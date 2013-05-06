@@ -1,0 +1,25 @@
+Sample                  Estimates of dog demographic variables
+capm-package            The capm Package
+clus2                   Two-stage cluster sampling size and composition
+globalsens              Global sensitivity analysis
+localsens               Local sensitivity analysis
+pilot                   Pilot study to calculate sample size and
+                        composition
+plotglobal              Plot results of GlobalSens function
+plotlocal               Plot results of localsens function
+plotmodel               Plot results of capm model functions
+ppssr                   Probability proportional to size sampling with
+                        replacement
+psu.ssu                 Primary and secondary sampling frames from
+                        Santos, Brazil.
+psukml                  Creates a folder with *.kml files of a subset
+                        of polygons form a polygon shapefile
+pyramid                 Population pyramid
+rasa                    Recruitment, abandonment, sterilization and
+                        adoption of dogs
+setranges               Parameter ranges for global sensitivity
+                        analysis
+siss                    Systematic sampling
+sterowned               Owned dog sterilization
+svyd2                   Two-stage cluster sampling analysis
+svysumm                 Summary statistics for sample surveys
