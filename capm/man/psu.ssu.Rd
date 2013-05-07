@@ -16,7 +16,7 @@ This data set list the primary (enumeration units/setores censitarios) and secon
   }
 }
 \source{
-\link{www.ibge.gov.br}
+\url{www.ibge.gov.br}
 }
 \examples{
 data(psu.ssu)

@@ -107,7 +107,8 @@
 
   The function is a wrapper around the defaults of
   \link[deSolve]{ode} function, whose help page must be
-  consulted for details.
+  consulted for details. An exception is the method
+  argument which is defined as "rk4".
 }
 \note{
   The implemented model is part of an ongoing PhD thesis
@@ -117,11 +118,19 @@
 \examples{
 # Parameters and initial conditions from estimates
 # obtained in examples section from svysumm function.
+# Note that there is not estimates for all arguments
+# and thus, some are a prior defined.
+# For example, carrying capacities were estimated as
+# 10 \% greater than population sizes; and birth and
+# death rates for stray animals were estimated as
+# 10 \% greater than those rates in owned animals.
+# The consequences of those "guesses" can be quantified
+# with globalsens and localsens functions.
 pars.rasa = c(
    af1 = 0.219, am1 = 0.219, af2 = 0.241, am2 = 0.241,
    bf1 = 0.091, bm1 = 0.091, bf2 = 0.1, bm2 = 0.1,
    ef1 = 0.074, ef2 = 0.01, em1 = 0.047, em2 = 0.01,
-   k1 = 137176.8, k2 = 13717.68, z1 = 1, z2 = 1,
+   k1 = 137176.8, k2 = 13854.86, z1 = 1, z2 = 1,
    h = 0.051, j = 0.111, v = 0.1
 )
 state.rasa = c(
@@ -137,7 +146,12 @@ rasa.pt <- rasa(pars = pars.rasa,
                 time = 0:30)
 
 # Solve for parameter ranges.
-# rasa.rg <-
+rasa.rg <- rasa(pars = pars.rasa,
+                state = state.rasa,
+                time = 0:30,
+                ster.range = seq(0, .5, by = .1),
+                aban.range = c(0, .2),
+                adop.range = c(0, .2))
 }
 \references{
   Soetaert K, Cash J and Mazzia F (2012). Solving

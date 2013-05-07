@@ -76,7 +76,7 @@
 #'                 time = 0:30)
 #' 
 #' # Solve for parameter ranges.
-#' # rasa.rg <- rasa(pars = pars.rasa, 
+#' rasa.rg <- rasa(pars = pars.rasa, 
 #'                 state = state.rasa, 
 #'                 time = 0:30,
 #'                 ster.range = seq(0, .5, by = .1), 
