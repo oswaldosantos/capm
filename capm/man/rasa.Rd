@@ -76,13 +76,13 @@
   \code{2}: stray animals; \code{f}: females; \code{m}:
   males. Then:
 
-  \code{af1}, \code{am1} \code{af2} and \code{af2}: birth
+  \code{af1}, \code{am1}, \code{af2} and \code{am2}: birth
   rate.
 
-  \code{bf1}, \code{bm1} \code{bf2} and \code{bf2}: death
+  \code{bf1}, \code{bm1}, \code{bf2} and \code{bm2}: death
   rate.
 
-  \code{ef1}, \code{em1} \code{ef2} and \code{ef2}:
+  \code{ef1}, \code{em1}, \code{ef2} and \code{em2}:
   sterilization rate.
 
   \code{k1} and \code{k2}: carrying capacity.
@@ -93,6 +93,8 @@
 
   \code{j}: adoption rate.
 
+  \code{v}: recruitment rate.
+
   The \code{state} argument must contain named values for
   the inital number of animals, using the following
   conventions: \code{1}: owned animals; \code{2}: stray
@@ -101,7 +103,7 @@
   for the categories:
 
   \code{f1}, \code{sf1}, \code{m1}, \code{sm1}, \code{f2},
-  \code{sf2}, \code{m2} and \code{sm1}.
+  \code{sf2}, \code{m2} and \code{sm2}.
 
   The function is a wrapper around the defaults of
   \link[deSolve]{ode} function, whose help page must be
@@ -115,8 +117,19 @@
 \examples{
 # Parameters and initial conditions from estimates
 # obtained in examples section from svysumm function.
-pars.rasa = #
-state.rasa = #
+pars.rasa = c(
+af1 = 0.219, am1 = 0.219, af2 = 0.241, am2 = 0.241,
+bf1 = 0.091, bm1 = 0.091, bf2 = 0.1, bm2 = 0.1,
+ef1 = 0.074, ef2 = 0.01, em1 = 0.047, em2 = 0.01,
+k1 = 137176.8, k2 = 13717.68, z1 = 1, z2 = 1,
+h = 0.051, j = 0.111, v = 0.1
+)
+state.rasa = c(
+   f1 = 46181.12, sf1 = 13309.497,
+m1 = 49681.91, sm1 = 15533.682,
+f2 = 5949.062, sf2 = 59.491,
+m2 = 6521.56, sm2 = 65.216
+)
 
 # Solve for point estimates.
 rasa.pt <- rasa(pars = pars.rasa, state = state.rasa, time = 0:30)

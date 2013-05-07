@@ -11,11 +11,11 @@
 #' @details The \code{pars} argument must contain named values, using the following conventions: \code{1}: owned animals; \code{2}: stray animals; \code{f}: females; \code{m}: males. Then:
 #' 
 #'  
-#' \code{af1}, \code{am1} \code{af2} and \code{af2}: birth rate.
+#' \code{af1}, \code{am1}, \code{af2} and \code{am2}: birth rate.
 #' 
-#' \code{bf1}, \code{bm1} \code{bf2} and \code{bf2}: death rate.
+#' \code{bf1}, \code{bm1}, \code{bf2} and \code{bm2}: death rate.
 #' 
-#' \code{ef1}, \code{em1} \code{ef2} and \code{ef2}: sterilization rate.
+#' \code{ef1}, \code{em1}, \code{ef2} and \code{em2}: sterilization rate.
 #' 
 #' \code{k1} and \code{k2}: carrying capacity.
 #' 
@@ -25,10 +25,12 @@
 #' 
 #' \code{j}: adoption rate.
 #' 
+#' \code{v}: recruitment rate.
+#' 
 #' 
 #' The \code{state} argument must contain named values for the inital number of animals, using the following conventions: \code{1}: owned animals; \code{2}: stray animals; \code{f}: females; \code{m}: males; and \code{s}: sterilized. Then, number values must be given for the categories:
 #' 
-#' \code{f1}, \code{sf1}, \code{m1}, \code{sm1}, \code{f2}, \code{sf2}, \code{m2} and \code{sm1}.
+#' \code{f1}, \code{sf1}, \code{m1}, \code{sm1}, \code{f2}, \code{sf2}, \code{m2} and \code{sm2}.
 #' 
 #' The function is a wrapper around the defaults of \link[deSolve]{ode} function, whose help page must be consulted for details.
 #' @return \code{\link{list}} of class \code{rasa}. The first element, \code{*$model}, is the model function. The second, third and fourth elements are vectors (\code{*$pars}, \code{*$state}, \code{*$time}, respectively) containing the \code{pars}, \code{state} and \code{time} arguments of the function. The fifth element \code{*$results} is a \code{\link{data.frame}} with up to as many rows as elements in time. Using the conventions for state argument (see details), the first fourth columns contain the variables: \code{f}, \code{sf}, \code{m} and \code{sm}. The fifth and sisxth columns contain the number of animals and the group respectively (\code{n} and \code{group}). Other optional arguments are:
@@ -46,21 +48,36 @@
 #' @examples 
 #' # Parameters and initial conditions from estimates   
 #' # obtained in examples section from svysumm function.
-#' pars.rasa = #
-#' state.rasa = #
+#' pars.rasa = c(
+#'    af1 = 0.219, am1 = 0.219, af2 = 0.241, am2 = 0.241,
+#'    bf1 = 0.091, bm1 = 0.091, bf2 = 0.1, bm2 = 0.1,
+#'    ef1 = 0.074, ef2 = 0.01, em1 = 0.047, em2 = 0.01,
+#'    k1 = 137176.8, k2 = 13717.68, z1 = 1, z2 = 1, 
+#'    h = 0.051, j = 0.111, v = 0.1
+#' )
+#' state.rasa = c(
+#'    f1 = 46181.12, sf1 = 13309.497, 
+#'    m1 = 49681.91, sm1 = 15533.682, 
+#'    f2 = 5949.062, sf2 = 59.491, 
+#'    m2 = 6521.56, sm2 = 65.216
+#' )
 #' 
 #' # Solve for point estimates.
-#' rasa.pt <- rasa(pars = pars.rasa, state = state.rasa, time = 0:30)
+#' rasa.pt = rasa(pars = pars.rasa, 
+#'                 state = state.rasa, 
+#'                 time = 0:30)
 #' 
 #' # Solve for parameter ranges.
-#' rasa.rg <- sterowned(pars = pars.rasa, state = state.rasa, time = 0:30, ster.range = seq(0, .4, length.out = 50), aban.range = c(0, .4), adop.range = c(0, .4))
+#' # rasa.rg = 
 rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.range = NULL, adop.range = NULL, ster.fm = TRUE, ...) {
-  rasafu <- function(pars = NULL, state = NULL, time = NULL) {
+  rasafu = function(pars = NULL, state = NULL, time = NULL) {
     rasa.fu = function(time, state, pars) {
       with(as.list(c(state, pars)), {
         v = k1 * v
-        x1 = ((z1 * m1 + f1) * af1 * (f1 + sf1 + m1 + sm1)) / (2 * z1 * f1 * m1)
-        x2 = ((z2 * m2 + f2) * af2 * (f2 + sf2 + m2 + sm2)) / (2 * z2 * f2 * m2)
+        x1 = ((z1 * m1 + f1) * af1 * (f1 + sf1 + m1 + sm1)) /
+          (2 * z1 * f1 * m1)
+        x2 = ((z2 * m2 + f2) * af2 * (f2 + sf2 + m2 + sm2)) /
+          (2 * z2 * f2 * m2)
         # femeas domiciliadas
         alf1 = (af1 * (2 * m1 * x1) / (z1^(-1) * f1 + m1))
         wf1 = alf1 - (alf1 - bf1) * (f1 + m1) / k1 # natalidade.
@@ -148,18 +165,18 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
   } 
   if (is.null(ster.range) & is.null(aban.range) & 
         is.null(adop.range)) {
-    output <- rasafu(pars = pars, state = state, time = time)
+    output = rasafu(pars = pars, state = state, time = time)
     output$n1 = rowSums(output[, 2:5])
     output$n2 = rowSums(output[, 6:9])
     output$n = rowSums(output[, 2:9])
-    rasa <- list(
+    rasa = list(
       model = rasafu,
       pars = pars,
       state = state,
       time = time,
       results = as.data.frame(output)
     )
-    class(rasa) <- 'rasa'
+    class(rasa) = 'rasa'
     return(rasa)
   } else {
     if(length(aban.range) != 2) {
@@ -168,8 +185,8 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
     if(length(adop.range) != 2) {
       stop('The length of adop.range must be equal to 2.')
     }
-    output <- NULL
-    paras <- pars
+    output = NULL
+    paras = pars
     aban.range = c(aban.range[1], pars['h'], aban.range[2])
     adop.range = c(adop.range[1], pars['j'], adop.range[2])
     for (i1 in 1:length(aban.range)) {
@@ -205,14 +222,14 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
     adop = rep(adop.range, each = length(time) * length(ster.range) * length(aban.range))
     )
     names(output)[1:5] = c('t', 'f', 'sf', 'm', 'sm')
-    rasa <- list(
+    rasa = list(
       model = rasafu,
       pars = pars,
       state = state,
       time = time,
       results = as.data.frame(output)
     )
-    class(rasa) <- 'rasa'
+    class(rasa) = 'rasa'
     return(rasa)
   }
 }
