@@ -32,7 +32,7 @@
 #' 
 #' \code{f1}, \code{sf1}, \code{m1}, \code{sm1}, \code{f2}, \code{sf2}, \code{m2} and \code{sm2}.
 #' 
-#' The function is a wrapper around the defaults of \link[deSolve]{ode} function, whose help page must be consulted for details.
+#' The function is a wrapper around the defaults of \link[deSolve]{ode} function, whose help page must be consulted for details. An exception is the method argument which is defined as "rk4".
 #' @return \code{\link{list}} of class \code{rasa}. The first element, \code{*$model}, is the model function. The second, third and fourth elements are vectors (\code{*$pars}, \code{*$state}, \code{*$time}, respectively) containing the \code{pars}, \code{state} and \code{time} arguments of the function. The fifth element \code{*$results} is a \code{\link{data.frame}} with up to as many rows as elements in time. Using the conventions for state argument (see details), the first fourth columns contain the variables: \code{f}, \code{sf}, \code{m} and \code{sm}. The fifth and sisxth columns contain the number of animals and the group respectively (\code{n} and \code{group}). Other optional arguments are:
 #' 
 #' \code{ster}: instance fo sterilization rate (if \code{ster.range} is specified).
@@ -48,11 +48,19 @@
 #' @examples 
 #' # Parameters and initial conditions from estimates   
 #' # obtained in examples section from svysumm function.
+#' # Note that there is not estimates for all arguments
+#' # and thus, some are a prior defined.
+#' # For example, carrying capacities were estimated as 
+#' # 10 % greater than population sizes; and birth and  
+#' # death rates for stray animals were estimated as 
+#' # 10 % greater than those rates in owned animals.
+#' # The consequences of those "guesses" can be quantified
+#' # with globalsens and localsens functions.
 #' pars.rasa = c(
 #'    af1 = 0.219, am1 = 0.219, af2 = 0.241, am2 = 0.241,
 #'    bf1 = 0.091, bm1 = 0.091, bf2 = 0.1, bm2 = 0.1,
 #'    ef1 = 0.074, ef2 = 0.01, em1 = 0.047, em2 = 0.01,
-#'    k1 = 137176.8, k2 = 13717.68, z1 = 1, z2 = 1, 
+#'    k1 = 137176.8, k2 = 13854.86, z1 = 1, z2 = 1, 
 #'    h = 0.051, j = 0.111, v = 0.1
 #' )
 #' state.rasa = c(
@@ -63,14 +71,20 @@
 #' )
 #' 
 #' # Solve for point estimates.
-#' rasa.pt = rasa(pars = pars.rasa, 
+#' rasa.pt <- rasa(pars = pars.rasa, 
 #'                 state = state.rasa, 
 #'                 time = 0:30)
 #' 
 #' # Solve for parameter ranges.
-#' # rasa.rg = 
+#' # rasa.rg <- rasa(pars = pars.rasa, 
+#'                 state = state.rasa, 
+#'                 time = 0:30,
+#'                 ster.range = seq(0, .5, by = .1), 
+#'                 aban.range = c(0, .2), 
+#'                 adop.range = c(0, .2))
+#'                 
 rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.range = NULL, adop.range = NULL, ster.fm = TRUE, ...) {
-  rasafu = function(pars = NULL, state = NULL, time = NULL) {
+  rasafu <- function(pars = NULL, state = NULL, time = NULL) {
     rasa.fu = function(time, state, pars) {
       with(as.list(c(state, pars)), {
         v = k1 * v
@@ -159,24 +173,28 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
                state['m1'], state['sm1'],
                state['f2'], state['sf2'], 
                state['m2'], state['sm2'])
-    rasa.out = ode(times = time, func = rasa.fu, 
-                         y = state, parms = pars, ...)
+    rasa.out = ode(times = time, 
+                   func = rasa.fu, 
+                   y = state, 
+                   parms = pars, 
+                   method = 'rk4',
+                   ...)
     return(as.data.frame(rasa.out))
   } 
   if (is.null(ster.range) & is.null(aban.range) & 
         is.null(adop.range)) {
-    output = rasafu(pars = pars, state = state, time = time)
+    output <- rasafu(pars = pars, state = state, time = time)
     output$n1 = rowSums(output[, 2:5])
     output$n2 = rowSums(output[, 6:9])
     output$n = rowSums(output[, 2:9])
-    rasa = list(
+    rasa <- list(
       model = rasafu,
       pars = pars,
       state = state,
       time = time,
       results = as.data.frame(output)
     )
-    class(rasa) = 'rasa'
+    class(rasa) <- 'rasa'
     return(rasa)
   } else {
     if(length(aban.range) != 2) {
@@ -185,8 +203,8 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
     if(length(adop.range) != 2) {
       stop('The length of adop.range must be equal to 2.')
     }
-    output = NULL
-    paras = pars
+    output <- NULL
+    paras <- pars
     aban.range = c(aban.range[1], pars['h'], aban.range[2])
     adop.range = c(adop.range[1], pars['j'], adop.range[2])
     for (i1 in 1:length(aban.range)) {
@@ -222,14 +240,14 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
     adop = rep(adop.range, each = length(time) * length(ster.range) * length(aban.range))
     )
     names(output)[1:5] = c('t', 'f', 'sf', 'm', 'sm')
-    rasa = list(
+    rasa <- list(
       model = rasafu,
       pars = pars,
       state = state,
       time = time,
       results = as.data.frame(output)
     )
-    class(rasa) = 'rasa'
+    class(rasa) <- 'rasa'
     return(rasa)
   }
 }

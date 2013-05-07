@@ -118,24 +118,26 @@
 # Parameters and initial conditions from estimates
 # obtained in examples section from svysumm function.
 pars.rasa = c(
-af1 = 0.219, am1 = 0.219, af2 = 0.241, am2 = 0.241,
-bf1 = 0.091, bm1 = 0.091, bf2 = 0.1, bm2 = 0.1,
-ef1 = 0.074, ef2 = 0.01, em1 = 0.047, em2 = 0.01,
-k1 = 137176.8, k2 = 13717.68, z1 = 1, z2 = 1,
-h = 0.051, j = 0.111, v = 0.1
+   af1 = 0.219, am1 = 0.219, af2 = 0.241, am2 = 0.241,
+   bf1 = 0.091, bm1 = 0.091, bf2 = 0.1, bm2 = 0.1,
+   ef1 = 0.074, ef2 = 0.01, em1 = 0.047, em2 = 0.01,
+   k1 = 137176.8, k2 = 13717.68, z1 = 1, z2 = 1,
+   h = 0.051, j = 0.111, v = 0.1
 )
 state.rasa = c(
    f1 = 46181.12, sf1 = 13309.497,
-m1 = 49681.91, sm1 = 15533.682,
-f2 = 5949.062, sf2 = 59.491,
-m2 = 6521.56, sm2 = 65.216
+   m1 = 49681.91, sm1 = 15533.682,
+   f2 = 5949.062, sf2 = 59.491,
+   m2 = 6521.56, sm2 = 65.216
 )
 
 # Solve for point estimates.
-rasa.pt <- rasa(pars = pars.rasa, state = state.rasa, time = 0:30)
+rasa.pt <- rasa(pars = pars.rasa,
+                state = state.rasa,
+                time = 0:30)
 
 # Solve for parameter ranges.
-rasa.rg <- sterowned(pars = pars.rasa, state = state.rasa, time = 0:30, ster.range = seq(0, .4, length.out = 50), aban.range = c(0, .4), adop.range = c(0, .4))
+# rasa.rg <-
 }
 \references{
   Soetaert K, Cash J and Mazzia F (2012). Solving
