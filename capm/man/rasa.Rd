@@ -4,7 +4,8 @@
 \usage{
   rasa(pars = NULL, state = NULL, time = NULL,
     ster.range = NULL, aban.range = NULL,
-    adop.range = NULL, ster.fm = TRUE, ...)
+    adop.range = NULL, recr.range = NULL, ster.fm = TRUE,
+    ...)
 }
 \arguments{
   \item{pars}{a named \code{\link{vector}} of length 21,
@@ -30,6 +31,11 @@
   to be assessed. If given, the rates evaluated are those
   specified by the argument plus the point estimate given
   in \code{pars}.}
+
+  \item{recr.range}{optional \code{\link{vector}} of length
+  2, with range of values of recruitment rates to be
+  assessed. This must be expressed as a percentage of
+  carrying capacity.}
 
   \item{ster.fm}{logical. If \code{TRUE}, ster.range is
   used for females and males and if \code{FALSE}, it is
@@ -111,6 +117,10 @@
   argument which is defined as "rk4".
 }
 \note{
+  Logistic growth models are not intended for scenarios in
+  which population size is greater than carrying capacity
+  and growth rate is negative.
+
   The implemented model is part of an ongoing PhD thesis
   (student: Oswaldo Santos; adviser: Fernando Ferreira) to
   be finished at the end of 2013.
@@ -121,7 +131,7 @@
 # Note that there is not estimates for all arguments
 # and thus, some are a prior defined.
 # For example, carrying capacities were estimated as
-# 10 \% greater than population sizes; and birth and
+# 10 \% greater than population sizes and birth and
 # death rates for stray animals were estimated as
 # 10 \% greater than those rates in owned animals.
 # The consequences of those "guesses" can be quantified
@@ -134,8 +144,8 @@ pars.rasa = c(
    h = 0.051, j = 0.111, v = 0.1
 )
 state.rasa = c(
-   f1 = 46181.12, sf1 = 13309.497,
-   m1 = 49681.91, sm1 = 15533.682,
+   f1 = 59490.620, sf1 = 13309.497,
+   m1 = 65215.595, sm1 = 15533.682,
    f2 = 5949.062, sf2 = 59.491,
    m2 = 6521.56, sm2 = 65.216
 )
@@ -149,9 +159,10 @@ rasa.pt <- rasa(pars = pars.rasa,
 rasa.rg <- rasa(pars = pars.rasa,
                 state = state.rasa,
                 time = 0:30,
-                ster.range = seq(0, .5, by = .1),
+                ster.range = seq(0, .5, length.out = 50),
                 aban.range = c(0, .2),
-                adop.range = c(0, .2))
+                adop.range = c(0, .2),
+                recr.range = c(0, .1))
 }
 \references{
   Soetaert K, Cash J and Mazzia F (2012). Solving

@@ -6,6 +6,7 @@
 #' @param ster.range optional sequence (between 0 and 1) of the sterilization rates to be simulated.
 #' @param aban.range optional \code{\link{vector}} of length 2, with range (ie, confidence interval) of abandonment rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.
 #' @param adop.range optional \code{\link{vector}} of length 2, with range (ie, confidence interval) of adoption rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.
+#' @param recr.range optional \code{\link{vector}} of length 2, with range of values of recruitment rates to be assessed. This must be expressed as a percentage of carrying capacity.
 #' @param ster.fm logical. If \code{TRUE}, ster.range is used for females and males and if \code{FALSE}, it is only used for females (for males, the point estimate given in \code{pars} is used.)
 #' @param ... further arguments passed to \link[deSolve]{ode} function.
 #' @details The \code{pars} argument must contain named values, using the following conventions: \code{1}: owned animals; \code{2}: stray animals; \code{f}: females; \code{m}: males. Then:
@@ -41,6 +42,8 @@
 #' 
 #' \code{adop}: instance fo adoption rate (if \code{adop.range} is specified).
 #' 
+#' @note Logistic growth models are not intended for scenarios in which
+#' population size is greater than carrying capacity and growth rate is negative.
 #' @references Soetaert K, Cash J and Mazzia F (2012). Solving differential equations in R. Springer.
 #' @note The implemented model is part of an ongoing PhD thesis (student: Oswaldo Santos; adviser: Fernando Ferreira) to be finished at the end of 2013.
 #' @seealso \link[deSolve]{ode}.
@@ -51,7 +54,7 @@
 #' # Note that there is not estimates for all arguments
 #' # and thus, some are a prior defined.
 #' # For example, carrying capacities were estimated as 
-#' # 10 % greater than population sizes; and birth and  
+#' # 10 % greater than population sizes and birth and  
 #' # death rates for stray animals were estimated as 
 #' # 10 % greater than those rates in owned animals.
 #' # The consequences of those "guesses" can be quantified
@@ -64,8 +67,8 @@
 #'    h = 0.051, j = 0.111, v = 0.1
 #' )
 #' state.rasa = c(
-#'    f1 = 46181.12, sf1 = 13309.497, 
-#'    m1 = 49681.91, sm1 = 15533.682, 
+#'    f1 = 59490.620, sf1 = 13309.497, 
+#'    m1 = 65215.595, sm1 = 15533.682, 
 #'    f2 = 5949.062, sf2 = 59.491, 
 #'    m2 = 6521.56, sm2 = 65.216
 #' )
@@ -79,19 +82,24 @@
 #' rasa.rg <- rasa(pars = pars.rasa, 
 #'                 state = state.rasa, 
 #'                 time = 0:30,
-#'                 ster.range = seq(0, .5, by = .1), 
+#'                 ster.range = seq(0, .5, length.out = 50), 
 #'                 aban.range = c(0, .2), 
-#'                 adop.range = c(0, .2))
+#'                 adop.range = c(0, .2),
+#'                 recr.range = c(0, .1))
 #'                 
-rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.range = NULL, adop.range = NULL, ster.fm = TRUE, ...) {
-  rasafu <- function(pars = NULL, state = NULL, time = NULL) {
+rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.range = NULL, adop.range = NULL, recr.range = NULL, ster.fm = TRUE, ...) {
+  state['n1'] = sum(state[c('f1', 'm1')])
+  state['n2'] = sum(state[c('f2', 'm2')])
+  state['n'] = sum(state[c('n1', 'n2')])
+  rasafu <- function(pars, state, time) {
     rasa.fu = function(time, state, pars) {
       with(as.list(c(state, pars)), {
         v = k1 * v
-        x1 = ((z1 * m1 + f1) * af1 * (f1 + sf1 + m1 + sm1)) /
-          (2 * z1 * f1 * m1)
-        x2 = ((z2 * m2 + f2) * af2 * (f2 + sf2 + m2 + sm2)) /
-          (2 * z2 * f2 * m2)
+        x1 = ((z1 * m1 - sm1 + f1 - sf1) * af1) /
+          (2 * z1 * (f1 - sf1) * (m1 -sm1))
+        x2 = ((z2 * m2 - sm2 + f2 - sf2) * af2) /
+                (2 * z2 * (f2 - sf2) * (m2 -sm2))
+        
         # femeas domiciliadas
         alf1 = (af1 * (2 * m1 * x1) / (z1^(-1) * f1 + m1))
         wf1 = alf1 - (alf1 - bf1) * (f1 + m1) / k1 # natalidade.
@@ -141,7 +149,7 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
                - j * f2 # adocao.
         )
         
-        # no. femeas nao esterilizadas.
+        # no. femeas esterilizadas.
         dsf2 = (- yf2 * sf2 # mortalidade.
                 + ef2 * (f2 - sf2 + h * (f1 - sf1)) # novos esterilizados.
                 - j * sf2 # adocao.
@@ -166,13 +174,18 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
                 + h * sm1 * (1 - ((f2 + m2) / k2)) # abandono.
         )
         
-        list(c(df1, dsf1, dm1, dsm1, df2, dsf2, dm2, dsm2))
+        dn1 = df1 + dsf1 + dm1 + dsm1
+        dn2 = df2 + dsf2 + dm2 + dsm2
+        dn = dn1 + dn2
+        
+        list(c(df1, dsf1, dm1, dsm1, df2, dsf2, dm2, dsm2, dn1, dn2, dn))
       })
     }
     state = c(state['f1'], state['sf1'], 
-               state['m1'], state['sm1'],
-               state['f2'], state['sf2'], 
-               state['m2'], state['sm2'])
+              state['m1'], state['sm1'],
+              state['f2'], state['sf2'], 
+              state['m2'], state['sm2'],
+              state['n1'], state['n2'], state['n'])
     rasa.out = ode(times = time, 
                    func = rasa.fu, 
                    y = state, 
@@ -184,9 +197,6 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
   if (is.null(ster.range) & is.null(aban.range) & 
         is.null(adop.range)) {
     output <- rasafu(pars = pars, state = state, time = time)
-    output$n1 = rowSums(output[, 2:5])
-    output$n2 = rowSums(output[, 6:9])
-    output$n = rowSums(output[, 2:9])
     rasa <- list(
       model = rasafu,
       pars = pars,
@@ -203,41 +213,53 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
     if(length(adop.range) != 2) {
       stop('The length of adop.range must be equal to 2.')
     }
+    if(length(recr.range) != 2) {
+      stop('The length of recr.range must be equal to 2.')
+    }
     output <- NULL
     paras <- pars
     aban.range = c(aban.range[1], pars['h'], aban.range[2])
     adop.range = c(adop.range[1], pars['j'], adop.range[2])
-    for (i1 in 1:length(aban.range)) {
-      for (i2 in 1:length(adop.range)) {
-        for (i3 in 1:length(ster.range)) {
-          if (ster.fm == T) {
-            paras[c('ef1', 'ef2', 'j', 'h')] = 
-              c(ster.range[i3], ster.range[i3], 
-                adop.range[i2], aban.range[i1]
+    for (i in 1:length(recr.range)) {
+      for (i1 in 1:length(aban.range)) {
+        for (i2 in 1:length(adop.range)) {
+          for (i3 in 1:length(ster.range)) {
+            if (ster.fm == T) {
+              paras[c('ef1', 'em1', 'j', 'h', 'v')] = 
+                c(ster.range[i3], ster.range[i3], 
+                  adop.range[i2], aban.range[i1],
+                  recr.range[i]
                 )
-          } else {
-            paras[c('ef1', 'j', 'h')] = 
-              c(ster.range[i3], adop.range[i2], 
-                aban.range[i1]
-              )
+            } else {
+              paras[c('ef1', 'j', 'h', 'v')] = 
+                c(ster.range[i3], adop.range[i2], 
+                  aban.range[i1], recr.range[i]
+                )
+            }
+            output = rbind(
+              output,
+              rasafu(pars = paras, 
+                     state = state, 
+                     time = time)
+            )
           }
-          output = rbind(
-            output,
-            rasafu(pars = paras, 
-                   state = state, 
-                   time = time)
-          )
         }
       }
     }
     names(output) = c(1,2:5, 2:5)
     output = data.frame(
     rbind(output[, 1:5], output[, c(1, 6:9)]),
-    n = c(rowSums(output[, 2:5]), rowSums(output[, 6:9])),
+    n = c(rowSums(output[, c(2, 4)]), rowSums(output[, c(6, 8)])),
     group = rep(1:2, each = nrow(output)),
     ster = rep(ster.range, each = length(time)),
-    aban = rep(aban.range, each = length(time) * length(ster.range)),
-    adop = rep(adop.range, each = length(time) * length(ster.range) * length(aban.range))
+    adop = rep(adop.range, 
+               each = length(time) * length(ster.range)),
+    aban = rep(aban.range, 
+               each = length(time) * length(ster.range) * 
+                 length(adop.range)),
+    recr = rep(recr.range, 
+               each = length(time) * length(ster.range) * 
+                 length(adop.range) * length(aban.range))
     )
     names(output)[1:5] = c('t', 'f', 'sf', 'm', 'sm')
     rasa <- list(
