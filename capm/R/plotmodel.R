@@ -144,144 +144,145 @@ plotmodel = function(model.out = NULL, variable = NULL, col = 'red', col1 = c('y
                 legend.title = element_text(size = 12))
       }
     }
-  }
-  if (class(model.out) == 'rasa') {
-    if (ncol(model.out$results) == 12) {
-      tmp = ggplot(model.out$results, 
-                   aes_string(x = 'time', y = variable)) + 
-        geom_line(colour = col) +
-        xlab(xlabel)
-      if (is.null(variable)) {
-        stop('"variable" argument can not be NULL.')
-      }
-      if (variable == 'n') {
-        yla = 'Total pulation size' 
-        yli = max(model.out$results['n'])
-      }
-      if (variable == 'n2') {
-        yla = 'Stray pulation size' 
-        yli = max(model.out$results['n2'])
-      }
-      if (variable == 'n1') {
-        yla = 'Owned pulation size' 
-        yli = max(model.out$results['n1'])
-      }
-      if (variable == 'sm2') {
-        yla = 'Stray sterilized male pulation size' 
-        yli = max(model.out$results['sm2'])
-      }
-      if (variable == 'm2') {
-        yla = 'Stray male pulation size' 
-        yli = max(model.out$results['m2'])
-      }
-      if (variable == 'sf2') {
-        yla = 'Stray sterilized female pulation size' 
-        yli = max(model.out$results['sf2'])
-      }
-      if (variable == 'f2') {
-        yla = 'Stray female pulation size' 
-        yli = max(model.out$results['f2'])
-      }
-      if (variable == 'sm1') {
-        yla = 'Owned sterilized male pulation size' 
-        yli = max(model.out$results['sm1'])
-      }
-      if (variable == 'm1') {
-        yla = 'Owned male pulation size' 
-        yli = max(model.out$results['m1'])
-      }
-      if (variable == 'sf1') {
-        yla = 'Owned sterilized female pulation size' 
-        yli = max(model.out$results['sf1'])
-      }
-      if (variable == 'f1') {
-        yla = 'Owned female pulation size' 
-        yli = max(model.out$results['f1'])
-      }
-      if (is.null(ylabel)) {
-        tmp + ylab(yla) + ylim(0, yli)
+  } else {
+    if (class(model.out) == 'rasa') {
+      if (ncol(model.out$results) == 12) {
+        tmp = ggplot(model.out$results, 
+                     aes_string(x = 'time', y = variable)) + 
+          geom_line(colour = col) +
+          xlab(xlabel)
+        if (is.null(variable)) {
+          stop('"variable" argument can not be NULL.')
+        }
+        if (variable == 'n') {
+          yla = 'Total pulation size' 
+          yli = max(model.out$results['n'])
+        }
+        if (variable == 'n2') {
+          yla = 'Stray pulation size' 
+          yli = max(model.out$results['n2'])
+        }
+        if (variable == 'n1') {
+          yla = 'Owned pulation size' 
+          yli = max(model.out$results['n1'])
+        }
+        if (variable == 'sm2') {
+          yla = 'Stray sterilized male pulation size' 
+          yli = max(model.out$results['sm2'])
+        }
+        if (variable == 'm2') {
+          yla = 'Stray male pulation size' 
+          yli = max(model.out$results['m2'])
+        }
+        if (variable == 'sf2') {
+          yla = 'Stray sterilized female pulation size' 
+          yli = max(model.out$results['sf2'])
+        }
+        if (variable == 'f2') {
+          yla = 'Stray female pulation size' 
+          yli = max(model.out$results['f2'])
+        }
+        if (variable == 'sm1') {
+          yla = 'Owned sterilized male pulation size' 
+          yli = max(model.out$results['sm1'])
+        }
+        if (variable == 'm1') {
+          yla = 'Owned male pulation size' 
+          yli = max(model.out$results['m1'])
+        }
+        if (variable == 'sf1') {
+          yla = 'Owned sterilized female pulation size' 
+          yli = max(model.out$results['sf1'])
+        }
+        if (variable == 'f1') {
+          yla = 'Owned female pulation size' 
+          yli = max(model.out$results['f1'])
+        }
+        if (is.null(ylabel)) {
+          tmp + ylab(yla) + ylim(0, yli)
+        } else {
+          tmp + ylab(ylabel) + ylim(0, yli)
+        }
+        
       } else {
-        tmp + ylab(ylabel) + ylim(0, yli)
-      }
-      
-    } else {
-      model.out$results[, 'aban'] = 
-        paste('Ab =', round(model.out$results[, 'aban'], 2))
-      model.out$results[, 'adop'] = 
-        paste('Ad =', round(model.out$results[, 'adop'], 2))
-      if (is.null(ylabel)) {
-        ylabel = 'Sterilization rate'
-      }
-      s11 = s12 = s21 = s22 = NULL
-      for (i in 1:2) {
-        for (j in 1:2) {
-          dat = model.out$results
-          dat = dat[
-            dat[, 'group'] == unique(dat[, 'group'])[j] &
-              dat[, 'recr'] == unique(dat[, 'recr'])[i], ]
-          scl = nchar(as.character(
-            round(max(dat[, 'n'])))) - 2
-          assign(paste0('s', i, j), 
-                 ggplot(
-                   dat,
-                   aes_string(x = 't', y = 'ster',
-                              fill = 'n')) +
-                   xlab(xlabel) + 
-                   ylab(ylabel) +
-                   geom_raster() + 
-                   scale_fill_continuous(
-                     name = paste0(leglabel[j], '\n',
-                                   '(x ', 10 ^ scl, ')\n'),
-                     limits = c(0, max(dat[, 'n'])), 
-                     breaks = round(
-                       seq(0 , max(dat[, 'n']),
-                           length.out = 5)),
-                     labels = round(round(
-                       seq(0 , max(dat[, 'n']),
-                           length.out = 5)) / (10 ^ scl), 1),
-                     low = col1,
-                     high = col2) +
-                   theme(legend.position = 'right',
-                         legend.title = 
-                           element_text(size = 10),
-                         plot.margin = 
-                           unit(c(.5, 0, 0, 0), 'lines')) +
-                   facet_grid(adop ~ aban)
-          )
+        model.out$results[, 'aban'] = 
+          paste('Ab =', round(model.out$results[, 'aban'], 2))
+        model.out$results[, 'adop'] = 
+          paste('Ad =', round(model.out$results[, 'adop'], 2))
+        if (is.null(ylabel)) {
+          ylabel = 'Sterilization rate'
         }
-      }
-      if (!is.null(pop)) {
-        if (pop == 1) {
-          print(s11)
+        s11 = s12 = s21 = s22 = NULL
+        for (i in 1:2) {
+          for (j in 1:2) {
+            dat = model.out$results
+            dat = dat[
+              dat[, 'group'] == unique(dat[, 'group'])[j] &
+                dat[, 'recr'] == unique(dat[, 'recr'])[i], ]
+            scl = nchar(as.character(
+              round(max(dat[, 'n'])))) - 2
+            assign(paste0('s', i, j), 
+                   ggplot(
+                     dat,
+                     aes_string(x = 't', y = 'ster',
+                                fill = 'n')) +
+                     xlab(xlabel) + 
+                     ylab(ylabel) +
+                     geom_raster() + 
+                     scale_fill_continuous(
+                       name = paste0(leglabel[j], '\n',
+                                     '(x ', 10 ^ scl, ')\n'),
+                       limits = c(0, max(dat[, 'n'])), 
+                       breaks = round(
+                         seq(0 , max(dat[, 'n']),
+                             length.out = 5)),
+                       labels = round(round(
+                         seq(0 , max(dat[, 'n']),
+                             length.out = 5)) / (10 ^ scl), 1),
+                       low = col1,
+                       high = col2) +
+                     theme(legend.position = 'right',
+                           legend.title = 
+                             element_text(size = 10),
+                           plot.margin = 
+                             unit(c(.5, 0, 0, 0), 'lines')) +
+                     facet_grid(adop ~ aban)
+            )
+          }
         }
-        if (pop == 2) {
-          print(s12)
+        if (!is.null(pop)) {
+          if (pop == 1) {
+            print(s11)
+          }
+          if (pop == 2) {
+            print(s12)
+          }
+          if (pop == 3) {
+            print(s21)
+          }
+          if (pop == 4) {
+            print(s22)
+          }
         }
-        if (pop == 3) {
-          print(s21)
+        if (is.null(pop)) {
+          vplayout <- function(x, y) {
+            viewport(layout.pos.row = x, layout.pos.col = y)
+          } 
+          grid.newpage()
+          pushViewport(viewport(layout = grid.layout(11, 2)))
+          grid.text(gsub('__', unique(model.out$results[, 'recr'])[1], 
+                         scenlabel), 
+                    vp = vplayout(1, 1))
+          grid.gedit("GRID.text", gp=gpar(fontsize=12))
+          grid.text(gsub('__', unique(model.out$results[, 'recr'])[2],
+                         scenlabel),
+                    vp = vplayout(1, 2))
+          grid.gedit("GRID.text", gp=gpar(fontsize=12))
+          print(s11, vp = vplayout(2:6, 1))
+          print(s21, vp = vplayout(2:6, 2))
+          print(s12, vp = vplayout(7:11, 1))
+          print(s22, vp = vplayout(7:11, 2))
         }
-        if (pop == 4) {
-          print(s22)
-        }
-      }
-      if (is.null(pop)) {
-        vplayout <- function(x, y) {
-          viewport(layout.pos.row = x, layout.pos.col = y)
-        } 
-        grid.newpage()
-        pushViewport(viewport(layout = grid.layout(11, 2)))
-        grid.text(gsub('__', unique(model.out$results[, 'recr'])[1], 
-                       scenlabel), 
-                  vp = vplayout(1, 1))
-        grid.gedit("GRID.text", gp=gpar(fontsize=12))
-        grid.text(gsub('__', unique(model.out$results[, 'recr'])[2],
-                       scenlabel),
-                  vp = vplayout(1, 2))
-        grid.gedit("GRID.text", gp=gpar(fontsize=12))
-        print(s11, vp = vplayout(2:6, 1))
-        print(s21, vp = vplayout(2:6, 2))
-        print(s12, vp = vplayout(7:11, 1))
-        print(s22, vp = vplayout(7:11, 2))
       }
     }
   }
