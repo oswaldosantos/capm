@@ -50,6 +50,11 @@
   \link[deSolve]{ode} function, whose help page must be
   consulted for details.
 }
+\note{
+  Logistic growth models are not intended for scenarios in
+  which population size is greater than carrying capacity
+  and growth rate is negative.
+}
 \examples{
 # Parameters and initial conditions from estimates
 # obtained in examples section from svysumm function.
