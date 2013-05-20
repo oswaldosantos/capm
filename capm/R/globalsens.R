@@ -2,6 +2,7 @@
 #' @description Wraper for \code{\link{sensRange}} function which calculate sensitivities of population size, to parameters used in one of the following functions: \code{\link{sterowned}}.
 #' @param model.out results of one of the following functions: \code{\link{sterowned}}
 #' @param ranges output from the \code{\link{setranges}} function, applied to the \code{pars} argument used in the function specified previously in \code{model.out}.
+#' @param sensv string or \code{\link{character}} \code{\link{vector}} with the name of the the output variables for which the sensitivity needs to be estimated.
 #' @param all logical. If \code{\link{FALSE}}, sensitivity ranges are calculated for each parameter. If \code{TRUE}, sensitivity ranges are calculated for the combination of all aparameters.
 #' @details When \code{all} is equal to TRUE, \code{dist} argument in \code{\link{sensRange}} is defined as "latin" and when equal to \code{\link{FALSE}}, as "grid". The \code{num} argument in \code{\link{sensRange}} is defined as 100.
 #' @return A \code{data.frame} (extended by \code{summary.sensRange} when \code{all == TRUE}) containing the parameter set and the corresponding values of the sensitivity output variables.
@@ -10,30 +11,77 @@
 #' Reichert P and Kfinsch HR (2001). Practical identifiability analysis of large environmental simulation models. Water Resources Research, 37(4), pp.1015-1030.
 #' @seealso \code{\link{sensRange}}.
 #' @export
-#' @examples 
-#' #### example 1 - sterowned function ####
-#' ### Global sensitivity analysis for the parameters 
-#' ### used in sterowned function. 
+#' @examples
+#' #####################
+#' ## Example 1       ##
+#' ## sterowned model ##
+#' #####################
 #' 
-#' ## Parameters and intial conditions from estimates 
+#' ## Parameters and intial conditions from estimates
 #' ## obtained in examples section from the svysumm function.
-#' pars.od <- c(b = 0.167, d = 0.094, k = 125027.411 * 1.1, s = .059)
+#' pars.od <- c(b = 0.167, d = 0.094,
+#'              k = 125027.411 * 1.1, s = .059)
 #' state.od <- c(n = 125027.411, q = 0.188)
 #' 
 #' # Solve for a specific sterilization rate.
-#' ster.od <- sterowned(pars = pars.od, state = state.od, time = 0:30)
+#' ster.od <- sterowned(pars = pars.od,
+#'                      state = state.od, time = 0:30)
 #' 
-#' ## Set ranges 10 % greater and lesser than the 
+#' ## Set ranges 10 % greater and lesser than the
 #' ## point estimates.
-#' par.ranges.1 = setranges(pars = pars.od)
+#' par.rg.od.1 = setranges(pars = pars.od)
 #' 
 #' ## Calculate golobal sensitivity of combined parameters.
-#' glob.od.all = globalsens(model.out = ster.od, ranges = par.ranges.1, all = TRUE)
+#' glob.od.all = globalsens(
+#'   model.out = ster.od, ranges = par.rg.od.1,
+#'   sensv = 'n', all = TRUE)
 #' 
 #' ## Calculate golobal sensitivity of individual parameters.
-#' glob.od = globalsens(model.out = ster.od, ranges = par.ranges.1)
-globalsens = function(model.out = NULL, ranges = NULL, all = FALSE) {
-  if (class(model.out) == 'sterowned') {
+#' glob.od = globalsens(model.out = ster.od,
+#' ranges = par.rg.od.1, sensv = 'n')
+#' 
+#' ################
+#' ## Example 2  ##
+#' ## rasa model ##
+#' ################
+#' 
+#' ## Parameters and intial conditions.
+#' pars.rasa = c(
+#'   af1 = 0.219, am1 = 0.219, af2 = 0.241, am2 = 0.241,
+#'   bf1 = 0.091, bm1 = 0.091, bf2 = 0.1, bm2 = 0.1,
+#'   ef1 = 0.074, ef2 = 0.01, em1 = 0.047, em2 = 0.01,
+#'   k1 = 137176.8, k2 = 13854.86, z1 = 1, z2 = 1,
+#'   h = 0.051, j = 0.111, v = 0.1
+#' )
+#' state.rasa = c(
+#'   f1 = 46181.12, sf1 = 13309.497,
+#'   m1 = 49681.91, sm1 = 15533.682,
+#'   f2 = 5949.062, sf2 = 59.491,
+#'   m2 = 6521.56, sm2 = 65.216
+#' )
+#' 
+#' # Solve for point estimates.
+#' rasa.pt <- rasa(pars = pars.rasa,
+#'                 state = state.rasa,
+#'                 time = 0:30)
+#' 
+#' ## Set ranges 10 % greater and lesser than the
+#' ## point estimates.
+#' par.rg.rasa.1 = setranges(pars = pars.rasa)
+#' 
+#' ## Calculate golobal sensitivity of combined parameters.
+#' glob.rasa.all = globalsens(
+#'   model.out = rasa.pt,
+#'   ranges = par.rg.rasa.1, sensv = 'n2', all = TRUE)
+#' 
+#' ## Calculate golobal sensitivity of individual parameters.
+#' glob.rasa = globalsens(
+#'   model.out = rasa.pt, ranges = par.rg.rasa.1,
+#'   sensv = 'n2')
+#' 
+globalsens = function(model.out = NULL, ranges = NULL, sensv = NULL, all = FALSE) {
+  if (class(model.out) == 'sterowned' |
+        class(model.out) == 'rasa') {
     if (all == T) {
       sens = sensRange(func = model.out$model, 
                        parms = model.out$pars, 
@@ -41,21 +89,21 @@ globalsens = function(model.out = NULL, ranges = NULL, all = FALSE) {
                        time = model.out$time,
                        parRange = ranges,
                        dist = "latin", 
-                       sensvar = "n", num = 100)
+                       sensvar = sensv, num = 100)
       return(summary(sens))
     } else {
         sens = NULL
-        for (i in 1:4) {
+        for (i in 1:length(model.out$pars)) {
           tmp = sensRange(func = model.out$model, 
                            parms = model.out$pars, 
                            state = model.out$state,
                            time = model.out$time,
                            parRange = ranges[i, ],
-                           dist = "latin", 
-                           sensvar = "n", num = 100)
+                           dist = "grid", 
+                           sensvar = sensv, num = 100)
           sens = rbind(sens, summary(tmp))
         }
-        param = rep(c('b', 'd', 'k', 's'), 
+        param = rep(names(model.out$pars), 
                      each = length(tmp[-1]))
         sens = cbind(sens, param)
         return(sens)
