@@ -9,11 +9,11 @@ This data set list dog demographic variables obtained from simulations based on 
 }
 \usage{data(Sample)}
 \format{
-  A data frame with 1816 observations on the following 13 variables.
+  A data frame with 1564 observations on the following 13 variables.
   \describe{
     \item{\code{interview_id}}{Interview Id.}
     \item{\code{psu}}{Primary sampling unit Id.}
-    \item{\code{caes}}{Number of dogs per secondary sampling unit (ssu).}
+    \item{\code{dogss}}{Number of dogs per secondary sampling unit (ssu).}
     \item{\code{sex}}{Sex of the dog.}
     \item{\code{age}}{Age of the dog}
     \item{\code{castrated}}{Indicate if the dog is castrated}

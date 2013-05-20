@@ -9,7 +9,7 @@ This data set list the primary (enumeration units/setores censitarios) and secon
 }
 \usage{data(psu.ssu)}
 \format{
-  A data frame with 666 observations on the following 2 variables.
+  A data frame with 649 observations on the following 2 variables.
   \describe{
     \item{\code{psu}}{Primary sampling units}
     \item{\code{ssu}}{Total number of secondary sampling units per primary sampling unit.}
