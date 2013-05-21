@@ -19,9 +19,10 @@
 #' 
 #' ## Parameters and intial conditions from estimates
 #' ## obtained in examples section from the svysumm function.
-#' pars.od <- c(b = 0.167, d = 0.094,
-#'              k = 125027.411 * 1.1, s = .059)
-#' state.od <- c(n = 125027.411, q = 0.188)
+#' pars.od <- c(b = 0.262, d = 0.075, 
+#'              k = 182531.831 * 1.1, s = .056)
+#' state.od <- c(n = 82531.831, q = 0.207)
+#'
 #' 
 #' # Solve for a specific sterilization rate.
 #' ster.od <- sterowned(pars = pars.od,
@@ -47,22 +48,22 @@
 #' 
 #' ## Parameters and intial conditions.
 #' pars.rasa = c(
-#'   af1 = 0.219, am1 = 0.219, af2 = 0.241, am2 = 0.241,
-#'   bf1 = 0.091, bm1 = 0.091, bf2 = 0.1, bm2 = 0.1,
-#'   ef1 = 0.074, ef2 = 0.01, em1 = 0.047, em2 = 0.01,
-#'   k1 = 137176.8, k2 = 13854.86, z1 = 1, z2 = 1,
-#'   h = 0.051, j = 0.111, v = 0.1
+#'    af1 = 0.262, am1 = 0.262, af2 = 0.288, am2 = 0.288,
+#'    bf1 = 0.081, bm1 = 0.069, bf2 = 0.089, bm2 = 0.076,
+#'    ef1 = 0.064, ef2 = 0.05, em1 = 0.048, em2 = 0.05,
+#'    k1 = 90785.01, k2 = 9078.501, z1 = 1, z2 = 1, 
+#'    h = 0.065, j = 0.095, v = 0.111
 #' )
 #' state.rasa = c(
-#'   f1 = 46181.12, sf1 = 13309.497,
-#'   m1 = 49681.91, sm1 = 15533.682,
-#'   f2 = 5949.062, sf2 = 59.491,
-#'   m2 = 6521.56, sm2 = 65.216
+#'    f1 = 41641.785, sf1 = 8423.503, 
+#'    m1 = 40890.046, sm1 = 8647.503, 
+#'    f2 = 4164.179, sf2 = 208.209, 
+#'    m2 = 4089.005, sm2 = 204.45
 #' )
 #' 
 #' # Solve for point estimates.
-#' rasa.pt <- rasa(pars = pars.rasa,
-#'                 state = state.rasa,
+#' rasa.pt <- rasa(pars = pars.rasa, 
+#'                 state = state.rasa, 
 #'                 time = 0:30)
 #' 
 #' ## Set ranges 10 % greater and lesser than the

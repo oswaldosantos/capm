@@ -58,7 +58,8 @@
 \examples{
 # Parameters and initial conditions from estimates
 # obtained in examples section from svysumm function.
-pars.od <- c(b = 0.262, d = 0.075, k = 182531.831 * 1.1, s = .056)
+pars.od <- c(b = 0.262, d = 0.075,
+             k = 82531.831 * 1.1, s = .056)
 state.od <- c(n = 82531.831, q = 0.207)
 
 # Solve for a specific sterilization rate.
