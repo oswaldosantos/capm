@@ -12,26 +12,26 @@
 #' @details The \code{pars} argument must contain named values, using the following conventions: \code{1}: owned animals; \code{2}: stray animals; \code{f}: females; \code{m}: males. Then:
 #' 
 #'  
-#' \code{af1}, \code{am1}, \code{af2} and \code{am2}: birth rate.
+#' \code{bf1}, \code{bm1}, \code{bf2} and \code{bm2}: birth rate.
 #' 
-#' \code{bf1}, \code{bm1}, \code{bf2} and \code{bm2}: death rate.
+#' \code{df1}, \code{dm1}, \code{df2} and \code{dm2}: death rate.
 #' 
-#' \code{ef1}, \code{em1}, \code{ef2} and \code{em2}: sterilization rate.
+#' \code{sf1}, \code{sm1}, \code{sf2} and \code{sm2}: sterilization rate.
 #' 
 #' \code{k1} and \code{k2}: carrying capacity.
 #' 
-#' \code{z1} and \code{z2}: mean harem size.
+#' \code{h1} and \code{h2}: mean harem size.
 #' 
-#' \code{h}: abandonment rate.
+#' \code{ab}: abandonment rate.
 #' 
-#' \code{j}: adoption rate.
+#' \code{ad}: adoption rate.
 #' 
-#' \code{v}: recruitment rate.
+#' \code{r}: recruitment rate.
 #' 
 #' 
 #' The \code{state} argument must contain named values for the inital number of animals, using the following conventions: \code{1}: owned animals; \code{2}: stray animals; \code{f}: females; \code{m}: males; and \code{s}: sterilized. Then, number values must be given for the categories:
 #' 
-#' \code{f1}, \code{sf1}, \code{m1}, \code{sm1}, \code{f2}, \code{sf2}, \code{m2} and \code{sm2}.
+#' \code{f1}, \code{cf1}, \code{m1}, \code{cm1}, \code{f2}, \code{cf2}, \code{m2} and \code{cm2}.
 #' 
 #' The function is a wrapper around the defaults of \link[deSolve]{ode} function, whose help page must be consulted for details. An exception is the method argument which is defined as "rk4".
 #' @return \code{\link{list}} of class \code{rasa}. The first element, \code{*$model}, is the model function. The second, third and fourth elements are vectors (\code{*$pars}, \code{*$state}, \code{*$time}, respectively) containing the \code{pars}, \code{state} and \code{time} arguments of the function. The fifth element \code{*$results} is a \code{\link{data.frame}} with up to as many rows as elements in time. Using the conventions for state argument (see details), the first fourth columns contain the variables: \code{f}, \code{sf}, \code{m} and \code{sm}. The fifth and sisxth columns contain the number of animals and the group respectively (\code{n} and \code{group}). Other optional arguments are:
@@ -60,17 +60,17 @@
 #' # The consequences of those "guesses" can be quantified
 #' # with globalsens and localsens functions.
 #' pars.rasa = c(
-#'    af1 = 0.262, am1 = 0.262, af2 = 0.288, am2 = 0.288,
-#'    bf1 = 0.081, bm1 = 0.069, bf2 = 0.089, bm2 = 0.076,
-#'    ef1 = 0.064, ef2 = 0.05, em1 = 0.048, em2 = 0.05,
-#'    k1 = 90785.01, k2 = 9078.501, z1 = 1, z2 = 1, 
-#'    h = 0.065, j = 0.095, v = 0.111
+#'    bf1 = 0.262, bm1 = 0.262, bf2 = 0.288, bm2 = 0.288,
+#'    df1 = 0.081, dm1 = 0.069, df2 = 0.089, dm2 = 0.076,
+#'    sf1 = 0.064, sf2 = 0.05, sm1 = 0.048, sm2 = 0.05,
+#'    k1 = 90785.01, k2 = 9078.501, h1 = 1, h2 = 1, 
+#'    ab = 0.065, ad = 0.095, r = 0.111
 #' )
 #' state.rasa = c(
-#'    f1 = 41641.785, sf1 = 8423.503, 
-#'    m1 = 40890.046, sm1 = 8647.503, 
-#'    f2 = 4164.179, sf2 = 208.209, 
-#'    m2 = 4089.005, sm2 = 204.45
+#'    f1 = 41641.785, cf1 = 8423.503, 
+#'    m1 = 40890.046, cm1 = 8647.503, 
+#'    f2 = 4164.179, cf2 = 208.209, 
+#'    m2 = 4089.005, cm2 = 204.45
 #' )
 #' 
 #' # Solve for point estimates.
@@ -94,97 +94,72 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
   rasafu <- function(pars, state, time) {
     rasa.fu = function(time, state, pars) {
       with(as.list(c(state, pars)), {
-        v = k1 * v
-        x1 = ((z1 * m1 - sm1 + f1 - sf1) * af1) /
-          (2 * z1 * (f1 - sf1) * (m1 -sm1))
-        x2 = ((z2 * m2 - sm2 + f2 - sf2) * af2) /
-                (2 * z2 * (f2 - sf2) * (m2 -sm2))
-        
-        # femeas domiciliadas
-        alf1 = (af1 * (2 * m1 * x1) / (z1^(-1) * f1 + m1))
-        wf1 = alf1 - (alf1 - bf1) * (f1 + m1) / k1 # natalidade.
-        yf1 = bf1 # mortalidedade.
-        
-        # no. femeas nao esterilizadas.
-        df1 = (f1 * (wf1 * (1 - (sf1 / f1)) - yf1) # crescimento.
-               - h * f1 # abandono.
-               + j * f2 * (1 - ((f1 + m1) / k1)) # adocao.
-               + v * (1 - ((f1 + m1) / k1)) # reposicao.
+        r = k1 * r
+        x1 = ((h1 * m1 - cm1 + f1 - cf1) * bf1) /
+          (2 * h1 * (f1 - cf1) * (m1 -cm1))
+        x2 = ((h2 * m2 - cm2 + f2 - cf2) * bf2) /
+          (2 * h2 * (f2 - cf2) * (m2 -cm2))
+        brf1 = (bf1 * (2 * m1 * x1) / (h1^(-1) * f1 + m1))
+        wf1 = brf1 - (brf1 - df1) * (f1 + m1) / k1
+        drf1 = df1
+        d.f1 = (f1 * (wf1 * (1 - (cf1 / f1)) - drf1)
+               - ab * f1
+               + ad * f2 * (1 - ((f1 + m1) / k1))
+               + r * (1 - ((f1 + m1) / k1))
         )
-        
-        # no. femeas esterilizadas.
-        dsf1 = (- yf1 * sf1 # mortalidade.
-                + ef1 * (f1 - sf1 + j * (f2 - sf2)) # novos esterilizados.
-                - h * sf1 # abandono.
-                + j * sf2 * (1 - ((f1 + m1) / k1)) # adocao.
+        d.sf1 = (- drf1 * cf1
+                + sf1 * (f1 - cf1 + ad * (f2 - cf2))
+                - ab * cf1
+                + ad * cf2 * (1 - ((f1 + m1) / k1))
         )
-        
-        # machos domiciliados
-        alm1 = (am1 * (2 * f1 * x1) / (z1^(-1) * f1 + m1)) # fertilidade.
-        wm1 = alm1 - (alm1 - bm1) * (f1 + m1) / k1 # natalidade.
-        ym1 = bm1 # mortalidade.
-        
-        # no. machos nao esterilizadas.
-        dm1 = (m1 * (wm1 * (1 - (sm1 / m1)) - ym1) # crescimento.
-               - h * m1 # abandono.
-               + j * m2 * (1 - ((f1 + m1) / k1)) # adocao.
-               + v * (1 - ((f1 + m1) / k1)) # reposicao.
+        brm1 = (bm1 * (2 * f1 * x1) / (h1^(-1) * f1 + m1))
+        wm1 = brm1 - (brm1 - dm1) * (f1 + m1) / k1
+        drm1 = dm1
+        d.m1 = (m1 * (wm1 * (1 - (cm1 / m1)) - drm1)
+               - ab * m1
+               + ad * m2 * (1 - ((f1 + m1) / k1))
+               + r * (1 - ((f1 + m1) / k1))
         )
-        
-        # no. machos esterilizadas.
-        dsm1 = (- ym1 * sm1 # mortalidade.
-                + em1 * (m1 - sm1 + j * (m2 - sm2)) # novos esterilizados.
-                - h * sm1 # abandono.
-                + j * sm2 * (1 - ((f1 + m1) / k1)) # adocao.
-        )      
-        
-        # femeas nao domiciladas
-        alf2 = (af2 * (2 * m2 * x2) / (z2^(-1) * f2 + m2)) # fertilidade.
-        wf2 = alf2 # natalidade.
-        yf2 = bf2 + (wf2 - bf2) * ((f2 + m2) / k2) # mortalidade.
-        
-        # no. femeas nao esterilizadas.
-        df2 = (f2 * (wf2 * (1 - (sf2 / f2)) - yf2) # crescimento 
-               + h * f1 * (1 - ((f2 + m2) / k2)) # abandono.
-               - j * f2 # adocao.
+        d.sm1 = (- drm1 * cm1
+                + sm1 * (m1 - cm1 + ad * (m2 - cm2))
+                - ab * cm1
+                + ad * cm2 * (1 - ((f1 + m1) / k1))
         )
-        
-        # no. femeas esterilizadas.
-        dsf2 = (- yf2 * sf2 # mortalidade.
-                + ef2 * (f2 - sf2 + h * (f1 - sf1)) # novos esterilizados.
-                - j * sf2 # adocao.
-                + h * sf1 * (1 - ((f2 + m2) / k2)) # abandono.
+        brf2 = (bf2 * (2 * m2 * x2) / (h2^(-1) * f2 + m2))
+        wf2 = brf2
+        drf2 = df2 + (wf2 - df2) * ((f2 + m2) / k2)
+        d.f2 = (f2 * (wf2 * (1 - (cf2 / f2)) - drf2) 
+               + ab * f1 * (1 - ((f2 + m2) / k2))
+               - ad * f2
+        )
+        d.sf2 = (- drf2 * cf2
+                + sf2 * (f2 - cf2 + ab * (f1 - cf1))
+                - ad * cf2
+                + ab * cf1 * (1 - ((f2 + m2) / k2))
+        )
+        brm2 = (bm2 * (2 * f2 * x2) / (h2^(-1) * f2 + m2))
+        wm2 = brm2
+        drm2 = dm2 + (wm2 - dm2) * ((f2 + m2) / k2)
+        d.m2 = (m2 * (wm2 * (1 - (cm2 / m2)) - drm2)
+               + ab * m1 * (1 - ((f2 + m2) / k2))
+               - ad * m2
         ) 
-        
-        # machos nao domiciliados
-        alm2 = (am2 * (2 * f2 * x2) / (z2^(-1) * f2 + m2)) # fertilidade.
-        wm2 = alm2 # natalidade.
-        ym2 = bm2 + (wm2 - bm2) * ((f2 + m2) / k2) # mortalidade.
-        
-        # no. machos esterilizadas.
-        dm2 = (m2 * (wm2 * (1 - (sm2 / m2)) - ym2) # crescimento.
-               + h * m1 * (1 - ((f2 + m2) / k2)) # abandono.
-               - j * m2 # adocao.
+        d.sm2 = (- drm2 * cm2
+                + sm2 * (m2 - cm2 + ab * (m1 - cm1))
+                - ad * cm2
+                + ab * cm1 * (1 - ((f2 + m2) / k2))
         )
-        
-        # no. machos esterilizadas.  
-        dsm2 = (- ym2 * sm2 # mortalidade.
-                + em2 * (m2 - sm2 + h * (m1 - sm1)) # novos esterilizados.
-                - j * sm2 # adocao.
-                + h * sm1 * (1 - ((f2 + m2) / k2)) # abandono.
-        )
-        
-        dn1 = df1 + dsf1 + dm1 + dsm1
-        dn2 = df2 + dsf2 + dm2 + dsm2
-        dn = dn1 + dn2
-        
-        list(c(df1, dsf1, dm1, dsm1, df2, dsf2, dm2, dsm2, dn1, dn2, dn))
+        d.n1 = d.f1 + d.sf1 + d.m1 + d.sm1
+        d.n2 = d.f2 + d.sf2 + d.m2 + d.sm2
+        d.n = d.n1 + d.n2
+        list(c(d.f1, d.sf1, d.m1, d.sm1, d.f2, d.sf2, 
+               d.m2, d.sm2, d.n1, d.n2, d.n))
       })
     }
-    state = c(state['f1'], state['sf1'], 
-              state['m1'], state['sm1'],
-              state['f2'], state['sf2'], 
-              state['m2'], state['sm2'],
+    state = c(state['f1'], state['cf1'], 
+              state['m1'], state['cm1'],
+              state['f2'], state['cf2'], 
+              state['m2'], state['cm2'],
               state['n1'], state['n2'], state['n'])
     rasa.out = ode(times = time, 
                    func = rasa.fu, 
@@ -218,20 +193,20 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
     }
     output <- NULL
     paras <- pars
-    aban.range = c(aban.range[1], pars['h'], aban.range[2])
-    adop.range = c(adop.range[1], pars['j'], adop.range[2])
+    aban.range = c(aban.range[1], pars['ab'], aban.range[2])
+    adop.range = c(adop.range[1], pars['ad'], adop.range[2])
     for (i in 1:length(recr.range)) {
       for (i1 in 1:length(aban.range)) {
         for (i2 in 1:length(adop.range)) {
           for (i3 in 1:length(ster.range)) {
-            if (ster.fm == T) {
-              paras[c('ef1', 'em1', 'j', 'h', 'v')] = 
+            if (ster.fm) {
+              paras[c('sf1', 'sm1', 'ad', 'ab', 'r')] = 
                 c(ster.range[i3], ster.range[i3], 
                   adop.range[i2], aban.range[i1],
                   recr.range[i]
                 )
             } else {
-              paras[c('ef1', 'j', 'h', 'v')] = 
+              paras[c('sf1', 'ad', 'ab', 'r')] = 
                 c(ster.range[i3], adop.range[i2], 
                   aban.range[i1], recr.range[i]
                 )
@@ -261,7 +236,7 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
                each = length(time) * length(ster.range) * 
                  length(adop.range) * length(aban.range))
     )
-    names(output)[1:5] = c('t', 'f', 'sf', 'm', 'sm')
+    names(output)[1:5] = c('t', 'f', 'cf', 'm', 'cm')
     rasa <- list(
       model = rasafu,
       pars = pars,

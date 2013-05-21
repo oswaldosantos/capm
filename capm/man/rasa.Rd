@@ -82,24 +82,24 @@
   \code{2}: stray animals; \code{f}: females; \code{m}:
   males. Then:
 
-  \code{af1}, \code{am1}, \code{af2} and \code{am2}: birth
+  \code{bf1}, \code{bm1}, \code{bf2} and \code{bm2}: birth
   rate.
 
-  \code{bf1}, \code{bm1}, \code{bf2} and \code{bm2}: death
+  \code{df1}, \code{dm1}, \code{df2} and \code{dm2}: death
   rate.
 
-  \code{ef1}, \code{em1}, \code{ef2} and \code{em2}:
+  \code{sf1}, \code{sm1}, \code{sf2} and \code{sm2}:
   sterilization rate.
 
   \code{k1} and \code{k2}: carrying capacity.
 
-  \code{z1} and \code{z2}: mean harem size.
+  \code{h1} and \code{h2}: mean harem size.
 
-  \code{h}: abandonment rate.
+  \code{ab}: abandonment rate.
 
-  \code{j}: adoption rate.
+  \code{ad}: adoption rate.
 
-  \code{v}: recruitment rate.
+  \code{r}: recruitment rate.
 
   The \code{state} argument must contain named values for
   the inital number of animals, using the following
@@ -108,8 +108,8 @@
   \code{s}: sterilized. Then, number values must be given
   for the categories:
 
-  \code{f1}, \code{sf1}, \code{m1}, \code{sm1}, \code{f2},
-  \code{sf2}, \code{m2} and \code{sm2}.
+  \code{f1}, \code{cf1}, \code{m1}, \code{cm1}, \code{f2},
+  \code{cf2}, \code{m2} and \code{cm2}.
 
   The function is a wrapper around the defaults of
   \link[deSolve]{ode} function, whose help page must be
@@ -137,17 +137,17 @@
 # The consequences of those "guesses" can be quantified
 # with globalsens and localsens functions.
 pars.rasa = c(
-   af1 = 0.262, am1 = 0.262, af2 = 0.288, am2 = 0.288,
-   bf1 = 0.081, bm1 = 0.069, bf2 = 0.089, bm2 = 0.076,
-   ef1 = 0.064, ef2 = 0.05, em1 = 0.048, em2 = 0.05,
-   k1 = 90785.01, k2 = 9078.501, z1 = 1, z2 = 1,
-   h = 0.065, j = 0.095, v = 0.111
+   bf1 = 0.262, bm1 = 0.262, bf2 = 0.288, bm2 = 0.288,
+   df1 = 0.081, dm1 = 0.069, df2 = 0.089, dm2 = 0.076,
+   sf1 = 0.064, sf2 = 0.05, sm1 = 0.048, sm2 = 0.05,
+   k1 = 90785.01, k2 = 9078.501, h1 = 1, h2 = 1,
+   ab = 0.065, ad = 0.095, r = 0.111
 )
 state.rasa = c(
-   f1 = 41641.785, sf1 = 8423.503,
-   m1 = 40890.046, sm1 = 8647.503,
-   f2 = 4164.179, sf2 = 208.209,
-   m2 = 4089.005, sm2 = 204.45
+   f1 = 41641.785, cf1 = 8423.503,
+   m1 = 40890.046, cm1 = 8647.503,
+   f2 = 4164.179, cf2 = 208.209,
+   m2 = 4089.005, cm2 = 204.45
 )
 
 # Solve for point estimates.
