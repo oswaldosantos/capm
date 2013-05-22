@@ -8,8 +8,8 @@
 #' @param xlabel string with the name of x axis.
 #' @param ylabel string with the name of y axis.
 #' @param leglabel string with the name of legend, for plots of \code{\link{rasa}} output.
-#' @param scenlabel string with the name of scenarios of \code{\link{rasa}} output, determined by the recruitment rates. Within the string, use the expression __ in the location where you want to appear the value of the recruitment rate. For line breaking, use \code{\\n} (see examples).
-#' @param pop a value indicating the output of \code{\link{rasa}} to be ploted. When \code{NULL} (default), plots for owned and stray populations under scenarios created by recruitment rate are created. If \code{1}, the plots of owned population for the minimum recruitment rate are ploted. When \code{2}, the plots of stray population for the minimum recruitment rate are ploted. If \code{3}, the plots of owned population for the maximum recruitment rate are ploted. When \code{4}, the plots of owned population for the maximum recruitment rate are ploted.
+#' @param scenlabel string with the name of scenarios of \code{\link{rasa}} output, determined by the replacement rates. Within the string, use the expression __ in the location where you want to appear the value of the replacement rate. For line breaking, use \code{\\n} (see examples).
+#' @param pop a value indicating the output of \code{\link{rasa}} to be ploted. When \code{NULL} (default), plots for owned and stray populations under scenarios created by replacement rate are created. If \code{1}, the plots of owned population for the minimum replacement rate are ploted. When \code{2}, the plots of stray population for the minimum replacement rate are ploted. If \code{3}, the plots of owned population for the maximum replacement rate are ploted. When \code{4}, the plots of owned population for the maximum replacement rate are ploted.
 #' @details Font size of saved plots is usually different to the font size seen in graphic browsers. Before changing font sizes, see the final result in saved (or preview) plots.
 #'  
 #' Other details of the plot can be modifyed using appropriate functions from \code{ggplot2} package.
@@ -78,7 +78,7 @@
 #'                 ster.range = seq(0, .5, length.out = 50), 
 #'                 aban.range = c(0, .2), 
 #'                 adop.range = c(0, .2),
-#'                 recr.range = c(0, .1))
+#'                 repl.range = c(0, .1))
 #'                 
 #' ## Plot stray population sizes using point estimates
 #' plotmodel(rasa.pt, variable = "n2")
@@ -86,7 +86,7 @@
 #' ## Plot all scenarios and change the label for the scenarios.
 #' plotmodel(rasa.rg, scenlabel = "Rec  \n(__ * k)")
 #'
-plotmodel = function(model.out = NULL, variable = NULL, col = 'red', col1 = c('yellow','blue'), col2 = c('green', 'orangered1'), xlabel = 'Time', scenlabel = 'Recruitment rate =\n (__ * owned carrying capacity)', leglabel = c('Owned \npop size', 'Stray \npop size'), ylabel = NULL, pop = NULL) {
+plotmodel = function(model.out = NULL, variable = NULL, col = 'red', col1 = c('yellow','blue'), col2 = c('green', 'orangered1'), xlabel = 'Time', scenlabel = 'Replacetment rate =\n (__ * owned carrying capacity)', leglabel = c('Owned \npop size', 'Stray \npop size'), ylabel = NULL, pop = NULL) {
   if (class(model.out) == 'sterowned') {
     if (ncol(model.out$results) == 3) {
       tmp = ggplot(model.out$results, 
@@ -218,7 +218,7 @@ plotmodel = function(model.out = NULL, variable = NULL, col = 'red', col1 = c('y
             dat = model.out$results
             dat = dat[
               dat[, 'group'] == unique(dat[, 'group'])[j] &
-                dat[, 'recr'] == unique(dat[, 'recr'])[i], ]
+                dat[, 'repl'] == unique(dat[, 'repl'])[i], ]
             scl = nchar(as.character(
               round(max(dat[, 'n'])))) - 2
             assign(paste0('s', i, j), 
@@ -270,11 +270,11 @@ plotmodel = function(model.out = NULL, variable = NULL, col = 'red', col1 = c('y
           } 
           grid.newpage()
           pushViewport(viewport(layout = grid.layout(11, 2)))
-          grid.text(gsub('__', unique(model.out$results[, 'recr'])[1], 
+          grid.text(gsub('__', unique(model.out$results[, 'repl'])[1], 
                          scenlabel), 
                     vp = vplayout(1, 1))
           grid.gedit("GRID.text", gp=gpar(fontsize=12))
-          grid.text(gsub('__', unique(model.out$results[, 'recr'])[2],
+          grid.text(gsub('__', unique(model.out$results[, 'repl'])[2],
                          scenlabel),
                     vp = vplayout(1, 2))
           grid.gedit("GRID.text", gp=gpar(fontsize=12))

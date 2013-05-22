@@ -5,7 +5,7 @@
   plotmodel(model.out = NULL, variable = NULL, col = "red",
     col1 = c("yellow", "blue"),
     col2 = c("green", "orangered1"), xlabel = "Time",
-    scenlabel = "Recruitment rate =\n (__ * owned carrying capacity)",
+    scenlabel = "Replacetment rate =\n (__ * owned carrying capacity)",
     leglabel = c("Owned \npop size", "Stray \npop size"),
     ylabel = NULL, pop = NULL)
 }
@@ -41,22 +41,22 @@
   of \code{\link{rasa}} output.}
 
   \item{scenlabel}{string with the name of scenarios of
-  \code{\link{rasa}} output, determined by the recruitment
+  \code{\link{rasa}} output, determined by the replacement
   rates. Within the string, use the expression __ in the
   location where you want to appear the value of the
-  recruitment rate. For line breaking, use \code{\\n} (see
+  replacement rate. For line breaking, use \code{\\n} (see
   examples).}
 
   \item{pop}{a value indicating the output of
   \code{\link{rasa}} to be ploted. When \code{NULL}
   (default), plots for owned and stray populations under
-  scenarios created by recruitment rate are created. If
+  scenarios created by replacement rate are created. If
   \code{1}, the plots of owned population for the minimum
-  recruitment rate are ploted. When \code{2}, the plots of
-  stray population for the minimum recruitment rate are
+  replacement rate are ploted. When \code{2}, the plots of
+  stray population for the minimum replacement rate are
   ploted. If \code{3}, the plots of owned population for
-  the maximum recruitment rate are ploted. When \code{4},
-  the plots of owned population for the maximum recruitment
+  the maximum replacement rate are ploted. When \code{4},
+  the plots of owned population for the maximum replacement
   rate are ploted.}
 }
 \description{
@@ -133,7 +133,7 @@ rasa.rg <- rasa(pars = pars.rasa,
                 ster.range = seq(0, .5, length.out = 50),
                 aban.range = c(0, .2),
                 adop.range = c(0, .2),
-                recr.range = c(0, .1))
+                repl.range = c(0, .1))
 
 ## Plot stray population sizes using point estimates
 plotmodel(rasa.pt, variable = "n2")

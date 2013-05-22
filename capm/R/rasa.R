@@ -1,12 +1,12 @@
-#' Recruitment, abandonment, sterilization and adoption of dogs
-#' @description System of ordinary differential equations to simulate the effect of recruitment of owned dogs, abandonment, sterilization of owned and stray dogs and adoption, on population dynamics.
+#' Replacement, abandonment, sterilization and adoption of companion animals
+#' @description System of ordinary differential equations to simulate the effect of replacement of owned dogs, abandonment, sterilization of owned and stray dogs and adoption, on population dynamics.
 #' @param pars a named \code{\link{vector}} of length 21, with point estimates of model parameters (see details).
 #' @param state a named \code{\link{vector}} of length 8, with point estimates of model parameters (see details).
 #' @param time time sequence for which output is wanted; the first value of times must be the initial time.
 #' @param ster.range optional sequence (between 0 and 1) of the sterilization rates to be simulated.
 #' @param aban.range optional \code{\link{vector}} of length 2, with range (ie, confidence interval) of abandonment rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.
 #' @param adop.range optional \code{\link{vector}} of length 2, with range (ie, confidence interval) of adoption rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.
-#' @param recr.range optional \code{\link{vector}} of length 2, with range of values of recruitment rates to be assessed. This must be expressed as a percentage of carrying capacity.
+#' @param repl.range optional \code{\link{vector}} of length 2, with range of values of replacement rates to be assessed. This must be expressed as a percentage of carrying capacity.
 #' @param ster.fm logical. If \code{TRUE}, ster.range is used for females and males and if \code{FALSE}, it is only used for females (for males, the point estimate given in \code{pars} is used.)
 #' @param ... further arguments passed to \link[deSolve]{ode} function.
 #' @details The \code{pars} argument must contain named values, using the following conventions: \code{1}: owned animals; \code{2}: stray animals; \code{f}: females; \code{m}: males. Then:
@@ -26,7 +26,7 @@
 #' 
 #' \code{ad}: adoption rate.
 #' 
-#' \code{r}: recruitment rate.
+#' \code{r}: replacement rate.
 #' 
 #' 
 #' The \code{state} argument must contain named values for the inital number of animals, using the following conventions: \code{1}: owned animals; \code{2}: stray animals; \code{f}: females; \code{m}: males; and \code{s}: sterilized. Then, number values must be given for the categories:
@@ -85,9 +85,9 @@
 #'                 ster.range = seq(0, .5, length.out = 50), 
 #'                 aban.range = c(0, .2), 
 #'                 adop.range = c(0, .2),
-#'                 recr.range = c(0, .1))
+#'                 repl.range = c(0, .1))
 #'                 
-rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.range = NULL, adop.range = NULL, recr.range = NULL, ster.fm = TRUE, ...) {
+rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.range = NULL, adop.range = NULL, repl.range = NULL, ster.fm = TRUE, ...) {
   state['n1'] = sum(state[c('f1', 'm1')])
   state['n2'] = sum(state[c('f2', 'm2')])
   state['n'] = sum(state[c('n1', 'n2')])
@@ -99,61 +99,59 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
           (2 * h1 * (f1 - cf1) * (m1 -cm1))
         x2 = ((h2 * m2 - cm2 + f2 - cf2) * bf2) /
           (2 * h2 * (f2 - cf2) * (m2 -cm2))
-        brf1 = (bf1 * (2 * m1 * x1) / (h1^(-1) * f1 + m1))
-        wf1 = brf1 - (brf1 - df1) * (f1 + m1) / k1
+        wf1 = (bf1 * (2 * m1 * x1) / (h1^(-1) * f1 + m1))
+        brf1 = wf1 - (wf1 - df1) * (f1 + m1) / k1
         drf1 = df1
-        d.f1 = (f1 * (wf1 * (1 - (cf1 / f1)) - drf1)
+        d.f1 = (f1 * (brf1 * (1 - (cf1 / f1)) - drf1)
                - ab * f1
                + ad * f2 * (1 - ((f1 + m1) / k1))
                + r * (1 - ((f1 + m1) / k1))
         )
-        d.sf1 = (- drf1 * cf1
+        d.cf1 = (- drf1 * cf1
                 + sf1 * (f1 - cf1 + ad * (f2 - cf2))
                 - ab * cf1
                 + ad * cf2 * (1 - ((f1 + m1) / k1))
         )
-        brm1 = (bm1 * (2 * f1 * x1) / (h1^(-1) * f1 + m1))
-        wm1 = brm1 - (brm1 - dm1) * (f1 + m1) / k1
+        wm1 = (bm1 * (2 * f1 * x1) / (h1^(-1) * f1 + m1))
+        brm1 = wm1 - (wm1 - dm1) * (f1 + m1) / k1
         drm1 = dm1
-        d.m1 = (m1 * (wm1 * (1 - (cm1 / m1)) - drm1)
+        d.m1 = (m1 * (brm1 * (1 - (cm1 / m1)) - drm1)
                - ab * m1
                + ad * m2 * (1 - ((f1 + m1) / k1))
                + r * (1 - ((f1 + m1) / k1))
         )
-        d.sm1 = (- drm1 * cm1
+        d.cm1 = (- drm1 * cm1
                 + sm1 * (m1 - cm1 + ad * (m2 - cm2))
                 - ab * cm1
                 + ad * cm2 * (1 - ((f1 + m1) / k1))
         )
         brf2 = (bf2 * (2 * m2 * x2) / (h2^(-1) * f2 + m2))
-        wf2 = brf2
-        drf2 = df2 + (wf2 - df2) * ((f2 + m2) / k2)
-        d.f2 = (f2 * (wf2 * (1 - (cf2 / f2)) - drf2) 
+        drf2 = df2 + (brf2 - df2) * ((f2 + m2) / k2)
+        d.f2 = (f2 * (brf2 * (1 - (cf2 / f2)) - drf2) 
                + ab * f1 * (1 - ((f2 + m2) / k2))
                - ad * f2
         )
-        d.sf2 = (- drf2 * cf2
+        d.cf2 = (- drf2 * cf2
                 + sf2 * (f2 - cf2 + ab * (f1 - cf1))
                 - ad * cf2
                 + ab * cf1 * (1 - ((f2 + m2) / k2))
         )
         brm2 = (bm2 * (2 * f2 * x2) / (h2^(-1) * f2 + m2))
-        wm2 = brm2
-        drm2 = dm2 + (wm2 - dm2) * ((f2 + m2) / k2)
-        d.m2 = (m2 * (wm2 * (1 - (cm2 / m2)) - drm2)
+        drm2 = dm2 + (brm2 - dm2) * ((f2 + m2) / k2)
+        d.m2 = (m2 * (brm2 * (1 - (cm2 / m2)) - drm2)
                + ab * m1 * (1 - ((f2 + m2) / k2))
                - ad * m2
         ) 
-        d.sm2 = (- drm2 * cm2
+        d.cm2 = (- drm2 * cm2
                 + sm2 * (m2 - cm2 + ab * (m1 - cm1))
                 - ad * cm2
                 + ab * cm1 * (1 - ((f2 + m2) / k2))
         )
-        d.n1 = d.f1 + d.sf1 + d.m1 + d.sm1
-        d.n2 = d.f2 + d.sf2 + d.m2 + d.sm2
+        d.n1 = d.f1 + d.cf1 + d.m1 + d.cm1
+        d.n2 = d.f2 + d.cf2 + d.m2 + d.cm2
         d.n = d.n1 + d.n2
-        list(c(d.f1, d.sf1, d.m1, d.sm1, d.f2, d.sf2, 
-               d.m2, d.sm2, d.n1, d.n2, d.n))
+        list(c(d.f1, d.cf1, d.m1, d.cm1, d.f2, d.cf2, 
+               d.m2, d.cm2, d.n1, d.n2, d.n))
       })
     }
     state = c(state['f1'], state['cf1'], 
@@ -188,14 +186,14 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
     if(length(adop.range) != 2) {
       stop('The length of adop.range must be equal to 2.')
     }
-    if(length(recr.range) != 2) {
-      stop('The length of recr.range must be equal to 2.')
+    if(length(repl.range) != 2) {
+      stop('The length of repl.range must be equal to 2.')
     }
     output <- NULL
     paras <- pars
     aban.range = c(aban.range[1], pars['ab'], aban.range[2])
     adop.range = c(adop.range[1], pars['ad'], adop.range[2])
-    for (i in 1:length(recr.range)) {
+    for (i in 1:length(repl.range)) {
       for (i1 in 1:length(aban.range)) {
         for (i2 in 1:length(adop.range)) {
           for (i3 in 1:length(ster.range)) {
@@ -203,12 +201,12 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
               paras[c('sf1', 'sm1', 'ad', 'ab', 'r')] = 
                 c(ster.range[i3], ster.range[i3], 
                   adop.range[i2], aban.range[i1],
-                  recr.range[i]
+                  repl.range[i]
                 )
             } else {
               paras[c('sf1', 'ad', 'ab', 'r')] = 
                 c(ster.range[i3], adop.range[i2], 
-                  aban.range[i1], recr.range[i]
+                  aban.range[i1], repl.range[i]
                 )
             }
             output = rbind(
@@ -232,7 +230,7 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
     aban = rep(aban.range, 
                each = length(time) * length(ster.range) * 
                  length(adop.range)),
-    recr = rep(recr.range, 
+    repl = rep(repl.range, 
                each = length(time) * length(ster.range) * 
                  length(adop.range) * length(aban.range))
     )
