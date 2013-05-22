@@ -1,10 +1,10 @@
 \name{rasa}
 \alias{rasa}
-\title{Recruitment, abandonment, sterilization and adoption of dogs}
+\title{Replacement, abandonment, sterilization and adoption of companion animals}
 \usage{
   rasa(pars = NULL, state = NULL, time = NULL,
     ster.range = NULL, aban.range = NULL,
-    adop.range = NULL, recr.range = NULL, ster.fm = TRUE,
+    adop.range = NULL, repl.range = NULL, ster.fm = TRUE,
     ...)
 }
 \arguments{
@@ -32,8 +32,8 @@
   specified by the argument plus the point estimate given
   in \code{pars}.}
 
-  \item{recr.range}{optional \code{\link{vector}} of length
-  2, with range of values of recruitment rates to be
+  \item{repl.range}{optional \code{\link{vector}} of length
+  2, with range of values of replacement rates to be
   assessed. This must be expressed as a percentage of
   carrying capacity.}
 
@@ -72,7 +72,7 @@
 }
 \description{
   System of ordinary differential equations to simulate the
-  effect of recruitment of owned dogs, abandonment,
+  effect of replacement of owned dogs, abandonment,
   sterilization of owned and stray dogs and adoption, on
   population dynamics.
 }
@@ -99,7 +99,7 @@
 
   \code{ad}: adoption rate.
 
-  \code{r}: recruitment rate.
+  \code{r}: replacement rate.
 
   The \code{state} argument must contain named values for
   the inital number of animals, using the following
@@ -162,7 +162,7 @@ rasa.rg <- rasa(pars = pars.rasa,
                 ster.range = seq(0, .5, length.out = 50),
                 aban.range = c(0, .2),
                 adop.range = c(0, .2),
-                recr.range = c(0, .1))
+                repl.range = c(0, .1))
 }
 \references{
   Soetaert K, Cash J and Mazzia F (2012). Solving
