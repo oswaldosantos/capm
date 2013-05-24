@@ -100,49 +100,49 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
         x2 = ((h2 * (m2 - cm2) + (f2 - cf2)) * bf2) /
           (2 * h2 * (f2 - cf2) * (m2 -cm2))
         wf1 = ((m1 - cm1) * x1) / (h1^(-1) * (f1 - cf1) + (m1 - cm1))
-        brf1 = wf1 - (wf1 - df1) * (f1 + m1) / k1
-        drf1 = df1
-        d.f1 = (f1 * (brf1 * (1 - (cf1 / f1)) - drf1)
+        bet.f1 = wf1 - (wf1 - df1) * (f1 + m1) / k1
+        gam.f1 = df1
+        d.f1 = (f1 * (bet.f1 * (1 - (cf1 / f1)) - gam.f1)
                - ab * f1
                + ad * f2 * (1 - ((f1 + m1) / k1))
                + r * (1 - ((f1 + m1) / k1))
         )
-        d.cf1 = (- drf1 * cf1
+        d.cf1 = (- gam.f1 * cf1
                 + sf1 * (f1 - cf1 + ad * (f2 - cf2))
                 - ab * cf1
                 + ad * cf2 * (1 - ((f1 + m1) / k1))
         )
         wm1 = ((f1 - cf1) * x1) / (h1^(-1) * (f1 - cf1) + (m1 - cm1))
-        brm1 = wm1 - (wm1 - dm1) * (f1 + m1) / k1
-        drm1 = dm1
-        d.m1 = (m1 * (brm1 * (1 - (cm1 / m1)) - drm1)
+        bet.m1 = wm1 - (wm1 - dm1) * (f1 + m1) / k1
+        gam.m1 = dm1
+        d.m1 = (m1 * (bet.m1 * (1 - (cm1 / m1)) - gam.m1)
                - ab * m1
                + ad * m2 * (1 - ((f1 + m1) / k1))
                + r * (1 - ((f1 + m1) / k1))
         )
-        d.cm1 = (- drm1 * cm1
+        d.cm1 = (- gam.m1 * cm1
                 + sm1 * (m1 - cm1 + ad * (m2 - cm2))
                 - ab * cm1
                 + ad * cm2 * (1 - ((f1 + m1) / k1))
         )
-        brf2 = ((m2 - cm2) * x2) / (h2^(-1) * (f2 - cf2) + (m2 - cm2))
-        drf2 = df2 + (brf2 - df2) * ((f2 + m2) / k2)
-        d.f2 = (f2 * (brf2 * (1 - (cf2 / f2)) - drf2) 
+        bet.f2 = ((m2 - cm2) * x2) / (h2^(-1) * (f2 - cf2) + (m2 - cm2))
+        gam.f2 = df2 + (bet.f2 - df2) * ((f2 + m2) / k2)
+        d.f2 = (f2 * (bet.f2 * (1 - (cf2 / f2)) - gam.f2) 
                + ab * f1 * (1 - ((f2 + m2) / k2))
                - ad * f2
         )
-        d.cf2 = (- drf2 * cf2
+        d.cf2 = (- gam.f2 * cf2
                 + sf2 * (f2 - cf2 + ab * (f1 - cf1))
                 - ad * cf2
                 + ab * cf1 * (1 - ((f2 + m2) / k2))
         )
-        brm2 = ((f2 - cf2) * x2) / (h2^(-1) * (f2 - cf2) + (m2 - cm2))
-        drm2 = dm2 + (brm2 - dm2) * ((f2 + m2) / k2)
-        d.m2 = (m2 * (brm2 * (1 - (cm2 / m2)) - drm2)
+        bet.m2 = ((f2 - cf2) * x2) / (h2^(-1) * (f2 - cf2) + (m2 - cm2))
+        gam.m2 = dm2 + (bet.m2 - dm2) * ((f2 + m2) / k2)
+        d.m2 = (m2 * (bet.m2 * (1 - (cm2 / m2)) - gam.m2)
                + ab * m1 * (1 - ((f2 + m2) / k2))
                - ad * m2
         ) 
-        d.cm2 = (- drm2 * cm2
+        d.cm2 = (- gam.m2 * cm2
                 + sm2 * (m2 - cm2 + ab * (m1 - cm1))
                 - ad * cm2
                 + ab * cm1 * (1 - ((f2 + m2) / k2))
