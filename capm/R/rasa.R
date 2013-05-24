@@ -94,12 +94,12 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
   rasafu <- function(pars, state, time) {
     rasa.fu = function(time, state, pars) {
       with(as.list(c(state, pars)), {
-        r = k1 * r
-        x1 = ((h1 * m1 - cm1 + f1 - cf1) * bf1) /
+        r = (k1 * r) / 2
+        x1 = ((h1 * (m1 - cm1) + (f1 - cf1)) * bf1) /
           (2 * h1 * (f1 - cf1) * (m1 -cm1))
-        x2 = ((h2 * m2 - cm2 + f2 - cf2) * bf2) /
+        x2 = ((h2 * (m2 - cm2) + (f2 - cf2)) * bf2) /
           (2 * h2 * (f2 - cf2) * (m2 -cm2))
-        wf1 = (bf1 * (2 * m1 * x1) / (h1^(-1) * f1 + m1))
+        wf1 = ((m1 - cm1) * x1) / (h1^(-1) * (f1 - cf1) + (m1 - cm1))
         brf1 = wf1 - (wf1 - df1) * (f1 + m1) / k1
         drf1 = df1
         d.f1 = (f1 * (brf1 * (1 - (cf1 / f1)) - drf1)
@@ -112,7 +112,7 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
                 - ab * cf1
                 + ad * cf2 * (1 - ((f1 + m1) / k1))
         )
-        wm1 = (bm1 * (2 * f1 * x1) / (h1^(-1) * f1 + m1))
+        wm1 = ((f1 - cf1) * x1) / (h1^(-1) * (f1 - cf1) + (m1 - cm1))
         brm1 = wm1 - (wm1 - dm1) * (f1 + m1) / k1
         drm1 = dm1
         d.m1 = (m1 * (brm1 * (1 - (cm1 / m1)) - drm1)
@@ -125,7 +125,7 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
                 - ab * cm1
                 + ad * cm2 * (1 - ((f1 + m1) / k1))
         )
-        brf2 = (bf2 * (2 * m2 * x2) / (h2^(-1) * f2 + m2))
+        brf2 = ((m2 - cm2) * x2) / (h2^(-1) * (f2 - cf2) + (m2 - cm2))
         drf2 = df2 + (brf2 - df2) * ((f2 + m2) / k2)
         d.f2 = (f2 * (brf2 * (1 - (cf2 / f2)) - drf2) 
                + ab * f1 * (1 - ((f2 + m2) / k2))
@@ -136,7 +136,7 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
                 - ad * cf2
                 + ab * cf1 * (1 - ((f2 + m2) / k2))
         )
-        brm2 = (bm2 * (2 * f2 * x2) / (h2^(-1) * f2 + m2))
+        brm2 = ((f2 - cf2) * x2) / (h2^(-1) * (f2 - cf2) + (m2 - cm2))
         drm2 = dm2 + (brm2 - dm2) * ((f2 + m2) / k2)
         d.m2 = (m2 * (brm2 * (1 - (cm2 / m2)) - drm2)
                + ab * m1 * (1 - ((f2 + m2) / k2))
