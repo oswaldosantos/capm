@@ -12,7 +12,7 @@
 #' @details The \code{pars} argument must contain named values, using the following conventions: \code{1}: owned animals; \code{2}: stray animals; \code{f}: females; \code{m}: males. Then:
 #' 
 #'  
-#' \code{bf1}, \code{bm1}, \code{bf2} and \code{bm2}: birth rate.
+#' \code{b1} and \code{b2}: number of births.
 #' 
 #' \code{df1}, \code{dm1}, \code{df2} and \code{dm2}: death rate.
 #' 
@@ -26,7 +26,7 @@
 #' 
 #' \code{ad}: adoption rate.
 #' 
-#' \code{r}: replacement rate.
+#' \code{v}: replacement rate.
 #' 
 #' 
 #' The \code{state} argument must contain named values for the inital number of animals, using the following conventions: \code{1}: owned animals; \code{2}: stray animals; \code{f}: females; \code{m}: males; and \code{s}: sterilized. Then, number values must be given for the categories:
@@ -60,11 +60,11 @@
 #' # The consequences of those "guesses" can be quantified
 #' # with globalsens and localsens functions.
 #' pars.rasa = c(
-#'    bf1 = 0.262, bm1 = 0.262, bf2 = 0.288, bm2 = 0.288,
+#'    b1 = 21585.15, b2 = 2374.367,
 #'    df1 = 0.081, dm1 = 0.069, df2 = 0.089, dm2 = 0.076,
 #'    sf1 = 0.064, sf2 = 0.05, sm1 = 0.048, sm2 = 0.05,
-#'    k1 = 90785.01, k2 = 9078.501, h1 = 1, h2 = 1, 
-#'    ab = 0.065, ad = 0.095, r = 0.111
+#'    k1 = 90785.01, k2 = 9078.501, h1 = 1, h2 = 0.5, 
+#'    ab = 0.065, ad = 0.095, v = 0.111
 #' )
 #' state.rasa = c(
 #'    f1 = 41641.785, cf1 = 8423.503, 
@@ -94,7 +94,7 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
   rasafu <- function(pars, state, time) {
     rasa.fu = function(time, state, pars) {
       with(as.list(c(state, pars)), {
-        x1 = ((h1 * (m1 - cm1) + (f1 - cf1)) * bf1) /
+        x1 = ((h1 * (m1 - cm1) + (f1 - cf1)) * b1) /
           (2 * h1 * (f1 - cf1) * (m1 -cm1))
         phi = (k1 * v) / 2
         wf1 = ((m1 - cm1) * x1) / (h1^(-1) * (f1 - cf1) + (m1 - cm1))
@@ -103,7 +103,7 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
         d.f1 = (f1 * (bet.f1 * (1 - (cf1 / f1)) - gam.f1)
                - ab * f1
                + ad * f2 * (1 - ((f1 + m1) / k1))
-               + r * (1 - ((f1 + m1) / k1))
+               + phi * (1 - ((f1 + m1) / k1))
         )
         d.cf1 = (- gam.f1 * cf1
                 + sf1 * (f1 - cf1 + ad * (f2 - cf2))
@@ -116,14 +116,14 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
         d.m1 = (m1 * (bet.m1 * (1 - (cm1 / m1)) - gam.m1)
                - ab * m1
                + ad * m2 * (1 - ((f1 + m1) / k1))
-               + r * (1 - ((f1 + m1) / k1))
+               + phi * (1 - ((f1 + m1) / k1))
         )
         d.cm1 = (- gam.m1 * cm1
                 + sm1 * (m1 - cm1 + ad * (m2 - cm2))
                 - ab * cm1
                 + ad * cm2 * (1 - ((f1 + m1) / k1))
         )
-        x2 = ((h2 * (m2 - cm2) + (f2 - cf2)) * bf2) /
+        x2 = ((h2 * (m2 - cm2) + (f2 - cf2)) * b2) /
           (2 * h2 * (f2 - cf2) * (m2 -cm2))
         bet.f2 = ((m2 - cm2) * x2) / (h2^(-1) * (f2 - cf2) + (m2 - cm2))
         gam.f2 = df2 + (bet.f2 - df2) * ((f2 + m2) / k2)
@@ -198,13 +198,13 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
         for (i2 in 1:length(adop.range)) {
           for (i3 in 1:length(ster.range)) {
             if (ster.fm) {
-              paras[c('sf1', 'sm1', 'ad', 'ab', 'r')] = 
+              paras[c('sf1', 'sm1', 'ad', 'ab', 'v')] = 
                 c(ster.range[i3], ster.range[i3], 
                   adop.range[i2], aban.range[i1],
                   repl.range[i]
                 )
             } else {
-              paras[c('sf1', 'ad', 'ab', 'r')] = 
+              paras[c('sf1', 'ad', 'ab', 'v')] = 
                 c(ster.range[i3], adop.range[i2], 
                   aban.range[i1], repl.range[i]
                 )

@@ -82,8 +82,7 @@
   \code{2}: stray animals; \code{f}: females; \code{m}:
   males. Then:
 
-  \code{bf1}, \code{bm1}, \code{bf2} and \code{bm2}: birth
-  rate.
+  \code{b1} and \code{b2}: birth rate.
 
   \code{df1}, \code{dm1}, \code{df2} and \code{dm2}: death
   rate.
@@ -99,7 +98,7 @@
 
   \code{ad}: adoption rate.
 
-  \code{r}: replacement rate.
+  \code{v}: replacement rate.
 
   The \code{state} argument must contain named values for
   the inital number of animals, using the following
@@ -137,11 +136,11 @@
 # The consequences of those "guesses" can be quantified
 # with globalsens and localsens functions.
 pars.rasa = c(
-   bf1 = 0.262, bm1 = 0.262, bf2 = 0.288, bm2 = 0.288,
+   b1 = 21585.15, b2 = 2374.367,
    df1 = 0.081, dm1 = 0.069, df2 = 0.089, dm2 = 0.076,
    sf1 = 0.064, sf2 = 0.05, sm1 = 0.048, sm2 = 0.05,
-   k1 = 90785.01, k2 = 9078.501, h1 = 1, h2 = 1,
-   ab = 0.065, ad = 0.095, r = 0.111
+   k1 = 90785.01, k2 = 9078.501, h1 = 1, h2 = 0.5,
+   ab = 0.065, ad = 0.095, v = 0.111
 )
 state.rasa = c(
    f1 = 41641.785, cf1 = 8423.503,

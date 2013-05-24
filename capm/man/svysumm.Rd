@@ -47,7 +47,7 @@ design = svyd2(psu.ssu, Sample, psu.col = 2, ssu.col = 1)
 names(design$variables)
 
 # Specify the type of estimate for each variable
-variables = c("", "", "total", "prop", "mean", rep("prop", 8), "", "")
+variables = c("", "", "total", "prop", "mean", rep("prop", 4), "total", rep("prop", 3), "", "")
 
 # Make sure you specify the correct type of estimate for each variable
 cbind(names(design$variables), variables)
