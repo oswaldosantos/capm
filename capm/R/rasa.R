@@ -94,11 +94,9 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
   rasafu <- function(pars, state, time) {
     rasa.fu = function(time, state, pars) {
       with(as.list(c(state, pars)), {
-        r = (k1 * r) / 2
         x1 = ((h1 * (m1 - cm1) + (f1 - cf1)) * bf1) /
           (2 * h1 * (f1 - cf1) * (m1 -cm1))
-        x2 = ((h2 * (m2 - cm2) + (f2 - cf2)) * bf2) /
-          (2 * h2 * (f2 - cf2) * (m2 -cm2))
+        phi = (k1 * v) / 2
         wf1 = ((m1 - cm1) * x1) / (h1^(-1) * (f1 - cf1) + (m1 - cm1))
         bet.f1 = wf1 - (wf1 - df1) * (f1 + m1) / k1
         gam.f1 = df1
@@ -125,6 +123,8 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
                 - ab * cm1
                 + ad * cm2 * (1 - ((f1 + m1) / k1))
         )
+        x2 = ((h2 * (m2 - cm2) + (f2 - cf2)) * bf2) /
+          (2 * h2 * (f2 - cf2) * (m2 -cm2))
         bet.f2 = ((m2 - cm2) * x2) / (h2^(-1) * (f2 - cf2) + (m2 - cm2))
         gam.f2 = df2 + (bet.f2 - df2) * ((f2 + m2) / k2)
         d.f2 = (f2 * (bet.f2 * (1 - (cf2 / f2)) - gam.f2) 
