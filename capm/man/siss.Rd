@@ -34,9 +34,13 @@
 # Load data with psu identifiers and sizes.
 data(psu.ssu)
 
-# Take a sistematic sampling of 5 ssu in the first five psu of psu.ssu.
-selected.ssu <- siss(psu.ssu[1:5, ], 5, write = TRUE)
-selected.ssu
+# Take a sample of 20 psu with probability
+# proportional to size with replacement.
+selected.psu = ppssr(psu.ssu, 20, write = FALSE)
+
+# Take a sistematic sampling of 5 ssu within each
+# psu of selected.psu.
+(selected.ssu <- siss(selected.psu, 5, write = FALSE))
 }
 \references{
   Levy P and Lemeshow S (1999). Sampling of populations:

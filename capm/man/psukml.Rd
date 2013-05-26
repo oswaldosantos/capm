@@ -5,9 +5,7 @@
   psukml(mp = NULL, psu = NULL, id = NULL)
 }
 \arguments{
-  \item{mp}{polygon shapefile layer name ommitting the
-  extensions *.shp, *.shx and *dbf, which are added in the
-  function.}
+  \item{mp}{polygon shapefile layer name.}
 
   \item{psu}{the values to be matched.}
 
@@ -26,11 +24,14 @@
 # Load data with the polygon identifiers.
 data(psu.ssu)
 
+# Take a sample of 20 psu with probability proportional to size with replacement.
+(selected.psu = ppssr(psu.ssu, 20, write = FALSE))
+
 # Load the polyogn shapefile.
 mplyer <- system.file('shp/santos.shp', package="capm")
 
 # Create *kml files of 10 polygons.
-psukml(mplyer, psu.ssu[seq(1, 100, 10), 1], id = 1)
+psukml(mplyer, selected.psu[, 1], 1)
 }
 \seealso{
   \code{\link{readShapeSpatial}}

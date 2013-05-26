@@ -13,8 +13,8 @@
 #' data(psu.ssu)
 #' 
 #' # Take a sample of 20 psu with probability proportional to size with replacement.
-#' selected.psu = ppssr(psu.ssu, 20, write = FALSE)
-#' selected.psu
+#' (selected.psu = ppssr(psu.ssu, 20, write = FALSE))
+#' 
 ppssr = function (psu.ssu = NULL, psu = NULL, write = FALSE, ...) {
   inv = c(which(!is.finite(psu.ssu[, 2])), which(psu.ssu[, 2] <= 0))
   if (length(inv) > 0) {

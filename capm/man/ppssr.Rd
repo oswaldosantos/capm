@@ -37,8 +37,7 @@
 data(psu.ssu)
 
 # Take a sample of 20 psu with probability proportional to size with replacement.
-selected.psu = ppssr(psu.ssu, 20, write = FALSE)
-selected.psu
+(selected.psu = ppssr(psu.ssu, 20, write = FALSE))
 }
 \references{
   Levy P and Lemeshow S (1999). Sampling of populations:
