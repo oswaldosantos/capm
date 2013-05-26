@@ -86,7 +86,7 @@
 #' ## Plot all scenarios and change the label for the scenarios.
 #' plotmodel(rasa.rg, scenlabel = "Rec  \n(__ * k)")
 #'
-plotmodel = function(model.out = NULL, variable = NULL, col = 'red', col1 = c('yellow','blue'), col2 = c('green', 'orangered1'), xlabel = 'Time', scenlabel = 'Replacetment rate =\n (__ * owned carrying capacity)', leglabel = c('Owned \npop size', 'Stray \npop size'), ylabel = NULL, pop = NULL) {
+plotmodel = function(model.out = NULL, variable = NULL, col = 'red', col1 = c('yellow','blue'), col2 = c('green', 'orangered1'), xlabel = 'Time', scenlabel = 'Rep = (__ * owned carrying capacity)', leglabel = c('Owned \npop size', 'Stray \npop size'), ylabel = NULL, pop = NULL) {
   if (class(model.out) == 'sterowned') {
     if (ncol(model.out$results) == 3) {
       tmp = ggplot(model.out$results, 
@@ -97,13 +97,12 @@ plotmodel = function(model.out = NULL, variable = NULL, col = 'red', col1 = c('y
         if (is.null(ylabel)) {
           ylabel = 'Population size'
         }
-        tmp + ylab(ylabel) + 
-          ylim(0, max(model.out$results['n']))
+        tmp + ylab(ylabel)
       } else {
         if (is.null(ylabel)) {
           ylabel = 'Proportion of sterilized animals'
         }
-        tmp + ylab(ylabel) + ylim(0, 1)
+        tmp + ylab(ylabel)
       }
     } else {
       if (is.null(ylabel)) {
@@ -199,9 +198,9 @@ plotmodel = function(model.out = NULL, variable = NULL, col = 'red', col1 = c('y
           yli = max(model.out$results['f1'])
         }
         if (is.null(ylabel)) {
-          tmp + ylab(yla) + ylim(0, yli)
+          tmp + ylab(yla)
         } else {
-          tmp + ylab(ylabel) + ylim(0, yli)
+          tmp + ylab(ylabel)
         }
         
       } else {
@@ -228,6 +227,10 @@ plotmodel = function(model.out = NULL, variable = NULL, col = 'red', col1 = c('y
                                 fill = 'n')) +
                      xlab(xlabel) + 
                      ylab(ylabel) +
+                     ggtitle(
+                       gsub('__', unique(
+                         model.out$results[, 'repl'])[i],
+                            scenlabel)) +
                      geom_raster() + 
                      scale_fill_continuous(
                        name = paste0(leglabel[j], '\n',
@@ -243,9 +246,11 @@ plotmodel = function(model.out = NULL, variable = NULL, col = 'red', col1 = c('y
                        high = col2) +
                      theme(legend.position = 'right',
                            legend.title = 
-                             element_text(size = 10),
+                             element_text(size = 10, face = 'plain'),
                            plot.margin = 
-                             unit(c(.5, 0, 0, 0), 'lines')) +
+                             unit(c(.5, 0, 0, 0), 'lines'),
+                           plot.title = 
+                             element_text(size = 12)) +
                      facet_grid(adop ~ aban)
             )
           }
@@ -263,25 +268,19 @@ plotmodel = function(model.out = NULL, variable = NULL, col = 'red', col1 = c('y
           if (pop == 4) {
             print(s22)
           }
+        } else {
+          
         }
         if (is.null(pop)) {
           vplayout <- function(x, y) {
             viewport(layout.pos.row = x, layout.pos.col = y)
           } 
           grid.newpage()
-          pushViewport(viewport(layout = grid.layout(11, 2)))
-          grid.text(gsub('__', unique(model.out$results[, 'repl'])[1], 
-                         scenlabel), 
-                    vp = vplayout(1, 1))
-          grid.gedit("GRID.text", gp=gpar(fontsize=12))
-          grid.text(gsub('__', unique(model.out$results[, 'repl'])[2],
-                         scenlabel),
-                    vp = vplayout(1, 2))
-          grid.gedit("GRID.text", gp=gpar(fontsize=12))
-          print(s11, vp = vplayout(2:6, 1))
-          print(s21, vp = vplayout(2:6, 2))
-          print(s12, vp = vplayout(7:11, 1))
-          print(s22, vp = vplayout(7:11, 2))
+          pushViewport(viewport(layout = grid.layout(2, 2)))
+          print(s11, vp = vplayout(1, 1))
+          print(s21, vp = vplayout(1, 2))
+          print(s12, vp = vplayout(2, 1))
+          print(s22, vp = vplayout(2, 2))
         }
       }
     }

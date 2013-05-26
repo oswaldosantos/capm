@@ -5,7 +5,7 @@
   plotmodel(model.out = NULL, variable = NULL, col = "red",
     col1 = c("yellow", "blue"),
     col2 = c("green", "orangered1"), xlabel = "Time",
-    scenlabel = "Replacetment rate =\n (__ * owned carrying capacity)",
+    scenlabel = "Rep = (__ * owned carrying capacity)",
     leglabel = c("Owned \npop size", "Stray \npop size"),
     ylabel = NULL, pop = NULL)
 }
