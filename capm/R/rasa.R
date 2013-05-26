@@ -101,8 +101,8 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
         bet.f1 = wf1 - (wf1 - df1) * (f1 + m1) / k1
         gam.f1 = df1
         d.f1 = (f1 * (bet.f1 * (1 - (cf1 / f1)) - gam.f1)
-               - ab * f1
-               + ad * f2 * (1 - ((f1 + m1) / k1))
+               - ab * (f1 - cf1)
+               + ad * (f2 - cf2) * (1 - ((f1 + m1) / k1))
                + phi * (1 - ((f1 + m1) / k1))
         )
         d.cf1 = (- gam.f1 * cf1
@@ -114,8 +114,8 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
         bet.m1 = wm1 - (wm1 - dm1) * (f1 + m1) / k1
         gam.m1 = dm1
         d.m1 = (m1 * (bet.m1 * (1 - (cm1 / m1)) - gam.m1)
-               - ab * m1
-               + ad * m2 * (1 - ((f1 + m1) / k1))
+               - ab * (m1 - cm1)
+               + ad * (m2 - cm2) * (1 - ((f1 + m1) / k1))
                + phi * (1 - ((f1 + m1) / k1))
         )
         d.cm1 = (- gam.m1 * cm1
@@ -128,8 +128,8 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
         bet.f2 = ((m2 - cm2) * x2) / (h2^(-1) * (f2 - cf2) + (m2 - cm2))
         gam.f2 = df2 + (bet.f2 - df2) * ((f2 + m2) / k2)
         d.f2 = (f2 * (bet.f2 * (1 - (cf2 / f2)) - gam.f2) 
-               + ab * f1 * (1 - ((f2 + m2) / k2))
-               - ad * f2
+               + ab * (f1 - cf1) * (1 - ((f2 + m2) / k2))
+               - ad * (f2 - cf2)
         )
         d.cf2 = (- gam.f2 * cf2
                 + sf2 * (f2 - cf2 + ab * (f1 - cf1))
@@ -139,8 +139,8 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
         bet.m2 = ((f2 - cf2) * x2) / (h2^(-1) * (f2 - cf2) + (m2 - cm2))
         gam.m2 = dm2 + (bet.m2 - dm2) * ((f2 + m2) / k2)
         d.m2 = (m2 * (bet.m2 * (1 - (cm2 / m2)) - gam.m2)
-               + ab * m1 * (1 - ((f2 + m2) / k2))
-               - ad * m2
+               + ab * (m1 - cm1) * (1 - ((f2 + m2) / k2))
+               - ad * (m2 - cm2)
         ) 
         d.cm2 = (- gam.m2 * cm2
                 + sm2 * (m2 - cm2 + ab * (m1 - cm1))
