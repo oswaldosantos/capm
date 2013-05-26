@@ -13,7 +13,7 @@ This data set list dog demographic variables obtained from simulations based on 
   \describe{
     \item{\code{interview_id}}{Interview Id.}
     \item{\code{psu}}{Primary sampling unit Id.}
-    \item{\code{dogs}}{Number of dogs per secondary sampling unit (ssu).}
+    \item{\code{dogs}}{Indicate if there is a dog in secondary sampling unit (ssu). For each interviewed ssu with more than one dog, there is as many rows as dogs in it.}
     \item{\code{sex}}{Sex of the dog.}
     \item{\code{age}}{Age of the dog}
     \item{\code{castrated}}{Indicate if the dog is castrated}
