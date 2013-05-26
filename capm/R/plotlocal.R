@@ -73,11 +73,24 @@ plotlocal = function(local.out = NULL, type = 1, sens.x = "Time", sens.y = "Sens
     viewport(layout.pos.row = x, layout.pos.col = y)
   } 
   tmp = melt(local.out[, -2], id.vars = 'x')
+  scl = nchar(as.character(
+    round(max(tmp[, 3])))) - 2
+  if (min(tmp[, 3]) == 0 | max(tmp[, 3]) == 0) {
+    yy = round(seq(min(tmp[, 3]), 
+                   max(tmp[, 3]), length.out = 4))
+  } else {
+    yy = round(
+      sort(c(seq(min(tmp[, 3]), max(tmp[, 3]), 
+                 length.out = 4), 0)))
+  }
   loc = ggplot(
     tmp, aes(x = x, y = value, colour = variable)) + 
-    geom_line(size = 1) +
+    geom_line(size = .5) +
     theme(legend.position="none") +
-    xlab(sens.x) + ylab(sens.y)
+    xlab(sens.x) + 
+    ylab(paste0(sens.y, ' (x ', 10 ^ scl, ')')) +
+    scale_y_continuous(breaks = yy, 
+                       labels = round(yy / (10 ^ scl), 1))
   
   tmp1 = cbind(w = factor(
     rownames(summary(local.out)),
@@ -86,6 +99,16 @@ plotlocal = function(local.out = NULL, type = 1, sens.x = "Time", sens.y = "Sens
     )
   coln = colnames(summary(local.out))[-c(1:2, 8)]
   for (i in 1:length(coln)) {
+    scl = nchar(as.character(
+      round(max(abs(tmp1[, coln[i]]))))) - 2
+    if (min(tmp1[, coln[i]]) == 0 | max(tmp1[, coln[i]]) == 0) {
+      yy = round(seq(min(tmp1[, coln[i]]), 
+                     max(tmp1[, coln[i]]), length.out = 4))
+    } else {
+      yy = round(
+        sort(c(seq(min(tmp1[, coln[i]]), max(tmp1[, coln[i]]), 
+                   length.out = 4), 0)))
+    }
     assign(
       paste0('loc', i),
       ggplot(tmp1, aes_string(x = 'w', y = coln[i], 
@@ -94,10 +117,13 @@ plotlocal = function(local.out = NULL, type = 1, sens.x = "Time", sens.y = "Sens
         theme(
           legend.position="none",
           axis.title.x = element_blank(),
-          axis.text.x = element_text(size = size.ax),
+          axis.text.x = element_text(size = size.ax - 1, 
+                                     angle = 90, vjust = .5),
           axis.title.y = element_text(size = size.ax + 2), 
           axis.text.y = element_text(size = size.ax)) +
-        ylab(ind.y[i]))
+        ylab(paste0(ind.y[i], ' (x ', 10 ^ scl, ')')) +
+        scale_y_continuous(breaks = yy, 
+                         labels = round(yy / (10 ^ scl), 1)))
   }
   if (type == 1) {
     options(warn = -1)
