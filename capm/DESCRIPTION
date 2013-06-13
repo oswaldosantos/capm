@@ -21,7 +21,11 @@ URL: https://github.com/oswaldosantos/capm_rpackage
 Authors@R: c(person(given='Oswaldo', family='Santos',
     email='oswaldosant@gmail.com', role=c("aut", "cre")),
     person(given='Fernando', family='Silveira Marques',
-    email='fernandosix@gmail.com', role=c("aut")))
+    email='fernandosix@gmail.com', role=c("aut")),
+    person(given='Marcos', family='Amaku',
+    email='amaku@vps.fmvz.usp.br', role=c("aut")),
+    person(given='Fernando', family='Ferreira',
+    email='fernando@vps.fmvz.usp.br', role=c("aut")))
 Version: 0.01-1
 Date: 2013-05-02
 Collate:
