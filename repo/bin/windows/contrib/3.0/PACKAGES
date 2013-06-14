@@ -1,0 +1,6 @@
+Package: capm
+Version: 0.01-1
+Depends: R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2,
+       plyr, reshape2
+License: GPL (>= 3)
+
