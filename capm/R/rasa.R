@@ -90,6 +90,15 @@
 #'                 imm.range = c(0, .1))
 #'                 
 rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.range = NULL, adop.range = NULL, imm.range = NULL, ster.fm = TRUE, ...) {
+  
+  state['n1'] = sum(state[c('f1', 'm1')])
+  state['cn1'] = sum(state[c('cf1', 'cm1')])
+  state['n2'] = sum(state[c('f2', 'm2')])
+  state['cn2'] = sum(state[c('cf2', 'cm2')])
+  state['N1'] = sum(state[c('n1', 'cn1')])
+  state['N2'] = sum(state[c('n2', 'cn2')])
+  state['N'] = sum(state[c('N1', 'N2')])
+  
   rasafu <- function(pars, state, time) {
     rasa.fu = function(time, state, pars) {
       with(as.list(c(state, pars)), {
@@ -140,32 +149,40 @@ rasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
         d.cm2 = - (gam.m2 + ad) * cm2 + sm2 * m2 +
           ab * cm1 * (1 - ((f2 + cf2 + m2 + cm2) / k2))
         
+        d.n1 = d.f1 + d.m1
+        d.cn1 = d.cf1 + d.cm1
+        d.n2 = d.f2 + d.m2
+        d.cn2 = d.cf2 + d.cm2
+        d.N1 = d.n1 + d.cn1
+        d.N2 = d.n2 + d.cn2
+        d.N = d.N1 + d.N2
+        
         list(c(d.f1, d.cf1, d.m1, d.cm1, d.f2, d.cf2, 
-               d.m2, d.cm2))
+               d.m2, d.cm2, d.n1, d.cn1, d.n2, d.cn2,
+               d.N1, d.N2, d.N))
       })
     }
+    
     state = c(state['f1'], state['cf1'], 
               state['m1'], state['cm1'],
               state['f2'], state['cf2'], 
-              state['m2'], state['cm2'])
+              state['m2'], state['cm2'],
+              state['n1'], state['cn1'],
+              state['n2'], state['cn2'],
+              state['N1'], state['N2'], state['N'])
+    
     rasa.out = ode(times = time, 
                    func = rasa.fu, 
                    y = state, 
                    parms = pars, 
                    method = 'rk4',
                    ...)
+    
     return(as.data.frame(rasa.out))
   } 
   if (is.null(ster.range) & is.null(aban.range) & 
         is.null(adop.range)) {
     output <- rasafu(pars = pars, state = state, time = time)
-    output$n1 = rowSums(output[ , c('f1', 'm1')])
-    output$cn1 = rowSums(output[ , c('cf1', 'cm1')])
-    output$n2 = rowSums(output[ , c('f2', 'm2')])
-    output$cn2 = rowSums(output[ , c('cf2', 'cm2')])
-    output$N1 = rowSums(output[ , c('n1', 'cn1')])
-    output$N2 = rowSums(output[ , c('n2', 'cn2')])
-    output$N = rowSums(output[ , c('N1', 'N2')])
     rasa <- list(
       model = rasafu,
       pars = pars,
