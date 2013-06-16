@@ -1,10 +1,10 @@
 \name{rasa}
 \alias{rasa}
-\title{Replacement, abandonment, sterilization and adoption of companion animals}
+\title{Immigration, abandonment, sterilization and adoption of companion animals}
 \usage{
   rasa(pars = NULL, state = NULL, time = NULL,
     ster.range = NULL, aban.range = NULL,
-    adop.range = NULL, repl.range = NULL, ster.fm = TRUE,
+    adop.range = NULL, imm.range = NULL, ster.fm = TRUE,
     ...)
 }
 \arguments{
@@ -32,10 +32,10 @@
   specified by the argument plus the point estimate given
   in \code{pars}.}
 
-  \item{repl.range}{optional \code{\link{vector}} of length
-  2, with range of values of replacement rates to be
-  assessed. This must be expressed as a percentage of
-  carrying capacity.}
+  \item{imm.range}{optional \code{\link{vector}} of length
+  2, with range of values of immigration rates to be
+  assessed. This must be expressed as a percentage of owned
+  animals carrying capacity.}
 
   \item{ster.fm}{logical. If \code{TRUE}, ster.range is
   used for females and males and if \code{FALSE}, it is
@@ -72,7 +72,7 @@
 }
 \description{
   System of ordinary differential equations to simulate the
-  effect of replacement of owned dogs, abandonment,
+  effect of immigration of owned dogs, abandonment,
   sterilization of owned and stray dogs and adoption, on
   population dynamics.
 }
@@ -82,7 +82,7 @@
   \code{2}: stray animals; \code{f}: females; \code{m}:
   males. Then:
 
-  \code{b1} and \code{b2}: birth rate.
+  \code{b1} and \code{b2}: number of births.
 
   \code{df1}, \code{dm1}, \code{df2} and \code{dm2}: death
   rate.
@@ -98,7 +98,7 @@
 
   \code{ad}: adoption rate.
 
-  \code{v}: replacement rate.
+  \code{v}: immigration rate.
 
   The \code{state} argument must contain named values for
   the inital number of animals, using the following
@@ -110,10 +110,13 @@
   \code{f1}, \code{cf1}, \code{m1}, \code{cm1}, \code{f2},
   \code{cf2}, \code{m2} and \code{cm2}.
 
-  The function is a wrapper around the defaults of
-  \link[deSolve]{ode} function, whose help page must be
-  consulted for details. An exception is the method
-  argument which is defined as "rk4".
+  If any range is specified (e.g \code{ster.range}), the
+  ramining ranges must be specified too (\code{aban.range},
+  \code{adop.range} and \code{imm.range}). The function is
+  a wrapper around the defaults of \link[deSolve]{ode}
+  function, whose help page must be consulted for details.
+  An exception is the method argument which is defined as
+  "rk4".
 }
 \note{
   Logistic growth models are not intended for scenarios in
@@ -136,17 +139,17 @@
 # The consequences of those "guesses" can be quantified
 # with globalsens and localsens functions.
 pars.rasa = c(
-   b1 = 21585.15, b2 = 2374.367,
+   b1 = 21351.829, b2 = 2374.367,
    df1 = 0.081, dm1 = 0.069, df2 = 0.089, dm2 = 0.076,
    sf1 = 0.064, sf2 = 0.05, sm1 = 0.048, sm2 = 0.05,
-   k1 = 90785.01, k2 = 9078.501, h1 = 1, h2 = 0.5,
-   ab = 0.065, ad = 0.095, v = 0.111
+   k1 = 96924.9, k2 = 9692.49, h1 = 1, h2 = .5,
+   ab = 0.066, ad = 0.05, v = 0.12
 )
 state.rasa = c(
-   f1 = 41641.785, cf1 = 8423.503,
-   m1 = 40890.046, cm1 = 8647.503,
-   f2 = 4164.179, cf2 = 208.209,
-   m2 = 4089.005, cm2 = 204.45
+   f1 = 44576.299, cf1 = 11059.615,
+   m1 = 43537.245, cm1 = 6827.960,
+   f2 = 4457.630, cf2 = 222.8815,
+   m2 = 4353.724, cm2 = 217.6862
 )
 
 # Solve for point estimates.
@@ -157,11 +160,11 @@ rasa.pt <- rasa(pars = pars.rasa,
 # Solve for parameter ranges.
 rasa.rg <- rasa(pars = pars.rasa,
                 state = state.rasa,
-                time = 0:30,
-                ster.range = seq(0, .5, length.out = 50),
+                time = 0:20,
+                ster.range = seq(0, .5, length.out = 20),
                 aban.range = c(0, .2),
                 adop.range = c(0, .2),
-                repl.range = c(0, .1))
+                imm.range = c(0, .1))
 }
 \references{
   Soetaert K, Cash J and Mazzia F (2012). Solving
