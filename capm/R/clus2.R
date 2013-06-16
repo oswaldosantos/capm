@@ -4,7 +4,7 @@
 #' @param psu.x \code{\link{data.frame}}. Each row corresponds to a secondary sampling unit (ssu) surveyed in a pilot study. First column contains the psu identifiers to which the ssu belongs to. Second column contains the totals observed in the ssu and must be numeric \code{\link{numeric}}.
 #' @param level the confidence level required.
 #' @param error the maximum relative difference between the estimate and the unknown population value.
-#' @param cust the ratio of the cust of sampling a psu to the cust of sampling a ssu.
+#' @param cost the ratio of the cost of sampling a psu to the cost of sampling a ssu.
 #' @return Matrix with the sample size and composition and with estimates of variability.
 #' @details It is assumed that psu from the pilot are selected with probability proportional to size (pps) and with replacement. ssu are assumed to be selected via simple random sampling.
 #' 
@@ -19,9 +19,9 @@
 #' data(pilot)
 #' 
 #' # Calculate sample size and composition.
-#' sample.sc = clus2(psu.ssu, pilot, level = 0.95, error = 0.1, cust = 12)
+#' sample.sc = clus2(psu.ssu, pilot, level = 0.95, error = 0.1, cost = 12)
 
-clus2 = function(psu.ssu = NULL, psu.x = NULL, level = .95, error = 0.1, cust = 12) {
+clus2 = function(psu.ssu = NULL, psu.x = NULL, level = .95, error = 0.1, cost = 12) {
   psu.ssu.x = merge(psu.ssu, psu.x, by = 1)
   tmp = nrow(psu.ssu.x)
   psu.ssu.x[, 1] = paste0(psu.ssu.x[, 1], 1:tmp)
@@ -49,7 +49,7 @@ clus2 = function(psu.ssu = NULL, psu.x = NULL, level = .95, error = 0.1, cust = 
     (((M / (M - 1)) * vec) + (Nb * (Nb - 1) * vdc))
   d = ifelse (d < 0, -d, d)
   d = ifelse (d == 0, 1e-02, d)
-  nb = ceiling(sqrt(cust * ((1 - d) / d)))
+  nb = ceiling(sqrt(cost * ((1 - d) / d)))
   X = sum(w * tapply(psu.ssu.x[ , 3], psu.ssu.x[ , 1], sum))
   z = abs(round(qnorm((1 - level) / 2, 0, 1), 2))
   m = ceiling((z ^ 2) * sum((((N * xi) / nbp) - X) ^ 2) / 

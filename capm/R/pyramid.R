@@ -73,13 +73,13 @@ pyramid = function(dat = NULL, col.age = NULL, col.sex = NULL, col.cas = NULL, x
       aes_string(x = names(dat)[col.age], fill = names(dat)[col.cas]) +
       theme(plot.margin = unit(c(2,.5,1,.5), "lines")) +
       scale_fill_manual(values = c(innercolor, outercolor)) +
-      geom_bar(subset=.(sex==levels(dat[, col.sex])[1])) + 
+      geom_bar(subset=.(sex==levels(dat[, col.sex])[2])) + 
       geom_bar(subset=.(sex==levels(dat[, col.sex])[1]),aes(y=..count..*(-1)))
   } else {
     pyr = ggplot(data=dat) + 
       aes_string(x = names(dat)[col.age], fill = names(dat)[col.sex]) +
       theme(plot.margin = unit(c(2,.5,1,.5), "lines")) +
-      geom_bar(subset=.(sex==levels(dat[, col.sex])[1]), fill = innercolor) + 
+      geom_bar(subset=.(sex==levels(dat[, col.sex])[2]), fill = innercolor) + 
       geom_bar(subset=.(sex==levels(dat[, col.sex])[1]),aes(y=..count..*(-1)), , fill = innercolor)
   }
   pyr = pyr + geom_hline(aes(yintercept = 0), colour = 'white') +

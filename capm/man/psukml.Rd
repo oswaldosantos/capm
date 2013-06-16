@@ -24,7 +24,8 @@
 # Load data with the polygon identifiers.
 data(psu.ssu)
 
-# Take a sample of 20 psu with probability proportional to size with replacement.
+# Take a sample of 20 psu with probability
+# proportional to size with replacement.
 (selected.psu = ppssr(psu.ssu, 20, write = FALSE))
 
 # Load the polyogn shapefile.

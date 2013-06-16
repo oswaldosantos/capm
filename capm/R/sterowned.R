@@ -15,10 +15,11 @@
 #' @export
 #' @examples 
 #' # Parameters and initial conditions from estimates   
-#' # obtained in examples section from svysumm function.
-#' pars.od <- c(b = 0.262, d = 0.075, 
-#'              k = 82531.831 * 1.1, s = .056)
-#' state.od <- c(n = 82531.831, q = 0.207)
+#' # obtained in examples section from svysumm function but
+#' # estimating a proportion insted of a total for births.
+#' pars.od <- c(b = 0.242, d = 0.093, 
+#'              k = 88113.544 * 1.1, s = .048)
+#' state.od <- c(n = 88113.544, q = 0.203)
 #' 
 #' # Solve for a specific sterilization rate.
 #' ster.od <- sterowned(pars = pars.od, state = state.od, time = 0:30)

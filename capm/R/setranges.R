@@ -25,8 +25,8 @@
 #' 
 #' ## Parameters and initial conditions from estimates   
 #' ## obtained in examples section from svysumm function.
-#' pars.od <- c(b = 0.262, d = 0.075, 
-#'              k = 82531.831 * 1.1, s = .056)
+#' pars.od <- c(b = 0.242, d = 0.093, 
+#'              k = 88113.544 * 1.1, s = .048)
 #' 
 #' ## Set ranges 10 % greater and lesser than the 
 #' ## point estimates.
@@ -70,14 +70,13 @@
 #' ## rasa model      ##
 #' #####################
 #' 
-#' ## Parameters and initial conditions from estimates   
-#' ## obtained in examples section from svysumm function.
+#' ## Parameters and initial conditions.
 #' pars.rasa = c(
-#'    af1 = 0.262, am1 = 0.262, af2 = 0.288, am2 = 0.288,
-#'    bf1 = 0.081, bm1 = 0.069, bf2 = 0.089, bm2 = 0.076,
-#'    ef1 = 0.064, ef2 = 0.05, em1 = 0.048, em2 = 0.05,
-#'    k1 = 90785.01, k2 = 9078.501, z1 = 1, z2 = 1, 
-#'    h = 0.065, j = 0.095, v = 0.111
+#'    b1 = 21351.829, b2 = 3202.774,
+#'    df1 = 0.081, dm1 = 0.069, df2 = 0.093, dm2 = 0.079,
+#'    sf1 = 0.064, sf2 = 0.05, sm1 = 0.048, sm2 = 0.05,
+#'    k1 = 96924.9, k2 = 9692.49, h1 = 1, h2 = .5,
+#'    ab = 0.066, ad = 0.05, v = 0.12
 #' )
 #' 
 #' ## Set ranges 10 % greater and lesser than the 

@@ -43,9 +43,9 @@
 
 ## Parameters and intial conditions from estimates
 ## obtained in examples section from the svysumm function.
-pars.od <- c(b = 0.262, d = 0.075,
-             k = 82531.831 * 1.1, s = .056)
-state.od <- c(n = 82531.831, q = 0.207)
+pars.od <- c(b = 0.242, d = 0.093,
+             k = 88113.544 * 1.1, s = .048)
+state.od <- c(n = 88113.544, q = 0.203)
 
 # Solve for a specific sterilization rate.
 ster.od <- sterowned(pars = pars.od, state = state.od, time = 0:30)
@@ -63,17 +63,17 @@ pairs(local.od, col = "green")
 
 ## Parameters and intial conditions.
 pars.rasa = c(
-   b1 = 21585.15, b2 = 2374.367,
-   df1 = 0.081, dm1 = 0.069, df2 = 0.089, dm2 = 0.076,
+   b1 = 21351.829, b2 = 3202.774,
+   df1 = 0.081, dm1 = 0.069, df2 = 0.093, dm2 = 0.079,
    sf1 = 0.064, sf2 = 0.05, sm1 = 0.048, sm2 = 0.05,
-   k1 = 90785.01, k2 = 9078.501, h1 = 1, h2 = 0.5,
-   ab = 0.065, ad = 0.095, v = 0.111
+   k1 = 96924.9, k2 = 9692.49, h1 = 1, h2 = .5,
+   ab = 0.066, ad = 0.05, v = 0.12
 )
 state.rasa = c(
-   f1 = 41641.785, cf1 = 8423.503,
-   m1 = 40890.046, cm1 = 8647.503,
-   f2 = 4164.179, cf2 = 208.209,
-   m2 = 4089.005, cm2 = 204.45
+   f1 = 44576.299, cf1 = 11059.615,
+   m1 = 43537.245, cm1 = 6827.960,
+   f2 = 4457.630, cf2 = 222.8815,
+   m2 = 4353.724, cm2 = 217.6862
 )
 
 # Solve for point estimates.

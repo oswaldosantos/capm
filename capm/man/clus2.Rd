@@ -3,7 +3,7 @@
 \title{Two-stage cluster sampling size and composition}
 \usage{
   clus2(psu.ssu = NULL, psu.x = NULL, level = 0.95,
-    error = 0.1, cust = 12)
+    error = 0.1, cost = 12)
 }
 \arguments{
   \item{psu.ssu}{\code{\link{data.frame}} with all primary
@@ -23,8 +23,8 @@
   \item{error}{the maximum relative difference between the
   estimate and the unknown population value.}
 
-  \item{cust}{the ratio of the cust of sampling a psu to
-  the cust of sampling a ssu.}
+  \item{cost}{the ratio of the cost of sampling a psu to
+  the cost of sampling a ssu.}
 }
 \value{
   Matrix with the sample size and composition and with
@@ -51,7 +51,7 @@ data(psu.ssu)
 data(pilot)
 
 # Calculate sample size and composition.
-sample.sc = clus2(psu.ssu, pilot, level = 0.95, error = 0.1, cust = 12)
+sample.sc = clus2(psu.ssu, pilot, level = 0.95, error = 0.1, cost = 12)
 }
 \references{
   Levy P and Lemeshow S (1999). Sampling of populations:
