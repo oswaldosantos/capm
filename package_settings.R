@@ -9,7 +9,8 @@ roxy.package(
     Package="capm",
     Type="Package",
     Title="Companion Animal Population Management",
-    AuthorsR="c(person(given=\'Oswaldo\', family=\'Santos\', email=\'oswaldosant@gmail.com\', role=c(\"aut\", \"cre\")), person(given=\'Fernando\', family=\'Silveira Marques\', email=\'fernandosix@gmail.com\', role=c(\"aut\")))",
+    AuthorsR="c(person(given=\'Oswaldo\', family=\'Santos\', email=\'oswaldosant@gmail.com\', role=c(\"aut\", \"cre\")), person(given=\'Fernando\', family=\'Silveira Marques\', email=\'fernandosix@gmail.com\', role=c(\"aut\")), person(given='Marcos', family='Amaku', email='amaku@vps.fmvz.usp.br', role=c(\"aut\")),
+    person(given='Fernando', family='Ferreira', email='fernando@vps.fmvz.usp.br', role=c(\"aut\")))", 
     Depends= "R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr, reshape2",
     Description="Provides functions to calculate the size and compostion of samples to estimate dog and cat demographic parameters and functions to simulate population dynamics under different scenarios of population management.",
     License="GPL (>= 3)",
@@ -25,4 +26,5 @@ roxy.package(
     #"license",
     #"win",
     "package"
-  ))
+  )
+  )

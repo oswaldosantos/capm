@@ -4,7 +4,7 @@
 #' Package: \tab capm\cr
 #' Type: \tab Package\cr
 #' Version: \tab 0.01-1\cr
-#' Date: \tab 2013-06-13\cr
+#' Date: \tab 2013-06-16\cr
 #' Depends: \tab R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr, reshape2\cr
 #' Encoding: \tab UTF-8\cr
 #' License: \tab GPL (>= 3)\cr
@@ -18,6 +18,6 @@
 #' @name capm-package
 #' @docType package
 #' @title The capm Package
-#' @author Oswaldo Santos \email{oswaldosant@@gmail.com}, Fernando Silveira Marques \email{fernandosix@@gmail.com}
+#' @author Oswaldo Santos \email{oswaldosant@@gmail.com}, Fernando Silveira Marques \email{fernandosix@@gmail.com}, Marcos Amaku \email{amaku@@vps.fmvz.usp.br}, Fernando Ferreira \email{fernando@@vps.fmvz.usp.br}
 #' @keywords package
 NULL

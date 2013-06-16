@@ -10,11 +10,10 @@ Depends:
     ggplot2,
     plyr,
     reshape2
-Description: Provides functions to calculate the size and
-    compostion of samples to estimate dog and cat
-    demographic parameters and functions to simulate
-    population dynamics under different scenarios of
-    population management.
+Description: Provides functions to calculate the size and compostion of samples
+    to estimate dog and cat demographic parameters and functions to
+    simulate population dynamics under different scenarios of population
+    management.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: no
@@ -22,13 +21,12 @@ URL: https://github.com/oswaldosantos/capm_rpackage
 Authors@R: c(person(given='Oswaldo', family='Santos',
     email='oswaldosant@gmail.com', role=c("aut", "cre")),
     person(given='Fernando', family='Silveira Marques',
-    email='fernandosix@gmail.com', role=c("aut")),
-    person(given='Marcos', family='Amaku',
-    email='amaku@vps.fmvz.usp.br', role=c("aut")),
+    email='fernandosix@gmail.com', role=c("aut")), person(given='Marcos',
+    family='Amaku', email='amaku@vps.fmvz.usp.br', role=c("aut")),
     person(given='Fernando', family='Ferreira',
     email='fernando@vps.fmvz.usp.br', role=c("aut")))
 Version: 0.01-1
-Date: 2013-06-13
+Date: 2013-06-16
 Collate:
     'capm-package.R'
     'clus2.R'
