@@ -19,7 +19,6 @@ This data set list dog demographic variables obtained from simulations based on 
     \item{\code{castrated}}{Indicate if the dog is castrated}
     \item{\code{castrated1}}{Indicate if the dog was castrated during the last year.}
     \item{\code{adopted}}{Indicate if the dog was adopted.}
-    \item{\code{recruitment}}{Indicate if during the year previous to the dog aquiscition, the owner had (and lost) another dog.}
     \item{\code{births}}{Number of puppies per female.}
     \item{\code{present}}{Indicate if the dog was present in the ssu at the moment of the interview.}
     \item{\code{death}}{Indicate if the dog who lived in the ssu during the last year but was not present at the moment of the interview, died.}

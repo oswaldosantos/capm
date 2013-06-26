@@ -47,7 +47,7 @@ design = svyd2(psu.ssu, Sample, psu.col = 2, ssu.col = 1)
 names(design$variables)
 
 # Specify the type of estimate for each variable
-variables = c("", "", "total", "prop", "mean", rep("prop", 4), "total", rep("prop", 3), "", "")
+variables = c("", "", "total", "prop", "mean", rep("prop", 3), "total", rep("prop", 3), "", "")
 
 # Make sure you specify the correct type of estimate for each variable
 cbind(names(design$variables), variables)
@@ -62,7 +62,7 @@ estimates = svysumm(design, variables = variables, rnd = 3)
 
 # Make a copy of the dataset and select some
 # variables of interest.
-sample1 = Sample[, c(1:4, 6:7, 12)]
+sample1 = Sample[, c(1:4, 6:7, 11)]
 
 # Transform to numeric the "castrated" variable in order
 # to estimate its total.

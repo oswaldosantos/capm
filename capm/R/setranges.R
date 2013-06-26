@@ -1,36 +1,36 @@
 #' Parameter ranges for global sensitivity analysis
 #' @description Define the minimum and maximum values for parameters whose global sensitivities are to be assesses with \code{\link{globalsens}} or \code{\link{sensRange}} functions.
-#' @param pars the same \code{pars} vector used in one of the following functions: \code{\link{sterowned}} or \code{\link{rasa}}.
+#' @param pars the same \code{pars} vector used in one of the following functions: \code{\link{sterim}} or \code{\link{iasa}}.
 #' @param range scale factor to define the minimum and maximum for each parameter. The default is 0.1, which set the minimum and maximum as 10 percent lesser and greater than the \code{pars} values.
 #' @param estimates output from the \code{\link{svysumm}} function (see detials).
 #' @param rowpars \code{\link{vector}} with values corresponding to the row positions of \code{estimates}, containing estimates for one or more parameters of \code{pars}. The name of the values must be equal to the name of the corresponding parameters in \code{pars} (see detials and examples).
 #' @param verbose logical idnicating if alteratinos must be informed.
-#' @details \code{estimates} and \code{rowpars} are optional arguments to be used together. Ranges for all parameters are initially defined acording to \code{range}. If \code{estimates} is used, the confidence limits for the parameters specified in \code{rowpars} will replace the corresponding ranges initially dfined by \code{range}.
+#' @details \code{estimates} and \code{rowpars} are optional arguments to be used together. When used, \code{pars} must be a \code{setrange} output. The confidence limits for the parameters specified in \code{rowpars} will replace the corresponding ranges initially dfined.
 #' @return a \code{\link{data.frame}} with the complete set of parameter ranges, when \code{verbose} is \code{FALSE} or rowpars is \code{NULL}. If \code{verbose} is \code{TRUE} and rowpars is not \code{NULL}, a \code{\link{list}} with information about the changed ranges (first element) and the complete set of parameter ranges.
 #' @note Logistic growth models are not intended for scenarios in which population size is greater than carrying capacity and growth rate is negative.
 #' @references Soetaert K and Petzoldt T (2010). Inverse modelling, sensitivity and monte carlo analysis in R using package FME. Journal of Statistical Software, 33(3), pp. 1-28.
 #' 
 #' Reichert P and Kfinsch HR (2001). Practical identifiability analysis of large environmental simulation models. Water Resources Research, 37(4), pp. 1015-1030.
-#' @seealso \code{\link{sensRange}} and \code{\link{sterowned}}.
+#' @seealso \code{\link{sensRange}} and \code{\link{sterim}}.
 #' @export
 #' @examples
 #' 
 #' data(psu.ssu)
 #' data(Sample)
 #' 
-#' #####################
-#' ## Example 1       ##
-#' ## sterowned model ##
-#' #####################
+#' ##################
+#' ## Example 1    ##
+#' ## sterim model ##
+#' ##################
 #' 
 #' ## Parameters and initial conditions from estimates   
 #' ## obtained in examples section from svysumm function.
-#' pars.od <- c(b = 0.242, d = 0.093, 
-#'              k = 88113.544 * 1.1, s = .048)
-#' 
-#' ## Set ranges 10 % greater and lesser than the 
+#' pars.sterim = c(b = 0.245, d = 0.101, 
+#'              k = 98050.49, s = .048)
+#'              
+#' ## Set ranges 10 % greater and lesser than the
 #' ## point estimates.
-#' par.rg.od10 = setranges(pars.od)
+#' par.rg.sterim.1 = setranges(pars = pars.sterim)
 #' 
 #' ## Set ranges based on estimated confidence limits.
 #' 
@@ -43,7 +43,7 @@
 #' 
 #' # Specify the type of estimate for each variable
 #' variables <- c("", "", "total", "prop", "mean", 
-#'                rep("prop", 8), "", "")
+#'                rep("prop", 7), "", "")
 #' 
 #' # Make sure you specify the correct type of 
 #' # estimate for each variable
@@ -57,31 +57,30 @@
 #' data.frame(rownames(estimates))
 #' 
 #' # Estimaes of birth, death and sterilization rates are
-#' # in rows 13, 17 and 8.
-#' par.rg.od = setranges(
-#'  pars.od, 
-#'  range = .1, 
-#'  estimates, 
-#'  rowpars = c('b' = 13, 'd' = 17, 's' = 8)
-#'  )
+#' # in rows 11, 15 and 8.
+#' par.rg.sterim.1 = setranges(pars = pars.sterim)
+#' par.rg.sterim = setranges(
+#'    pars = par.rg.sterim.1, 
+#'    estimates = estimates, 
+#'    rowpars = c('b' = 11, 'd' = 15, 's' = 8))
 #'  
 #' #####################
 #' ## Example 2       ##
-#' ## rasa model      ##
+#' ## iasa model      ##
 #' #####################
 #' 
 #' ## Parameters and initial conditions.
-#' pars.rasa = c(
-#'    b1 = 21351.829, b2 = 3202.774,
-#'    df1 = 0.081, dm1 = 0.069, df2 = 0.093, dm2 = 0.079,
-#'    sf1 = 0.064, sf2 = 0.05, sm1 = 0.048, sm2 = 0.05,
-#'    k1 = 96924.9, k2 = 9692.49, h1 = 1, h2 = .5,
-#'    ab = 0.066, ad = 0.05, v = 0.12
+#' pars.iasa = c(
+#'    b1 = 21870.897, b2 = 4374.179,
+#'    df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,
+#'    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
+#'    k1 = 98050.49, k2 = 8055.456, h1 = 1, h2 = .5,
+#'    ab = 0.054, ad = 0.1, v = 0.1
 #' )
 #' 
 #' ## Set ranges 10 % greater and lesser than the 
 #' ## point estimates.
-#' par.rg.rasa10 = setranges(pars.rasa)
+#' par.rg.iasa.1 = setranges(pars.iasa)
 #' 
 #' ## Set ranges based on estimated confidence limits.
 #' 
@@ -102,18 +101,21 @@
 #' # and specify the type of estimate for each variable.
 #' 
 #' names(design$variables)
-#' variables <- c("", "", "total", "prop", "mean", 
-#'                rep("prop", 8), "", "")
-#'                
-#' names(design.f$variables)
-#' variables.f <- c("", "", "total", "prop", "mean", 
-#'                rep("prop", 8), "", "")
-#'
-#' names(design.m$variables)
-#' variables.m <- c("", "", "total", "prop", "mean", 
-#'                rep("prop", 8), "", "")
+#' variables <- c("", "", "total", "prop", "mean",
+#' rep("prop", 3), "total", rep("prop", 3),
+#' "", "")
 #' 
-#' # Make sure you specify the correct type of 
+#' names(design.f$variables)
+#' variables.f <- c("", "", "total", "prop", "mean",
+#'                  rep("prop", 3), "total", rep("prop", 3),
+#'                  "", "")
+#' 
+#' names(design.m$variables)
+#' variables.m <- c("", "", "total", "prop", "mean",
+#'                  rep("prop", 3), "total", rep("prop", 3),
+#'                  "", "")
+#' 
+#' # Make sure you specify the correct type of
 #' # estimate for each variable
 #' cbind(names(design$variables), variables)
 #' cbind(names(design.f$variables), variables.f)
@@ -124,31 +126,36 @@
 #' estimates.f = svysumm(design.f, variables.f, rnd = 3)
 #' estimates.m = svysumm(design.m, variables.m, rnd = 3)
 #' 
-#' ## Then: 
+#' ## Then:
 #' # See which rows contain the estimates of interest.
 #' data.frame(rownames(estimates))
 #' data.frame(rownames(estimates.f))
 #' data.frame(rownames(estimates.m))
 #' 
 #' # Change the ranges.
-#' par.rg.rasa = setranges(pars.rasa)
-#' rep.est = c(af1 = 13, am1 = 13, h = 19, j = 10,v = 12)
-#' par.rg.rasa = setranges(pars = pars.rasa, estimates = estimates, 
-#'                         rowpars = rep.est)
-#' rep.est.f = c(bf1 = 6, ef1 = 4)
-#' par.rg.rasa = setranges(pars = pars.rasa, estimates = estimates.f, 
-#'                        rowpars = rep.est.f)
-#' rep.est.m = c(bm1 = 6, em1 = 4)
-#' par.rg.rasa = setranges(pars = pars.rasa, estimates = estimates.m, 
-#' rowpars = rep.est.m)
+#' par.rg.iasa.1 = setranges(pars.iasa)
+#' new.est = c(b1 = 11, ab = 17, ad = 10)
+#' par.rg.iasa = setranges(pars = par.rg.iasa.1, 
+#'                         estimates = estimates,
+#'                         rowpars = new.est)
+#' new.est.f = c(df1 = 15, sf1 = 8)
+#' par.rg.iasa = setranges(pars = par.rg.iasa.1, 
+#'                         estimates = estimates.f,
+#'                         rowpars = new.est.f)
+#' new.est.m = c(dm1 = 15, sm1 = 8)
+#' par.rg.iasa = setranges(pars = par.rg.iasa.1, 
+#'                         estimates = estimates.m,
+#'                         rowpars = new.est.m)
 #' 
 setranges = function(pars = NULL, range = 0.1, estimates = NULL, rowpars = NULL, verbose = FALSE) {
-  par.ranges = data.frame(min = c(pars) * (1 - range),
-                          max = c(pars) * (1 + range))
-  rownames(par.ranges) = names(pars)
-  cumu = NULL
-  for (i in 1:length(rowpars)) {
-    if (!is.null(rowpars[i])) {
+  if (is.null(rowpars)) {
+    par.ranges = data.frame(min = c(pars) * (1 - range),
+                            max = c(pars) * (1 + range))
+    rownames(par.ranges) = names(pars)
+  } else {
+    par.ranges = pars
+    cumu = NULL
+    for (i in 1:length(rowpars)) {
       par.ranges[names(rowpars[i]), ] = estimates[rowpars[i], 3:4]
       cumu = c(cumu, names(rowpars)[i])
     }

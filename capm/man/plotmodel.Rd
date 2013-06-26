@@ -5,7 +5,7 @@
   plotmodel(model.out = NULL, variable = NULL, col = "red",
     col1 = c("cadetblue1", "yellow", "red"),
     col2 = c("blue", "darkgreen", "darkred"),
-    xlabel = "Time",
+    xlabel = "Years",
     scenlabel = "Imm = (__ * owned carrying capacity)",
     leglabel = NULL, ylabel = NULL, pop = NULL)
 }
@@ -16,13 +16,13 @@
   \item{variable}{string to specify the variable to be
   ploted.
 
-  For \code{\link{sterowned}} function:
+  For \code{\link{sterim}} function:
 
   "n" (population size).
 
   "q" (proportion of sterilized animals).
 
-  For \code{\link{rasa}} function using with only point
+  For \code{\link{iasa}} function using with only point
   estimates:
 
   "f1" (owned intact females).
@@ -55,7 +55,7 @@
 
   "N" (total population).
 
-  For \code{\link{rasa}} function using *.range arguments:
+  For \code{\link{iasa}} function using *.range arguments:
 
   "f" (intact females).
 
@@ -90,17 +90,17 @@
   \item{ylabel}{string with the name of y axis.}
 
   \item{leglabel}{string with the name of legend, for plots
-  of \code{\link{rasa}} output.}
+  of \code{\link{iasa}} output.}
 
   \item{scenlabel}{string with the name of scenarios of
-  \code{\link{rasa}} output, determined by the immigartion
+  \code{\link{iasa}} output, determined by the immigartion
   rates. Within the string, use the expression __ in the
   location where you want to appear the value of the
   immigartion rate. For line breaking, use \code{\\n} (see
   examples).}
 
   \item{pop}{a value indicating the output of
-  \code{\link{rasa}} to be ploted. When \code{NULL}
+  \code{\link{iasa}} to be ploted. When \code{NULL}
   (default), plots for owned and stray populations under
   scenarios created by immigartion rate are created. If
   \code{1}, the plots of owned population for the minimum
@@ -113,7 +113,7 @@
 }
 \description{
   Plot results of the following functions:
-  \code{\link{sterowned}} and \code{\link{rasa}}.
+  \code{\link{sterim}} and \code{\link{iasa}}.
 }
 \details{
   Font size of saved plots is usually different to the font
@@ -126,62 +126,61 @@
 \examples{
 #####################
 ## Example 1       ##
-## sterowned model ##
+## sterim model ##
 #####################
 
 ## Parameters and initial conditions from estimates
 ## obtained in examples section from svysumm function.
-pars.od <- c(b = 0.242, d = 0.093,
-             k = 88113.544 * 1.1, s = .048)
-state.od <- c(n = 88113.544, q = 0.203)
+pars.sterim = c(b = 0.245, d = 0.101,
+             k = 98050.49, s = .048)
+state.sterim = c(n = 89136.810, q = 0.198)
 
 # Solve for a specific sterilization rate.
-ster.od <- sterowned(pars = pars.od,
-                     state = state.od, time = 0:30)
+sterim.pt = sterim(pars = pars.sterim, state = state.sterim,
+                  time = 0:30, dd = 'b', imm = 100)
 
 # Solve for a range of sterilization rates.
-ster.range.od <- sterowned(
- pars = pars.od,
- state = state.od,
- time = 0:30,
- ster.range = seq(0, .4, length.out = 50))
+sterim.rg = sterim(
+   pars = pars.sterim, state = state.sterim,
+   time = 0:30, dd = 'b', imm = 100,
+   ster.range = seq(0, .4, length.out = 50))
 
 ## Plot the population size
-plotmodel(ster.od, variable = 'n')
-plotmodel(ster.range.od, variable = 'n')
+plotmodel(sterim.pt, variable = 'n')
+plotmodel(sterim.rg, variable = 'n')
 
 ## Plot the proportion of sterilized animals
-plotmodel(ster.od, variable = 'q')
-plotmodel(ster.range.od, variable = 'q')
+plotmodel(sterim.pt, variable = 'q')
+plotmodel(sterim.rg, variable = 'q')
 
 ################
 ## Example 2  ##
-## rasa model ##
+## iasa model ##
 ################
 
 ## Parameters and intial conditions.
-pars.rasa = c(
-   b1 = 21351.829, b2 = 3202.774,
-   df1 = 0.081, dm1 = 0.069, df2 = 0.093, dm2 = 0.079,
-   sf1 = 0.064, sf2 = 0.05, sm1 = 0.048, sm2 = 0.05,
-   k1 = 96924.9, k2 = 9692.49, h1 = 1, h2 = .5,
-   ab = 0.066, ad = 0.05, v = 0.12
+pars.iasa = c(
+   b1 = 21870.897, b2 = 4374.179,
+   df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,
+   sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
+   k1 = 98050.49, k2 = 8055.456, h1 = 1, h2 = .5,
+   ab = 0.054, ad = 0.1, v = 0.1
 )
-state.rasa = c(
-   f1 = 44576.299, cf1 = 11059.615,
-   m1 = 43537.245, cm1 = 6827.960,
-   f2 = 4457.630, cf2 = 222.8815,
-   m2 = 4353.724, cm2 = 217.6862
+state.iasa = c(
+   f1 = 33425.19, cf1 = 10864.901,
+   m1 = 38038.96, cm1 = 6807.759,
+   f2 = 3342.519, cf2 = 108.64901,
+   m2 = 3803.896, cm2 = 68.07759
 )
 
 # Solve for point estimates.
-rasa.pt <- rasa(pars = pars.rasa,
-                state = state.rasa,
+iasa.pt <- iasa(pars = pars.iasa,
+                state = state.iasa,
                 time = 0:30)
 
 # Solve for parameter ranges.
-rasa.rg <- rasa(pars = pars.rasa,
-                state = state.rasa,
+iasa.rg <- iasa(pars = pars.iasa,
+                state = state.iasa,
                 time = 0:30,
                 ster.range = seq(0, .5, length.out = 50),
                 aban.range = c(0, .2),
@@ -189,10 +188,10 @@ rasa.rg <- rasa(pars = pars.rasa,
                 imm.range = c(0, .1))
 
 ## Plot stray population sizes using point estimates
-plotmodel(rasa.pt, variable = "n2")
+plotmodel(iasa.pt, variable = "n2")
 
 ## Plot all scenarios and change the label for the scenarios.
-plotmodel(rasa.rg, scenlabel = "Rec  \\n(__ * k)")
+plotmodel(iasa.rg, variable = 'N')
 }
 \references{
   Chang W (2012). R Graphics Cookbook. O'Reilly Media, Inc.

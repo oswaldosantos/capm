@@ -7,7 +7,7 @@
 }
 \arguments{
   \item{model.out}{results of one of the following
-  functions: \code{\link{sterowned}}}
+  functions: \code{\link{sterim}}}
 
   \item{ranges}{output from the \code{\link{setranges}}
   function, applied to the \code{pars} argument used in the
@@ -33,7 +33,7 @@
   Wraper for \code{\link{sensRange}} function which
   calculate sensitivities of population size, to parameters
   used in one of the following functions:
-  \code{\link{sterowned}}.
+  \code{\link{sterim}}.
 }
 \details{
   When \code{all} is equal to TRUE, \code{dist} argument in
@@ -42,72 +42,71 @@
   argument in \code{\link{sensRange}} is defined as 100.
 }
 \examples{
-#####################
-## Example 1       ##
-## sterowned model ##
-#####################
+##################
+## Example 1    ##
+## sterim model ##
+##################
 
 ## Parameters and intial conditions from estimates
 ## obtained in examples section from the svysumm function.
-pars.od <- c(b = 0.242, d = 0.093,
-             k = 88113.544 * 1.1, s = .048)
-state.od <- c(n = 88113.544, q = 0.203)
-
+pars.sterim = c(b = 0.245, d = 0.101,
+             k = 98050.49, s = .048)
+state.sterim = c(n = 89136.810, q = 0.198)
 
 # Solve for a specific sterilization rate.
-ster.od <- sterowned(pars = pars.od,
-                     state = state.od, time = 0:30)
+sterim.pt = sterim(pars = pars.sterim, state = state.sterim,
+                  time = 0:30, dd = 'b', imm = 100)
 
 ## Set ranges 10 \% greater and lesser than the
 ## point estimates.
-par.rg.od.1 = setranges(pars = pars.od)
+par.rg.sterim.1 = setranges(pars = pars.sterim)
 
 ## Calculate golobal sensitivity of combined parameters.
-glob.od.all = globalsens(
-  model.out = ster.od, ranges = par.rg.od.1,
+glob.sterim.all = globalsens(
+  model.out = sterim.pt, ranges = par.rg.sterim.1,
   sensv = 'n', all = TRUE)
 
 ## Calculate golobal sensitivity of individual parameters.
-glob.od = globalsens(model.out = ster.od,
-ranges = par.rg.od.1, sensv = 'n')
+glob.sterim = globalsens(model.out = sterim.pt,
+ranges = par.rg.sterim.1, sensv = 'n')
 
 ################
 ## Example 2  ##
-## rasa model ##
+## iasa model ##
 ################
 
 ## Parameters and intial conditions.
-pars.rasa = c(
-   b1 = 21351.829, b2 = 3202.774,
-   df1 = 0.081, dm1 = 0.069, df2 = 0.093, dm2 = 0.079,
-   sf1 = 0.064, sf2 = 0.05, sm1 = 0.048, sm2 = 0.05,
-   k1 = 96924.9, k2 = 9692.49, h1 = 1, h2 = .5,
-   ab = 0.066, ad = 0.05, v = 0.12
+pars.iasa = c(
+   b1 = 21870.897, b2 = 4374.179,
+   df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,
+   sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
+   k1 = 98050.49, k2 = 8055.456, h1 = 1, h2 = .5,
+   ab = 0.054, ad = 0.1, v = 0.1
 )
-state.rasa = c(
-   f1 = 44576.299, cf1 = 11059.615,
-   m1 = 43537.245, cm1 = 6827.960,
-   f2 = 4457.630, cf2 = 222.8815,
-   m2 = 4353.724, cm2 = 217.6862
+state.iasa = c(
+   f1 = 33425.19, cf1 = 10864.901,
+   m1 = 38038.96, cm1 = 6807.759,
+   f2 = 3342.519, cf2 = 108.64901,
+   m2 = 3803.896, cm2 = 68.07759
 )
 
 # Solve for point estimates.
-rasa.pt <- rasa(pars = pars.rasa,
-                state = state.rasa,
+iasa.pt <- iasa(pars = pars.iasa,
+                state = state.iasa,
                 time = 0:30)
 
 ## Set ranges 10 \% greater and lesser than the
 ## point estimates.
-par.rg.rasa.1 = setranges(pars = pars.rasa)
+par.rg.iasa.1 = setranges(pars = pars.iasa)
 
 ## Calculate golobal sensitivity of combined parameters.
-glob.rasa.all = globalsens(
-  model.out = rasa.pt,
-  ranges = par.rg.rasa.1, sensv = 'n2', all = TRUE)
+glob.iasa.all = globalsens(
+  model.out = iasa.pt,
+  ranges = par.rg.iasa.1, sensv = 'n2', all = TRUE)
 
 ## Calculate golobal sensitivity of individual parameters.
-glob.rasa = globalsens(
-  model.out = rasa.pt, ranges = par.rg.rasa.1,
+glob.iasa = globalsens(
+  model.out = iasa.pt, ranges = par.rg.iasa.1,
   sensv = 'n2')
 }
 \references{

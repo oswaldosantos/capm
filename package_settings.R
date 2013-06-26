@@ -24,7 +24,7 @@ roxy.package(
     #"html",
     #"doc",
     #"license",
-    #"win",
+    "win",
     "package"
   )
   )

@@ -7,8 +7,8 @@
 }
 \arguments{
   \item{pars}{the same \code{pars} vector used in one of
-  the following functions: \code{\link{sterowned}} or
-  \code{\link{rasa}}.}
+  the following functions: \code{\link{sterim}} or
+  \code{\link{iasa}}.}
 
   \item{range}{scale factor to define the minimum and
   maximum for each parameter. The default is 0.1, which set
@@ -44,11 +44,10 @@
 }
 \details{
   \code{estimates} and \code{rowpars} are optional
-  arguments to be used together. Ranges for all parameters
-  are initially defined acording to \code{range}. If
-  \code{estimates} is used, the confidence limits for the
-  parameters specified in \code{rowpars} will replace the
-  corresponding ranges initially dfined by \code{range}.
+  arguments to be used together. When used, \code{pars}
+  must be a \code{setrange} output. The confidence limits
+  for the parameters specified in \code{rowpars} will
+  replace the corresponding ranges initially dfined.
 }
 \note{
   Logistic growth models are not intended for scenarios in
@@ -59,19 +58,19 @@
 data(psu.ssu)
 data(Sample)
 
-#####################
-## Example 1       ##
-## sterowned model ##
-#####################
+##################
+## Example 1    ##
+## sterim model ##
+##################
 
 ## Parameters and initial conditions from estimates
 ## obtained in examples section from svysumm function.
-pars.od <- c(b = 0.242, d = 0.093,
-             k = 88113.544 * 1.1, s = .048)
+pars.sterim = c(b = 0.245, d = 0.101,
+             k = 98050.49, s = .048)
 
 ## Set ranges 10 \% greater and lesser than the
 ## point estimates.
-par.rg.od10 = setranges(pars.od)
+par.rg.sterim.1 = setranges(pars = pars.sterim)
 
 ## Set ranges based on estimated confidence limits.
 
@@ -84,7 +83,7 @@ names(design$variables)
 
 # Specify the type of estimate for each variable
 variables <- c("", "", "total", "prop", "mean",
-               rep("prop", 8), "", "")
+               rep("prop", 7), "", "")
 
 # Make sure you specify the correct type of
 # estimate for each variable
@@ -98,31 +97,30 @@ estimates <- svysumm(design, variables, rnd = 3)
 data.frame(rownames(estimates))
 
 # Estimaes of birth, death and sterilization rates are
-# in rows 13, 17 and 8.
-par.rg.od = setranges(
- pars.od,
- range = .1,
- estimates,
- rowpars = c('b' = 13, 'd' = 17, 's' = 8)
- )
+# in rows 11, 15 and 8.
+par.rg.sterim.1 = setranges(pars = pars.sterim)
+par.rg.sterim = setranges(
+   pars = par.rg.sterim.1,
+   estimates = estimates,
+   rowpars = c('b' = 11, 'd' = 15, 's' = 8))
 
 #####################
 ## Example 2       ##
-## rasa model      ##
+## iasa model      ##
 #####################
 
 ## Parameters and initial conditions.
-pars.rasa = c(
-   b1 = 21351.829, b2 = 3202.774,
-   df1 = 0.081, dm1 = 0.069, df2 = 0.093, dm2 = 0.079,
-   sf1 = 0.064, sf2 = 0.05, sm1 = 0.048, sm2 = 0.05,
-   k1 = 96924.9, k2 = 9692.49, h1 = 1, h2 = .5,
-   ab = 0.066, ad = 0.05, v = 0.12
+pars.iasa = c(
+   b1 = 21870.897, b2 = 4374.179,
+   df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,
+   sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
+   k1 = 98050.49, k2 = 8055.456, h1 = 1, h2 = .5,
+   ab = 0.054, ad = 0.1, v = 0.1
 )
 
 ## Set ranges 10 \% greater and lesser than the
 ## point estimates.
-par.rg.rasa10 = setranges(pars.rasa)
+par.rg.iasa.1 = setranges(pars.iasa)
 
 ## Set ranges based on estimated confidence limits.
 
@@ -144,15 +142,18 @@ design.m = subset(design, sex == 'Male')
 
 names(design$variables)
 variables <- c("", "", "total", "prop", "mean",
-               rep("prop", 8), "", "")
+rep("prop", 3), "total", rep("prop", 3),
+"", "")
 
 names(design.f$variables)
 variables.f <- c("", "", "total", "prop", "mean",
-               rep("prop", 8), "", "")
+                 rep("prop", 3), "total", rep("prop", 3),
+                 "", "")
 
 names(design.m$variables)
 variables.m <- c("", "", "total", "prop", "mean",
-               rep("prop", 8), "", "")
+                 rep("prop", 3), "total", rep("prop", 3),
+                 "", "")
 
 # Make sure you specify the correct type of
 # estimate for each variable
@@ -172,16 +173,19 @@ data.frame(rownames(estimates.f))
 data.frame(rownames(estimates.m))
 
 # Change the ranges.
-par.rg.rasa = setranges(pars.rasa)
-rep.est = c(af1 = 13, am1 = 13, h = 19, j = 10,v = 12)
-par.rg.rasa = setranges(pars = pars.rasa, estimates = estimates,
-                        rowpars = rep.est)
-rep.est.f = c(bf1 = 6, ef1 = 4)
-par.rg.rasa = setranges(pars = pars.rasa, estimates = estimates.f,
-                       rowpars = rep.est.f)
-rep.est.m = c(bm1 = 6, em1 = 4)
-par.rg.rasa = setranges(pars = pars.rasa, estimates = estimates.m,
-rowpars = rep.est.m)
+par.rg.iasa.1 = setranges(pars.iasa)
+new.est = c(b1 = 11, ab = 17, ad = 10)
+par.rg.iasa = setranges(pars = par.rg.iasa.1,
+                        estimates = estimates,
+                        rowpars = new.est)
+new.est.f = c(df1 = 15, sf1 = 8)
+par.rg.iasa = setranges(pars = par.rg.iasa.1,
+                        estimates = estimates.f,
+                        rowpars = new.est.f)
+new.est.m = c(dm1 = 15, sm1 = 8)
+par.rg.iasa = setranges(pars = par.rg.iasa.1,
+                        estimates = estimates.m,
+                        rowpars = new.est.m)
 }
 \references{
   Soetaert K and Petzoldt T (2010). Inverse modelling,
@@ -194,6 +198,6 @@ rowpars = rep.est.m)
   1015-1030.
 }
 \seealso{
-  \code{\link{sensRange}} and \code{\link{sterowned}}.
+  \code{\link{sensRange}} and \code{\link{sterim}}.
 }
 
