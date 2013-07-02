@@ -1,0 +1,19 @@
+Package: r-other-capm
+Priority: optional
+Section: math
+Installed-Size: 687
+Maintainer: Oswaldo Santos <oswaldosant@gmail.com>
+Architecture: all
+Version: 0.01-1-1
+Depends: r-base (>= 3.0.0)
+Filename: dists/unstable/main/all/r-other-capm_0.01-1-1_all.deb
+Size: 277360
+MD5sum: 6fcba80ff5624adb2ce6417131025e7f
+SHA1: 56916f4bb82bdb7e80b244eaf16b284a55721d51
+SHA256: cfaff63241564ceabfca5e1f887d0a9fc35a478e658246e4e770a28a27602dec
+SHA512: ec2efe483a9d8a23e7827c764e1ce5532e181eab934eb58c0d54e13e78b9c88c7a476e432be87ddd365c1329bdd168eaa34b6d85b85e23cdce36fcab4c8eab54
+Description: GNU R package: Provides functions to calculate the size and compostion of samples to
+ estimate dog and cat demographic parameters and functions to simulate population dynamics under
+ different scenarios of population management.
+Homepage: https://github.com/oswaldosantos/capm_rpackage
+

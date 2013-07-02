@@ -1,0 +1,22 @@
+Format: 1.8
+Date: Tue, 02 Jul 2013 13:47:08 +0000
+Source: r-other-capm
+Binary: r-other-capm
+Architecture: all
+Version: 0.01-1-1
+Distribution: unstable
+Urgency: low
+Maintainer: Oswaldo Santos <oswaldosant@gmail.com>
+Changed-By: Oswaldo Santos <oswaldosant@gmail.com>
+Description: 
+ r-other-capm - GNU R package: Provides functions to calculate the size and compo
+Changes: 
+ r-other-capm (0.01-1-1) unstable; urgency=low
+ .
+   * new upstream release
+Checksums-Sha1: 
+ 56916f4bb82bdb7e80b244eaf16b284a55721d51 277360 r-other-capm_0.01-1-1_all.deb
+Checksums-Sha256: 
+ cfaff63241564ceabfca5e1f887d0a9fc35a478e658246e4e770a28a27602dec 277360 r-other-capm_0.01-1-1_all.deb
+Files: 
+ 6fcba80ff5624adb2ce6417131025e7f 277360 math optional r-other-capm_0.01-1-1_all.deb

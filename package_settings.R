@@ -25,6 +25,8 @@ roxy.package(
     #"doc",
     #"license",
     "win",
+    "macosx",
+    "deb",
     "package"
   )
   )

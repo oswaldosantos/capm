@@ -1,0 +1,29 @@
+Package: r-other-capm
+Binary: r-other-capm
+Version: 0.01-1-1
+Maintainer: Oswaldo Santos <oswaldosant@gmail.com>
+Build-Depends-Indep: debhelper (>> 4.1.0), r-base-dev (>= 3.0.0), cdbs
+Architecture: all
+Standards-Version: 3.9.3.1
+Format: 3.0 (quilt)
+Directory: source/unstable
+Files:
+ 54aab48ce910712b5d4c63e9a7a5a4ca 919 r-other-capm_0.01-1-1.dsc
+ 3b41433ac30ca24a176441638c49609c 360607 r-other-capm_0.01-1.orig.tar.gz
+ 58e40ca0520af27df3222a6c721b2c7e 1572 r-other-capm_0.01-1-1.debian.tar.gz
+Homepage: https://github.com/oswaldosantos/capm_rpackage
+Package-List: 
+ r-other-capm deb math optional
+Checksums-Sha1:
+ d83b79339f082cd78e8c365715e1fbc82bd55c38 919 r-other-capm_0.01-1-1.dsc
+ 6953537c15f5c71775f5ce0435452e8223786650 360607 r-other-capm_0.01-1.orig.tar.gz
+ 0c37af7d03b69e74ff9f0b729502761b182d95c9 1572 r-other-capm_0.01-1-1.debian.tar.gz
+Checksums-Sha256:
+ 79c645197b99494713ff6454c6a20d86b2b206842f4fa1d58bf4f4450784add6 919 r-other-capm_0.01-1-1.dsc
+ b32d7f4f0554e90475ee845360d093dd8dc1924a0a34edd7eaf2fe656d8ce85a 360607 r-other-capm_0.01-1.orig.tar.gz
+ cd8dba0f4e97408c4c121b6be0996243344177ae988108b9107cbe86079de1e6 1572 r-other-capm_0.01-1-1.debian.tar.gz
+Checksums-Sha512:
+ bed2a892fdb168e59853961c1351ca90e88de1050d50343e8baa046f5d2a3663bab61f1f23061c267fc894dbac5c97434354f381117cfd0a440ebda7e7d0d3ad 919 r-other-capm_0.01-1-1.dsc
+ 0b7de394ab494dbb27b61d230ff9f754e67d704177e99c831fa997c5567be4b4a31f7d275d1a23fd4da55aee4f2d1f1f5f5cd54480224b8867245334f3cd013b 360607 r-other-capm_0.01-1.orig.tar.gz
+ f3fb569e0674d1b4ad9cd6348d9b960f67f6d348fcbe75a84956132545aae240f742a2fe42429e32dec1a8abf34e9027457c95dcdfcb2be48cf63a89158b5aac 1572 r-other-capm_0.01-1-1.debian.tar.gz
+

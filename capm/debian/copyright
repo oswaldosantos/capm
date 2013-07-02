@@ -1,0 +1,76 @@
+The R library capm was originally written by Oswaldo Santos <oswaldosant@gmail.com>
+and is maintained by Oswaldo Santos <oswaldosant@gmail.com>.
+
+This Debian package was put together Oswaldo Santos <oswaldosant@gmail.com>.
+
+The package was renamed from its upstream name 'capm' to
+'r-other-capm' in harmony with the R packaging policy to indicate
+that the package is external to the CRAN or BioC repositories.
+
+capm Copyright (C) 2013 Oswaldo Santos, released under the
+GNU General Public License (GPL) version 3 or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE.
+
+You should have received a copy of the license with your Debian system,
+in the file /usr/share/common-licenses/GPL-3, or with the
+source package as the file COPYING or LICENSE.
+ The R library capm was originally written by Fernando Silveira Marques <fernandosix@gmail.com>
+and is maintained by Oswaldo Santos <oswaldosant@gmail.com>.
+
+This Debian package was put together Oswaldo Santos <oswaldosant@gmail.com>.
+
+The package was renamed from its upstream name 'capm' to
+'r-other-capm' in harmony with the R packaging policy to indicate
+that the package is external to the CRAN or BioC repositories.
+
+capm Copyright (C) 2013 Fernando Silveira Marques, released under the
+GNU General Public License (GPL) version 3 or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE.
+
+You should have received a copy of the license with your Debian system,
+in the file /usr/share/common-licenses/GPL-3, or with the
+source package as the file COPYING or LICENSE.
+ The R library capm was originally written by Marcos Amaku <amaku@vps.fmvz.usp.br>
+and is maintained by Oswaldo Santos <oswaldosant@gmail.com>.
+
+This Debian package was put together Oswaldo Santos <oswaldosant@gmail.com>.
+
+The package was renamed from its upstream name 'capm' to
+'r-other-capm' in harmony with the R packaging policy to indicate
+that the package is external to the CRAN or BioC repositories.
+
+capm Copyright (C) 2013 Marcos Amaku, released under the
+GNU General Public License (GPL) version 3 or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE.
+
+You should have received a copy of the license with your Debian system,
+in the file /usr/share/common-licenses/GPL-3, or with the
+source package as the file COPYING or LICENSE.
+ The R library capm was originally written by Fernando Ferreira <fernando@vps.fmvz.usp.br>
+and is maintained by Oswaldo Santos <oswaldosant@gmail.com>.
+
+This Debian package was put together Oswaldo Santos <oswaldosant@gmail.com>.
+
+The package was renamed from its upstream name 'capm' to
+'r-other-capm' in harmony with the R packaging policy to indicate
+that the package is external to the CRAN or BioC repositories.
+
+capm Copyright (C) 2013 Fernando Ferreira, released under the
+GNU General Public License (GPL) version 3 or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE.
+
+You should have received a copy of the license with your Debian system,
+in the file /usr/share/common-licenses/GPL-3, or with the
+source package as the file COPYING or LICENSE.
