@@ -28,6 +28,7 @@
 #' 
 #' \code{v}: immigration rate.
 #' 
+#' \code{vc}: proportion of sterilized immigrants.
 #' 
 #' The \code{state} argument must contain named values for the inital number of animals, using the following conventions: \code{1}: owned animals; \code{2}: stray animals; \code{f}: females; \code{m}: males; and \code{s}: sterilized. Then, number values must be given for the categories:
 #' 
@@ -65,7 +66,7 @@
 #'    df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,
 #'    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
 #'    k1 = 98050.49, k2 = 8055.456, h1 = 1, h2 = .5,
-#'    ab = 0.054, ad = 0.1, v = 0.1
+#'    ab = 0.054, ad = 0.1, v = 0.2, vc = 0.1
 #' )
 #' state.iasa = c(
 #'    f1 = 33425.19, cf1 = 10864.901,
@@ -108,13 +109,14 @@ iasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
           (m1 + f1 * h1 ^ (-1))
         bet.f1 = wf1 - (wf1 - df1) * ((f1 + cf1 + m1 + cm1) / k1)
         gam.f1 = df1
-        phi = (k1 * v) / 2
+        phi = k1 * v * (1 - vc) / 2
+        phic = k1 * v * vc / 2
         
         d.f1 = (bet.f1 - gam.f1 - sf1 - ab) * f1 +
           (ad * f2 + phi) * (1 - ((f1 + cf1 + m1 + cm1) / k1))
         
         d.cf1 = - (gam.f1 + ab) * cf1 + sf1 * f1 + 
-          ad * cf2 * (1 - ((f1 + cf1 + m1 + cm1) / k1))
+          (ad * cf2 + phic) * (1 - ((f1 + cf1 + m1 + cm1) / k1))
         
         wm1 = (x1 * f1) / 
           (m1 + f1 * h1 ^ (-1))
@@ -125,7 +127,7 @@ iasa = function(pars = NULL, state = NULL, time = NULL, ster.range = NULL, aban.
           (ad * m2 + phi) * (1 - ((f1 + cf1 + m1 + cm1) / k1))
         
         d.cm1 = - (gam.m1 + ab) * cm1 + sm1 * m1 + 
-          ad * cm2 * (1 - ((f1 + cf1 + m1 + cm1) / k1))
+          (ad * cm2 + phic) * (1 - ((f1 + cf1 + m1 + cm1) / k1))
         
         x2 = (b2 * (h2 * m2 + f2)) /
           (2 * h2 * f2 * m2)

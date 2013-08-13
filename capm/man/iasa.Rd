@@ -100,6 +100,8 @@
 
   \code{v}: immigration rate.
 
+  \code{vc}: proportion of sterilized immigrants.
+
   The \code{state} argument must contain named values for
   the inital number of animals, using the following
   conventions: \code{1}: owned animals; \code{2}: stray
@@ -143,7 +145,7 @@ pars.iasa = c(
    df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,
    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
    k1 = 98050.49, k2 = 8055.456, h1 = 1, h2 = .5,
-   ab = 0.054, ad = 0.1, v = 0.1
+   ab = 0.054, ad = 0.1, v = 0.2, vc = 0.1
 )
 state.iasa = c(
    f1 = 33425.19, cf1 = 10864.901,
