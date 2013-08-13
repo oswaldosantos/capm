@@ -1,6 +1,6 @@
 \name{psukml}
 \alias{psukml}
-\title{Creates a folder with *.kml files of a subset of polygons form a polygon shapefile}
+\title{Creates *.kml files of a subset of polygons form a polygon shapefile}
 \usage{
   psukml(mp = NULL, psu = NULL, id = NULL)
 }
@@ -13,12 +13,16 @@
   matched against.}
 }
 \value{
-  A folder with *.kml files of the subsetted polygons.
+  *.kml files of the subsetted polygons.
 }
 \description{
   Subset polygons acording to the matches between a vector
   and a specified column from a
   \link[sp]{SpatialPolygonsDataFrame}.
+}
+\details{
+  If there is *.kml files in the working directory, the new
+  created files will overwrite it in case of name matching.
 }
 \examples{
 # Load data with the polygon identifiers.
