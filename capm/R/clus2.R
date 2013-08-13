@@ -34,26 +34,23 @@ clus2 = function(psu.ssu = NULL, psu.x = NULL, level = .95, error = 0.1, cost = 
   nbp = mean(nip)
   mp = length(unique(psu.ssu.x[ , 1])) 
   np = nrow(psu.ssu.x)
-  w1 = 1 / (mp * Nip / N)
-  w2 = 1 / (nip / Nip)
-  w = w1 * w2
   xi = tapply(psu.ssu.x[ , 3], psu.ssu.x[ , 1], sum)
-  Xi = xi * w2
+  Xi = xi * Nip / nip
   vec = sum((Xi - mean(Xi)) ^ 2) / mp
   qua = (psu.ssu.x[ , 3] - mean(psu.ssu.x[ , 3])) ^ 2
   vdc = sum((Nip / (Nip - 1)) * 
-              (tapply(qua, psu.ssu.x[ , 1], sum) * w)) / N
+              (tapply(qua, psu.ssu.x[ , 1], sum))) / sum(nip)
   dpec = sqrt(vec)
   dpdc = sqrt(vdc)
   d = (((M / (M - 1)) * vec) - (Nb * vdc)) / 
     (((M / (M - 1)) * vec) + (Nb * (Nb - 1) * vdc))
-  d = ifelse (d < 0, -d, d)
-  d = ifelse (d == 0, 1e-02, d)
+  d = if (d <= 0) {d = 1e-03} else {d = d}
   nb = ceiling(sqrt(cost * ((1 - d) / d)))
-  X = sum(w * tapply(psu.ssu.x[ , 3], psu.ssu.x[ , 1], sum))
+  X = sum(N / sum(nip) * tapply(psu.ssu.x[ , 3], psu.ssu.x[ , 1], sum))
   z = abs(round(qnorm((1 - level) / 2, 0, 1), 2))
   m = ceiling((z ^ 2) * sum((((N * xi) / nbp) - X) ^ 2) / 
     ((error ^ 2) * (X ^ 2) * (mp - 1)))
+  if(m > M) {m = M}
 
   sam = matrix(c(m * nb, m, nb, vec, vdc, d), 
                ncol = 1)
