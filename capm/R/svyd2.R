@@ -16,25 +16,18 @@
 #' data(Sample)
 #' 
 #' # Specify the two-stage cluster design.
-#' design <- svyd2(psu.ssu, Sample, psu.col = 2, ssu.col = 1)
+#' design = svyd2(psu.ssu, Sample, psu.col = 2, ssu.col = 1)
 
-svyd2 <- function(psu.ssu = NULL, sample = NULL, psu.col = NULL, ssu.col = NULL, ...) {
+svyd2 = function(psu.ssu = NULL, sample = NULL, psu.col = NULL, ssu.col = NULL, ...) {
   if (length(which(!is.na((match(psu.ssu[, 1], sample[, psu.col]))))) == 0) {
     stop('There is no matches between psu identifiers from psu.ssu and sample. See details section from help page.')
   }
   names(sample)[c(psu.col, ssu.col)] = c('psu.id', 'ssu.id')
-  pop.size <- sum(psu.ssu[, 2])
-  sample <- cbind(sample, pop.size)
-  sample <- merge(sample, psu.ssu, by.x = psu.col, by.y = 1)
-  names(sample)[ncol(sample)] <- 'psu.size'
-  psu.size <- tapply(sample$psu.size, sample$psu.id, unique)
-  psu.sample.size <- tapply(sample$psu.size, sample$psu.id, length)
-  psu.sample.size <- rep(psu.sample.size, psu.sample.size)
-  w.1stage <- 1 / (length(psu.size) * sample$psu.size / sample$pop.size)
-  w.2stage <- 1 / (psu.sample.size / sample$psu.size)
-  weights <- w.1stage * w.2stage
-  dat <- cbind(sample, weights)
-  return(svydesign(ids = ~ psu.id + ssu.id, weights = weights,
-                   fpc = ~ pop.size + psu.size, data = sample, ...))  
+  pop.size = sum(psu.ssu[, 2])
+  sample = cbind(sample, pop.size)
+  sample = merge(sample, psu.ssu, by.x = psu.col, by.y = 1)
+  names(sample)[ncol(sample)] = 'psu.size'
+  return(svydesign(ids = ~ psu.id + ssu.id, fpc = ~ pop.size +
+                     psu.size, data = sample, ...))  
 
 }
