@@ -2,7 +2,8 @@
 \alias{siss}
 \title{Systematic sampling}
 \usage{
-  siss(psu.ssu = NULL, ssu = NULL, write = FALSE, ...)
+  siss(psu.ssu = NULL, ssu = NULL, total = NULL,
+    write = FALSE, ...)
 }
 \arguments{
   \item{psu.ssu}{\code{\link{data.frame}} with all primary
@@ -11,6 +12,10 @@
   psu sizes.}
 
   \item{ssu}{the number of ssu to be selected.}
+
+  \item{total}{value indicating the number of sampling
+  units in the population. This is an alternative to
+  \code{psu.ssu}, intended for non complex designs.}
 
   \item{write}{logical. If \code{TRUE}, a *.csv file
   containing the psu and their ssu is writed in the current
