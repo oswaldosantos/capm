@@ -1,7 +1,8 @@
 Package: capm
 Version: 0.01-1
-Depends: R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr, reshape2
+Depends: R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr,
+        reshape2, grid
 License: GPL (>= 3)
-MD5sum: c4800e686d5e7003f4d900c76cd53ded
+MD5sum: d1865418b2ca683f2cd2d6f33467f3de
 NeedsCompilation: no
 

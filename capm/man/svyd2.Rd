@@ -50,7 +50,7 @@ data(psu.ssu)
 data(Sample)
 
 # Specify the two-stage cluster design.
-design <- svyd2(psu.ssu, Sample, psu.col = 2, ssu.col = 1)
+design = svyd2(psu.ssu, Sample, psu.col = 2, ssu.col = 1)
 }
 \references{
   Lumley, T. (2011). Complex surveys: A guide to analysis
