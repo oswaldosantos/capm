@@ -1,0 +1,58 @@
+\name{SampleSystematic}
+\alias{SampleSystematic}
+\title{Systematic sampling}
+\usage{
+  SampleSystematic(psu.ssu = NULL, ssu = NULL,
+    total = NULL, write = FALSE, ...)
+}
+\arguments{
+  \item{psu.ssu}{\code{\link{data.frame}} with all primary
+  sampling units (PSU). First column contains PSU unique
+  identifiers. Second column contains \code{\link{numeric}}
+  PSU sizes.}
+
+  \item{ssu}{the number of SSU to be selected.}
+
+  \item{total}{value indicating the number of sampling
+  units in the population. This is an alternative to
+  \code{psu.ssu}, intended for non complex designs.}
+
+  \item{write}{logical. If \code{TRUE}, a *.csv file
+  containing the psu and their ssu is writed in the current
+  working directory.}
+
+  \item{...}{further arguments passed to
+  \code{\link{write.table}} function.}
+}
+\value{
+  A \code{matrix}. The names of columns are the identifiers
+  of selected psu, coerced by \code{\link{as.character}} to
+  avoid scientific notation in case the identifiers be of
+  \code{\link{class}} \code{\link{numeric}}. The rows
+  correspond to the selected ssu within each psu.
+}
+\description{
+  Select secondary sampling units (SSU) in one or more
+  primary sampling units (PSU), using systematic sampling.
+}
+\examples{
+# Load data with PSU identifiers and sizes.
+data(psu.ssu)
+
+# Take a sample of 20 PSU with probability
+# proportional to size with replacement.
+selected.psu <- SamplePPS(psu.ssu, 20, write = FALSE)
+
+# Take a sistematic sampling of 5 SSU within each
+# psu of selected.psu.
+(selected.ssu <- SampleSystematic(selected.psu, 5, write = FALSE))
+}
+\references{
+  Levy P and Lemeshow S (1999). Sampling of populations:
+  methods and applications, Second edition. John Wiley and
+  Sons, Inc.
+}
+\seealso{
+  \code{\link{SamplePPS}}.
+}
+

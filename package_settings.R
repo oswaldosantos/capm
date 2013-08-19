@@ -2,7 +2,7 @@ library(roxyPackage)
 
 roxy.package(
   pck.source.dir="~/Documents/Projects/capms/capm/capm",
-  pck.version="0.01-1",
+  pck.version="1.01-1",
   R.libs="~/R",
   repo.root="~/Documents/Projects/capms/capm/repo",
   pck.description=data.frame(

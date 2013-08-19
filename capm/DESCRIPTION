@@ -28,21 +28,21 @@ Authors@R: c(person(given='Oswaldo', family='Santos',
     person(given='Fernando', family='Ferreira',
     email='fernando@vps.fmvz.usp.br', role=c("aut")))
 Version: 0.01-1
-Date: 2013-08-13
+Date: 2013-08-19
 Collate:
+    'Calculate2ClusterSize.R'
+    'CalculateGlobalSens.R'
+    'CalculateLocalSens.R'
     'capm-package.R'
-    'clus2.R'
-    'globalsens.R'
-    'iasa.R'
-    'localsens.R'
-    'plotglobal.R'
-    'plotlocal.R'
-    'plotmodel.R'
-    'ppssr.R'
-    'psukml.R'
-    'pyramid.R'
-    'setranges.R'
-    'siss.R'
-    'sterim.R'
-    'svyd2.R'
-    'svysumm.R'
+    'DesignSurvey.R'
+    'MapkmlPSU.R'
+    'PlotGlobalSens.R'
+    'PlotLocalSens.R'
+    'PlotModels.R'
+    'PlotPopPyramid.R'
+    'SamplePPS.R'
+    'SampleSystematic.R'
+    'SetRanges.R'
+    'SolveIASA.R'
+    'SolveSterIm.R'
+    'SummarySurvey.R'

@@ -1,0 +1,130 @@
+#' Plot results of GlobalSens function
+#' @description Plot results of of \code{\link{CalculateGlobalSens}} function.
+#' @param global.out output from \code{\link{CalculateGlobalSens}} function.
+#' @param nam.leg string with name for the legend.
+#' @param mm.leg string with the name of the "envelope" calculated using the minimum and maximum ranges.
+#' @param sd.leg string with the name of the "envelope" calculated using the mean +- standard deviation ranges.
+#' @details Font size of saved plots is usually different to the font size seen in graphic browsers. Before changing font sizes, see the final result in saved (or preview) plots.
+#'  
+#' Other details of the plot can be modifyed using appropriate functions from \code{ggplot2} package.
+#' @seealso \link[deSolve]{plot.deSolve}.
+#' @export
+#' @examples 
+#' #######################
+#' ## Example 1         ##
+#' ## SolveSterIm model ##
+#' #######################
+#' 
+#' ## Parameters and intial conditions from estimates
+#' ## obtained in examples section from the svysumm function.
+#' pars.SolveSterIm <- c(b = 0.245, d = 0.101, 
+#'                       k = 98050.49, s = .048)
+#' init.SolveSterIm <- c(n = 89136.810, q = 0.198)
+#' 
+#' # Solve for a specific sterilization rate.
+#' SolveSterIm.pt <- SolveSterIm(pars = pars.SolveSterIm, 
+#'                               init = init.SolveSterIm, 
+#'                               time = 0:30, dd = 'b',
+#'                               im = 100, method = 'rk4')
+#' 
+#' ## Set ranges 10 % greater and lesser than the
+#' ## point estimates.
+#' rg.SolveSterIm <- SetRanges(pars = pars.SolveSterIm)
+#' 
+#' ## Calculate golobal sensitivity of combined parameters.
+#' glob.all.SolveSterIm <- CalculateGlobalSens(
+#'   model.out = SolveSterIm.pt, 
+#'   ranges = rg.SolveSterIm,
+#'   sensv = 'n', all = TRUE)
+#' 
+#' ## Calculate golobal sensitivity of individual parameters.
+#' glob.SolveSterIm <- CalculateGlobalSens(
+#'   model.out = SolveSterIm.pt,
+#'   ranges = rg.SolveSterIm, sensv = 'n')
+#'  
+#' ### Plot the sensitivities of combined parameters.
+#' PlotGlobalSens(glob.all.SolveSterIm)
+#' 
+#' ### Plot the sensitivities of individual parameters.
+#' PlotGlobalSens(glob.SolveSterIm)
+#' 
+#' #####################
+#' ## Example 2       ##
+#' ## SolveIASA model ##
+#' #####################
+#' 
+#' ## Parameters and intial conditions.
+#' pars.SolveIASA <- c(
+#'    b1 = 21870.897, b2 = 4374.179,
+#'    df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,
+#'    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
+#'    k1 = 98050.49, k2 = 8055.456, h1 = 1, h2 = .5,
+#'    ab = 0.054, ad = 0.1, v = 0.2, vc = 0.1)
+#'    
+#' init.SolveIASA <- c(
+#'    f1 = 33425.19, cf1 = 10864.901,
+#'    m1 = 38038.96, cm1 = 6807.759,
+#'    f2 = 3342.519, cf2 = 108.64901,
+#'    m2 = 3803.896, cm2 = 68.07759)
+#' 
+#' # Solve for point estimates.
+#' SolveIASA.pt <- SolveIASA(pars = pars.SolveIASA, 
+#'                           init = init.SolveIASA, 
+#'                           time = 0:30, method = 'rk4')
+#' 
+#' ## Set ranges 10 % greater and lesser than the
+#' ## point estimates.
+#' rg.SolveIASA <- SetRanges(pars = pars.SolveIASA)
+#' 
+#' ## Calculate golobal sensitivity of combined parameters.
+#' glob.allSolveIASA <- CalculateGlobalSens(
+#'   model.out = SolveIASA.pt,
+#'   ranges = rg.SolveIASA, 
+#'   sensv = 'n2', all = TRUE)
+#' 
+#' ## Calculate golobal sensitivity of an individual parameter.
+#' glob.SolveIASA <- CalculateGlobalSens(
+#'   model.out = SolveIASA.pt, 
+#'   ranges = rg.SolveIASA,
+#'   sensv = 'n2')
+#' 
+#' ### Plot the sensitivities of combined parameters.
+#' PlotGlobalSens(glob.allSolveIASA)
+#' 
+#' ### Plot the sensitivities of individual parameters.
+#' PlotGlobalSens(glob.SolveIASA)
+#'
+PlotGlobalSens <- function(global.out = NULL, nam.leg = 'Sensitivity range', mm.leg = 'min - max', sd.leg = 'mean +- sd   ') {
+  x <- Mean <- Min <- Max <- Sd <- NULL
+  if (colnames(global.out)[length(global.out)] == 'param') {
+    ggplot(global.out, aes(x = x, y = Mean)) +
+      geom_ribbon(aes(ymin = Min, ymax = Max, fill = 'red'), 
+                  alpha = .6) +
+      geom_ribbon(aes(ymin = Mean - Sd, ymax = Mean + Sd, fill = 'blue'), 
+                  alpha = .6) +
+      geom_line() + facet_wrap( ~ param) +
+      xlab('Time') + ylab('Population size')  +
+      scale_fill_manual(
+        name = nam.leg,
+        values = c('blue', 'red'),
+        labels = c(sd.leg, mm.leg)) +
+      theme(legend.position = 'top') +
+      guides(fill = guide_legend(
+        override.aes = list(alpha = 0.5)))
+  } else {
+    ggplot(global.out, aes(x = x, y = Mean)) +
+      geom_ribbon(aes(ymin = Min, ymax = Max, fill = 'red'), 
+                  alpha = .6) +
+      geom_ribbon(aes(ymin = Mean - Sd, ymax = Mean + Sd, fill = 'blue'), 
+                  alpha = .6) +
+      geom_line() +
+      xlab('Time') + ylab('Population size')  +
+      scale_fill_manual(
+        name = nam.leg,
+        values = c('blue', 'red'),
+        labels = c(sd.leg, mm.leg)) +
+      theme(legend.position = 'top') +
+      guides(fill = guide_legend(
+        override.aes = list(alpha = 0.4)))    
+  }
+}

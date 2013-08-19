@@ -20,4 +20,4 @@ Authors@R: c(person(given='Oswaldo', family='Santos',
         person(given='Fernando', family='Ferreira',
         email='fernando@vps.fmvz.usp.br', role=c("aut")))
 Version: 0.01-1
-Date: 2013-08-13
+Date: 2013-08-19

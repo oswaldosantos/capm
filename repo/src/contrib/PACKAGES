@@ -3,6 +3,6 @@ Version: 0.01-1
 Depends: R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr,
         reshape2, grid
 License: GPL (>= 3)
-MD5sum: 605b788f16b8a99dc460699a54eaab57
+MD5sum: 9bd4a2f6c3062835b8064e0c755b2af5
 NeedsCompilation: no
 
