@@ -27,8 +27,8 @@ Authors@R: c(person(given='Oswaldo', family='Santos',
     email='amaku@vps.fmvz.usp.br', role=c("aut")),
     person(given='Fernando', family='Ferreira',
     email='fernando@vps.fmvz.usp.br', role=c("aut")))
-Version: 0.01-1
-Date: 2013-08-19
+Version: 1.01-1
+Date: 2013-08-23
 Collate:
     'Calculate2ClusterSize.R'
     'CalculateGlobalSens.R'

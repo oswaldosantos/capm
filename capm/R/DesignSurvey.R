@@ -27,7 +27,7 @@ DesignSurvey <- function(psu.ssu = NULL, sample = NULL, psu.col = NULL, ssu.col 
       stop('There is no matches between PSU identifiers\nfrom psu.ssu and sample. See details section from the help page.')
     }
     names(sample)[c(psu.col, ssu.col)] <- c('psu.id', 'ssu.id')
-    pop.size <- sum(psu.ssu[, 2])
+    pop.size <- nrow(psu.ssu)
     sample <- cbind(sample, pop.size)
     sample <- merge(sample, psu.ssu, by.x = psu.col, by.y = 1)
     names(sample)[ncol(sample)] <- 'psu.size'
