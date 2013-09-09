@@ -52,7 +52,7 @@ Calculate2ClusterSize <- function(psu.ssu = NULL, psu.x = NULL, level = .95, err
     (((M / (M - 1)) * vec) + (Nb * (Nb - 1) * vdc))
   d <- if (d <= 0) {d = 1e-03} else {d = d}
   nb <- ceiling(sqrt(cost * ((1 - d) / d)))
-  X <- sum(N / sum(nip) * tapply(psu.ssu.x[ , 3], psu.ssu.x[ , 1], sum))
+  X <- sum(N / sum(nip) * psu.ssu.x[ , 3])
   z <- abs(round(qnorm((1 - level) / 2, 0, 1), 2))
   m <- ceiling((z ^ 2) * sum((((N * xi) / nbp) - X) ^ 2) / 
                  ((error ^ 2) * (X ^ 2) * (mp - 1)))
