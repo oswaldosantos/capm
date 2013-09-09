@@ -4,7 +4,7 @@
 \usage{
   DesignSurvey(psu.ssu = NULL, sample = NULL,
     psu.col = NULL, ssu.col = NULL, design = "2clusterPPS",
-    total = NULL, ...)
+    psu.2cd = NULL, total = NULL, ...)
 }
 \arguments{
   \item{psu.ssu}{\code{\link{data.frame}} with all primary
@@ -29,6 +29,10 @@
   with selection of PSU with probability proportional to
   size. "simple" defines a simple (systematic) random
   sampling design.}
+
+  \item{psu.2cd}{value indicating the number of psu
+  included in a design of type "2clusterPPS" (for psu
+  included more than once, each must be counted).}
 
   \item{total}{value corresponding to population size. If
   \code{design} is equal to "2clusterPPS", it is not

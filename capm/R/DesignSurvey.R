@@ -5,6 +5,7 @@
 #' @param psu.col the column of \code{sample} containing the psu identifiers.
 #' @param ssu.col the column of \code{sample} containing the ssu identifiers.
 #' @param design string to define the type of design. "2clusterPPS" defines a two-stage cluster sampling design with selection of PSU with probability proportional to size. "simple" defines a simple (systematic) random sampling design.
+#' @param psu.2cd value indicating the number of psu included in a design of type "2clusterPPS" (for psu included more than once, each must be counted).
 #' @param total value corresponding to population size. If \code{design} is equal to "2clusterPPS", it is not necessary to define \code{total}.
 #' @param ... further arguments passed to \code{\link{svydesign}} function. 
 #' @details A psu appearing in both \code{psu.ssu} and in \code{sample} must have the same identifier. ssu identifiers must be unique but can appear more than once if there is more than one observations per ssu.
@@ -20,7 +21,7 @@
 #' # Specify the two-stage cluster design.
 #' design = DesignSurvey(psu.ssu, Sample, psu.col = 2, ssu.col = 1)
 
-DesignSurvey <- function(psu.ssu = NULL, sample = NULL, psu.col = NULL, ssu.col = NULL, design = '2clusterPPS', total = NULL, ...) {
+DesignSurvey <- function(psu.ssu = NULL, sample = NULL, psu.col = NULL, ssu.col = NULL, design = '2clusterPPS', psu.2cd = NULL, total = NULL, ...) {
   if (design == '2clusterPPS') {
     if (length(which(!is.na(match(psu.ssu[, 1], 
                                   sample[, psu.col])))) == 0) {
@@ -31,8 +32,14 @@ DesignSurvey <- function(psu.ssu = NULL, sample = NULL, psu.col = NULL, ssu.col 
     sample <- cbind(sample, pop.size)
     sample <- merge(sample, psu.ssu, by.x = psu.col, by.y = 1)
     names(sample)[ncol(sample)] <- 'psu.size'
+    #psu.size <- tapply(sample$psu.size, sample$psu.id, unique)
+    psu.sample.size <- tapply(sample$psu.size, sample$psu.id, length)
+    psu.sample.size <- rep(psu.sample.size, psu.sample.size)
+    f.1 <- psu.2cd * sample$psu.size / sum(psu.ssu[, 2])
+    f.2 <- psu.sample.size / sample$psu.size
+    sample$weights <- 1 / (f.1 * f.2)
     return(svydesign(ids = ~ psu.id + ssu.id, fpc = ~ pop.size +
-                       psu.size, data = sample, ...))
+                       psu.size, weights = ~ weights, data = sample, ...))
   } else {
     if (design == 'simple') {
       sample$total <- total
