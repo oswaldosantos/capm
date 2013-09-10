@@ -2,7 +2,7 @@ library(roxyPackage)
 
 roxy.package(
   pck.source.dir="~/Documents/Projects/capms/capm/capm",
-  pck.version="1.01-1",
+  pck.version="1.01",
   R.libs="~/R",
   repo.root="~/Documents/Projects/capms/capm/repo",
   pck.description=data.frame(
@@ -13,7 +13,7 @@ roxy.package(
     person(given='Fernando', family='Ferreira', email='fernando@vps.fmvz.usp.br', role=c(\"aut\")))", 
     Depends= "R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr, reshape2, grid",
     Description="Provides functions to calculate the size and compostion of samples to estimate dog and cat demographic parameters and functions to simulate population dynamics under different scenarios of population management.",
-    License="GPL (>= 3)",
+    License="GPL (>= 2)",
     Encoding="UTF-8",
     LazyLoad="no",
     URL="https://github.com/oswaldosantos/capm_rpackage",

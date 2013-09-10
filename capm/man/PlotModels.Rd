@@ -5,9 +5,9 @@
   PlotModels(model.out = NULL, variable = NULL,
     col = "red", col1 = c("cadetblue1", "yellow", "red"),
     col2 = c("blue", "darkgreen", "darkred"),
-    xlabel = "Years",
+    xlabel = "Years", ylabel = NULL,
     scenlabel = "Im = (__ * owned carrying capacity)",
-    leglabel = NULL, ylabel = NULL, pop = NULL)
+    leglabel = NULL, pop = NULL)
 }
 \arguments{
   \item{model.out}{output of one of the function previously

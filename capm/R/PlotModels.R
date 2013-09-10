@@ -144,7 +144,7 @@
 #' ## Plot all scenarios and change the label for the scenarios.
 #' PlotModels(SolveIASA.rg, variable = 'N')
 #'
-PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c('cadetblue1', 'yellow', 'red'), col2 = c('blue', 'darkgreen', 'darkred'), xlabel = 'Years', scenlabel = 'Im = (__ * owned carrying capacity)', leglabel = NULL, ylabel = NULL, pop = NULL) {
+PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c('cadetblue1', 'yellow', 'red'), col2 = c('blue', 'darkgreen', 'darkred'), xlabel = 'Years', ylabel = NULL, scenlabel = 'Im = (__ * owned carrying capacity)', leglabel = NULL, pop = NULL) {
   
   if (!(class(model.out) %in% c('SolveSterIm', 'SolveIASA'))) {
     stop('model.out must be an output\nof one of the following functions:\n  SolveSterIm\n  SolveIASA')
@@ -163,18 +163,25 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
         if (is.null(ylabel)) {
           ylabel <- 'Population size'
         }
-        tmp + ylab(ylabel)
+        tmp + ylab(ylabel) +
+          ylim(0, max(model.out$results[ , variable]))
       } else {
         if (is.null(ylabel)) {
           ylabel <- 'Proportion of sterilized animals'
         }
-        tmp + ylab(ylabel)
+        tmp + ylab(ylabel) +
+          ylim(0, max(model.out$results[ , variable]))
       }
     } else {
       if (is.null(ylabel)) {
-        ylabel <- 'Population size'
+        ylabel <- 'Sterilization rate'
       }
+      scl <- nchar(as.character(
+        round(max(model.out$results[, variable])))) - 2
       if (variable == 'n') {
+        if (is.null(leglabel)) {
+          leglabel = 'Population size'
+        }
         ggplot(
           model.out$results, 
           aes_string(x = 'time', y = 'ster.rate',
@@ -183,16 +190,22 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
           ylab(ylabel) +
           geom_raster() + 
           scale_fill_continuous(
-            name = 'Population size',
+            name = paste0(leglabel,' (x ', 10 ^ scl, ')'),
             limits = c(0, max(model.out$results[, variable])), 
             breaks = round(
               seq(0 , max(model.out$results[, variable]),
                   length.out = 5)),
+            labels = round(
+              seq(0 , max(model.out$results[, variable]),
+                  length.out = 5) / (10 ^ scl), 1),
             low = col1,
             high = col2) +
           theme(legend.position = 'top',
                 legend.title = element_text(size = 12))
       } else {
+        if (is.null(leglabel)) {
+          leglabel == 'Proportion of sterilized animals'
+        }
         ggplot(
           model.out$results, 
           aes_string(x = 'time', y = 'ster.rate',
@@ -201,8 +214,8 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
           ylab(ylabel) +
           geom_raster() +
           scale_fill_continuous(
-            name = 'Proportion of sterilized animals',
-            limits = c(0, 1), breaks=seq(0 , 1, .2),
+            name = leglabel,
+            limits = c(0, 1), breaks = seq(0 , 1, .2),
             low = rev(col2), 
             high = rev(col1)) +
           theme(legend.position = 'top', 
@@ -224,70 +237,57 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
                       aes_string(x = 'time', y = variable)) + 
           geom_line(colour = col) +
           xlab(xlabel)
-        if (variable == 'f1') {
-          yla <- 'Owned intact females' 
-          yli <- max(model.out$results['f1'])
-        }
-        if (variable == 'cf1') {
-          yla <- 'Owned sterilized females' 
-          yli <- max(model.out$results['cf1'])
-        }
-        if (variable == 'm1') {
-          yla <- 'Owned intact males' 
-          yli <- max(model.out$results['m1'])
-        }
-        if (variable == 'cm1') {
-          yla <- 'Owned sterilized males' 
-          yli <- max(model.out$results['cm1'])
-        }
-        if (variable == 'f2') {
-          yla <- 'Stray intact females' 
-          yli <- max(model.out$results['f2'])
-        }
-        if (variable == 'cf2') {
-          yla <- 'Stray sterilized females' 
-          yli <- max(model.out$results['cf2'])
-        }
-        if (variable == 'm2') {
-          yla <- 'Stray intact males' 
-          yli <- max(model.out$results['m2'])
-        }
-        if (variable == 'cm2') {
-          yla <- 'Stray sterilized males' 
-          yli <- max(model.out$results['cm2'])
-        }
-        if (variable == 'n1') {
-          yla <- 'Owned intact animals' 
-          yli <- max(model.out$results['n1'])
-        }
-        if (variable == 'cn1') {
-          yla <- 'Owned sterilized animals' 
-          yli <- max(model.out$results['cn1'])
-        }
-        if (variable == 'n2') {
-          yla <- 'Stray intact animals' 
-          yli <- max(model.out$results['n2'])
-        }
-        if (variable == 'cn2') {
-          yla <- 'Stray sterilized animals' 
-          yli <- max(model.out$results['cn2'])
-        }
-        if (variable == 'N1') {
-          yla <- 'Owned animals' 
-          yli <- max(model.out$results['N1'])
-        }
-        if (variable == 'N2') {
-          yla <- 'Stray animals' 
-          yli <- max(model.out$results['N2'])
-        }
-        if (variable == 'N') {
-          yla <- 'Total pulation size' 
-          yli <- max(model.out$results['N'])
-        }
-        if (is.null(ylabel)) {
-          tmp + ylab(yla)
+        if (!is.null(ylabel)) {
+          tmp + ylab(ylabel) +
+            ylim(0, max(model.out$results[ , variable]))
         } else {
-          tmp + ylab(ylabel)
+          if (variable == 'f1') {
+            yla <- 'Owned intact females'
+          }
+          if (variable == 'cf1') {
+            yla <- 'Owned sterilized females'
+          }
+          if (variable == 'm1') {
+            yla <- 'Owned intact males'
+          }
+          if (variable == 'cm1') {
+            yla <- 'Owned sterilized males'
+          }
+          if (variable == 'f2') {
+            yla <- 'Stray intact females'
+          }
+          if (variable == 'cf2') {
+            yla <- 'Stray sterilized females'
+          }
+          if (variable == 'm2') {
+            yla <- 'Stray intact males'
+          }
+          if (variable == 'cm2') {
+            yla <- 'Stray sterilized males'
+          }
+          if (variable == 'n1') {
+            yla <- 'Owned intact animals'
+          }
+          if (variable == 'cn1') {
+            yla <- 'Owned sterilized animals'
+          }
+          if (variable == 'n2') {
+            yla <- 'Stray intact animals'
+          }
+          if (variable == 'cn2') {
+            yla <- 'Stray sterilized animals'
+          }
+          if (variable == 'N1') {
+            yla <- 'Owned animals'
+          }
+          if (variable == 'N2') {
+            yla <- 'Stray animals'
+          }
+          if (variable == 'N') {
+            yla <- 'Total pulation size'
+          }
+          tmp + ylab(yla) +
+            ylim(0, max(model.out$results[ , variable]))
         }
       } else {
         if (length(intersect(variable, 
@@ -296,33 +296,35 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
           stop(paste('Invalid variable: "', variable, 
                      '". See the help page of PlotModels.'))
         }
-        if (variable == 'f') {
-          leglabel <- c('Owned\nintact\nfemales', 
-                        'Stray\nintact\nfemales')
-        }
-        if (variable == 'cf') {
-          leglabel <- c('Owned\nsterilized\nfemales', 
-                        'Stray\nsterilized\nfemales')
-        }
-        if (variable == 'm') {
-          leglabel <- c('Owned\nintact\nmales', 
-                        'Stray\nintact\nmales')
-        }
-        if (variable == 'cm') {
-          leglabel <- c('Owned\nsterilized\nmales', 
-                        'Stray\nsterilized\nmales')
-        }
-        if (variable == 'n') {
-          leglabel <- c('Owned\nintact\nanimals', 
-                        'Stray\nintact\nanimals')
-        }
-        if (variable == 'cn') {
-          leglabel <- c('Owned\nsterilized\nanimals', 
-                        'Stray\nsterilized\nanimals')
-        }
-        if (variable == 'N') {
-          leglabel <- c('Owned\nanimals', 
-                        'Stray\nanimals')
+        if (is.null(leglabel)) {
+          if (variable == 'f') {
+            leglabel <- c('Owned\nintact\nfemales', 
+                          'Stray\nintact\nfemales')
+          }
+          if (variable == 'cf') {
+            leglabel <- c('Owned\nsterilized\nfemales', 
+                          'Stray\nsterilized\nfemales')
+          }
+          if (variable == 'm') {
+            leglabel <- c('Owned\nintact\nmales', 
+                          'Stray\nintact\nmales')
+          }
+          if (variable == 'cm') {
+            leglabel <- c('Owned\nsterilized\nmales', 
+                          'Stray\nsterilized\nmales')
+          }
+          if (variable == 'n') {
+            leglabel <- c('Owned\nintact\nanimals', 
+                          'Stray\nintact\nanimals')
+          }
+          if (variable == 'cn') {
+            leglabel <- c('Owned\nsterilized\nanimals', 
+                          'Stray\nsterilized\nanimals')
+          }
+          if (variable == 'N') {
+            leglabel <- c('Owned\nanimals', 
+                          'Stray\nanimals')
+          }
         }
         model.out$results[, 'aban'] = 
           paste('Ab =', round(model.out$results[, 'aban'], 2))
@@ -339,7 +341,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
               dat[, 'group'] == unique(dat[, 'group'])[j] &
                 dat[, 'im'] == unique(dat[, 'im'])[i], ]
             scl <- nchar(as.character(
-              round(max(dat[, 'n'])))) - 2
+              round(max(dat[, variable])))) - 2
             assign(paste0('s', i, j), 
                    ggplot(
                      dat,
@@ -355,13 +357,16 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
                      scale_fill_continuous(
                        name = paste0(leglabel[j], '\n',
                                      '(x ', 10 ^ scl, ')\n'),
-                       limits = c(0, max(dat[, variable])), 
-                       breaks = round(
-                         seq(0 , max(dat[, variable]),
-                             length.out = 5)),
-                       labels = round(round(
-                         seq(0 , max(dat[, variable]),
-                             length.out = 5)) / (10 ^ scl), 1),
+                       limits = c(0, max(model.out$results[
+                         model.out$results$group == j, variable])), 
+                       breaks = 
+                         seq(0 , max(model.out$results[
+                           model.out$results$group == j, variable]),
+                             length.out = 5),
+                       labels = round(
+                         seq(0 , max(model.out$results[
+                           model.out$results$group == j, variable]),
+                             length.out = 5) / (10 ^ scl), 1),
                        low = col1,
                        high = col2) +
                      theme(legend.position = 'right',

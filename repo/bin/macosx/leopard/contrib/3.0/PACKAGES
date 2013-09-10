@@ -14,3 +14,11 @@ License: GPL (>= 3)
 MD5sum: 5492fbc4bff260b45474920441bf1086
 NeedsCompilation: no
 
+Package: capm
+Version: 1.01
+Depends: R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr, reshape2,
+         grid
+License: GPL (>= 2)
+MD5sum: c0257cac27410084f9a04159a4fa58d3
+NeedsCompilation: no
+
