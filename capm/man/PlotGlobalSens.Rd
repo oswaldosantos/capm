@@ -2,15 +2,19 @@
 \alias{PlotGlobalSens}
 \title{Plot results of GlobalSens function}
 \usage{
-  PlotGlobalSens(global.out = NULL,
-    nam.leg = "Sensitivity range", mm.leg = "min - max",
-    sd.leg = "mean +- sd   ")
+  PlotGlobalSens(global.out = NULL, xlabel = "Time",
+    ylabel = "Population", nam.leg = "Sensitivity range",
+    mm.leg = "min - max", sd.leg = "mean +- sd   ")
 }
 \arguments{
   \item{global.out}{output from
   \code{\link{CalculateGlobalSens}} function.}
 
   \item{nam.leg}{string with name for the legend.}
+
+  \item{xlabel}{string with the name of x axis.}
+
+  \item{ylabel}{string with the name of y axis.}
 
   \item{mm.leg}{string with the name of the "envelope"
   calculated using the minimum and maximum ranges.}

@@ -2,6 +2,8 @@
 #' @description Plot results of of \code{\link{CalculateGlobalSens}} function.
 #' @param global.out output from \code{\link{CalculateGlobalSens}} function.
 #' @param nam.leg string with name for the legend.
+#' @param xlabel string with the name of x axis.
+#' @param ylabel string with the name of y axis.
 #' @param mm.leg string with the name of the "envelope" calculated using the minimum and maximum ranges.
 #' @param sd.leg string with the name of the "envelope" calculated using the mean +- standard deviation ranges.
 #' @details Font size of saved plots is usually different to the font size seen in graphic browsers. Before changing font sizes, see the final result in saved (or preview) plots.
@@ -94,7 +96,7 @@
 #' ### Plot the sensitivities of individual parameters.
 #' PlotGlobalSens(glob.SolveIASA)
 #'
-PlotGlobalSens <- function(global.out = NULL, nam.leg = 'Sensitivity range', mm.leg = 'min - max', sd.leg = 'mean +- sd   ') {
+PlotGlobalSens <- function(global.out = NULL, xlabel = 'Time', ylabel = 'Population', nam.leg = 'Sensitivity range', mm.leg = 'min - max', sd.leg = 'mean +- sd   ') {
   x <- Mean <- Min <- Max <- Sd <- NULL
   if (colnames(global.out)[length(global.out)] == 'param') {
     ggplot(global.out, aes(x = x, y = Mean)) +
@@ -103,7 +105,7 @@ PlotGlobalSens <- function(global.out = NULL, nam.leg = 'Sensitivity range', mm.
       geom_ribbon(aes(ymin = Mean - Sd, ymax = Mean + Sd, fill = 'blue'), 
                   alpha = .6) +
       geom_line() + facet_wrap( ~ param) +
-      xlab('Time') + ylab('Population size')  +
+      xlab(xlabel) + ylab(ylabel) +
       scale_fill_manual(
         name = nam.leg,
         values = c('blue', 'red'),
@@ -118,7 +120,8 @@ PlotGlobalSens <- function(global.out = NULL, nam.leg = 'Sensitivity range', mm.
       geom_ribbon(aes(ymin = Mean - Sd, ymax = Mean + Sd, fill = 'blue'), 
                   alpha = .6) +
       geom_line() +
-      xlab('Time') + ylab('Population size')  +
+      xlab(xlabel) + ylab(ylabel) +
+      ylim(0, max(global.out$Max)) +
       scale_fill_manual(
         name = nam.leg,
         values = c('blue', 'red'),
