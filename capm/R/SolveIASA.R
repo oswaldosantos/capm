@@ -28,7 +28,7 @@
 #' 
 #' \code{v}: immigration rate.
 #' 
-#' \code{vc}: proportion of sterilized immigrants.
+#' \code{z}: proportion of sterilized immigrants.
 #' 
 #' The \code{init} argument must contain named values for the inital number of animals, using the following conventions: \code{1}: owned animals; \code{2}: stray animals; \code{f}: females; \code{m}: males; and \code{s}: sterilized. Then, number values must be given for the categories:
 #' 
@@ -65,7 +65,7 @@
 #'    df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,
 #'    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
 #'    k1 = 98050.49, k2 = 8055.456, h1 = 1, h2 = .5,
-#'    ab = 0.054, ad = 0.1, v = 0.2, vc = 0.1)
+#'    ab = 0.054, ad = 0.1, v = 0.2, z = 0.1)
 #'    
 #' init.SolveIASA = c(
 #'    f1 = 33425.19, cf1 = 10864.901,
@@ -93,8 +93,8 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, ster.range = NULL, 
   if(!setequal(names(pars), c('b1', 'b2', 'df1', 'dm1', 
                               'df2', 'dm2', 'sf1', 'sf2', 
                               'sm1', 'sm2', 'k1', 'k2', 'h1',
-                              'h2', 'ab', 'ad', 'v', 'vc'))) {
-    stop('Values in pars must have the following names:\nb1, b2, df1, dm1, df2, dm2, sf1, sf2, sm1, sm2, k1, k2, h1, h2, ab, ad, v, vc')
+                              'h2', 'ab', 'ad', 'v', 'z'))) {
+    stop('Values in pars must have the following names:\nb1, b2, df1, dm1, df2, dm2, sf1, sf2, sm1, sm2, k1, k2, h1, h2, ab, ad, v, z')
   }
   if(!setequal(names(init), c('f1', 'cf1', 'm1', 'cm1',
                               'f2', 'cf2', 'm2', 'cm2'))) {
@@ -128,8 +128,8 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, ster.range = NULL, 
         wf1 <- (x1 * m1) / (m1 + f1 * h1 ^ (-1))
         bet.f1 <- wf1 - (wf1 - df1) * (omega1 / k1)
         gam.f1 <- df1
-        phi <- k1 * v * (1 - vc) / 2
-        phic <- k1 * v * vc / 2
+        phi <- k1 * v * (1 - z) / 2
+        phic <- k1 * v * z / 2
         
         d.f1 <- (bet.f1 - gam.f1 - sf1 - ab) * f1 +
           (ad * f2 + phi) * (1 - (omega1 / k1))
