@@ -111,53 +111,60 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, ster.range = NULL, 
   SolveIASAfu <- function(pars, init, time) {
     SolveIASA.fu <- function(time, init, pars) {
       with(as.list(c(init, pars)), {
-        x1 <- (b1 * (h1 * m1 + f1)) /
-          (2 * h1 * f1 * m1)
-        wf1 <- (x1 * m1) / 
-          (m1 + f1 * h1 ^ (-1))
-        bet.f1 <- wf1 - (wf1 - df1) * ((f1 + cf1 + m1 + cm1) / k1)
+        
+        if (f1 + cf1 + m1 + cm1 <= k1) {
+          omega1 <- f1 + cf1 + m1 + cm1
+        } else {
+          omega1 <- k1
+        }
+        
+        if (f2 + cf2 + m2 + cm2 <= k2) {
+          omega2 <- f2 + cf2 + m2 + cm2
+        } else {
+          omega2 <- k2
+        }
+        
+        x1 <- (b1 * (h1 * m1 + f1)) / (2 * h1 * f1 * m1)
+        wf1 <- (x1 * m1) / (m1 + f1 * h1 ^ (-1))
+        bet.f1 <- wf1 - (wf1 - df1) * (omega1 / k1)
         gam.f1 <- df1
         phi <- k1 * v * (1 - vc) / 2
         phic <- k1 * v * vc / 2
         
         d.f1 <- (bet.f1 - gam.f1 - sf1 - ab) * f1 +
-          (ad * f2 + phi) * (1 - ((f1 + cf1 + m1 + cm1) / k1))
+          (ad * f2 + phi) * (1 - (omega1 / k1))
         
         d.cf1 <- - (gam.f1 + ab) * cf1 + sf1 * f1 + 
-          (ad * cf2 + phic) * (1 - ((f1 + cf1 + m1 + cm1) / k1))
+          (ad * cf2 + phic) * (1 - (omega1 / k1))
         
-        wm1 <- (x1 * f1) / 
-          (m1 + f1 * h1 ^ (-1))
-        bet.m1 <- wm1 - (wm1 - dm1) * ((f1 + cf1 + m1 + cm1) / k1)
+        wm1 <- (x1 * f1) / (m1 + f1 * h1 ^ (-1))
+        bet.m1 <- wm1 - (wm1 - dm1) * (omega1 / k1)
         gam.m1 <- dm1
         
         d.m1 <- (bet.m1 - gam.m1 - sm1 - ab) * m1 +
-          (ad * m2 + phi) * (1 - ((f1 + cf1 + m1 + cm1) / k1))
+          (ad * m2 + phi) * (1 - (omega1 / k1))
         
         d.cm1 <- - (gam.m1 + ab) * cm1 + sm1 * m1 + 
-          (ad * cm2 + phic) * (1 - ((f1 + cf1 + m1 + cm1) / k1))
+          (ad * cm2 + phic) * (1 - (omega1 / k1))
         
-        x2 <- (b2 * (h2 * m2 + f2)) /
-          (2 * h2 * f2 * m2)
-        bet.f2 <- (m2 * x2) / 
-          (m2 + f2 * h2 ^ (-1))
-        gam.f2 <- df2 + (bet.f2 - df2) * ((f2 + cf2 + m2 + cm2) / k2)
+        x2 <- (b2 * (h2 * m2 + f2)) / (2 * h2 * f2 * m2)
+        bet.f2 <- (m2 * x2) /  (m2 + f2 * h2 ^ (-1))
+        gam.f2 <- df2 + (bet.f2 - df2) * (omega2 / k2)
         
         d.f2 <- (bet.f2 - gam.f2 - sf2 - ad) * f2 +
-          ab * f1 * (1 - ((f2 + cf2 + m2 + cm2) / k2))
+          ab * f1 * (1 - (omega2 / k2))
         
         d.cf2 <- - (gam.f2 + ad) * cf2 + sf2 * f2 +
-          ab * cf1 * (1 - ((f2 + cf2 + m2 + cm2) / k2))
+          ab * cf1 * (1 - (omega2 / k2))
         
-        bet.m2 <- (f2 * x2) / 
-          (m2 + f2 * h2 ^ (-1))
-        gam.m2 <- dm2 + (bet.m2 - dm2) * ((f2 + cf2 + m2 + cm2) / k2)
+        bet.m2 <- (f2 * x2) / (m2 + f2 * h2 ^ (-1))
+        gam.m2 <- dm2 + (bet.m2 - dm2) * (omega2 / k2)
         
         d.m2 <- (bet.m2 - gam.m2 - sm2 - ad) * m2 +
-          ab * m1 * (1 - ((f2 + cf2 + m2 + cm2) / k2))
+          ab * m1 * (1 - (omega2 / k2))
         
         d.cm2 <- - (gam.m2 + ad) * cm2 + sm2 * m2 +
-          ab * cm1 * (1 - ((f2 + cf2 + m2 + cm2) / k2))
+          ab * cm1 * (1 - (omega2 / k2))
         
         d.n1 <- d.f1 + d.m1
         d.cn1 <- d.cf1 + d.cm1
@@ -197,8 +204,7 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, ster.range = NULL, 
       pars = pars,
       init = init,
       time = time,
-      results = as.data.frame(output)
-    )
+      results = output)
     class(SolveIASA) <- 'SolveIASA'
     return(SolveIASA)
   } else {
@@ -269,7 +275,7 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, ster.range = NULL, 
       pars = pars,
       init = init,
       time = time,
-      results = as.data.frame(output))
+      results = output)
     class(SolveIASA) <- 'SolveIASA'
     return(SolveIASA)
   }
