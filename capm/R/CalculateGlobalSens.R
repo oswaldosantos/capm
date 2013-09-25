@@ -85,8 +85,8 @@
 #'   sensv = 'n2')
 #' 
 CalculateGlobalSens <- function(model.out = NULL, ranges = NULL, sensv = NULL, all = FALSE) {
-  if (!(class(model.out) %in% c('SolveSterIm', 'SolveIASA'))) {
-    stop('model.out must be an output\nof one of the following functions:\n  SolveSterIm\n  SolveIASA')
+  if (!(class(model.out) %in% c('SolveSterIm', 'SolveIASA', 'SolveTC'))) {
+    stop('model.out must be an output\nof one of the following functions:\nSolveSterIm\n  SolveIASA\nSolveTC')
   }
   if (!setequal(rownames(ranges), names(model.out$pars))) {
     stop('All parameters in ranges must be\ncontained in "pars" argument  of model.out.')

@@ -69,8 +69,8 @@
 #' pairs(local.SolveIASA2, col = "green")
 #' 
 CalculateLocalSens <- function(model.out = NULL, sensv = 'n') {
-  if (!(class(model.out) %in% c('SolveSterIm', 'SolveIASA'))) {
-    stop('model.out must be an output\nof one of the following functions:\n  SolveSterIm\n  SolveIASA')
+  if (!(class(model.out) %in% c('SolveSterIm', 'SolveIASA', 'SolveTC'))) {
+    stop('model.out must be an output\nof one of the following functions:\nSolveSterIm\n  SolveIASA\nSolveTC')
   }
   if (length(intersect(sensv, names(model.out$init))) == 0) {
     stop('All variables in sensv must be\ncontained in "init" argument  of model.out.')
