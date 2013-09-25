@@ -1,24 +1,21 @@
 Package: capm
 Version: 0.01-1
-Depends: R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr, reshape2,
-         grid
+Depends: R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr, reshape2, grid
 License: GPL (>= 3)
 MD5sum: 0464ca2c9622d33c53049c06a60a7cfa
 NeedsCompilation: no
 
 Package: capm
 Version: 1.01-1
-Depends: R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr, reshape2,
-         grid
+Depends: R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr, reshape2, grid
 License: GPL (>= 3)
 MD5sum: 5492fbc4bff260b45474920441bf1086
 NeedsCompilation: no
 
 Package: capm
 Version: 1.01
-Depends: R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr, reshape2,
-         grid
+Depends: R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr, reshape2, grid
 License: GPL (>= 2)
-MD5sum: c0257cac27410084f9a04159a4fa58d3
+MD5sum: 98612f3f28b45af67e93f96a9889a5af
 NeedsCompilation: no
 

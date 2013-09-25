@@ -12,9 +12,8 @@ Depends:
     reshape2,
     grid
 Description: Provides functions to calculate the size and compostion of samples
-    to estimate dog and cat demographic parameters and functions to
-    simulate population dynamics under different scenarios of population
-    management.
+    to estimate dog and cat demographic parameters and functions to simulate
+    population dynamics under different scenarios of population management.
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyLoad: no
@@ -27,7 +26,7 @@ Authors@R: c(person(given='Oswaldo', family='Santos',
     person(given='Fernando', family='Ferreira',
     email='fernando@vps.fmvz.usp.br', role=c("aut")))
 Version: 1.01
-Date: 2013-09-10
+Date: 2013-09-25
 Collate:
     'Calculate2ClusterSize.R'
     'CalculateGlobalSens.R'
@@ -44,4 +43,5 @@ Collate:
     'SetRanges.R'
     'SolveIASA.R'
     'SolveSterIm.R'
+    'SolveTC.R'
     'SummarySurvey.R'

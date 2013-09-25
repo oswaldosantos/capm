@@ -4,7 +4,7 @@
 #' Package: \tab capm\cr
 #' Type: \tab Package\cr
 #' Version: \tab 1.01\cr
-#' Date: \tab 2013-09-10\cr
+#' Date: \tab 2013-09-25\cr
 #' Depends: \tab R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr, reshape2, grid\cr
 #' Encoding: \tab UTF-8\cr
 #' License: \tab GPL (>= 2)\cr
