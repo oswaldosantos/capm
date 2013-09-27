@@ -1,15 +1,15 @@
 #' Plot results of capm model functions
-#' @description Plot results of the following functions: \code{\link{SolveSterIm}} and \code{\link{SolveIASA}}.
+#' @description Plot results of objects of class \code{capmModels}.
 #' @param model.out output of one of the function previously mentioned.
 #' @param variable string to specify the variable to be ploted. 
 #' 
-#' For \code{\link{SolveSterIm}} function: 
+#' For \code{\link{SolveSI}} function: 
 #' 
 #' "n" (population size).
 #' 
 #' "q" (proportion of sterilized animals). 
 #' 
-#' For \code{\link{SolveIASA}} function using with only point estimates:
+#' For \code{\link{SolveIASA}} function using only point estimates:
 #' 
 #' "f1" (owned intact females).
 #' 
@@ -57,9 +57,17 @@
 #' 
 #' "N" (Total population stratified by reproductive status).
 #' 
-#' @param col string indicating the color of ploted line, when \code{ster.range} is \code{NULL}.
-#' @param col1 \code{\link{character}} \code{\link{vector}} indicating the color of lowest (highest) population sizes (proportion of sterilized animals), when \code{ster.range} is not \code{NULL}.
-#' @param col2 \code{\link{character}} \code{\link{vector}} indicating the color of lowest (highest) population sizes (proportion of sterilized animals), when \code{ster.range} is not \code{NULL}.
+#' For \code{\link{SolveTC}} function: 
+#' 
+#' "n" (fertile animals).
+#' 
+#' "cn" (sterilized animals).
+#' 
+#' "tcn" (cumulative of sterilized animals)
+#' 
+#' @param col string indicating the color of ploted line, when \code{s.range} is \code{NULL}.
+#' @param col1 \code{\link{character}} \code{\link{vector}} indicating the color of lowest (highest) population sizes (proportion of sterilized animals), when \code{s.range} is not \code{NULL}.
+#' @param col2 \code{\link{character}} \code{\link{vector}} indicating the color of lowest (highest) population sizes (proportion of sterilized animals), when \code{s.range} is not \code{NULL}.
 #' @param xlabel string with the name of x axis.
 #' @param ylabel string with the name of y axis.
 #' @param leglabel string with the name of legend, for plots of \code{\link{SolveIASA}} output.
@@ -72,36 +80,38 @@
 #' @seealso \link[deSolve]{plot.deSolve}.
 #' @export
 #' @examples
-#' #######################
-#' ## Example 1         ##
-#' ## SolveSterIm model ##
-#' #######################
+#' ###################
+#' ## Example 1     ##
+#' ## SolveSI model ##
+#' ###################
 #' 
-#' ## Parameters and initial conditions from estimates   
-#' ## obtained in examples section from svysumm function.
-#' pars.SolveSterIm = c(b = 0.245, d = 0.101, 
-#'                      k = 98050.49, s = .048)
-#' init.SolveSterIm = c(n = 89136.810, q = 0.198)
+#' # Parameters and initial conditions from estimates   
+#' # obtained in examples section from svysumm function but
+#' # estimating a proportion insted of a total for births.
+#' pars.solvesi = c(b = 0.245, d = 0.101, 
+#'                  k = 98050.49, s = .048)
+#' init.solvesi = c(n = 89136.810, q = 0.198)
 #' 
 #' # Solve for a specific sterilization rate.
-#' SolveSterIm.pt = SolveSterIm(pars = pars.SolveSterIm, 
-#'                              init = init.SolveSterIm, 
-#'                              time = 0:30, dd = 'b',
-#'                              im = 100, method = 'rk4')
+#' solvesi.pt = SolveSI(pars = pars.solvesi, 
+#'                      init = init.solvesi, 
+#'                      time = 0:30, dd = 'b',
+#'                      im = 100, method = 'rk4')
 #' 
 #' # Solve for a range of sterilization rates.
-#' SolveSterIm.rg = SolveSterIm(pars = pars.SolveSterIm,
-#'                              init = init.SolveSterIm,
-#'                              time = 0:30, dd = 'b', im = 100, 
-#'                              ster.range = seq(0, .4, l = 50))
+#' solvesi.rg = SolveSI(pars = pars.solvesi,
+#'                      init = init.solvesi,
+#'                      time = 0:30, dd = 'b', im = 100, 
+#'                      s.range = seq(0, .4, l = 50),
+#'                      method = 'rk4')
 #'  
 #' ## Plot the population size
-#' PlotModels(SolveSterIm.pt, variable = 'n')
-#' PlotModels(SolveSterIm.rg, variable = 'n')
+#' PlotModels(solvesi.pt, variable = 'n')
+#' PlotModels(solvesi.rg, variable = 'n')
 #' 
 #' ## Plot the proportion of sterilized animals
-#' PlotModels(SolveSterIm.pt, variable = 'q')
-#' PlotModels(SolveSterIm.rg, variable = 'q')
+#' PlotModels(solvesi.pt, variable = 'q')
+#' PlotModels(solvesi.rg, variable = 'q')
 #' 
 #' #####################
 #' ## Example 2       ##
@@ -109,14 +119,14 @@
 #' #####################
 #' 
 #' ## Parameters and intial conditions.
-#' pars.SolveIASA = c(
+#' pars.solveiasa = c(
 #'    b1 = 21870.897, b2 = 4374.179,
 #'    df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,
 #'    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
 #'    k1 = 98050.49, k2 = 8055.456, h1 = 1, h2 = .5,
 #'    ab = 0.054, ad = 0.1, v = 0.2, z = 0.1)
 #'    
-#' init.SolveIASA = c(
+#' init.solveiasa = c(
 #'    f1 = 33425.19, cf1 = 10864.901,
 #'    m1 = 38038.96, cm1 = 6807.759,
 #'    f2 = 3342.519, cf2 = 108.64901,
@@ -124,32 +134,31 @@
 #'    
 #' 
 #' # Solve for point estimates.
-#' SolveIASA.pt <- SolveIASA(pars = pars.SolveIASA, 
-#'                           init = init.SolveIASA, 
-#'                           time = 0:30)
+#' solveiasa.pt <- SolveIASA(pars = pars.solveiasa, 
+#'                           init = init.solveiasa, 
+#'                           time = 0:30, method = 'rk4')
 #' 
 #' # Solve for parameter ranges.
-#' SolveIASA.rg <- SolveIASA(pars = pars.SolveIASA, 
-#'                           init = init.SolveIASA, 
+#' solveiasa.rg <- SolveIASA(pars = pars.solveiasa, 
+#'                           init = init.solveiasa, 
 #'                           time = 0:20,
-#'                           ster.range = seq(0, .4, l = 20), 
-#'                           aban.range = c(0, .2), 
-#'                           adop.range = c(0, .2),
+#'                           s.range = seq(0, .4, l = 20), 
+#'                           ab.range = c(0, .2), 
+#'                           ad.range = c(0, .2),
 #'                           im.range = c(0, .1),
 #'                           method = 'rk4')
 #'                 
 #' ## Plot stray population sizes using point estimates
-#' PlotModels(SolveIASA.pt, variable = "n2")
+#' PlotModels(solveiasa.pt, variable = "n2")
 #' 
 #' ## Plot all scenarios and change the label for the scenarios.
-#' PlotModels(SolveIASA.rg, variable = 'N')
+#' PlotModels(solveiasa.rg, variable = 'N')
 #'
 PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c('cadetblue1', 'yellow', 'red'), col2 = c('blue', 'darkgreen', 'darkred'), xlabel = 'Years', ylabel = NULL, scenlabel = 'Im = (__ * owned carrying capacity)', leglabel = NULL, pop = NULL) {
-  
-  if (!(class(model.out) %in% c('SolveSterIm', 'SolveIASA', 'SolveTC'))) {
-    stop('model.out must be an output\nof one of the following functions:\n  SolveSterIm\n  SolveIASA')
+    if (class(model.out) != 'capmModels') {
+    stop('model.out must be of class "capmModels".')
   }
-  if (class(model.out) == 'SolveSterIm') {
+  if (model.out$names == 'SolveSI') {
     if (length(intersect(variable, c('n', 'q'))) == 0) {
       stop(paste0('Invalid variable: "', variable,
                   '". See the help page of PlotModels.'))
@@ -184,7 +193,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
         }
         ggplot(
           model.out$results, 
-          aes_string(x = 'time', y = 'ster.rate',
+          aes_string(x = 'time', y = 's.rate',
                      fill = variable)) +
           xlab(xlabel) + 
           ylab(ylabel) +
@@ -208,7 +217,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
         }
         ggplot(
           model.out$results, 
-          aes_string(x = 'time', y = 'ster.rate',
+          aes_string(x = 'time', y = 's.rate',
                      fill = variable)) +
           xlab(xlabel) + 
           ylab(ylabel) +
@@ -223,7 +232,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
       }
     }
   }
-  if (class(model.out) == 'SolveIASA') {
+  if (model.out$names == 'SolveIASA') {
     if (ncol(model.out$results) == 16) {
       if (length(intersect(variable, 
                            c('f1', 'cf1', 'm1', 'cm1',
@@ -409,7 +418,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
       }
     }
   }
-  if (class(model.out) == 'SolveTC') {
+  if (model.out$names == 'SolveTC') {
     if (length(intersect(variable, c('n', 'cn', 'tcn'))) == 0) {
       stop(paste0('Invalid variable: "', variable,
                   '". See the help page of PlotModels.'))

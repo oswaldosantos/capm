@@ -5,10 +5,10 @@
 #' @param time time sequence for which output is wanted; the first value of times must be the initial time.
 #' @param dd string equal to \code{b} or \code{d} to define if density-dependece act on birth or death rartes respectively.
 #' @param im a number representing the total of immigrants per time unit.
-#' @param ster.range optional sequence (between 0 and 1) of the sterilization rates to be simulated.
+#' @param s.range optional sequence (between 0 and 1) of the sterilization rates to be simulated.
 #' @param ... further arguments passed to \link[deSolve]{ode} function.
 #' @details The implemented model is described by Amaku, et. al., 2009 and the function is a wrapper around the defaults of \link[deSolve]{ode} function, whose help page must be consulted for details.
-#' @return \code{\link{list}} of class \code{capmModels}. The first element, \code{*$model}, is the model function. The second, third and fourth elements are vectors (\code{*$pars}, \code{*$init}, \code{*$time}, respectively) containing the \code{pars}, \code{init} and \code{time} arguments of the function. The fifth element \code{*$results} is a \code{\link{data.frame}} with up to as many rows as elements in time. First column contains the time, second column the population size and third column the proportion of sterilized animals. If \code{ster.range} is specified, fourth column contains the used sterilization rates.
+#' @return \code{\link{list}} of class \code{capmModels}. The first element, \code{name}, is a string with the name of the function, the second element, \code{*$model}, is the model function. The third, fourth and fifth elements are vectors (\code{*$pars}, \code{*$init}, \code{*$time}, respectively) containing the \code{pars}, \code{init} and \code{time} arguments of the function. The sisxthth element \code{*$results} is a \code{\link{data.frame}} with up to as many rows as elements in time. First column contains the time, second column the population size and third column the proportion of sterilized animals. If \code{s.range} is specified, fourth column contains its specific instances.
 #' @note Logistic growth models are not intended for scenarios in which population size is greater than carrying capacity and growth rate is negative.
 #' @references Amaku M, Dias R and Ferreira F (2009). Dinamica populacional canina: potenciais efeitos de campanhas de esterilizacao. Revista Panamericana de Salud Publica, 25(4), pp. 300-304.
 #' 
@@ -19,24 +19,24 @@
 #' # Parameters and initial conditions from estimates   
 #' # obtained in examples section from svysumm function but
 #' # estimating a proportion insted of a total for births.
-#' pars.SolveSI = c(b = 0.245, d = 0.101, 
-#'                      k = 98050.49, s = .048)
-#' init.SolveSI = c(n = 89136.810, q = 0.198)
+#' pars.solvesi = c(b = 0.245, d = 0.101, 
+#'                  k = 98050.49, s = .048)
+#' init.solvesi = c(n = 89136.810, q = 0.198)
 #' 
 #' # Solve for a specific sterilization rate.
-#' SolveSI.pt = SolveSI(pars = pars.SolveSI, 
-#'                              init = init.SolveSI, 
-#'                              time = 0:30, dd = 'b',
-#'                              im = 100, method = 'rk4')
+#' solvesi.pt = SolveSI(pars = pars.solvesi, 
+#'                      init = init.solvesi, 
+#'                      time = 0:30, dd = 'b',
+#'                      im = 100, method = 'rk4')
 #' 
 #' # Solve for a range of sterilization rates.
-#' SolveSI.rg = SolveSI(pars = pars.SolveSI,
-#'                              init = init.SolveSI,
-#'                              time = 0:30, dd = 'b', im = 100, 
-#'                              ster.range = seq(0, .4, l = 50),
-#'                              method = 'rk4')
+#' solvesi.rg = SolveSI(pars = pars.solvesi,
+#'                      init = init.solvesi,
+#'                      time = 0:30, dd = 'b', im = 100, 
+#'                      s.range = seq(0, .4, l = 50),
+#'                      method = 'rk4')
 #' 
-SolveSI <- function(pars = NULL, init = NULL, time = NULL, dd = 'b', im = 0, ster.range = NULL, ...) {
+SolveSI <- function(pars = NULL, init = NULL, time = NULL, dd = 'b', im = 0, s.range = NULL, ...) {
   SolveSIfu <- function(pars = NULL, init = NULL, time = NULL) {
     SolveSI.fu <- function(time, init, pars) {
       with(as.list(c(init, pars)), {
@@ -59,22 +59,22 @@ SolveSI <- function(pars = NULL, init = NULL, time = NULL, dd = 'b', im = 0, ste
     return(as.data.frame(SolveSI.out))
   }
   
-  if (!is.null(ster.range)) {
+  if (!is.null(s.range)) {
     output <- NULL
     paras <- pars
-    for(i in 1:length(ster.range)) {
-      paras['s'] = ster.range[i]
+    for(i in 1:length(s.range)) {
+      paras['s'] = s.range[i]
       tmp = SolveSIfu(pars = paras, init = init, time = time)
       output = rbind(output, tmp)
     }   
-    ster.rate <- rep(ster.range , each = length(time))   
+    s.rate <- rep(s.range , each = length(time))   
     SolveSI <- list(
       name = 'SolveSI',
       model = SolveSIfu,
       pars = pars,
       init = init,
       time = time,
-      results = as.data.frame(cbind(output, ster.rate))
+      results = as.data.frame(cbind(output, s.rate))
     )
     class(SolveSI) <- 'capmModels'
     return(SolveSI)
@@ -82,6 +82,7 @@ SolveSI <- function(pars = NULL, init = NULL, time = NULL, dd = 'b', im = 0, ste
   } else {
     output <- SolveSIfu(pars = pars, init = init, time = time)
     SolveSI <- list(
+      name = 'SolveSI',
       model = SolveSIfu,
       pars = pars,
       init = init,

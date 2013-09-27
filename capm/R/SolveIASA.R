@@ -3,11 +3,11 @@
 #' @param pars a named \code{\link{vector}} of length 21, with point estimates of model parameters (see details).
 #' @param init a named \code{\link{vector}} of length 8, with point estimates of model parameters (see details).
 #' @param time time sequence for which output is wanted; the first value of times must be the initial time.
-#' @param ster.range optional sequence (between 0 and 1) of the sterilization rates to be simulated.
-#' @param aban.range optional \code{\link{vector}} of length 2, with range (ie, confidence interval) of abandonment rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.
-#' @param adop.range optional \code{\link{vector}} of length 2, with range (ie, confidence interval) of adoption rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.
+#' @param s.range optional sequence (between 0 and 1) of the sterilization rates to be simulated.
+#' @param ab.range optional \code{\link{vector}} of length 2, with range (ie, confidence interval) of abandonment rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.
+#' @param ad.range optional \code{\link{vector}} of length 2, with range (ie, confidence interval) of adoption rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.
 #' @param im.range optional \code{\link{vector}} of length 2, with range of values of immigration rates to be assessed. This must be expressed as a percentage of owned animals carrying capacity.
-#' @param ster.fm logical. If \code{TRUE}, ster.range is used for females and males and if \code{FALSE}, it is only used for females (for males, the point estimate given in \code{pars} is used.)
+#' @param s.fm logical. If \code{TRUE}, s.range is used for females and males and if \code{FALSE}, it is only used for females (for males, the point estimate given in \code{pars} is used.)
 #' @param ... further arguments passed to \link[deSolve]{ode} function.
 #' @details The \code{pars} argument must contain named values, using the following conventions: \code{1}: owned animals; \code{2}: stray animals; \code{f}: females; \code{m}: males. Then:
 #' 
@@ -34,16 +34,9 @@
 #' 
 #' \code{f1}, \code{cf1}, \code{m1}, \code{cm1}, \code{f2}, \code{cf2}, \code{m2} and \code{cm2}.
 #' 
-#' If any range is specified (e.g \code{ster.range}), the ramining ranges must be specified too (\code{aban.range}, \code{adop.range} and \code{im.range}).
+#' If any range is specified (e.g \code{s.range}), the ramining ranges must be specified too (\code{ab.range}, \code{ad.range} and \code{im.range}).
 #' The function is a wrapper around the defaults of \link[deSolve]{ode} function, whose help page must be consulted for details. An exception is the method argument which is defined as "rk4".
-#' @return \code{\link{list}} of class \code{SolveIASA}. The first element, \code{*$model}, is the model function. The second, third and fourth elements are vectors (\code{*$pars}, \code{*$init}, \code{*$time}, respectively) containing the \code{pars}, \code{init} and \code{time} arguments of the function. The fifth element \code{*$results} is a \code{\link{data.frame}} with up to as many rows as elements in time. Using the conventions for init argument (see details), the first fourth columns contain the variables: \code{f}, \code{sf}, \code{m} and \code{sm}. The fifth and sisxth columns contain the number of animals and the group respectively (\code{n} and \code{group}). Other optional arguments are:
-#' 
-#' \code{ster}: instance fo sterilization rate (if \code{ster.range} is specified).
-#' 
-#' \code{aban}: instance fo abandonment rate (if \code{aban.range} is specified).
-#' 
-#' \code{adop}: instance fo adoption rate (if \code{adop.range} is specified).
-#' 
+#' @return \code{\link{list}} of class \code{capmModels}. The first element, \code{name}, is a string with the name of the function, the second element, \code{*$model}, is the model function. The third, fourth and fifth elements are vectors (\code{*$pars}, \code{*$init}, \code{*$time}, respectively) containing the \code{pars}, \code{init} and \code{time} arguments of the function. The sisxthth element \code{*$results} is a \code{\link{data.frame}} with up to as many rows as elements in time. The first column contain the time and subsequent columns contain the sise of specific subpopulations, named according to above conventions. The \code{group} column differentiate between owned and strays. When *.range arguments are given, the last fourth columsn specify their instances.
 #' @note Logistic growth models are not intended for scenarios in which
 #' population size is greater than carrying capacity and growth rate is negative.
 #' @note The implemented model is part of an ongoing PhD thesis (student: Oswaldo Santos; adviser: Fernando Ferreira) to be finished on the next months.
@@ -60,14 +53,14 @@
 #' # 20 % greater than those rates in owned animals.
 #' # The consequences of those "guesses" can be quantified
 #' # with globalsens and localsens functions.
-#' pars.SolveIASA = c(
+#' pars.solveiasa = c(
 #'    b1 = 21870.897, b2 = 4374.179,
 #'    df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,
 #'    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
 #'    k1 = 98050.49, k2 = 8055.456, h1 = 1, h2 = .5,
 #'    ab = 0.054, ad = 0.1, v = 0.2, z = 0.1)
 #'    
-#' init.SolveIASA = c(
+#' init.solveiasa = c(
 #'    f1 = 33425.19, cf1 = 10864.901,
 #'    m1 = 38038.96, cm1 = 6807.759,
 #'    f2 = 3342.519, cf2 = 108.64901,
@@ -75,21 +68,21 @@
 #'    
 #' 
 #' # Solve for point estimates.
-#' SolveIASA.pt <- SolveIASA(pars = pars.SolveIASA, 
-#'                           init = init.SolveIASA, 
+#' solveiasa.pt <- SolveIASA(pars = pars.solveiasa, 
+#'                           init = init.solveiasa, 
 #'                           time = 0:30, method = 'rk4')
 #' 
 #' # Solve for parameter ranges.
-#' SolveIASA.rg <- SolveIASA(pars = pars.SolveIASA, 
-#'                           init = init.SolveIASA, 
+#' solveiasa.rg <- SolveIASA(pars = pars.solveiasa, 
+#'                           init = init.solveiasa, 
 #'                           time = 0:20,
-#'                           ster.range = seq(0, .4, l = 20), 
-#'                           aban.range = c(0, .2), 
-#'                           adop.range = c(0, .2),
+#'                           s.range = seq(0, .4, l = 20), 
+#'                           ab.range = c(0, .2), 
+#'                           ad.range = c(0, .2),
 #'                           im.range = c(0, .1),
 #'                           method = 'rk4')
 #'
-SolveIASA <- function(pars = NULL, init = NULL, time = NULL, ster.range = NULL, aban.range = NULL, adop.range = NULL, im.range = NULL, ster.fm = TRUE, ...) {
+SolveIASA <- function(pars = NULL, init = NULL, time = NULL, s.range = NULL, ab.range = NULL, ad.range = NULL, im.range = NULL, s.fm = TRUE, ...) {
   if(!setequal(names(pars), c('b1', 'b2', 'df1', 'dm1', 
                               'df2', 'dm2', 'sf1', 'sf2', 
                               'sm1', 'sm2', 'k1', 'k2', 'h1',
@@ -196,52 +189,53 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, ster.range = NULL, 
     
     return(as.data.frame(SolveIASA.out))
   } 
-  if (is.null(ster.range) & is.null(aban.range) & 
-        is.null(adop.range)) {
+  if (is.null(s.range) & is.null(ab.range) & 
+        is.null(ad.range)) {
     output <- SolveIASAfu(pars = pars, init = init, time = time)
     SolveIASA <- list(
+      name = 'SolveIASA',
       model = SolveIASAfu,
       pars = pars,
       init = init,
       time = time,
       results = output)
-    class(SolveIASA) <- 'SolveIASA'
+    class(SolveIASA) <- 'capmModels'
     return(SolveIASA)
   } else {
-    if(length(aban.range) != 2) {
-      stop('The length of aban.range must be equal to 2.')
+    if(length(ab.range) != 2) {
+      stop('The length of ab.range must be equal to 2.')
     }
-    if(length(adop.range) != 2) {
-      stop('The length of adop.range must be equal to 2.')
+    if(length(ad.range) != 2) {
+      stop('The length of ad.range must be equal to 2.')
     }
     if(length(im.range) != 2) {
       stop('The length of im.range must be equal to 2.')
     }
-    if(any(aban.range > 1 | adop.range > 1 | im.range > 1)) {
-      stop('Values in aban.range, adop.range,\nim.range and ster.range must be lesser or equal to 1.')
+    if(any(ab.range > 1 | ad.range > 1 | im.range > 1)) {
+      stop('Values in ab.range, ad.range,\nim.range and s.range must be lesser or equal to 1.')
     }
-    if(any(ster.range > 1)) {
-      stop('Values in ster.range must be lesser or equal to 1.')
+    if(any(s.range > 1)) {
+      stop('Values in s.range must be lesser or equal to 1.')
     }
     output <- NULL
     paras <- pars
-    aban.range <- c(aban.range[1], pars['ab'], aban.range[2])
-    adop.range <- c(adop.range[1], pars['ad'], adop.range[2])
+    ab.range <- c(ab.range[1], pars['ab'], ab.range[2])
+    ad.range <- c(ad.range[1], pars['ad'], ad.range[2])
     for (i in 1:length(im.range)) {
-      for (i1 in 1:length(aban.range)) {
-        for (i2 in 1:length(adop.range)) {
-          for (i3 in 1:length(ster.range)) {
-            if (ster.fm) {
+      for (i1 in 1:length(ab.range)) {
+        for (i2 in 1:length(ad.range)) {
+          for (i3 in 1:length(s.range)) {
+            if (s.fm) {
               paras[c('sf1', 'sm1', 'sf2', 'sm2',
                       'ad', 'ab', 'v')] <- 
-                c(ster.range[i3], ster.range[i3],
-                  ster.range[i3], ster.range[i3],
-                  adop.range[i2], aban.range[i1],
+                c(s.range[i3], s.range[i3],
+                  s.range[i3], s.range[i3],
+                  ad.range[i2], ab.range[i1],
                   im.range[i])
             } else {
               paras[c('sf1', 'sf2', 'ad', 'ab', 'v')] <- 
-                c(ster.range[i3], ster.range[i3],
-                  adop.range[i2], aban.range[i1], 
+                c(s.range[i3], s.range[i3],
+                  ad.range[i2], ab.range[i1], 
                   im.range[i])
             }
             output <- rbind(
@@ -260,23 +254,24 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, ster.range = NULL, 
       cn = c(rowSums(output[, c(3, 5)]), rowSums(output[, c(7, 9)])),
       N = c(rowSums(output[, 2:5]), rowSums(output[, 6:9])),
       group = rep(1:2, each = nrow(output)),
-      ster = rep(ster.range, each = length(time)),
-      adop = rep(adop.range, 
-                 each = length(time) * length(ster.range)),
-      aban = rep(aban.range, 
-                 each = length(time) * length(ster.range) * 
-                   length(adop.range)),
+      s = rep(s.range, each = length(time)),
+      ad = rep(ad.range, 
+                 each = length(time) * length(s.range)),
+      ab = rep(ab.range, 
+                 each = length(time) * length(s.range) * 
+                   length(ad.range)),
       im = rep(im.range, 
-               each = length(time) * length(ster.range) * 
-                 length(adop.range) * length(aban.range)))
+               each = length(time) * length(s.range) * 
+                 length(ad.range) * length(ab.range)))
     names(output)[1:5] <- c('t', 'f', 'cf', 'm', 'cm')
     SolveIASA <- list(
+      name = 'SolveIASA',
       model = SolveIASAfu,
       pars = pars,
       init = init,
       time = time,
       results = output)
-    class(SolveIASA) <- 'SolveIASA'
+    class(SolveIASA) <- 'capmModels'
     return(SolveIASA)
   }
 }
