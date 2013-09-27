@@ -1,9 +1,9 @@
-\name{SolveSterIm}
-\alias{SolveSterIm}
+\name{SolveSI}
+\alias{SolveSI}
 \title{Sterilization and immigration effects.}
 \usage{
-  SolveSterIm(pars = NULL, init = NULL, time = NULL,
-    dd = "b", im = 0, ster.range = NULL, ...)
+  SolveSI(pars = NULL, init = NULL, time = NULL, dd = "b",
+    im = 0, ster.range = NULL, ...)
 }
 \arguments{
   \item{pars}{\code{\link{vector}} of length 4. The values
@@ -33,7 +33,7 @@
   \link[deSolve]{ode} function.}
 }
 \value{
-  \code{\link{list}} of class \code{SolveSterIm}. The first
+  \code{\link{list}} of class \code{capmModels}. The first
   element, \code{*$model}, is the model function. The
   second, third and fourth elements are vectors
   (\code{*$pars}, \code{*$init}, \code{*$time},
@@ -66,19 +66,19 @@
 # Parameters and initial conditions from estimates
 # obtained in examples section from svysumm function but
 # estimating a proportion insted of a total for births.
-pars.SolveSterIm = c(b = 0.245, d = 0.101,
+pars.SolveSI = c(b = 0.245, d = 0.101,
                      k = 98050.49, s = .048)
-init.SolveSterIm = c(n = 89136.810, q = 0.198)
+init.SolveSI = c(n = 89136.810, q = 0.198)
 
 # Solve for a specific sterilization rate.
-SolveSterIm.pt = SolveSterIm(pars = pars.SolveSterIm,
-                             init = init.SolveSterIm,
+SolveSI.pt = SolveSI(pars = pars.SolveSI,
+                             init = init.SolveSI,
                              time = 0:30, dd = 'b',
                              im = 100, method = 'rk4')
 
 # Solve for a range of sterilization rates.
-SolveSterIm.rg = SolveSterIm(pars = pars.SolveSterIm,
-                             init = init.SolveSterIm,
+SolveSI.rg = SolveSI(pars = pars.SolveSI,
+                             init = init.SolveSI,
                              time = 0:30, dd = 'b', im = 100,
                              ster.range = seq(0, .4, l = 50),
                              method = 'rk4')
