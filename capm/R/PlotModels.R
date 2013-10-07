@@ -203,7 +203,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
             limits = c(0, max(model.out$results[, variable])), 
             breaks = round(
               seq(0 , max(model.out$results[, variable]),
-                  length.out = 5)),
+                  length.out = 5) - 0.5),
             labels = round(
               seq(0 , max(model.out$results[, variable]),
                   length.out = 5) / (10 ^ scl), 1),
@@ -228,7 +228,8 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
             low = rev(col2), 
             high = rev(col1)) +
           theme(legend.position = 'top', 
-                legend.title = element_text(size = 12))
+                legend.title = element_text(size = 12),
+                legend.text = element_text(angle = 90))
       }
     }
   }
@@ -477,7 +478,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
           limits = c(0, max(model.out$results[, variable])), 
           breaks = round(
             seq(0 , max(model.out$results[, variable]),
-                length.out = 5)),
+                length.out = 5) - 0.5),
           labels = round(
             seq(0 , max(model.out$results[, variable]),
                 length.out = 5) / (10 ^ scl), 1),
@@ -485,8 +486,8 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
           high = col2) +
         theme(legend.position = 'top',
               legend.title = element_text(size = 12),
-              plot.margin = 
-                unit(c(.5, 0, 0, 0), 'lines')) +
+              legend.text = element_text(angle = 90),
+              plot.margin = unit(c(.5, 0, 0, 0), 'lines')) +
         facet_grid(z ~ s)
     }
   }
