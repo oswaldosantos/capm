@@ -464,7 +464,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
       }
       model.out$results[, 'ster'] <- 
         paste('S =', round(model.out$results[, 's'], 2))
-      model.out$results[, 'fer.im'] = 
+      model.out$results[, 'fer.im'] <- 
         paste('Z =', round(model.out$results[, 'z'], 2))
       ggplot(
         model.out$results,
