@@ -3,9 +3,8 @@
 \title{Immigration, abandonment, sterilization and adoption of companion animals}
 \usage{
   SolveIASA(pars = NULL, init = NULL, time = NULL,
-    ster.range = NULL, aban.range = NULL,
-    adop.range = NULL, im.range = NULL, ster.fm = TRUE,
-    ...)
+    s.range = NULL, ab.range = NULL, ad.range = NULL,
+    im.range = NULL, s.fm = TRUE, ...)
 }
 \arguments{
   \item{pars}{a named \code{\link{vector}} of length 21,
@@ -17,16 +16,16 @@
   \item{time}{time sequence for which output is wanted; the
   first value of times must be the initial time.}
 
-  \item{ster.range}{optional sequence (between 0 and 1) of
-  the sterilization rates to be simulated.}
+  \item{s.range}{optional sequence (between 0 and 1) of the
+  sterilization rates to be simulated.}
 
-  \item{aban.range}{optional \code{\link{vector}} of length
+  \item{ab.range}{optional \code{\link{vector}} of length
   2, with range (ie, confidence interval) of abandonment
   rates to be assessed. If given, the rates evaluated are
   those specified by the argument plus the point estimate
   given in \code{pars}.}
 
-  \item{adop.range}{optional \code{\link{vector}} of length
+  \item{ad.range}{optional \code{\link{vector}} of length
   2, with range (ie, confidence interval) of adoption rates
   to be assessed. If given, the rates evaluated are those
   specified by the argument plus the point estimate given
@@ -37,37 +36,29 @@
   assessed. This must be expressed as a percentage of owned
   animals carrying capacity.}
 
-  \item{ster.fm}{logical. If \code{TRUE}, ster.range is
-  used for females and males and if \code{FALSE}, it is
-  only used for females (for males, the point estimate
-  given in \code{pars} is used.)}
+  \item{s.fm}{logical. If \code{TRUE}, s.range is used for
+  females and males and if \code{FALSE}, it is only used
+  for females (for males, the point estimate given in
+  \code{pars} is used.)}
 
   \item{...}{further arguments passed to
   \link[deSolve]{ode} function.}
 }
 \value{
-  \code{\link{list}} of class \code{SolveIASA}. The first
-  element, \code{*$model}, is the model function. The
-  second, third and fourth elements are vectors
-  (\code{*$pars}, \code{*$init}, \code{*$time},
+  \code{\link{list}} of class \code{capmModels}. The first
+  element, \code{name}, is a string with the name of the
+  function, the second element, \code{*$model}, is the
+  model function. The third, fourth and fifth elements are
+  vectors (\code{*$pars}, \code{*$init}, \code{*$time},
   respectively) containing the \code{pars}, \code{init} and
-  \code{time} arguments of the function. The fifth element
-  \code{*$results} is a \code{\link{data.frame}} with up to
-  as many rows as elements in time. Using the conventions
-  for init argument (see details), the first fourth columns
-  contain the variables: \code{f}, \code{sf}, \code{m} and
-  \code{sm}. The fifth and sisxth columns contain the
-  number of animals and the group respectively (\code{n}
-  and \code{group}). Other optional arguments are:
-
-  \code{ster}: instance fo sterilization rate (if
-  \code{ster.range} is specified).
-
-  \code{aban}: instance fo abandonment rate (if
-  \code{aban.range} is specified).
-
-  \code{adop}: instance fo adoption rate (if
-  \code{adop.range} is specified).
+  \code{time} arguments of the function. The sisxthth
+  element \code{*$results} is a \code{\link{data.frame}}
+  with up to as many rows as elements in time. The first
+  column contain the time and subsequent columns contain
+  the sise of specific subpopulations, named according to
+  above conventions. The \code{group} column differentiate
+  between owned and strays. When *.range arguments are
+  given, the last fourth columsn specify their instances.
 }
 \description{
   System of ordinary differential equations to simulate the
@@ -111,9 +102,9 @@
   \code{f1}, \code{cf1}, \code{m1}, \code{cm1}, \code{f2},
   \code{cf2}, \code{m2} and \code{cm2}.
 
-  If any range is specified (e.g \code{ster.range}), the
-  ramining ranges must be specified too (\code{aban.range},
-  \code{adop.range} and \code{im.range}). The function is a
+  If any range is specified (e.g \code{s.range}), the
+  ramining ranges must be specified too (\code{ab.range},
+  \code{ad.range} and \code{im.range}). The function is a
   wrapper around the defaults of \link[deSolve]{ode}
   function, whose help page must be consulted for details.
   An exception is the method argument which is defined as
@@ -139,14 +130,14 @@
 # 20 \% greater than those rates in owned animals.
 # The consequences of those "guesses" can be quantified
 # with globalsens and localsens functions.
-pars.SolveIASA = c(
+pars.solveiasa = c(
    b1 = 21870.897, b2 = 4374.179,
    df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,
    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
    k1 = 98050.49, k2 = 8055.456, h1 = 1, h2 = .5,
    ab = 0.054, ad = 0.1, v = 0.2, z = 0.1)
 
-init.SolveIASA = c(
+init.solveiasa = c(
    f1 = 33425.19, cf1 = 10864.901,
    m1 = 38038.96, cm1 = 6807.759,
    f2 = 3342.519, cf2 = 108.64901,
@@ -154,17 +145,17 @@ init.SolveIASA = c(
 
 
 # Solve for point estimates.
-SolveIASA.pt <- SolveIASA(pars = pars.SolveIASA,
-                          init = init.SolveIASA,
+solveiasa.pt <- SolveIASA(pars = pars.solveiasa,
+                          init = init.solveiasa,
                           time = 0:30, method = 'rk4')
 
 # Solve for parameter ranges.
-SolveIASA.rg <- SolveIASA(pars = pars.SolveIASA,
-                          init = init.SolveIASA,
+solveiasa.rg <- SolveIASA(pars = pars.solveiasa,
+                          init = init.solveiasa,
                           time = 0:20,
-                          ster.range = seq(0, .4, l = 20),
-                          aban.range = c(0, .2),
-                          adop.range = c(0, .2),
+                          s.range = seq(0, .4, l = 20),
+                          ab.range = c(0, .2),
+                          ad.range = c(0, .2),
                           im.range = c(0, .1),
                           method = 'rk4')
 }

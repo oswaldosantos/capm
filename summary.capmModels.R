@@ -5,7 +5,7 @@
 #' 
 summary.capmModels <- function(model.out) {
   cat('\nModel function: ', model.out$name)
-  cat('\nParameters:\n\n')
+  cat('\n\nParameters:\n\n')
   print(model.out$pars)
   cat('\nInitial conditions:\n\n')
   print(model.out$init)

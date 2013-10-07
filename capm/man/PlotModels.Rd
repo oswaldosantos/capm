@@ -16,14 +16,14 @@
   \item{variable}{string to specify the variable to be
   ploted.
 
-  For \code{\link{SolveSterIm}} function:
+  For \code{\link{SolveSI}} function:
 
   "n" (population size).
 
   "q" (proportion of sterilized animals).
 
-  For \code{\link{SolveIASA}} function using with only
-  point estimates:
+  For \code{\link{SolveIASA}} function using only point
+  estimates:
 
   "f1" (owned intact females).
 
@@ -70,21 +70,28 @@
 
   "cn" (sterilized animals).
 
-  "N" (Total population stratified by reproductive
-  status).}
+  "N" (Total population stratified by reproductive status).
+
+  For \code{\link{SolveTC}} function:
+
+  "n" (fertile animals).
+
+  "cn" (sterilized animals).
+
+  "tcn" (cumulative of sterilized animals)}
 
   \item{col}{string indicating the color of ploted line,
-  when \code{ster.range} is \code{NULL}.}
+  when \code{s.range} is \code{NULL}.}
 
   \item{col1}{\code{\link{character}} \code{\link{vector}}
   indicating the color of lowest (highest) population sizes
-  (proportion of sterilized animals), when
-  \code{ster.range} is not \code{NULL}.}
+  (proportion of sterilized animals), when \code{s.range}
+  is not \code{NULL}.}
 
   \item{col2}{\code{\link{character}} \code{\link{vector}}
   indicating the color of lowest (highest) population sizes
-  (proportion of sterilized animals), when
-  \code{ster.range} is not \code{NULL}.}
+  (proportion of sterilized animals), when \code{s.range}
+  is not \code{NULL}.}
 
   \item{xlabel}{string with the name of x axis.}
 
@@ -113,8 +120,7 @@
   rate are ploted.}
 }
 \description{
-  Plot results of the following functions:
-  \code{\link{SolveSterIm}} and \code{\link{SolveIASA}}.
+  Plot results of objects of class \code{capmModels}.
 }
 \details{
   Font size of saved plots is usually different to the font
@@ -125,36 +131,38 @@
   appropriate functions from \code{ggplot2} package.
 }
 \examples{
-#######################
-## Example 1         ##
-## SolveSterIm model ##
-#######################
+###################
+## Example 1     ##
+## SolveSI model ##
+###################
 
-## Parameters and initial conditions from estimates
-## obtained in examples section from svysumm function.
-pars.SolveSterIm = c(b = 0.245, d = 0.101,
-                     k = 98050.49, s = .048)
-init.SolveSterIm = c(n = 89136.810, q = 0.198)
+# Parameters and initial conditions from estimates
+# obtained in examples section from svysumm function but
+# estimating a proportion insted of a total for births.
+pars.solvesi = c(b = 0.245, d = 0.101,
+                 k = 98050.49, s = .048)
+init.solvesi = c(n = 89136.810, q = 0.198)
 
 # Solve for a specific sterilization rate.
-SolveSterIm.pt = SolveSterIm(pars = pars.SolveSterIm,
-                             init = init.SolveSterIm,
-                             time = 0:30, dd = 'b',
-                             im = 100, method = 'rk4')
+solvesi.pt = SolveSI(pars = pars.solvesi,
+                     init = init.solvesi,
+                     time = 0:30, dd = 'b',
+                     im = 100, method = 'rk4')
 
 # Solve for a range of sterilization rates.
-SolveSterIm.rg = SolveSterIm(pars = pars.SolveSterIm,
-                             init = init.SolveSterIm,
-                             time = 0:30, dd = 'b', im = 100,
-                             ster.range = seq(0, .4, l = 50))
+solvesi.rg = SolveSI(pars = pars.solvesi,
+                     init = init.solvesi,
+                     time = 0:30, dd = 'b', im = 100,
+                     s.range = seq(0, .4, l = 50),
+                     method = 'rk4')
 
 ## Plot the population size
-PlotModels(SolveSterIm.pt, variable = 'n')
-PlotModels(SolveSterIm.rg, variable = 'n')
+PlotModels(solvesi.pt, variable = 'n')
+PlotModels(solvesi.rg, variable = 'n')
 
 ## Plot the proportion of sterilized animals
-PlotModels(SolveSterIm.pt, variable = 'q')
-PlotModels(SolveSterIm.rg, variable = 'q')
+PlotModels(solvesi.pt, variable = 'q')
+PlotModels(solvesi.rg, variable = 'q')
 
 #####################
 ## Example 2       ##
@@ -162,14 +170,14 @@ PlotModels(SolveSterIm.rg, variable = 'q')
 #####################
 
 ## Parameters and intial conditions.
-pars.SolveIASA = c(
+pars.solveiasa = c(
    b1 = 21870.897, b2 = 4374.179,
    df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,
    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
    k1 = 98050.49, k2 = 8055.456, h1 = 1, h2 = .5,
    ab = 0.054, ad = 0.1, v = 0.2, z = 0.1)
 
-init.SolveIASA = c(
+init.solveiasa = c(
    f1 = 33425.19, cf1 = 10864.901,
    m1 = 38038.96, cm1 = 6807.759,
    f2 = 3342.519, cf2 = 108.64901,
@@ -177,25 +185,25 @@ init.SolveIASA = c(
 
 
 # Solve for point estimates.
-SolveIASA.pt <- SolveIASA(pars = pars.SolveIASA,
-                          init = init.SolveIASA,
-                          time = 0:30)
+solveiasa.pt <- SolveIASA(pars = pars.solveiasa,
+                          init = init.solveiasa,
+                          time = 0:30, method = 'rk4')
 
 # Solve for parameter ranges.
-SolveIASA.rg <- SolveIASA(pars = pars.SolveIASA,
-                          init = init.SolveIASA,
+solveiasa.rg <- SolveIASA(pars = pars.solveiasa,
+                          init = init.solveiasa,
                           time = 0:20,
-                          ster.range = seq(0, .4, l = 20),
-                          aban.range = c(0, .2),
-                          adop.range = c(0, .2),
+                          s.range = seq(0, .4, l = 20),
+                          ab.range = c(0, .2),
+                          ad.range = c(0, .2),
                           im.range = c(0, .1),
                           method = 'rk4')
 
 ## Plot stray population sizes using point estimates
-PlotModels(SolveIASA.pt, variable = "n2")
+PlotModels(solveiasa.pt, variable = "n2")
 
 ## Plot all scenarios and change the label for the scenarios.
-PlotModels(SolveIASA.rg, variable = 'N')
+PlotModels(solveiasa.rg, variable = 'N')
 }
 \references{
   Chang W (2012). R Graphics Cookbook. O'Reilly Media, Inc.

@@ -37,6 +37,21 @@
   \item{...}{further arguments passed to
   \link[deSolve]{ode} function.}
 }
+\value{
+  \code{\link{list}} of class \code{capmModels}. The first
+  element, \code{name}, is a string with the name of the
+  function, the second element, \code{*$model}, is the
+  model function. The third, fourth and fifth elements are
+  vectors (\code{*$pars}, \code{*$init}, \code{*$time},
+  respectively) containing the \code{pars}, \code{init} and
+  \code{time} arguments of the function. The sisxthth
+  element \code{*$results} is a \code{\link{data.frame}}
+  with up to as many rows as elements in time. The first
+  fourth columns contain the time and the variables:
+  \code{n}, \code{cn} and \code{tcn}. When *.range
+  arguments are given, additional columns contain the
+  variables \code{f}, \code{s} and \code{z}.
+}
 \description{
   System of ordinary differential equations to simulate the
   effect of reversible contraception in a population at
@@ -50,24 +65,24 @@
 }
 \examples{
 # Parameters and initial conditions.
-pars.solve.tc <- c(d = 1 / 6, fr = 0.5, s = 0.2,
+pars.solvetc <- c(d = 1 / 6, fr = 0.5, s = 0.2,
                    z = 0.8, dr = 0.1)
 
-init.solve.tc <- c(n = 950, cn = 50)
+init.solvetc <- c(n = 950, cn = 50)
 
 # Solve for point estimates.
-solve.tc.pt <- SolveTC(pars = pars.solve.tc,
-                          init = init.solve.tc,
-                          time = 0:30, method = 'rk4')
+solvetc.pt <- SolveTC(pars = pars.solvetc,
+                      init = init.solvetc,
+                      time = 0:30, method = 'rk4')
 
 # Solve for parameter ranges.
-solve.tc.rg <- SolveTC(pars = pars.solve.tc,
-                          init = init.solve.tc,
-                          time = 0:20,
-                          fr.range = seq(0, 1, 0.01),
-                          s.range = c(0.05, 0.4),
-                          z.range = c(0.95, 0.6),
-                          method = 'rk4')
+solvetc.rg <- SolveTC(pars = pars.solvetc,
+                      init = init.solvetc,
+                      time = 0:20,
+                      fr.range = seq(0, 1, 0.01),
+                      s.range = c(0.05, 0.4),
+                      z.range = c(0.95, 0.6),
+                      method = 'rk4')
 }
 \seealso{
   \link[deSolve]{ode}.

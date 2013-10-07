@@ -6,9 +6,7 @@
     sensv = NULL, all = FALSE)
 }
 \arguments{
-  \item{model.out}{results of one of the following
-  functions: \code{\link{SolveSterIm}} or
-  \code{\link{SolveIASA}}.}
+  \item{model.out}{an object of class \code{capmModels}.}
 
   \item{ranges}{output from the \code{\link{SetRanges}}
   function, applied to the \code{pars} argument used in the
@@ -34,7 +32,8 @@
   Wraper for \code{\link{sensRange}} function which
   calculate sensitivities of population size, to parameters
   used in one of the following functions:
-  \code{\link{SolveSterIm}} or \code{\link{SolveIASA}}.
+  \code{\link{SolveIASA}}, \code{\link{SolveSI}} or
+  \code{\link{SolveTC}} .
 }
 \details{
   When \code{all} is equal to TRUE, \code{dist} argument in
@@ -43,37 +42,37 @@
   argument in \code{\link{sensRange}} is defined as 100.
 }
 \examples{
-#######################
-## Example 1         ##
-## SolveSterIm model ##
-#######################
+###################
+## Example 1     ##
+## SolveSI model ##
+###################
 
 ## Parameters and intial conditions from estimates
 ## obtained in examples section from the svysumm function.
-pars.SolveSterIm <- c(b = 0.245, d = 0.101,
+pars.solvesi <- c(b = 0.245, d = 0.101,
                       k = 98050.49, s = .048)
-init.SolveSterIm <- c(n = 89136.810, q = 0.198)
+init.solvesi <- c(n = 89136.810, q = 0.198)
 
 # Solve for a specific sterilization rate.
-SolveSterIm.pt <- SolveSterIm(pars = pars.SolveSterIm,
-                              init = init.SolveSterIm,
-                              time = 0:30, dd = 'b',
-                              im = 100, , method = 'rk4')
+solvesi.pt <- SolveSI(pars = pars.solvesi,
+                      init = init.solvesi,
+                      time = 0:30, dd = 'b',
+                      im = 100, , method = 'rk4')
 
 ## Set ranges 10 \% greater and lesser than the
 ## point estimates.
-rg.SolveSterIm <- SetRanges(pars = pars.SolveSterIm)
+rg.solvesi <- SetRanges(pars = pars.solvesi)
 
 ## Calculate golobal sensitivity of combined parameters.
-glob.all.SolveSterIm <- CalculateGlobalSens(
-  model.out = SolveSterIm.pt,
-  ranges = rg.SolveSterIm,
+glob.all.solvesi <- CalculateGlobalSens(
+  model.out = solvesi.pt,
+  ranges = rg.solvesi,
   sensv = 'n', all = TRUE)
 
 ## Calculate golobal sensitivity of individual parameters.
-glob.SolveSterIm <- CalculateGlobalSens(
-  model.out = SolveSterIm.pt,
-  ranges = rg.SolveSterIm, sensv = 'n')
+glob.solvesi <- CalculateGlobalSens(
+  model.out = solvesi.pt,
+  ranges = rg.solvesi, sensv = 'n')
 
 #####################
 ## Example 2       ##
@@ -81,38 +80,38 @@ glob.SolveSterIm <- CalculateGlobalSens(
 #####################
 
 ## Parameters and intial conditions.
-pars.SolveIASA <- c(
+pars.solveiasa <- c(
    b1 = 21870.897, b2 = 4374.179,
    df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,
    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
    k1 = 98050.49, k2 = 8055.456, h1 = 1, h2 = .5,
    ab = 0.054, ad = 0.1, v = 0.2, vc = 0.1)
 
-init.SolveIASA <- c(
+init.solveiasa <- c(
    f1 = 33425.19, cf1 = 10864.901,
    m1 = 38038.96, cm1 = 6807.759,
    f2 = 3342.519, cf2 = 108.64901,
    m2 = 3803.896, cm2 = 68.07759)
 
 # Solve for point estimates.
-SolveIASA.pt <- SolveIASA(pars = pars.SolveIASA,
-                          init = init.SolveIASA,
+solveiasa.pt <- SolveIASA(pars = pars.solveiasa,
+                          init = init.solveiasa,
                           time = 0:30, method = 'rk4')
 
 ## Set ranges 10 \% greater and lesser than the
 ## point estimates.
-rg.SolveIASA <- SetRanges(pars = pars.SolveIASA)
+rg.solveiasa <- SetRanges(pars = pars.solveiasa)
 
 ## Calculate golobal sensitivity of combined parameters.
 glob.allSolveIASA <- CalculateGlobalSens(
-  model.out = SolveIASA.pt,
-  ranges = rg.SolveIASA,
+  model.out = solveiasa.pt,
+  ranges = rg.solveiasa,
   sensv = 'n2', all = TRUE)
 
 ## Calculate golobal sensitivity of an individual parameter.
 glob.SolveIASA <- CalculateGlobalSens(
-  model.out = SolveIASA.pt,
-  ranges = rg.SolveIASA,
+  model.out = solveiasa.pt,
+  ranges = rg.solveiasa,
   sensv = 'n2')
 }
 \references{
