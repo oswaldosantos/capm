@@ -158,7 +158,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
     if (class(model.out) != 'capmModels') {
     stop('model.out must be of class "capmModels".')
   }
-  if (model.out$names == 'SolveSI') {
+  if (model.out$name == 'SolveSI') {
     if (length(intersect(variable, c('n', 'q'))) == 0) {
       stop(paste0('Invalid variable: "', variable,
                   '". See the help page of PlotModels.'))
@@ -232,7 +232,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
       }
     }
   }
-  if (model.out$names == 'SolveIASA') {
+  if (model.out$name == 'SolveIASA') {
     if (ncol(model.out$results) == 16) {
       if (length(intersect(variable, 
                            c('f1', 'cf1', 'm1', 'cm1',
@@ -418,7 +418,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
       }
     }
   }
-  if (model.out$names == 'SolveTC') {
+  if (model.out$name == 'SolveTC') {
     if (length(intersect(variable, c('n', 'cn', 'tcn'))) == 0) {
       stop(paste0('Invalid variable: "', variable,
                   '". See the help page of PlotModels.'))
@@ -462,12 +462,12 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
         }
       }
       model.out$results[, 'ster'] <- 
-        paste('S =', round(model.out$results[, 'ster'], 2))
+        paste('S =', round(model.out$results[, 's'], 2))
       model.out$results[, 'fer.im'] = 
-        paste('Z =', round(model.out$results[, 'fer.im'], 2))
+        paste('Z =', round(model.out$results[, 'z'], 2))
       ggplot(
         model.out$results,
-        aes_string(x = 'time', y = 'fer.rec',
+        aes_string(x = 'time', y = 'f',
                    fill = variable)) +
         xlab(xlabel) + 
         ylab(ylabel) +
@@ -487,7 +487,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
               legend.title = element_text(size = 12),
               plot.margin = 
                 unit(c(.5, 0, 0, 0), 'lines')) +
-        facet_grid(fer.im ~ ster)
+        facet_grid(z ~ s)
     }
   }
 }
