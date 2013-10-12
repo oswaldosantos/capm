@@ -29,13 +29,11 @@ Calculate2ClusterSize <- function(psu.ssu = NULL, psu.x = NULL, level = .95, err
     stop('level and error must be lesser or equal to 1.')
   }
   psu.ssu.x <- merge(psu.ssu, psu.x, by = 1)
-  tmp <- nrow(psu.ssu.x)
-  psu.ssu.x[, 1] <- paste0(psu.ssu.x[, 1], 1:tmp)
   M <- nrow(psu.ssu)
   N <- sum(psu.ssu[ , 2])
   Ni <- psu.ssu[ , 2]
   Nip <- tapply(psu.ssu.x[, 2], psu.ssu.x[ , 1], unique)
-  Nb <- mean(Ni)
+  Nb <- mean(Ni) 
   nip <- tapply(psu.ssu.x[, 2], psu.ssu.x[ , 1], length)
   nbp <- mean(nip)
   mp <- length(unique(psu.ssu.x[ , 1])) 
@@ -43,20 +41,22 @@ Calculate2ClusterSize <- function(psu.ssu = NULL, psu.x = NULL, level = .95, err
   xi <- tapply(psu.ssu.x[ , 3], psu.ssu.x[ , 1], sum)
   Xi <- xi * Nip / nip
   vec <- sum((Xi - mean(Xi)) ^ 2) / mp
-  qua <- (psu.ssu.x[ , 3] - mean(psu.ssu.x[ , 3])) ^ 2
+  dq <- as.numeric(unlist(tapply(
+    psu.ssu.x[ , 3], psu.ssu.x[ , 1],
+    function(x) (x - mean(x))^2))) 
   vdc <- sum((Nip / (Nip - 1)) * 
-               (tapply(qua, psu.ssu.x[ , 1], sum))) / sum(nip)
-  dpec <- sqrt(vec)
-  dpdc <- sqrt(vdc)
+               (tapply(dq, psu.ssu.x[ , 1], sum))) / sum(nip)
   d <- (((M / (M - 1)) * vec) - (Nb * vdc)) / 
-    (((M / (M - 1)) * vec) + (Nb * (Nb - 1) * vdc))
-  d <- if (d <= 0) {d = 1e-03} else {d = d}
+    (((M / (M - 1)) * vec) + (Nb * (Nb - 1) * vdc)) 
+  d <- if (d < 0 | d == 0) {d = 1e-03} else {d = d}
   nb <- ceiling(sqrt(4 * cost * ((1 - d) / d)))
-  X <- sum(N / sum(nip) * psu.ssu.x[ , 3])
+  if (nb < 2) {nb = 2}
+  X <- sum(N / sum(nip) * tapply(psu.ssu.x[ , 3], 
+                                 psu.ssu.x[ , 1], sum)) 
   z <- abs(round(qnorm((1 - level) / 2, 0, 1), 2))
-  m <- ceiling((z ^ 2) * sum((((N * xi) / nbp) - X) ^ 2) / 
+  m <- ceiling(((z ^ 2) * sum((((N * xi) / nbp) - X) ^ 2)) / 
                  ((error ^ 2) * (X ^ 2) * (mp - 1)))
-  if(m > M) {m = M}
+  if(m > M) {m  <-  M}
   
   sam <- matrix(c(m * nb, m, nb, vec, vdc, d), 
                 ncol = 1)

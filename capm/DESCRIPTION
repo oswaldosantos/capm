@@ -46,3 +46,4 @@ Collate:
     'SolveSI.R'
     'SolveTC.R'
     'SummarySurvey.R'
+    'summary.capmModels.R'
