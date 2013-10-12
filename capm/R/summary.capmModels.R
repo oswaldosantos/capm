@@ -1,8 +1,7 @@
-#' Summary for class \code{capmModels}.
+#' Summary for class 'capmModels'
 #' @usage summary(model.out, ...)
-#' @method method for class 'capmModels'.
-#' @rdname SolveStreIm
-#' 
+#' @s3method summary.capmModels
+#' @export
 summary.capmModels <- function(model.out) {
   cat('\nModel function: ', model.out$name)
   cat('\n\nParameters:\n\n')
