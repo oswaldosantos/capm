@@ -37,24 +37,24 @@ Standards-Version: 3.9.3.1
 Format: 3.0 (quilt)
 Directory: source/unstable
 Files:
- dfb27ecc3c08d6b06e39b6e707d7ee07 905 r-other-capm_1.01-1.dsc
- e6e2eeab4b4f18b9bd469ffb27303955 364422 r-other-capm_1.01.orig.tar.gz
- ad9d2e12384e5ed744e4ec0c3dc5f89b 1629 r-other-capm_1.01-1.debian.tar.gz
+ 84d146cb5092d2b004c4535c7be9d2eb 905 r-other-capm_1.01-1.dsc
+ 5de73732f452b375b5bef1a43c127041 364745 r-other-capm_1.01.orig.tar.gz
+ c36a00e9e21fad214e08f237f082ef4a 1622 r-other-capm_1.01-1.debian.tar.gz
 Homepage: https://github.com/oswaldosantos/capm_rpackage
 Package-List: 
  r-other-capm deb math optional
 Checksums-Sha1:
- 78592228283ca4ec6e7493b6fc7f15abd29bd2a7 905 r-other-capm_1.01-1.dsc
- 9b73f25e5df57badaca73906c00fd180d4b504da 364422 r-other-capm_1.01.orig.tar.gz
- 75796a5fc87230317e9cde89d39264f6e4c61a92 1629 r-other-capm_1.01-1.debian.tar.gz
+ 2d6fbdd1f30ae94d9725b3fc7048cd702a260a89 905 r-other-capm_1.01-1.dsc
+ ebdf9b3fc39ed34bced994f79619e8deffc435b2 364745 r-other-capm_1.01.orig.tar.gz
+ 7505fca3654c295f90cd875e4f15c2294ddc7d98 1622 r-other-capm_1.01-1.debian.tar.gz
 Checksums-Sha256:
- e47ad12aef05f305a87b32ac369e7f4424e24b9a79c2408947f9d3a8f8777a2e 905 r-other-capm_1.01-1.dsc
- ee0a18ebb64d0262eaa03466d27dfa234280041788141c28cd2ea0abeae13fa7 364422 r-other-capm_1.01.orig.tar.gz
- 7829fd82ef57524ca9762960dc9b22c8d114db49684252ab7ea14554b68f84ec 1629 r-other-capm_1.01-1.debian.tar.gz
+ ce469837eb1618acf53fcfe78b5e9ac3585536c0f5de82fbe8f5aa5cdc2dda8d 905 r-other-capm_1.01-1.dsc
+ 36217bbf23260ab43fec2cb3711d98dffaa4cd8a48a1f48d141950aaf1bfc649 364745 r-other-capm_1.01.orig.tar.gz
+ 771d1e440471d1970be130b9bc22c57ae56e2965119787333169d6303951f33d 1622 r-other-capm_1.01-1.debian.tar.gz
 Checksums-Sha512:
- c1bdb493fdc02d4d21e683f7f16d6c646f4d916975a7f475464774fd2257137ade49f920bc5029e2987b3b02237ae5d41167d6b8fee1791f3319258f5155c91b 905 r-other-capm_1.01-1.dsc
- 0a114c3cd22dc8560010f5931af573e7a43d11d2047da6403668a18b6d195d274af1326dd928169e9246e59e27fc184366909fcbf20a3ee00fae7d75e425472f 364422 r-other-capm_1.01.orig.tar.gz
- 07e58c87b7ce59dbb4538e68f3fd3f7196e0863ab7335423e597ab1139f2733a9b2f9e4f107b60e3394ca99ca37d2e8e6e92fede126c9e9935d8926ffc65e449 1629 r-other-capm_1.01-1.debian.tar.gz
+ 20d6f0d2bb5dee264d45c3ed0a91c42a2c4f11739a02e7d1690f5cb373fbca3557fe6c50065d6abcd7b0459d76361de47f31bfaadc9f7a9d0556d7093460ba5b 905 r-other-capm_1.01-1.dsc
+ c90458085b13cca2f78ce98cbfece9b081daa0f0ef70adcf1d80f8b09d4f2587f5a93f8c7e9df18898db02ccaa5b33908970054e15c1bacf4bbf28bb88f8f565 364745 r-other-capm_1.01.orig.tar.gz
+ fd36c0ee760d246ac17f75d36ab4783f9bedcc56917685316bf44412b51816836a6c435728cc951c56b3b055fb3371a47983025143be80d28ee92a48cc27549f 1622 r-other-capm_1.01-1.debian.tar.gz
 
 Package: r-other-capm
 Binary: r-other-capm

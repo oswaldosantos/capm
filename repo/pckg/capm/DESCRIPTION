@@ -2,9 +2,9 @@ Package: capm
 Type: Package
 Title: Companion Animal Population Management
 Depends: R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr, reshape2, grid
-Description: Provides functions to calculate the size and compostion of samples to estimate
-          dog and cat demographic parameters and functions to simulate population dynamics
-          under different scenarios of population management.
+Description: Provides functions to calculate the size and compostion of samples to
+          estimate dog and cat demographic parameters and functions to simulate population
+          dynamics under different scenarios of population management.
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyLoad: no
@@ -16,4 +16,4 @@ Authors@R: c(person(given='Oswaldo', family='Santos', email='oswaldosant@gmail.c
           person(given='Fernando', family='Ferreira', email='fernando@vps.fmvz.usp.br',
           role=c("aut")))
 Version: 1.01
-Date: 2013-10-07
+Date: 2013-10-15
