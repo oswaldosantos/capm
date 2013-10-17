@@ -2,7 +2,7 @@
 #' @usage summary(model.out, ...)
 #' @s3method summary.capmModels
 #' @export
-summary.capmModels <- function(model.out) {
+print.capmModels <- function(model.out) {
   cat('\nModel function: ', model.out$name)
   cat('\n\nParameters:\n\n')
   print(model.out$pars)
