@@ -57,3 +57,21 @@ Description: GNU R package: Provides functions to calculate the size and
  population management.
 Homepage: https://github.com/oswaldosantos/capm_rpackage
 
+Package: r-other-capm
+Priority: optional
+Section: math
+Installed-Size: 699
+Maintainer: Oswaldo Santos <oswaldosant@gmail.com>
+Architecture: all
+Version: 0.1.0-1
+Depends: r-base (>= 3.0.0)
+Filename: dists/unstable/main/all/r-other-capm_0.1.0-1_all.deb
+Size: 288418
+MD5sum: 6fa917a6c5455c3510c9372a52936cd3
+SHA1: b0c48fb4c5785187d520ef5f49059ff3b52fcc5b
+SHA256: d166710bb587b1618b6418d88ac2979ae9bc03a42d1432f6e11c7e1d1e62d6a9
+SHA512: afe951d539faedf2265b2859daa213ede5ab473b673380621708eb7d6211c63479dc675b656c1e56f185441d62e16b3247ae26354a5f571188f365e6577744dc
+Description: GNU R package: Provides functions to calculate the size and compostion of samples to estimate dog and cat demographic parameters and functions to simulate
+ population dynamics under different scenarios of population management.
+Homepage: https://github.com/oswaldosantos/capm_rpackage
+

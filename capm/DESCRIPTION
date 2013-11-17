@@ -25,8 +25,8 @@ Authors@R: c(person(given='Oswaldo', family='Santos',
     family='Amaku', email='amaku@vps.fmvz.usp.br', role=c("aut")),
     person(given='Fernando', family='Ferreira',
     email='fernando@vps.fmvz.usp.br', role=c("aut")))
-Version: 1.01
-Date: 2013-10-15
+Version: 0.1.0
+Date: 2013-11-17
 Collate:
     'Calculate2ClusterSize.R'
     'CalculateGlobalSens.R'
@@ -39,11 +39,11 @@ Collate:
     'PlotLocalSens.R'
     'PlotModels.R'
     'PlotPopPyramid.R'
+    'print.capmModels.R'
     'SamplePPS.R'
     'SampleSystematic.R'
     'SetRanges.R'
     'SolveIASA.R'
     'SolveSI.R'
     'SolveTC.R'
-    'summary.capmModels.R'
     'SummarySurvey.R'

@@ -1,13 +1,13 @@
-#' Summary for class 'capmModels'
-#' @usage summary(model.out, ...)
-#' @s3method summary.capmModels
-#' @export
-print.capmModels <- function(model.out) {
+print.capmModels <- function(x, ...) {
   cat('\nModel function: ', model.out$name)
   cat('\n\nParameters:\n\n')
-  print(model.out$pars)
+  model.out$pars
   cat('\nInitial conditions:\n\n')
-  print(model.out$init)
+  model.out$init
   cat('\nInitial time: ', model.out$time[1])
   cat('\n\nFinal time: ', model.out$time[length(model.out$time)])
+  cat('Head:\n\n')
+  head(model.out$results)
+  cat('Tail:\n\n')
+  tail(model.out$results)
 }
