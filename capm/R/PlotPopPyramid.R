@@ -102,7 +102,8 @@ PlotPopPyramid <- function(dat = NULL, col.age = NULL, col.sex = NULL, col.cas =
           plot.margin = unit(c(0.5, 0, 0.5, 0.5), "lines"),
           axis.ticks.length = unit(0, 'lines'),
           axis.text.y = element_blank(),
-          axis.title.y = element_blank()) +
+          axis.title.y = element_blank(),
+          axis.text.x = element_text(size = 11)) +
     scale_x_continuous(breaks = 0:max(dat2$age),
                        labels = 0:max(dat2$age)) +
     scale_y_continuous(breaks = seq(0, (ylb * -1), by = ylb / -5),
@@ -116,7 +117,10 @@ PlotPopPyramid <- function(dat = NULL, col.age = NULL, col.sex = NULL, col.cas =
           plot.margin = unit(c(0.5, 0.5, 0.5, 0), "lines"),
           axis.ticks.length = unit(0, 'lines'),
           axis.text.y = element_blank(),
-          axis.title.y = element_blank()) +
+          axis.title.y = element_blank(),
+          axis.text.x = element_text(size = 11),
+          legend.title = element_text(size = 10),
+          legend.text = element_text(size = 10)) +
     scale_x_continuous(breaks = 0:max(dat2$age),
                        labels = 0:max(dat2$age)) +
     scale_y_continuous(breaks = seq(0, ylb, by = ylb / 5),
