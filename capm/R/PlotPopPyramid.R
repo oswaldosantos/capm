@@ -26,24 +26,8 @@
 #' @examples 
 #' ## Load data with information about age, sex and reproductive status of individuals.
 #' data(Sample)
-#' 
-#' ## Make a population pyramid.
-#' (pyram <- PlotPopPyramid(Sample, col.age = 5,
-#'                          col.sex = 4, col.cas = 6))
-#' 
-#' # Increase legend font size.
-#' (pyram <- pyram + theme(legend.title = element_text(size = 16),
-#'                         legend.text = element_text(size = 16)))
-#' 
-#' 
-#' # Increase axis labels font size.
-#' pyram <- pyram + theme(axis.title.x = element_text(size = 16), 
-#'                       axis.text.x = element_text(size = 16))
-#' (pyram <- pyram + theme(axis.title.y = element_text(size = 16), 
-#'                       axis.text.y = element_text(size = 16)))
-#' 
-#' # Increase sex labels font size.
-#' p(yram <- pyram + theme(plot.title = element_text(size = 16)))
+#' PlotPopPyramid(Sample, col.age = 5, col.sex = 4, col.cas = 6)
+#' PlotPopPyramid(Sample, col.age = 5, col.sex = 4)
 #' 
 PlotPopPyramid <- function(dat = NULL, col.age = NULL, col.sex = NULL, col.cas = NULL, x.label = 'Total', stage.label = 'Years', inner.color = 'Gold2', outer.color = 'DarkOliveGreen') {
   if (!is.numeric(dat[, col.age])) {
@@ -128,6 +112,9 @@ PlotPopPyramid <- function(dat = NULL, col.age = NULL, col.sex = NULL, col.cas =
     ggtitle(paste(levels(dat[, col.sex])[2], ' = ',
                   summary(dat[, col.sex])[2])) +
     ylab(x.label)
+  if (is.null(col.cas)) {
+    plot.m <- plot.m + theme(legend.position = 'none')
+  }
   ages <- ggplot(data.frame(age = 0:max(dat2$age), count = 0),
                  aes(x = age, y = count)) +
     geom_bar(stat = 'identity') + coord_flip() +
