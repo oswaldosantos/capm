@@ -7,7 +7,7 @@ The package was renamed from its upstream name 'capm' to
 'r-other-capm' in harmony with the R packaging policy to indicate
 that the package is external to the CRAN or BioC repositories.
 
-capm Copyright (C) 2013 Oswaldo Santos, released under the
+capm Copyright (C) 2014 Oswaldo Santos, released under the
 GNU General Public License (GPL) version 2 or (at your option) any later version.
 
 This software is distributed in the hope that it will be useful, but
@@ -26,7 +26,7 @@ The package was renamed from its upstream name 'capm' to
 'r-other-capm' in harmony with the R packaging policy to indicate
 that the package is external to the CRAN or BioC repositories.
 
-capm Copyright (C) 2013 Fernando Silveira Marques, released under the
+capm Copyright (C) 2014 Fernando Silveira Marques, released under the
 GNU General Public License (GPL) version 2 or (at your option) any later version.
 
 This software is distributed in the hope that it will be useful, but
@@ -45,7 +45,7 @@ The package was renamed from its upstream name 'capm' to
 'r-other-capm' in harmony with the R packaging policy to indicate
 that the package is external to the CRAN or BioC repositories.
 
-capm Copyright (C) 2013 Marcos Amaku, released under the
+capm Copyright (C) 2014 Marcos Amaku, released under the
 GNU General Public License (GPL) version 2 or (at your option) any later version.
 
 This software is distributed in the hope that it will be useful, but
@@ -64,7 +64,7 @@ The package was renamed from its upstream name 'capm' to
 'r-other-capm' in harmony with the R packaging policy to indicate
 that the package is external to the CRAN or BioC repositories.
 
-capm Copyright (C) 2013 Fernando Ferreira, released under the
+capm Copyright (C) 2014 Fernando Ferreira, released under the
 GNU General Public License (GPL) version 2 or (at your option) any later version.
 
 This software is distributed in the hope that it will be useful, but

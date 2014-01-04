@@ -1,24 +1,20 @@
 Package: capm
 Version: 0.01-1
-Depends: R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr, reshape2,
-         grid
+Depends: R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr, reshape2, grid
 License: GPL (>= 3)
 
 Package: capm
 Version: 0.1.0
-Depends: R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr, reshape2,
-         grid
+Depends: R (>= 2.15.0), FME, survey, ggplot2, grid, rgdal, maptools
 License: GPL (>= 2)
 
 Package: capm
 Version: 1.01-1
-Depends: R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr, reshape2,
-         grid
+Depends: R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr, reshape2, grid
 License: GPL (>= 3)
 
 Package: capm
 Version: 1.01
-Depends: R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr, reshape2,
-         grid
+Depends: R (>= 2.15.0), FME, survey, rgdal, maptools, ggplot2, plyr, reshape2, grid
 License: GPL (>= 2)
 

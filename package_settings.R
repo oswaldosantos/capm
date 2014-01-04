@@ -15,7 +15,7 @@ roxy.package(
     Description="Provides functions to calculate the size and compostion of samples to estimate dog and cat demographic parameters and functions to simulate population dynamics under different scenarios of population management.",
     License="GPL (>= 2)",
     Encoding="UTF-8",
-    LazyLoad="no",
+    LazyLoad="yes",
     URL="https://github.com/oswaldosantos/capm",
     stringsAsFactors=FALSE),
   actions=c(

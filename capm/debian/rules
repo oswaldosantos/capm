@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 #								-*- makefile -*-
 # debian/rules file for the Debian/GNU Linux r-other-capm package
-# Copyright 2013 by Oswaldo Santos <oswaldosant@gmail.com>
+# Copyright 2014 by Oswaldo Santos <oswaldosant@gmail.com>
 
 debRreposname := other
 
