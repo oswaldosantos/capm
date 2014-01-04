@@ -10,11 +10,11 @@ Build-Depends-Indep: debhelper (>> 4.1.0), r-base-dev (>= 3.0.0), cdbs
 Package-List: 
  r-other-capm deb math optional
 Checksums-Sha1: 
- e952d87bc780cd9d072f84867cc075512c88e6d4 364419 r-other-capm_0.1.0.orig.tar.gz
- b0c2750c9dde5371926a6a5f3e43cfa0dd85160d 1671 r-other-capm_0.1.0-1.debian.tar.gz
+ 5858178855600365149af035b64f0dbc041bad7a 364331 r-other-capm_0.1.0.orig.tar.gz
+ 0cbe4d64a2b8fd192ef4529d898fe3cbda2247e3 1656 r-other-capm_0.1.0-1.debian.tar.gz
 Checksums-Sha256: 
- 2dd6ce8ee45f8efcd9ab5ecd62320251d5d3e410a6c0ddbd740dbe44c2002b46 364419 r-other-capm_0.1.0.orig.tar.gz
- 627d3facd558cd22d8bb1f3c6ca59b327b7b292dc7d846c2725acea53ad78643 1671 r-other-capm_0.1.0-1.debian.tar.gz
+ cc5ed3ae0cd3604a33daa0ea61e56ad682ebd6fcadd9f291badc0de3c24e4841 364331 r-other-capm_0.1.0.orig.tar.gz
+ 3f80c7c3fce632b5370e7ecdb4255a88953d9142c2e775731a8f1cd963289712 1656 r-other-capm_0.1.0-1.debian.tar.gz
 Files: 
- c7dbe184a84be99e3b7e8cd6a0701df1 364419 r-other-capm_0.1.0.orig.tar.gz
- 30a39fcf77c837d3fc2a9210e58f1a41 1671 r-other-capm_0.1.0-1.debian.tar.gz
+ 9e5a6656e5ca0e39b6bcc1d29df8db72 364331 r-other-capm_0.1.0.orig.tar.gz
+ 19d07305cded61b66526f490cdcfc53d 1656 r-other-capm_0.1.0-1.debian.tar.gz
