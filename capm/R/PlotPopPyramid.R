@@ -6,8 +6,8 @@
 #' @param col.cas the number of \code{dat} column which have a \code{\link{factor}} representing the reproductive status of individuals (see Details).
 #' @param x.label a string to be used as a label for x-axis. If non defined, \code{xlabel} is equal to "Total" (see Details).
 #' @param stage.label a string to be used as a label for ages or stages categories. If non defined, \code{stage.label} is equal to "Years" (see Details).
-#' @param inner.color any valid way to specify colors. When \code{cas} is \code{NULL}, \code{inner.color} is the color of bars. When \code{cas} is not \code{NULL}, \code{innercolor} is the inner color of bars. If non defined, \code{inner.color} is equal to "Gold2".
-#' @param outer.color any valid way to specify colors. When \code{cas} is \code{NULL}, \code{outer.color} is ignored. When \code{cas} is not \code{NULL}, \code{outer.color} is the outer color of bars. If non defined, \code{outercolor} is equal to "DarkOliveGreen".
+#' @param inner.color any valid way to specify colors. When \code{col.cas} is \code{NULL}, \code{inner.color} is the color of bars. When \code{col.cas} is not \code{NULL}, \code{innercolor} is the inner color of bars. If non defined, \code{inner.color} is equal to "Gold2".
+#' @param outer.color any valid way to specify colors. When \code{col.cas} is \code{NULL}, \code{outer.color} is ignored. When \code{col.cas} is not \code{NULL}, \code{outer.color} is the outer color of bars. If non defined, \code{outercolor} is equal to "DarkOliveGreen".
 #' @details \code{PlotPopPyramid} is mainly intended for companion animals population pyramids, although it can display other types of opposed bar charts with suitable modification of the arguments.
 #' 
 #' The bars to the left of \code{0} on the x axis correspond to the minimum value of \code{\link{as.numeric}}(\code{dat[, col.sex]}). If \code{col.cas} is not \code{NULL}, bars will be stacked, with the minimum value of \code{\link{as.numeric}}(\code{dat[, col.cas]}) as their base.
@@ -33,21 +33,9 @@ PlotPopPyramid <- function(dat = NULL, col.age = NULL, col.sex = NULL, col.cas =
   if (!is.numeric(dat[, col.age])) {
     stop('The column containing age information must be numeric.')
   }
-  if (is.numeric(col.age)) {
-    col.age <- names(dat)[col.age]
-  } else {
-    names(Sample)[which(names(Sample) == col.age)]
-  }
-  if (is.numeric(col.sex)) {
-    col.sex <- names(dat)[col.sex]
-  } else {
-    names(Sample)[which(names(Sample) == col.sex)]
-  }
   if (!is.null(col.cas)) {
     if (is.numeric(col.cas)) {
       col.cas <- names(dat)[col.cas]
-    } else {
-      names(Sample)[which(names(Sample) == col.cas)]
     }
     dat2 <- aggregate(dat, list(dat[, col.age],
                                 dat[, col.sex],
@@ -67,7 +55,9 @@ PlotPopPyramid <- function(dat = NULL, col.age = NULL, col.sex = NULL, col.cas =
   dat2[dat2$sex == levels(dat2$sex)[1], 'count'] <-
     dat2[dat2$sex == levels(dat2$sex)[1], 'count'] * (-1)
   dat.f <- dat2[which(dat2[, 2] == levels(dat2$sex)[1]), ]
+  dat.f <- rbind(dat.f, c(max(dat2$age), rep(0, ncol(dat2) - 1)))
   dat.m <- dat2[which(dat2[, 2] == levels(dat2$sex)[2]), ]
+  dat.m <- rbind(dat.m, c(max(dat2$age), rep(0, ncol(dat2) - 1)))
   options(warn = -1)
   if (!is.null(col.cas)) {
     plot.f <- ggplot(dat.f, aes(x = age, y = count , fill = cas)) +
@@ -111,6 +101,7 @@ PlotPopPyramid <- function(dat = NULL, col.age = NULL, col.sex = NULL, col.cas =
                        labels = seq(0, ylb, by = ylb / 5)) +
     ggtitle(paste(levels(dat[, col.sex])[2], ' = ',
                   summary(dat[, col.sex])[2])) +
+    labs(fill = col.cas) +
     ylab(x.label)
   if (is.null(col.cas)) {
     plot.m <- plot.m + theme(legend.position = 'none')
@@ -124,7 +115,7 @@ PlotPopPyramid <- function(dat = NULL, col.age = NULL, col.sex = NULL, col.cas =
           axis.ticks.length = unit(0, 'lines'),
           axis.text.y = element_blank(),
           axis.title.y = element_blank()) +
-    scale_y_continuous(breaks = 0, labels = '', limits = c(-10, 10)) +
+    scale_y_continuous(breaks = 0, labels = '') +
     scale_x_continuous(breaks = 0:max(dat2$age),
                        labels = 0:max(dat2$age)) +
     annotate("text", y = 0, x = 0:max(dat2$age),

@@ -13,7 +13,7 @@ Authors@R: c(person(given='Oswaldo', family='Santos', email='oswaldosant@gmail.c
          role=c("aut", "cre")), person(given='Fernando', family='Silveira Marques',
          email='fernandosix@gmail.com', role=c("aut")), person(given='Marcos',
          family='Amaku', email='amaku@vps.fmvz.usp.br', role=c("aut")),
-         person(given='Fernando', family='Ferreira', email='fernando@vps.fmvz.usp.br',
-         role=c("aut")))
+         person(given='Fernando', family='Ferreira',
+         email='fernando@vps.fmvz.usp.br', role=c("aut")))
 Version: 0.1.0
-Date: 2014-01-03
+Date: 2014-01-05

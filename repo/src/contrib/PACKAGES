@@ -9,7 +9,7 @@ Package: capm
 Version: 0.1.0
 Depends: R (>= 2.15.0), FME, survey, ggplot2, grid, rgdal, maptools
 License: GPL (>= 2)
-MD5sum: 35ae731763c746cce811d51ac8caa94e
+MD5sum: a9f3fd7bd31ec4b21c37fba518101b68
 NeedsCompilation: no
 
 Package: capm

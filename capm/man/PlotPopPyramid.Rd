@@ -31,16 +31,16 @@
   \code{stage.label} is equal to "Years" (see Details).}
 
   \item{inner.color}{any valid way to specify colors. When
-  \code{cas} is \code{NULL}, \code{inner.color} is the
-  color of bars. When \code{cas} is not \code{NULL},
+  \code{col.cas} is \code{NULL}, \code{inner.color} is the
+  color of bars. When \code{col.cas} is not \code{NULL},
   \code{innercolor} is the inner color of bars. If non
   defined, \code{inner.color} is equal to "Gold2".}
 
   \item{outer.color}{any valid way to specify colors. When
-  \code{cas} is \code{NULL}, \code{outer.color} is ignored.
-  When \code{cas} is not \code{NULL}, \code{outer.color} is
-  the outer color of bars. If non defined,
-  \code{outercolor} is equal to "DarkOliveGreen".}
+  \code{col.cas} is \code{NULL}, \code{outer.color} is
+  ignored. When \code{col.cas} is not \code{NULL},
+  \code{outer.color} is the outer color of bars. If non
+  defined, \code{outercolor} is equal to "DarkOliveGreen".}
 }
 \description{
   Dysplays two opposed horizontal barplots (pyramid).
@@ -85,24 +85,8 @@
 \examples{
 ## Load data with information about age, sex and reproductive status of individuals.
 data(Sample)
-
-## Make a population pyramid.
-(pyram <- PlotPopPyramid(Sample, col.age = 5,
-                         col.sex = 4, col.cas = 6))
-
-# Increase legend font size.
-(pyram <- pyram + theme(legend.title = element_text(size = 16),
-                        legend.text = element_text(size = 16)))
-
-
-# Increase axis labels font size.
-pyram <- pyram + theme(axis.title.x = element_text(size = 16),
-                      axis.text.x = element_text(size = 16))
-(pyram <- pyram + theme(axis.title.y = element_text(size = 16),
-                      axis.text.y = element_text(size = 16)))
-
-# Increase sex labels font size.
-p(yram <- pyram + theme(plot.title = element_text(size = 16)))
+PlotPopPyramid(Sample, col.age = 5, col.sex = 4, col.cas = 6)
+PlotPopPyramid(Sample, col.age = 5, col.sex = 4)
 }
 \seealso{
   \link[plotrix]{pyramid.plot}.
