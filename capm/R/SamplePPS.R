@@ -18,19 +18,14 @@
 SamplePPS <- function (psu.ssu = NULL, psu = NULL, write = FALSE, ...) {
   inv <- c(which(!is.finite(psu.ssu[, 2])), which(psu.ssu[, 2] <= 0))
   if (length(inv) > 0) {
-    stop('The size of the following sampling unit(s) is(are) invalid:', 
-         '\n', paste('   ', inv))
+    stop('The size of the following sampling unit(s) is(are) invalid:', '\n', paste('   ', inv))
   }
   if (psu > nrow(psu.ssu)) {
-    stop('The number of sampling units to be selected (', psu, ') is greater 
-         than the total number of sampling units in the population (', 
-         nrow(psu.ssu), ').')
+    stop('The number of sampling units to be selected (', psu, ') is greater than the total number of sampling units in the population (', nrow(psu.ssu), ').')
   }
   inv2 <- which(psu.ssu[, 1] == psu.ssu[, 1][duplicated(psu.ssu[, 1])])
   if (length(inv2) > 1) {
-    stop('The following psu are repeated:', '\n', 
-         paste('   ', psu.ssu[, 1][duplicated(psu.ssu[, 1])]), '\n', 
-         'It appears in positions:', '\n', paste('   ', inv2))
+    stop('The following psu are repeated:', '\n', paste('   ', psu.ssu[, 1][duplicated(psu.ssu[, 1])]), '\n', 'It appears in positions:', '\n', paste('   ', inv2))
   }
   M <- nrow(psu.ssu) 
   cum <- cumsum(psu.ssu[ , 2]) 

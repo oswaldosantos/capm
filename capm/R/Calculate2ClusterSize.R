@@ -63,7 +63,12 @@ Calculate2ClusterSize <- function(psu.ssu = NULL, psu.x = NULL, level = .95, err
   
   sam <- matrix(c(m * nb, m, nb, vec, vdc, d), 
                 ncol = 1)
-  rownames(sam) <- c('Sample size', 'Number of psu to be sampled', 'Number of ssu to be sampled in each psu', 'Intercluster variance', 'Intracluster variance', 'Intraclass correlation coefficient')
+  rownames(sam) <- c('Sample size',
+                     'Number of psu to be sampled',
+                     'Number of ssu to be sampled in each psu',
+                     'Intercluster variance',
+                     'Intracluster variance',
+                     'Intraclass correlation coefficient')
   colnames(sam) <- 'Value'
   return(sam)
 }
