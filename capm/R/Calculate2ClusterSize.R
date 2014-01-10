@@ -1,15 +1,15 @@
 #' Two-stage cluster sampling size and composition
 #' @description Calculates sample size and composition for a two-stage cluster sampling design to estimate a total.
 #' @param psu.ssu \code{\link{data.frame}} with all primary sampling units (PSU). First column contains PSU unique identifiers. Second column contains \code{\link{numeric}} PSU sizes.
-#' @param psu.x \code{\link{data.frame}}. Each row corresponds to a secondary sampling unit (SSU) surveyed in a pilot study. First column contains the PSU identifiers to which the ssu belongs to. Second column contains the totals observed in the ssu and must be numeric \code{\link{numeric}}.
-#' @param level the confidence level required.
-#' @param error the maximum relative difference between the estimate and the unknown population value.
-#' @param cost the ratio of the cost of sampling a psu to the cost of sampling a SSU.
+#' @param psu.x \code{\link{data.frame}}. Each row corresponds to a secondary sampling unit (SSU) surveyed in a pilot study. First column contains the PSU identifiers to which the ssu belongs to. Second column contains the totals observed in the ssu and must be \code{\link{numeric}}.
+#' @param level the confidence level required. It must be \code{\link{numeric}} between 0 and 1 inclusive.
+#' @param error the maximum relative difference between the estimate and the unknown population value. It must be \code{\link{numeric}} between 0 and 1 inclusive.
+#' @param cost the ratio of the cost of sampling a PSU to the cost of sampling a SSU.
 #' @return Matrix with the sample size and composition and with estimates of variability.
 #' @details It is assumed that psu from the pilot are selected with probability proportional to size (PPS) and with replacement. ssu are assumed to be selected via simple random sampling.
 #' 
 #' PSU must have the same identifiers in \code{psu.ssu} and in \code{psu.x}.
-#' @references Levy P and Lemeshow S (1999). Sampling of populations: methods and applications, Second edition. John Wiley and Sons, Inc.
+#' @references Levy P and Lemeshow S (2008). Sampling of populations: methods and applications, Fourth edition. John Wiley and Sons, Inc.
 #' @export
 #' @examples 
 #' # Load data with psu identifiers and sizes.
@@ -19,14 +19,17 @@
 #' data(pilot)
 #' 
 #' # Calculate sample size and composition.
-#' sample.sc <- Calculate2ClusterSize(psu.ssu, pilot, level = 0.95, error = 0.1, cost = 12)
+#' (sample.sc <- Calculate2ClusterSize(psu.ssu, pilot, level = 0.95, error = 0.1, cost = 4))
 
-Calculate2ClusterSize <- function(psu.ssu = NULL, psu.x = NULL, level = .95, error = 0.1, cost = 12) {
+Calculate2ClusterSize <- function(psu.ssu = NULL, psu.x = NULL, level = .95, error = 0.1, cost = 4) {
   if (length(intersect(psu.ssu[, 1], psu.x[, 1])) == 0) {
     stop('PSU identifiers must be equal in psu.ssu and in psu.x')
   }
-  if (level > 1 | error > 1) {
-    stop('level and error must be lesser or equal to 1.')
+  if (level > 1 | level < 0) {
+    stop('level must be a number between 0 and 1 inclusive.')
+  }
+  if (error > 1 | error < 0) {
+    stop('level must be a number between 0 and 1 inclusive.')
   }
   psu.ssu.x <- merge(psu.ssu, psu.x, by = 1)
   M <- nrow(psu.ssu)
@@ -49,7 +52,7 @@ Calculate2ClusterSize <- function(psu.ssu = NULL, psu.x = NULL, level = .95, err
   d <- (((M / (M - 1)) * vec) - (Nb * vdc)) / 
     (((M / (M - 1)) * vec) + (Nb * (Nb - 1) * vdc)) 
   d <- if (d < 0 | d == 0) {d = 1e-03} else {d = d}
-  nb <- ceiling(sqrt(4 * cost * ((1 - d) / d)))
+  nb <- ceiling(sqrt(12 * cost * ((1 - d) / d)))
   if (nb < 2) {nb = 2}
   X <- sum(N / sum(nip) * tapply(psu.ssu.x[ , 3], 
                                  psu.ssu.x[ , 1], sum)) 
