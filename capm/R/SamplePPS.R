@@ -4,8 +4,8 @@
 #' @param psu the number of PSU to be selected.
 #' @param write logical. If \code{TRUE}, a *.csv file containing the PSU and their secondary sampling units (SSU) is writed in the current working directory.
 #' @param ... further arguments passed to \code{\link{write.table}} function.
-#' @return \code{\link{data.frame}}. First column contains the selected psu identifiers, coerced by \code{\link{as.character}}, to avoid scientific notation in case the identifiers be of \code{\link{class}} \code{\link{numeric}}. Second column contain psu sizes, a variable needed for second stage sampling with \code{\link{SampleSystematic}}.
-#' @references Levy P and Lemeshow S (1999). Sampling of populations: methods and applications, Second edition. John Wiley and Sons, Inc.
+#' @return \code{\link{data.frame}}. First column contains the selected psu identifiers, coerced by \code{\link{as.character}}, to avoid scientific notation in case the identifiers be large numbers of \code{\link{class}} \code{\link{numeric}}. Second column contain psu sizes, a variable needed for second stage sampling with \code{\link{SampleSystematic}}.
+#' @references Levy P and Lemeshow S (2008). Sampling of populations: methods and applications, Fourth edition. John Wiley and Sons, Inc.
 #' @seealso \code{\link{SampleSystematic}}.
 #' @export
 #' @examples 
@@ -22,7 +22,7 @@ SamplePPS <- function (psu.ssu = NULL, psu = NULL, write = FALSE, ...) {
          '\n', paste('   ', inv))
   }
   if (psu > nrow(psu.ssu)) {
-    stop('The number of selected sampling units (', psu, ') is greater 
+    stop('The number of sampling units to be selected (', psu, ') is greater 
          than the total number of sampling units in the population (', 
          nrow(psu.ssu), ').')
   }
