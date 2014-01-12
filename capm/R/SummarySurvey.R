@@ -1,6 +1,6 @@
 #' Summary statistics for sample surveys
 #' @description Wraps functions for summary statistics from survey package.
-#' @param design an object of class "survey.design2" "survey.design".
+#' @param design an output form \code{\link{DesignSurvey}} function.
 #' @param variables \code{\link{character}} \code{\link{vector}} with the type of estimate for each variable contained in \code{design} (see details).
 #' @param level the confidence level required.
 #' @param rnd the number of decimal places (round) or significant digits (signif) to be used. If \code{NA}, scientific notation is used.
@@ -19,14 +19,14 @@
 #' #######################
 #' 
 #' # Specify the two-stage cluster design.
-#' design <- DesignSurvey(psu.ssu, Sample, psu.col = 2, ssu.col = 1)
+#' design <- DesignSurvey(psu.ssu, Sample, psu.col = 2, ssu.col = 1, psu.2cd = 20)
 #' 
 #' # Look at the variables contained in the survey design
 #' names(design$variables)
 #' 
 #' # Specify the type of estimate for each variable
 #' variables <- c("", "", "total", "prop", "mean", rep("prop", 3),
-#'               "total", rep("prop", 3), "", "")
+#'               "total", rep("prop", 3), "", "", "")
 #' 
 #' # Make sure you specify the correct type of estimate for each variable
 #' cbind(names(design$variables), variables)
@@ -54,7 +54,7 @@
 #' # Define a survey design for each sex.
 #' design.sex <- DesignSurvey(psu.ssu, sample1, 
 #'                    psu.col = 2, 
-#'                    ssu.col = 1)
+#'                    ssu.col = 1, psu.2cd = 20)
 #' design.f <- subset(design.sex, sex == 'Female')
 #' design.m <- subset(design.sex, sex == 'Male')
 #' 
@@ -63,7 +63,7 @@
 #'
 #' # Specify the type of estimate for each variable
 #' variables.sex <- c("", "", "total", "", "total", 
-#'                   "prop", "prop", "", "")
+#'                   "prop", "prop", "", "", "")
 #'
 #' # Make sure you specify the correct type of 
 #' # estimate for each variable

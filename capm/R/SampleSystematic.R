@@ -1,6 +1,6 @@
 #' Systematic sampling
-#' @description Select secondary sampling units (SSU) in one or more primary sampling units (PSU), using systematic sampling.
-#' @param psu.ssu \code{\link{data.frame}} with all primary sampling units (PSU). First column contains PSU unique identifiers. Second column contains \code{\link{numeric}} PSU sizes.
+#' @description Select Secondary Sampling Units (SSU) in one or more Primary Sampling Units (PSU), using systematic sampling.
+#' @param psu.ssu \code{\link{data.frame}} with all PSU. First column contains PSU unique identifiers. Second column contains \code{\link{numeric}} PSU sizes.
 #' @param ssu \code{\link{numeric}} indicating SSU to be selected.
 #' @param total \code{\link{numeric}} indicating the number of sampling units in the population. This is an alternative to \code{psu.ssu}, intended for non complex designs.
 #' @param write logical. If \code{TRUE}, a *.csv file containing the psu and their ssu is writed in the current working directory.

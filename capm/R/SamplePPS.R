@@ -1,10 +1,10 @@
 #' Probability proportional to size sampling with replacement
-#' @description Select primary sampling units (PSU) with probability proportional to size with replacement.
-#' @param psu.ssu \code{\link{data.frame}} with all primary sampling units (PSU). First column contains PSU unique identifiers. Second column contains \code{\link{numeric}} PSU sizes.
+#' @description Select Primary Sampling Units (PSU) with probability proportional to size with replacement.
+#' @param psu.ssu \code{\link{data.frame}} with all PSU. First column contains PSU unique identifiers. Second column contains \code{\link{numeric}} PSU sizes.
 #' @param psu the number of PSU to be selected.
-#' @param write logical. If \code{TRUE}, a *.csv file containing the PSU and their secondary sampling units (SSU) is writed in the current working directory.
+#' @param write logical. If \code{TRUE}, a *.csv file containing the PSU and their Secondary Sampling Units (SSU) is writed in the current working directory.
 #' @param ... further arguments passed to \code{\link{write.table}} function.
-#' @return \code{\link{data.frame}}. First column contains the selected psu identifiers, coerced by \code{\link{as.character}}, to avoid scientific notation in case the identifiers be large numbers of \code{\link{class}} \code{\link{numeric}}. Second column contain psu sizes, a variable needed for second stage sampling with \code{\link{SampleSystematic}}.
+#' @return \code{\link{data.frame}}. First column contains the selected psu identifiers, coerced by \code{\link{as.character}}, to avoid scientific notation in case the identifiers be large numbers of \code{\link{class}} \code{\link{numeric}}. Second column contain PSU sizes, a variable needed for second stage sampling with \code{\link{SampleSystematic}}.
 #' @references Levy P and Lemeshow S (2008). Sampling of populations: methods and applications, Fourth edition. John Wiley and Sons, Inc.
 #' @seealso \code{\link{SampleSystematic}}.
 #' @export
