@@ -1,10 +1,13 @@
-#' Creates *.kml files of a subset of polygons form a polygon shapefile
+#' Creates *.kml files of a subset of polygons from a polygon shapefile
 #' @description Subset polygons acording to the matches between a vector and a specified column from a \link[sp]{SpatialPolygonsDataFrame}.
-#' @param mp polygon shapefile layer name.
+#' @param shape \code{\link{character}} string with the name of a polygon shapefile or an object of \code{\link{class}} \link[sp]{SpatialPolygonsDataFrame} (see examples).
 #' @param psu the values to be matched.
 #' @param id column of the *.dbf file with the values to be matched against.
+#' @path \code{\link{character}} string indicating the path to the folder containing the shapfile. If the shapefile is in the working directory or if \code{shape} argument is a shapefile, \code{path} can be ignored.
 #' @return *.kml files of the subsetted polygons.
-#' @details If there is *.kml files in the working directory, the new created files will overwrite it in case of name matching.
+#' @details If there is *.kml files in the working directory, the new files created will overwrite it in case of name matching.
+#' 
+#' \code{shape} must receive a shapefile with apropriate coordinate reference system, otherwise, \code{MapkmlPSU} report an error.
 #' @seealso \code{\link{readShapeSpatial}}
 #' @export
 #' @examples
@@ -15,15 +18,29 @@
 #' # proportional to size with replacement.
 #' (selected.psu <- SamplePPS(psu.ssu, 20, write = FALSE))
 #' 
-#' # Load the polyogn shapefile.
-#' mplyer <- system.file('shp/santos.shp', package="capm")
+#' ## Define shape from shapefile.
+#' shp.path <- system.file('shp.shp', package="capm")
+#' # The code above used a shapefile avaliable in the
+#' # capm package.
+#' # You might want to write a code like:
+#' # shp.path  <- 'path_to_the_folder_with_the_shapefile'
 #' 
 #' # Create *kml files of 10 polygons.
-#' MapkmlPSU(mplyer, selected.psu[, 1], 1)
+#' MapkmlPSU('santos', selected.psu[, 1], 1, shp.path)
 #' 
-MapkmlPSU <- function(mp = NULL, psu = NULL, id = NULL) {
-  tmp <- readShapePoly(mp)
-  proj4string(tmp) <- CRS('+proj=longlat +ellps=WGS84')
+#' ## Define shape form an object x of class
+#' ## SpatialPolygonsDataFrame.
+#' # MapkmlPSU(x, selected.psu[, 1], 1)
+#' 
+#' 
+MapkmlPSU <- function(shape = NULL, psu = NULL, id = NULL, path = '.') {
+  if (class(shape) == 'SpatialPolygonsDataFrame') {
+    tmp <- shape
+  } else {
+    tmp <- readOGR(path, shape)
+    #proj4string(tmp) <- CRS('+proj=longlat +ellps=WGS84')
+  }
+  tmp <- spTransform(tmp, CRS('+proj=longlat +ellps=WGS84'))
   tmp2 = NULL
   for(i in 1:length(psu)) {
     if (file.exists(paste(eval(psu[i]), '.kml', sep =''))) {

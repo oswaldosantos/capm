@@ -23,10 +23,10 @@
   \code{\link{data.frame}}. First column contains the
   selected psu identifiers, coerced by
   \code{\link{as.character}}, to avoid scientific notation
-  in case the identifiers be of \code{\link{class}}
-  \code{\link{numeric}}. Second column contain psu sizes, a
-  variable needed for second stage sampling with
-  \code{\link{SampleSystematic}}.
+  in case the identifiers be large numbers of
+  \code{\link{class}} \code{\link{numeric}}. Second column
+  contain psu sizes, a variable needed for second stage
+  sampling with \code{\link{SampleSystematic}}.
 }
 \description{
   Select primary sampling units (PSU) with probability
@@ -40,8 +40,8 @@ data(psu.ssu)
 (selected.psu <- SamplePPS(psu.ssu, 20, write = FALSE))
 }
 \references{
-  Levy P and Lemeshow S (1999). Sampling of populations:
-  methods and applications, Second edition. John Wiley and
+  Levy P and Lemeshow S (2008). Sampling of populations:
+  methods and applications, Fourth edition. John Wiley and
   Sons, Inc.
 }
 \seealso{

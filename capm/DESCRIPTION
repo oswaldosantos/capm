@@ -37,7 +37,6 @@ Collate:
     'PlotLocalSens.R'
     'PlotModels.R'
     'PlotPopPyramid.R'
-    'print.capmModels.R'
     'SamplePPS.R'
     'SampleSystematic.R'
     'SetRanges.R'

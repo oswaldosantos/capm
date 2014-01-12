@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document><Folder><name>selected_psu</name>
+<Schema name="selected_psu" id="selected_psu">
+	<SimpleField name="Name" type="string"></SimpleField>
+	<SimpleField name="Description" type="string"></SimpleField>
+	<SimpleField name="psu" type="string"></SimpleField>
+</Schema>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#selected_psu">
+		<SimpleData name="psu">354850005000165</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>-46.345621,-23.95481 -46.344492,-23.95496 -46.344334,-23.954968 -46.344365,-23.95514 -46.344443,-23.955988 -46.344682,-23.95765 -46.344823,-23.957638 -46.345899,-23.957515 -46.345759,-23.956257 -46.345725,-23.956043 -46.345655,-23.955407 -46.345621,-23.95481</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+</Folder></Document></kml>

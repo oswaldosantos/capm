@@ -3,7 +3,7 @@
 \title{Two-stage cluster sampling size and composition}
 \usage{
   Calculate2ClusterSize(psu.ssu = NULL, psu.x = NULL,
-    level = 0.95, error = 0.1, cost = 12)
+    level = 0.95, error = 0.1, cost = 4)
 }
 \arguments{
   \item{psu.ssu}{\code{\link{data.frame}} with all primary
@@ -16,14 +16,16 @@
   in a pilot study. First column contains the PSU
   identifiers to which the ssu belongs to. Second column
   contains the totals observed in the ssu and must be
-  numeric \code{\link{numeric}}.}
+  \code{\link{numeric}}.}
 
-  \item{level}{the confidence level required.}
+  \item{level}{the confidence level required. It must be
+  \code{\link{numeric}} between 0 and 1 inclusive.}
 
   \item{error}{the maximum relative difference between the
-  estimate and the unknown population value.}
+  estimate and the unknown population value. It must be
+  \code{\link{numeric}} between 0 and 1 inclusive.}
 
-  \item{cost}{the ratio of the cost of sampling a psu to
+  \item{cost}{the ratio of the cost of sampling a PSU to
   the cost of sampling a SSU.}
 }
 \value{
@@ -51,11 +53,11 @@ data(psu.ssu)
 data(pilot)
 
 # Calculate sample size and composition.
-sample.sc <- Calculate2ClusterSize(psu.ssu, pilot, level = 0.95, error = 0.1, cost = 12)
+(sample.sc <- Calculate2ClusterSize(psu.ssu, pilot, level = 0.95, error = 0.1, cost = 4))
 }
 \references{
-  Levy P and Lemeshow S (1999). Sampling of populations:
-  methods and applications, Second edition. John Wiley and
+  Levy P and Lemeshow S (2008). Sampling of populations:
+  methods and applications, Fourth edition. John Wiley and
   Sons, Inc.
 }
 

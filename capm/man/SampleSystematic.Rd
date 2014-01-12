@@ -11,11 +11,13 @@
   identifiers. Second column contains \code{\link{numeric}}
   PSU sizes.}
 
-  \item{ssu}{the number of SSU to be selected.}
+  \item{ssu}{\code{\link{numeric}} indicating SSU to be
+  selected.}
 
-  \item{total}{value indicating the number of sampling
-  units in the population. This is an alternative to
-  \code{psu.ssu}, intended for non complex designs.}
+  \item{total}{\code{\link{numeric}} indicating the number
+  of sampling units in the population. This is an
+  alternative to \code{psu.ssu}, intended for non complex
+  designs.}
 
   \item{write}{logical. If \code{TRUE}, a *.csv file
   containing the psu and their ssu is writed in the current
@@ -39,17 +41,17 @@
 # Load data with PSU identifiers and sizes.
 data(psu.ssu)
 
-# Take a sample of 20 PSU with probability
-# proportional to size with replacement.
+# Take a sample of 20 PSU, with probability
+# proportional to size and with replacement.
 selected.psu <- SamplePPS(psu.ssu, 20, write = FALSE)
 
 # Take a sistematic sampling of 5 SSU within each
-# psu of selected.psu.
+# PSU of selected.psu.
 (selected.ssu <- SampleSystematic(selected.psu, 5, write = FALSE))
 }
 \references{
-  Levy P and Lemeshow S (1999). Sampling of populations:
-  methods and applications, Second edition. John Wiley and
+  Levy P and Lemeshow S (2008). Sampling of populations:
+  methods and applications, Fourth edition. John Wiley and
   Sons, Inc.
 }
 \seealso{

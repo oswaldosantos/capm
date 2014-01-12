@@ -1,6 +1,6 @@
 \name{MapkmlPSU}
 \alias{MapkmlPSU}
-\title{Creates *.kml files of a subset of polygons form a polygon shapefile}
+\title{Creates *.kml files of a subset of polygons from a polygon shapefile}
 \usage{
   MapkmlPSU(mp = NULL, psu = NULL, id = NULL)
 }
@@ -22,7 +22,7 @@
 }
 \details{
   If there is *.kml files in the working directory, the new
-  created files will overwrite it in case of name matching.
+  files created will overwrite it in case of name matching.
 }
 \examples{
 # Load data with the polygon identifiers.
