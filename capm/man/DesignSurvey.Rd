@@ -7,16 +7,16 @@
     psu.2cd = NULL, total = NULL, ...)
 }
 \arguments{
-  \item{psu.ssu}{\code{\link{data.frame}} with all primary
-  sampling units (psu). First column contains psu unique
+  \item{psu.ssu}{\code{\link{data.frame}} with all Primary
+  Sampling Units (PSU). First column contains PSU unique
   identifiers. Second column contains \code{\link{numeric}}
-  psu sizes.}
+  PSU sizes.}
 
-  \item{sample}{a \code{\link{data.frame}} with sample
+  \item{sample}{\code{\link{data.frame}} with sample
   observations. One of the columns must contain unique
-  identifiers for psu. Another column must contain unique
-  identifiers for ssu. The rest of the columns corresponds
-  to the variables surveyed.}
+  identifiers for PSU. Another column must contain unique
+  identifiers for Secondary Sampling Units (SSU). The rest
+  of the columns corresponds to the variables surveyed.}
 
   \item{psu.col}{the column of \code{sample} containing the
   psu identifiers.}
@@ -52,10 +52,10 @@
   level of sampling.
 }
 \details{
-  A psu appearing in both \code{psu.ssu} and in
-  \code{sample} must have the same identifier. ssu
+  A PSU appearing in both \code{psu.ssu} and in
+  \code{sample} must have the same identifier. SSU
   identifiers must be unique but can appear more than once
-  if there is more than one observations per ssu.
+  if there is more than one observation per SSU.
 }
 \examples{
 # Load data with PSU identifiers and sizes.
@@ -64,8 +64,8 @@ data(psu.ssu)
 # Load data with sample data.
 data(Sample)
 
-# Specify the two-stage cluster design.
-design = DesignSurvey(psu.ssu, Sample, psu.col = 2, ssu.col = 1)
+# Specify the two-stage cluster design that included 20 PSU.
+design <- DesignSurvey(psu.ssu, Sample, psu.col = 2, ssu.col = 1, psu.2cd = 20)
 }
 \references{
   Lumley, T. (2011). Complex surveys: A guide to analysis

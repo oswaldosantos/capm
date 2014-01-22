@@ -7,9 +7,9 @@ NeedsCompilation: no
 
 Package: capm
 Version: 0.1.0
-Depends: R (>= 2.15.0), FME, survey, ggplot2, grid, rgdal, maptools
+Depends: R (>= 2.15.0), FME, survey, reshape2, ggplot2, grid, rgdal, maptools
 License: GPL (>= 2)
-MD5sum: de06488f22c0303f81c30c6a5fba8dd3
+MD5sum: 1b9892e232531e3de13cc8056c49d565
 NeedsCompilation: no
 
 Package: capm

@@ -2,10 +2,14 @@
 \alias{MapkmlPSU}
 \title{Creates *.kml files of a subset of polygons from a polygon shapefile}
 \usage{
-  MapkmlPSU(mp = NULL, psu = NULL, id = NULL)
+  MapkmlPSU(shape = NULL, psu = NULL, id = NULL,
+    path = ".")
 }
 \arguments{
-  \item{mp}{polygon shapefile layer name.}
+  \item{shape}{\code{\link{character}} string with the name
+  of a polygon shapefile or an object of
+  \code{\link{class}} \link[sp]{SpatialPolygonsDataFrame}
+  (see examples).}
 
   \item{psu}{the values to be matched.}
 
@@ -23,6 +27,10 @@
 \details{
   If there is *.kml files in the working directory, the new
   files created will overwrite it in case of name matching.
+
+  \code{shape} must receive a shapefile with apropriate
+  coordinate reference system, otherwise, \code{MapkmlPSU}
+  report an error.
 }
 \examples{
 # Load data with the polygon identifiers.
@@ -32,11 +40,19 @@ data(psu.ssu)
 # proportional to size with replacement.
 (selected.psu <- SamplePPS(psu.ssu, 20, write = FALSE))
 
-# Load the polyogn shapefile.
-mplyer <- system.file('shp/santos.shp', package="capm")
+## Define shape from shapefile.
+shp.path <- system.file('shp.shp', package="capm")
+# The code above used a shapefile avaliable in the
+# capm package.
+# You might want to write a code like:
+# shp.path  <- 'path_to_the_folder_with_the_shapefile'
 
 # Create *kml files of 10 polygons.
-MapkmlPSU(mplyer, selected.psu[, 1], 1)
+MapkmlPSU('santos', selected.psu[, 1], 1, shp.path)
+
+## Define shape form an object x of class
+## SpatialPolygonsDataFrame.
+# MapkmlPSU(x, selected.psu[, 1], 1)
 }
 \seealso{
   \code{\link{readShapeSpatial}}

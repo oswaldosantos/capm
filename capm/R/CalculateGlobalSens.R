@@ -85,9 +85,6 @@
 #'   sensv = 'n2')
 #' 
 CalculateGlobalSens <- function(model.out = NULL, ranges = NULL, sensv = NULL, all = FALSE) {
-  if (class(model.out) != 'capmModels') {
-    stop('model.out must be of class "capmModels".')
-  }
   if (!setequal(rownames(ranges), names(model.out$pars))) {
     stop('All parameters in ranges must be\ncontained in "pars" argument  of model.out.')
   }

@@ -5,15 +5,14 @@
   SamplePPS(psu.ssu = NULL, psu = NULL, write = FALSE, ...)
 }
 \arguments{
-  \item{psu.ssu}{\code{\link{data.frame}} with all primary
-  sampling units (PSU). First column contains PSU unique
-  identifiers. Second column contains \code{\link{numeric}}
-  PSU sizes.}
+  \item{psu.ssu}{\code{\link{data.frame}} with all PSU.
+  First column contains PSU unique identifiers. Second
+  column contains \code{\link{numeric}} PSU sizes.}
 
   \item{psu}{the number of PSU to be selected.}
 
   \item{write}{logical. If \code{TRUE}, a *.csv file
-  containing the PSU and their secondary sampling units
+  containing the PSU and their Secondary Sampling Units
   (SSU) is writed in the current working directory.}
 
   \item{...}{further arguments passed to
@@ -25,11 +24,11 @@
   \code{\link{as.character}}, to avoid scientific notation
   in case the identifiers be large numbers of
   \code{\link{class}} \code{\link{numeric}}. Second column
-  contain psu sizes, a variable needed for second stage
+  contain PSU sizes, a variable needed for second stage
   sampling with \code{\link{SampleSystematic}}.
 }
 \description{
-  Select primary sampling units (PSU) with probability
+  Select Primary Sampling Units (PSU) with probability
   proportional to size with replacement.
 }
 \examples{

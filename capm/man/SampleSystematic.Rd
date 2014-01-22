@@ -6,10 +6,9 @@
     total = NULL, write = FALSE, ...)
 }
 \arguments{
-  \item{psu.ssu}{\code{\link{data.frame}} with all primary
-  sampling units (PSU). First column contains PSU unique
-  identifiers. Second column contains \code{\link{numeric}}
-  PSU sizes.}
+  \item{psu.ssu}{\code{\link{data.frame}} with all PSU.
+  First column contains PSU unique identifiers. Second
+  column contains \code{\link{numeric}} PSU sizes.}
 
   \item{ssu}{\code{\link{numeric}} indicating SSU to be
   selected.}
@@ -34,8 +33,8 @@
   correspond to the selected ssu within each psu.
 }
 \description{
-  Select secondary sampling units (SSU) in one or more
-  primary sampling units (PSU), using systematic sampling.
+  Select Secondary Sampling Units (SSU) in one or more
+  Primary Sampling Units (PSU), using systematic sampling.
 }
 \examples{
 # Load data with PSU identifiers and sizes.

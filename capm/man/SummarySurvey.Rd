@@ -6,8 +6,8 @@
     level = 0.95, rnd = 3)
 }
 \arguments{
-  \item{design}{an object of class "survey.design2"
-  "survey.design".}
+  \item{design}{an output form \code{\link{DesignSurvey}}
+  function.}
 
   \item{variables}{\code{\link{character}}
   \code{\link{vector}} with the type of estimate for each
@@ -41,14 +41,14 @@ data(Sample)
 #######################
 
 # Specify the two-stage cluster design.
-design <- DesignSurvey(psu.ssu, Sample, psu.col = 2, ssu.col = 1)
+design <- DesignSurvey(psu.ssu, Sample, psu.col = 2, ssu.col = 1, psu.2cd = 20)
 
 # Look at the variables contained in the survey design
 names(design$variables)
 
 # Specify the type of estimate for each variable
 variables <- c("", "", "total", "prop", "mean", rep("prop", 3),
-              "total", rep("prop", 3), "", "")
+              "total", rep("prop", 3), "", "", "")
 
 # Make sure you specify the correct type of estimate for each variable
 cbind(names(design$variables), variables)
@@ -76,7 +76,7 @@ sample1[, 5] <- as.numeric(sample1[, 5])
 # Define a survey design for each sex.
 design.sex <- DesignSurvey(psu.ssu, sample1,
                    psu.col = 2,
-                   ssu.col = 1)
+                   ssu.col = 1, psu.2cd = 20)
 design.f <- subset(design.sex, sex == 'Female')
 design.m <- subset(design.sex, sex == 'Male')
 
@@ -85,7 +85,7 @@ names(design.sex$variables)
 
 # Specify the type of estimate for each variable
 variables.sex <- c("", "", "total", "", "total",
-                  "prop", "prop", "", "")
+                  "prop", "prop", "", "", "")
 
 # Make sure you specify the correct type of
 # estimate for each variable
