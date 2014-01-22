@@ -1,8 +1,8 @@
-\name{Calculate2ClusterSize}
-\alias{Calculate2ClusterSize}
+\name{Calculate2StageSampleSize}
+\alias{Calculate2StageSampleSize}
 \title{Two-stage cluster sampling size and composition}
 \usage{
-  Calculate2ClusterSize(psu.ssu = NULL, psu.x = NULL,
+  Calculate2StageSampleSize(psu.ssu = NULL, psu.x = NULL,
     level = 0.95, error = 0.1, cost = 4)
 }
 \arguments{
@@ -53,7 +53,7 @@ data(psu.ssu)
 data(pilot)
 
 # Calculate sample size and composition.
-(sample.sc <- Calculate2ClusterSize(psu.ssu, pilot, level = 0.95, error = 0.1, cost = 4))
+(sample.sc <- Calculate2StageSampleSize(psu.ssu, pilot, level = 0.95, error = 0.1, cost = 4))
 }
 \references{
   Levy P and Lemeshow S (2008). Sampling of populations:

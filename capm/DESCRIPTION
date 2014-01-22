@@ -27,7 +27,7 @@ Authors@R: c(person(given='Oswaldo', family='Santos',
 Version: 0.1.0
 Date: 2014-01-22
 Collate:
-    'Calculate2ClusterSize.R'
+    'Calculate2StageSampleSize.R'
     'CalculateGlobalSens.R'
     'CalculateLocalSens.R'
     'CalculatePopChange.R'

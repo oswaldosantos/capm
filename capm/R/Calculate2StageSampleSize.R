@@ -19,9 +19,9 @@
 #' data(pilot)
 #' 
 #' # Calculate sample size and composition.
-#' (sample.sc <- Calculate2ClusterSize(psu.ssu, pilot, level = 0.95, error = 0.1, cost = 4))
+#' (sample.sc <- Calculate2StageSampleSize(psu.ssu, pilot, level = 0.95, error = 0.1, cost = 4))
 
-Calculate2ClusterSize <- function(psu.ssu = NULL, psu.x = NULL, level = .95, error = 0.1, cost = 4) {
+Calculate2StageSampleSize <- function(psu.ssu = NULL, psu.x = NULL, level = .95, error = 0.1, cost = 4) {
   if (length(intersect(psu.ssu[, 1], psu.x[, 1])) == 0) {
     stop('PSU identifiers must be equal in psu.ssu and in psu.x')
   }

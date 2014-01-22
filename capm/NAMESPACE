@@ -1,4 +1,4 @@
-export(Calculate2ClusterSize)
+export(Calculate2StageSampleSize)
 export(CalculateGlobalSens)
 export(CalculateLocalSens)
 export(CalculatePopChange)
