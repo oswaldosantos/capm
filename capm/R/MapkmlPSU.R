@@ -3,7 +3,7 @@
 #' @param shape \code{\link{character}} string with the name of a polygon shapefile or an object of \code{\link{class}} \link[sp]{SpatialPolygonsDataFrame} (see examples).
 #' @param psu the values to be matched.
 #' @param id column of the *.dbf file with the values to be matched against.
-#' @path \code{\link{character}} string indicating the path to the folder containing the shapfile. If the shapefile is in the working directory or if \code{shape} argument is a shapefile, \code{path} can be ignored.
+#' @param path \code{\link{character}} string indicating the path to the folder containing the shapfile. If the shapefile is in the working directory or if \code{shape} argument is a shapefile, \code{path} can be ignored.
 #' @return *.kml files of the subsetted polygons.
 #' @details If there is *.kml files in the working directory, the new files created will overwrite it in case of name matching.
 #' 
@@ -19,7 +19,7 @@
 #' (selected.psu <- SamplePPS(psu.ssu, 20, write = FALSE))
 #' 
 #' ## Define shape from shapefile.
-#' shp.path <- system.file('shp.shp', package="capm")
+#' shp.path <- system.file('shp', package="capm")
 #' # The code above used a shapefile avaliable in the
 #' # capm package.
 #' # You might want to write a code like:

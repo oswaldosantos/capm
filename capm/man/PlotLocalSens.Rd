@@ -2,34 +2,34 @@
 \alias{PlotLocalSens}
 \title{Plot results of CalculateLocalSens function}
 \usage{
-  PlotLocalSens(local.out = NULL, type = 1,
-    sens.x = "Time", sens.y = "Sensitivity",
-    ind.y = c("L1", "L2", "Mean", "Min", "Max"),
-    size.ax = 10)
+  PlotLocalSens(local.out = NULL, x.sens = "Time",
+    y.sens = "Sensitivity",
+    y.ind = c("L1", "L2", "Mean", "Min", "Max"),
+    ax.size = 10, type = 6)
 }
 \arguments{
   \item{local.out}{output from
   \code{\link{CalculateLocalSens}} function.}
 
   \item{type}{a number to define the type of graphical
-  output. When equal to \code{1}, both the sensitivity
-  functions and all importance indices are ploted. If equal
-  to \code{2}, the sensitivity function for each parameter
-  and the importance indices L1 and L2 are ploted and if
-  equal to \code{3}, just sensitivity functions are
-  ploted.}
+  output. \code{6}: sensitivity functions and all
+  importance indices are ploted; \code{1}: importance index
+  L1; \code{2}: importance index L2; \code{3}: mean of
+  sensitivity functions; \code{5}: minimum of sensitivity
+  functions; and \code{5}: maximum of sensitivity
+  functions.}
 
-  \item{sens.x}{string with the name of x axis for
+  \item{x.sens}{string with the name of x axis for
   sensitivity functions.}
 
-  \item{sens.y}{string with the name of y axis for
+  \item{y.sens}{string with the name of y axis for
   sensitivity functions.}
 
-  \item{ind.y}{\code{\link{character}} \code{\link{vector}}
+  \item{y.ind}{\code{\link{character}} \code{\link{vector}}
   with the name of y axis for the parameter importance
   indices.}
 
-  \item{size.ax}{a number to specify the size of axes
+  \item{ax.size}{a number to specify the size of axes
   labels and text.}
 }
 \description{
@@ -77,7 +77,7 @@ pars.solveiasa <- c(
    df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,
    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
    k1 = 98050.49, k2 = 8055.456, h1 = 1, h2 = .5,
-   ab = 0.054, ad = 0.1, v = 0.2, vc = 0.1)
+   ab = 0.054, ad = 0.1, v = 0.2, z = 0.1)
 
 init.solveiasa <- c(
    f1 = 33425.19, cf1 = 10864.901,

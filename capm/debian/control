@@ -10,7 +10,7 @@ Package: r-other-capm
 Architecture: all
 Section: math
 Depends: r-base (>= 3.0.0)
-Description: GNU R package: Provides functions to calculate the size and compostion of samples
- to estimate dog and cat demographic parameters and functions to simulate population dynamics
- under different scenarios of population management.
+Description: GNU R package: Provides functions to calculate the size and compostion
+ of samples to estimate dog and cat demographic parameters and functions to simulate
+ population dynamics under different scenarios of population management.
 Homepage: https://github.com/oswaldosantos/capm

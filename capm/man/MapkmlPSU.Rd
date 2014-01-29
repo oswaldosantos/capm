@@ -41,7 +41,7 @@ data(psu.ssu)
 (selected.psu <- SamplePPS(psu.ssu, 20, write = FALSE))
 
 ## Define shape from shapefile.
-shp.path <- system.file('shp.shp', package="capm")
+shp.path <- system.file('shp', package="capm")
 # The code above used a shapefile avaliable in the
 # capm package.
 # You might want to write a code like:
