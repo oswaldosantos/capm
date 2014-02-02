@@ -15,6 +15,11 @@
 
   \item{id}{column of the *.dbf file with the values to be
   matched against.}
+
+  \item{path}{\code{\link{character}} string indicating the
+  path to the folder containing the shapfile. If the
+  shapefile is in the working directory or if \code{shape}
+  argument is a shapefile, \code{path} can be ignored.}
 }
 \value{
   *.kml files of the subsetted polygons.
