@@ -25,18 +25,26 @@ shinyServer(function(input, output) {
   
   map <- function() {
     if (input$examples) {
-      shp.path <- system.file('shp', package="capm")
-    } #else {
-      #shp.path <- ()
-    #}
-    options(warn = -1)
-    return(readOGR(shp.path, 'santos'))
+      shape.path <- system.file('shp', package="capm")
+      shape.name <- 'santos'
+    } else {
+      shape.path <- input$shape.path
+      shape.name <- input$shape.name
+    }
+    options(warn = -1)    
+    #return(list(shape.path, shape.name))
+    return(readOGR(shape.path, shape.name))
     
   }
   
   output$selected <- renderTable({
-    if (is.null(dat()) | is.null(psu()) |
-          is.null(input$ssu)) {
+    if (is.null(dat()) & !is.null(input$total) & !is.null(input$ssu)) {
+      if (input$total > 0 & input$ssu > 0) {
+        data.frame(SSU = SampleSystematic(total = input$total,
+                                          ssu = input$ssu))
+      }
+    } else if (is.null(dat()) | is.null(psu()) |
+                 is.null(input$ssu)) {
       return(NULL)
     } else {
       SampleSystematic(psu(), input$ssu)
@@ -44,15 +52,20 @@ shinyServer(function(input, output) {
   })
   
   output$map <- renderPlot({
-    if (input$psu & !is.null(input$psu) & !is.null(dat())) {
-      tmp <- NULL
-      for (i in 1:length(psu()[ , 1])) {
-        tmp[i] <- which(as.character(map()@data[, 1]) == psu()[ , 1][i])
+    if (input$get.map == 0)
+      return()
+    
+    isolate({
+      if (input$psu & !is.null(input$psu) & !is.null(dat())) {
+        tmp <- NULL
+        for (i in 1:length(psu()[ , 1])) {
+          tmp[i] <- which(as.character(map()@data[, 1]) == psu()[ , 1][i])
+        }
+        plot(map(), border = 'grey', axes = T, las = 1,
+             xlab = 'Easting', ylab = 'Northing')
+        plot(map()[tmp, ], col = 'red', border = 'red', add = T)
       }
-      plot(map(), border = 'grey', axes = T, las = 1,
-           xlab = 'Easting', ylab = 'Northing')
-      plot(map()[tmp, ], col = 'red', border = 'red', add = T)
-    }
+    })
   })
   
-})
+})                    
