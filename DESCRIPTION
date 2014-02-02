@@ -7,6 +7,7 @@ Depends:
     survey,
     reshape2,
     ggplot2,
+    shiny,
     grid,
     rgdal,
     maptools
@@ -45,3 +46,4 @@ Collate:
     'SolveSI.R'
     'SolveTC.R'
     'SummarySurvey.R'
+    'GraphicInterface.R'
