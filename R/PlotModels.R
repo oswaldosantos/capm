@@ -1,0 +1,496 @@
+#' Plot results of capm model functions
+#' @description Plot results of objects of class \code{capmModels}.
+#' @param model.out output of one of the function previously mentioned.
+#' @param variable string to specify the variable to be ploted. 
+#' 
+#' For \code{\link{SolveSI}} function: 
+#' 
+#' "n" (population size).
+#' 
+#' "q" (proportion of sterilized animals). 
+#' 
+#' For \code{\link{SolveIASA}} function using only point estimates:
+#' 
+#' "f1" (owned intact females).
+#' 
+#' "cf1" (owned sterilized females).
+#' 
+#' "m1" (owned intact males).
+#' 
+#' "cm1" (owned sterilized males).
+#'
+#' "f2" (stray intact females).
+#' 
+#' "cf2" (stray sterilized females).
+#' 
+#' "m2" (stray intact males).
+#' 
+#' "cm2" (stray sterilized males). 
+#' 
+#' "n1" (owned intact animals).
+#' 
+#' "cn1" (oned sterilized animals).
+#' 
+#' "n2" (stray intact animals).
+#' 
+#' "cn2" (stray sterilized animals).
+#' 
+#' "N1" (owned animals).
+#' 
+#' "N2" (stray animals).
+#' 
+#' "N" (total population).
+#' 
+#' For \code{\link{SolveIASA}} function using *.range arguments:
+#' 
+#' "f" (intact females).
+#' 
+#' "cf" (sterilized females).
+#' 
+#' "m" (intact males).
+#' 
+#' "cm" (sterilized males).
+#' 
+#' "n" (intact animals).
+#' 
+#' "cn" (sterilized animals).
+#' 
+#' "N" (Total population stratified by reproductive status).
+#' 
+#' For \code{\link{SolveTC}} function: 
+#' 
+#' "n" (fertile animals).
+#' 
+#' "cn" (sterilized animals).
+#' 
+#' "tcn" (cumulative of sterilized animals)
+#' 
+#' @param col string indicating the color of ploted line, when \code{s.range} is \code{NULL}.
+#' @param col1 \code{\link{character}} \code{\link{vector}} indicating the color of lowest (highest) population sizes (proportion of sterilized animals), when \code{s.range} is not \code{NULL}.
+#' @param col2 \code{\link{character}} \code{\link{vector}} indicating the color of lowest (highest) population sizes (proportion of sterilized animals), when \code{s.range} is not \code{NULL}.
+#' @param xlabel string with the name of x axis.
+#' @param ylabel string with the name of y axis.
+#' @param leglabel string with the name of legend, for plots of \code{\link{SolveIASA}} output.
+#' @param scenlabel string with the name of scenarios of \code{\link{SolveIASA}} output, determined by the immigartion rates. Within the string, use the expression __ in the location where you want to appear the value of the immigartion rate. For line breaking, use \code{\\n} (see examples).
+#' @param pop a value indicating the output of \code{\link{SolveIASA}} to be ploted. When \code{NULL} (default), plots for owned and stray populations under scenarios created by immigartion rate are created. If \code{1}, the plots of owned population for the minimum immigartion rate are ploted. When \code{2}, the plots of stray population for the minimum immigartion rate are ploted. If \code{3}, the plots of owned population for the maximum immigartion rate are ploted. When \code{4}, the plots of owned population for the maximum immigartion rate are ploted.
+#' @details Font size of saved plots is usually different to the font size seen in graphic browsers. Before changing font sizes, see the final result in saved (or preview) plots.
+#'  
+#' Other details of the plot can be modifyed using appropriate functions from \code{ggplot2} package.
+#' @references Chang W (2012). R Graphics Cookbook. O'Reilly Media, Inc.
+#' @seealso \link[deSolve]{plot.deSolve}.
+#' @export
+#' @examples
+#' ###################
+#' ## Example 1     ##
+#' ## SolveSI model ##
+#' ###################
+#' 
+#' # Parameters and initial conditions from estimates   
+#' # obtained in examples section from svysumm function but
+#' # estimating a proportion insted of a total for births.
+#' pars.solvesi = c(b = 0.245, d = 0.101, 
+#'                  k = 98050.49, s = .048)
+#' init.solvesi = c(n = 89136.810, q = 0.198)
+#' 
+#' # Solve for a specific sterilization rate.
+#' solvesi.pt = SolveSI(pars = pars.solvesi, 
+#'                      init = init.solvesi, 
+#'                      time = 0:30, dd = 'b',
+#'                      im = 100, method = 'rk4')
+#' 
+#' # Solve for a range of sterilization rates.
+#' solvesi.rg = SolveSI(pars = pars.solvesi,
+#'                      init = init.solvesi,
+#'                      time = 0:30, dd = 'b', im = 100, 
+#'                      s.range = seq(0, .4, l = 50),
+#'                      method = 'rk4')
+#'  
+#' ## Plot the population size
+#' PlotModels(solvesi.pt, variable = 'n')
+#' PlotModels(solvesi.rg, variable = 'n')
+#' 
+#' ## Plot the proportion of sterilized animals
+#' PlotModels(solvesi.pt, variable = 'q')
+#' PlotModels(solvesi.rg, variable = 'q')
+#' 
+#' #####################
+#' ## Example 2       ##
+#' ## SolveIASA model ##
+#' #####################
+#' 
+#' ## Parameters and intial conditions.
+#' pars.solveiasa = c(
+#'    b1 = 21870.897, b2 = 4374.179,
+#'    df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,
+#'    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
+#'    k1 = 98050.49, k2 = 8055.456, h1 = 1, h2 = .5,
+#'    ab = 0.054, ad = 0.1, v = 0.2, z = 0.1)
+#'    
+#' init.solveiasa = c(
+#'    f1 = 33425.19, cf1 = 10864.901,
+#'    m1 = 38038.96, cm1 = 6807.759,
+#'    f2 = 3342.519, cf2 = 108.64901,
+#'    m2 = 3803.896, cm2 = 68.07759)
+#'    
+#' 
+#' # Solve for point estimates.
+#' solveiasa.pt <- SolveIASA(pars = pars.solveiasa, 
+#'                           init = init.solveiasa, 
+#'                           time = 0:30, method = 'rk4')
+#' 
+#' # Solve for parameter ranges.
+#' solveiasa.rg <- SolveIASA(pars = pars.solveiasa, 
+#'                           init = init.solveiasa, 
+#'                           time = 0:20,
+#'                           s.range = seq(0, .4, l = 20), 
+#'                           ab.range = c(0, .2), 
+#'                           ad.range = c(0, .2),
+#'                           im.range = c(0, .1),
+#'                           method = 'rk4')
+#'                 
+#' ## Plot stray population sizes using point estimates
+#' PlotModels(solveiasa.pt, variable = "n2")
+#' 
+#' ## Plot all scenarios and change the label for the scenarios.
+#' PlotModels(solveiasa.rg, variable = 'N')
+#'
+PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c('cadetblue1', 'yellow', 'red'), col2 = c('blue', 'darkgreen', 'darkred'), xlabel = 'Years', ylabel = NULL, scenlabel = 'Im = (__ * owned carrying capacity)', leglabel = NULL, pop = NULL) {
+  if (class(model.out) != 'capmModels') {
+    stop('model.out must be of class "capmModels".')
+  }
+  if (model.out$name == 'SolveSI') {
+    if (length(intersect(variable, c('n', 'q'))) == 0) {
+      stop(paste0('Invalid variable: "', variable,
+                  '". See the help page of PlotModels.'))
+    }
+    if (ncol(model.out$results) == 3) {
+      tmp <- ggplot(model.out$results, 
+                    aes_string(x = 'time', y = variable)) + 
+        geom_line(colour = col) +
+        xlab(xlabel)
+      if (!is.null(ylabel)) {
+        tmp + ylab(ylabel) +
+          ylim(0, max(model.out$results[ , variable]))
+      } else {
+        if (variable == 'n') {
+          ylabel <- 'Population size'
+        }
+        if (variable == 'q') {
+          ylabel <- 'Proportion of sterilized animals'
+        }
+        tmp + ylab(ylabel) +
+          ylim(0, max(model.out$results[ , variable]))
+      }
+    }  else {
+      if (is.null(ylabel)) {
+        ylabel <- 'Sterilization rate'
+      }
+      scl <- nchar(as.character(
+        round(max(model.out$results[, variable])))) - 2
+      if (variable == 'n') {
+        if (is.null(leglabel)) {
+          leglabel = 'Population size'
+        }
+        ggplot(
+          model.out$results, 
+          aes_string(x = 'time', y = 's.rate',
+                     fill = variable)) +
+          xlab(xlabel) + 
+          ylab(ylabel) +
+          geom_raster() + 
+          scale_fill_continuous(
+            name = paste0(leglabel,' (x ', 10 ^ scl, ')'),
+            limits = c(0, max(model.out$results[, variable])), 
+            breaks = round(
+              seq(0 , max(model.out$results[, variable]),
+                  length.out = 5) - 0.5),
+            labels = round(
+              seq(0 , max(model.out$results[, variable]),
+                  length.out = 5) / (10 ^ scl), 1),
+            low = col1,
+            high = col2) +
+          theme(legend.position = 'top',
+                legend.title = element_text(size = 12))
+      } else {
+        if (is.null(leglabel)) {
+          leglabel == 'Proportion of sterilized animals'
+        }
+        ggplot(
+          model.out$results, 
+          aes_string(x = 'time', y = 's.rate',
+                     fill = variable)) +
+          xlab(xlabel) + 
+          ylab(ylabel) +
+          geom_raster() +
+          scale_fill_continuous(
+            name = leglabel,
+            limits = c(0, 1), breaks = seq(0 , 1, .2),
+            low = rev(col2), 
+            high = rev(col1)) +
+          theme(legend.position = 'top', 
+                legend.title = element_text(size = 12),
+                legend.text = element_text(angle = 90))
+      }
+    }
+  } else { 
+    if (model.out$name == 'SolveIASA') {
+      if (ncol(model.out$results) == 16) {
+        if (length(intersect(variable, 
+                             c('f1', 'cf1', 'm1', 'cm1',
+                               'f2', 'cf2', 'm2', 'cm2',
+                               'n1', 'cn1', 'n2', 'cn2',
+                               'N1', 'N2', 'N'))) == 0) {
+          stop(paste0('Invalid variable: "', variable,
+                      '". See the help page of PlotModels.'))
+        }
+        tmp <- ggplot(model.out$results, 
+                      aes_string(x = 'time', y = variable)) + 
+          geom_line(colour = col) +
+          xlab(xlabel)
+        if (!is.null(ylabel)) {
+          tmp + ylab(ylabel) +
+            ylim(0, max(model.out$results[ , variable]))
+        } else {
+          if (variable == 'f1') {
+            yla <- 'Owned intact females'
+          }
+          if (variable == 'cf1') {
+            yla <- 'Owned sterilized females'
+          }
+          if (variable == 'm1') {
+            yla <- 'Owned intact males'
+          }
+          if (variable == 'cm1') {
+            yla <- 'Owned sterilized males'
+          }
+          if (variable == 'f2') {
+            yla <- 'Stray intact females'
+          }
+          if (variable == 'cf2') {
+            yla <- 'Stray sterilized females'
+          }
+          if (variable == 'm2') {
+            yla <- 'Stray intact males'
+          }
+          if (variable == 'cm2') {
+            yla <- 'Stray sterilized males'
+          }
+          if (variable == 'n1') {
+            yla <- 'Owned intact animals'
+          }
+          if (variable == 'cn1') {
+            yla <- 'Owned sterilized animals'
+          }
+          if (variable == 'n2') {
+            yla <- 'Stray intact animals'
+          }
+          if (variable == 'cn2') {
+            yla <- 'Stray sterilized animals'
+          }
+          if (variable == 'N1') {
+            yla <- 'Owned animals'
+          }
+          if (variable == 'N2') {
+            yla <- 'Stray animals'
+          }
+          if (variable == 'N') {
+            yla <- 'Total pulation size'
+          }
+          tmp + ylab(yla) +
+            ylim(0, max(model.out$results[ , variable]))
+        }
+      } else {
+        if (length(intersect(variable, 
+                             c('f', 'cf', 'm', 'cm',
+                               'n', 'cn', 'N'))) == 0) {
+          stop(paste('Invalid variable: "', variable, 
+                     '". See the help page of PlotModels.'))
+        }
+        if (is.null(leglabel)) {
+          if (variable == 'f') {
+            leglabel <- c('Owned\nintact\nfemales', 
+                          'Stray\nintact\nfemales')
+          }
+          if (variable == 'cf') {
+            leglabel <- c('Owned\nsterilized\nfemales', 
+                          'Stray\nsterilized\nfemales')
+          }
+          if (variable == 'm') {
+            leglabel <- c('Owned\nintact\nmales', 
+                          'Stray\nintact\nmales')
+          }
+          if (variable == 'cm') {
+            leglabel <- c('Owned\nsterilized\nmales', 
+                          'Stray\nsterilized\nmales')
+          }
+          if (variable == 'n') {
+            leglabel <- c('Owned\nintact\nanimals', 
+                          'Stray\nintact\nanimals')
+          }
+          if (variable == 'cn') {
+            leglabel <- c('Owned\nsterilized\nanimals', 
+                          'Stray\nsterilized\nanimals')
+          }
+          if (variable == 'N') {
+            leglabel <- c('Owned\nanimals', 
+                          'Stray\nanimals')
+          }
+        }
+        model.out$results[, 'ab'] = 
+          paste('Ab =', round(model.out$results[, 'ab'], 2))
+        model.out$results[, 'ad'] = 
+          paste('Ad =', round(model.out$results[, 'ad'], 2))
+        if (is.null(ylabel)) {
+          ylabel <- 'Sterilization rate'
+        }
+        s11 <- s12 <- s21 <- s22 <- NULL
+        for (i in 1:2) {
+          for (j in 1:2) {
+            dat <- model.out$results
+            dat <- dat[
+              dat[, 'group'] == unique(dat[, 'group'])[j] &
+                dat[, 'im'] == unique(dat[, 'im'])[i], ]
+            scl <- nchar(as.character(
+              round(max(dat[, variable])))) - 2
+            assign(paste0('s', i, j), 
+                   ggplot(
+                     dat,
+                     aes_string(x = 't', y = 's',
+                                fill = variable)) +
+                     xlab(xlabel) + 
+                     ylab(ylabel) +
+                     ggtitle(
+                       gsub('__', unique(
+                         model.out$results[, 'im'])[i],
+                            scenlabel)) +
+                     geom_raster() + 
+                     scale_fill_continuous(
+                       name = paste0(leglabel[j], '\n',
+                                     '(x ', 10 ^ scl, ')\n'),
+                       limits = c(0, max(model.out$results[
+                         model.out$results$group == j, variable])), 
+                       breaks = 
+                         seq(0 , max(model.out$results[
+                           model.out$results$group == j, variable]),
+                             length.out = 5),
+                       labels = round(
+                         seq(0 , max(model.out$results[
+                           model.out$results$group == j, variable]),
+                             length.out = 5) / (10 ^ scl), 1),
+                       low = col1,
+                       high = col2) +
+                     theme(legend.position = 'right',
+                           legend.title = 
+                             element_text(size = 10, face = 'plain'),
+                           plot.margin = 
+                             unit(c(.5, 0, 0, 0), 'lines'),
+                           plot.title = 
+                             element_text(size = 12)) +
+                     facet_grid(ad ~ ab)
+            )
+          }
+        }
+        if (!is.null(pop)) {
+          if (pop == 1) {
+            print(s11)
+          }
+          if (pop == 2) {
+            print(s12)
+          }
+          if (pop == 3) {
+            print(s21)
+          }
+          if (pop == 4) {
+            print(s22)
+          }
+        } else {
+          
+        }
+        if (is.null(pop)) {
+          vplayout <- function(x, y) {
+            viewport(layout.pos.row = x, layout.pos.col = y)
+          } 
+          grid.newpage()
+          pushViewport(viewport(layout = grid.layout(2, 2)))
+          print(s11, vp = vplayout(1, 1))
+          print(s21, vp = vplayout(1, 2))
+          print(s12, vp = vplayout(2, 1))
+          print(s22, vp = vplayout(2, 2))
+        }
+      }
+    } else {
+      if (model.out$name == 'SolveTC') {
+        if (length(intersect(variable, c('n', 'cn', 'tcn'))) == 0) {
+          stop(paste0('Invalid variable: "', variable,
+                      '". See the help page of PlotModels.'))
+        }
+        if (ncol(model.out$results) == 4) {
+          tmp <- ggplot(model.out$results, 
+                        aes_string(x = 'time', y = variable)) + 
+            geom_line(colour = col) +
+            xlab(xlabel)
+          if (!is.null(ylabel)) {
+            tmp + ylab(ylabel) +
+              ylim(0, max(model.out$results[ , variable]))
+          } else {
+            if (variable == 'n') {
+              ylabel <- 'Fertile animals'
+            }
+            if (variable == 'cn') {
+              ylabel <- 'Infertile animals'
+            }
+            if (variable == 'tcn') {
+              ylabel <- 'Sterilized animals (cumulative)'
+            }
+            tmp + ylab(ylabel) +
+              ylim(0, max(model.out$results[ , variable]))
+          }
+        } else {
+          if (is.null(ylabel)) {
+            ylabel <- 'Fertility recovery rate'
+          }
+          scl <- nchar(as.character(
+            round(max(model.out$results[, variable])))) - 2
+          if (is.null(leglabel)) {
+            if (variable == 'n') {
+              leglabel = 'Fertile animals'
+            }
+            if (variable == 'cn') {
+              leglabel = 'Inertile animals'
+            }
+            if (variable == 'tcn') {
+              leglabel = 'Sterilized animals (cumulative)'
+            }
+          }
+          model.out$results[, 's'] <- 
+            paste('S =', round(model.out$results[, 's'], 2))
+          model.out$results[, 'z'] <- 
+            paste('Z =', round(model.out$results[, 'z'], 2))
+          ggplot(
+            model.out$results,
+            aes_string(x = 'time', y = 'f',
+                       fill = variable)) +
+            xlab(xlabel) + 
+            ylab(ylabel) +
+            geom_raster() + 
+            scale_fill_continuous(
+              name = paste0(leglabel,' (x ', 10 ^ scl, ')'),
+              limits = c(0, max(model.out$results[, variable])), 
+              breaks = round(
+                seq(0 , max(model.out$results[, variable]),
+                    length.out = 5) - 0.5),
+              labels = round(
+                seq(0 , max(model.out$results[, variable]),
+                    length.out = 5) / (10 ^ scl), 1),
+              low = col1,
+              high = col2) +
+            theme(legend.position = 'top',
+                  legend.title = element_text(size = 12),
+                  legend.text = element_text(angle = 90),
+                  plot.margin = unit(c(.5, 0, 0, 0), 'lines')) +
+            facet_grid(z ~ s)
+        }
+      }
+    }
+  }
+}
