@@ -32,9 +32,9 @@ SampleSystematic <- function(psu.ssu = NULL, ssu = NULL, total = NULL, write = F
     ssus <- floor(Ssu)
     if (write == TRUE) {
       colnames(ssus) <- as.character(psu.ssu[ , 1])
-      write.table(ssus, file = 'ssus.csv', sep = ',', dec = '.', 
+      write.table(ssus, file = 'sampling_units.csv', sep = ',', dec = '.', 
                   qmethod = 'double', col.names = NA, ...)
-      cat('\n', 'The \"ssus.csv\" file contains the selected SSU. \nIt is in the directory:', '\n\n', getwd(), '\n', '\n')
+      cat('\n', 'The \"sampling_units.csv\" file contains the selected SSU. \nIt is in the directory:', '\n\n', getwd(), '\n', '\n')
     }
     return(ssus)
   } else {
