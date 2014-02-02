@@ -5,7 +5,7 @@ shinyServer(function(input, output) {
       data(psu.ssu)
       return(psu.ssu)
     } else if (is.null(input$psu.ssu)) {
-      return(NULL)
+      return()
     } else {
       return(read.csv(input$psu.ssu$datapath,
                       sep=input$sep,
@@ -17,7 +17,7 @@ shinyServer(function(input, output) {
   psu <- function() {
     if (is.null(dat()) | is.null(input$psu) |
           !is.numeric(input$psu)) {
-      return(NULL)
+      return()
     } else {
       return(SamplePPS(dat(), input$psu))
     }
@@ -31,8 +31,7 @@ shinyServer(function(input, output) {
       shape.path <- input$shape.path
       shape.name <- input$shape.name
     }
-    options(warn = -1)    
-    #return(list(shape.path, shape.name))
+    options(warn = -1) 
     return(readOGR(shape.path, shape.name))
     
   }
@@ -40,12 +39,12 @@ shinyServer(function(input, output) {
   output$selected <- renderTable({
     if (is.null(dat()) & !is.null(input$total) & !is.null(input$ssu)) {
       if (input$total > 0 & input$ssu > 0) {
-        data.frame(SSU = SampleSystematic(total = input$total,
-                                          ssu = input$ssu))
+          data.frame(SSU = SampleSystematic(total = input$total,
+                                            ssu = input$ssu))
       }
     } else if (is.null(dat()) | is.null(psu()) |
                  is.null(input$ssu)) {
-      return(NULL)
+      return()
     } else {
       SampleSystematic(psu(), input$ssu)
     }
@@ -59,7 +58,8 @@ shinyServer(function(input, output) {
       if (input$psu & !is.null(input$psu) & !is.null(dat())) {
         tmp <- NULL
         for (i in 1:length(psu()[ , 1])) {
-          tmp[i] <- which(as.character(map()@data[, 1]) == psu()[ , 1][i])
+          tmp[i] <- which(
+            as.character(map()@data[, input$col]) == psu()[ , 1][i])
         }
         plot(map(), border = 'grey', axes = T, las = 1,
              xlab = 'Easting', ylab = 'Northing')
