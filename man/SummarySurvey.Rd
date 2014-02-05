@@ -33,7 +33,7 @@
 \examples{
 # Load data.
 data(psu.ssu)
-data(Sample)
+data(survey.data)
 
 #######################
 ## Example 1         ##
@@ -41,7 +41,7 @@ data(Sample)
 #######################
 
 # Specify the two-stage cluster design.
-design <- DesignSurvey(psu.ssu, Sample, psu.col = 2, ssu.col = 1, psu.2cd = 20)
+design <- DesignSurvey(psu.ssu, survey.data, psu.col = 2, ssu.col = 1, psu.2cd = 20)
 
 # Look at the variables contained in the survey design
 names(design$variables)
@@ -64,7 +64,7 @@ estimates <- SummarySurvey(design, variables = variables,
 
 # Make a copy of the dataset and select some
 # variables of interest.
-sample1 <- Sample[, c(1:4, 6:7, 11)]
+sample1 <- survey.data[, c(1:4, 6:7, 11)]
 
 # Transform to numeric the "castrated" variable in order
 # to estimate its total.

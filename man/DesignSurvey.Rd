@@ -63,10 +63,10 @@
 data(psu.ssu)
 
 # Load data with sample data.
-data(Sample)
+data(survey.data)
 
 # Specify the two-stage cluster design that included 20 PSU.
-design <- DesignSurvey(psu.ssu, Sample, psu.col = 2, ssu.col = 1, psu.2cd = 20)
+design <- DesignSurvey(psu.ssu, survey.data, psu.col = 2, ssu.col = 1, psu.2cd = 20)
 }
 \references{
   Lumley, T. (2011). Complex surveys: A guide to analysis
