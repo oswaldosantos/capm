@@ -12,7 +12,7 @@
 #' @examples
 #' 
 #' data(psu.ssu)
-#' data(Sample)
+#' data(survey.data)
 #' 
 #' #######################
 #' ## Example 1         ##

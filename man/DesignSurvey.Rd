@@ -19,10 +19,10 @@
   of the columns corresponds to the variables surveyed.}
 
   \item{psu.col}{the column of \code{sample} containing the
-  psu identifiers.}
+  psu identifiers (for two-stage cluster designs).}
 
   \item{ssu.col}{the column of \code{sample} containing the
-  ssu identifiers.}
+  ssu identifiers (for two-stage cluster designs).}
 
   \item{design}{string to define the type of design.
   "2clusterPPS" defines a two-stage cluster sampling design
@@ -34,7 +34,8 @@
   included in a design of type "2clusterPPS" (for psu
   included more than once, each must be counted).}
 
-  \item{total}{value corresponding to population size. If
+  \item{total}{\code{\link{numeric}} value representing the
+  total of sampling units in the population. If
   \code{design} is equal to "2clusterPPS", it is not
   necessary to define \code{total}.}
 

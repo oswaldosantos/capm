@@ -25,9 +25,9 @@
 #' @export
 #' @examples 
 #' ## Load data with information about age, sex and reproductive status of individuals.
-#' data(Sample)
-#' PlotPopPyramid(Sample, col.age = 5, col.sex = 4, col.cas = 6)
-#' PlotPopPyramid(Sample, col.age = 5, col.sex = 4)
+#' data(survey.data)
+#' PlotPopPyramid(survey.data, col.age = 5, col.sex = 4, col.cas = 6)
+#' PlotPopPyramid(survey.data, col.age = 5, col.sex = 4)
 #' 
 PlotPopPyramid <- function(dat = NULL, col.age = NULL, col.sex = NULL, col.cas = NULL, x.label = 'Total', stage.label = 'Years', inner.color = 'Gold2', outer.color = 'DarkOliveGreen') {
   if (!is.numeric(dat[, col.age])) {
