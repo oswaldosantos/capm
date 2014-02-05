@@ -31,13 +31,12 @@ shinyServer(function(input, output) {
       shape.path <- input$shape.path
       shape.name <- input$shape.name
     }
-    options(warn = -1) 
     return(readOGR(shape.path, shape.name))
     
   }
   
   output$selected <- renderTable({
-    if (is.null(dat()) & !is.null(input$total) & !is.null(input$ssu)) {
+    if (is.null(dat()) & !is.na(input$total) & !is.na(input$ssu)) {
       if (input$total > 0 & input$ssu > 0) {
           data.frame(SSU = SampleSystematic(total = input$total,
                                             ssu = input$ssu))
@@ -55,7 +54,7 @@ shinyServer(function(input, output) {
       return()
     
     isolate({
-      if (input$psu & !is.null(input$psu) & !is.null(dat())) {
+      if (!is.null(input$psu) & !is.null(dat())) {
         tmp <- NULL
         for (i in 1:length(psu()[ , 1])) {
           tmp[i] <- which(

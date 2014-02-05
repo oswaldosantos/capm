@@ -36,7 +36,8 @@ shinyUI(pageWithSidebar(
     textInput('shape.name', 'Name of the file (without quotes).'),
     numericInput('col', 'Column with PSU identifiers.', value = NULL, min = 0),
     br(),
-    actionButton('get.map', 'Get map'),
+    helpText('Press the buttom and wait'),
+    actionButton('get.map', 'Get/Update map'),
     
     tags$hr(),
     checkboxInput('examples', 'Instead of choosing your own csv and shapefile, use example files from capm package. After checking this box, press the "Get map" above.', F),
@@ -85,7 +86,6 @@ Further information can be found in <a href="https://github.com/oswaldosantos/ca
       tabPanel('Selected sampling units',
                tableOutput('selected')),
       tabPanel('Maps',
-               HTML('After pressing the "Get map" button in the left side panel, the map will be plotted below after some seconds.'),
                plotOutput('map', height = 600))
     )
   )
