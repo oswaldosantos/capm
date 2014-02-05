@@ -80,6 +80,7 @@ shinyUI(pageWithSidebar(
                    'For systematic sampling, ingore the first three fields and specify here the total number of sampling units in the population.',
                    value = NULL, min = 0),
       tags$hr(),
+      helpText('Press the buttom and wait'), br(),
       actionButton('calc.estimates', 'Get estimates'))
   ),
   
@@ -100,7 +101,7 @@ If you checked the box to use example files, ignore the left side panel of the <
 
 <b>Survey data</b><br>
 If you checked the box to use example files, ignore the left side panel of the <i>Survey data</i> Tab.  If you are using your own files, make sure you choose the apropriate options in the left side panel to avoid error messages or awkward results. The csv file must have one column for each variable for which estimates are needed, one column for PSU identifiers and one column for SSU identifiers. You must be able to see that columns and as many rows as SSU (across all PSU) in the sample. On the top of the table, the gray box shows summary statistics for each column. In the example file, the first column contain SSU identifiers, the second contain PSU identifiers and the remaining contain the variables.<br>
-To see a description of the meaning of each variable, go to RStudio and run <code>help(Sample)</code>.<br><br>
+To see a description of the meaning of each variable, go to RStudio and run <code>help(survey.data)</code>.<br><br>
 
 <b>Population pyramid</b><br>
 If you checked the box to use example files, fill in the fields from top to bottom with, 5, 4 and 6 respectively (see this column positions in the output from <i>Survey data</i> Tab).<br><br>

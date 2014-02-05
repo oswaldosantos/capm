@@ -16,8 +16,8 @@ shinyServer(function(input, output) {
   
   SampleData <- function() {
     if (input$examples) {
-      data(Sample)
-      return(Sample)
+      data(survey.data)
+      return(survey.data)
     } else if (is.null(input$sample)) {
       return()
     } else {
