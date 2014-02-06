@@ -74,7 +74,7 @@ shinyUI(pageWithSidebar(
       tags$hr(),
       HTML('<p> Type of estimates <br> If you are using example files, copy and paste the following terms: <br> total, prop, mean, prop, prop, prop, total, prop, prop, prop'),
       textInput('variables', '',
-                 value = NULL),
+                value = NULL),
       tags$hr(),
       numericInput('total',
                    'For systematic sampling, ingore the first three fields and specify here the total number of sampling units in the population.',
@@ -90,29 +90,31 @@ shinyUI(pageWithSidebar(
       tabPanel(
         'Introduction', value = 1,
         HTML(
-          '<p>
-          With this App, you can upload data collected in a survey, make some descriptive analysis, and estimate population parameters. To get the estimates, it is necessary to specify the survey design used to collect the data.<br><br>
+          '<p>With this App, you can upload data collected in a survey, make some descriptive analysis, and estimate population parameters. To get the estimates, it is necessary to specify the survey design used to collect the data.</p>
 
-<b>Runing example files</b><br>
-To run the App with example files from capm package instead of your own data, check the box in the left side panel.<br><br>
+<b>Runing example files</b>
+<p>To run the App with example files from capm package instead of your own data, check the box in the left side panel.</p>
 
-<b>Universe of sampling units</b><br>
-If you checked the box to use example files, ignore the left side panel of the <i>Universe of sampling units</i> Tab. If you are using your own files, make sure you choose the apropriate options in the left side panel to avoid error messages or awkward results. You must be able to see a table with two columns and as many rows as sampling units in the population.<br><br>
+<b>Universe of sampling units</b>
+<p>If you checked the box to use example files, ignore the left side panel of the <i>Universe of sampling units</i> Tab. If you are using your own files, make sure you choose the apropriate options in the left side panel to avoid error messages or awkward results. You must be able to see a table with two columns and as many rows as sampling units in the population.</p>
 
-<b>Survey data</b><br>
-If you checked the box to use example files, ignore the left side panel of the <i>Survey data</i> Tab.  If you are using your own files, make sure you choose the apropriate options in the left side panel to avoid error messages or awkward results. The csv file must have one column for each variable for which estimates are needed, one column for PSU identifiers and one column for SSU identifiers. You must be able to see that columns and as many rows as SSU (across all PSU) in the sample. On the top of the table, the gray box shows summary statistics for each column. In the example file, the first column contain SSU identifiers, the second contain PSU identifiers and the remaining contain the variables.<br>
-To see a description of the meaning of each variable, go to RStudio and run <code>help(survey.data)</code>.<br><br>
+<b>Survey data</b>
+<p>If you checked the box to use example files, ignore the left side panel of the <i>Survey data</i> Tab.  If you are using your own files, make sure you choose the apropriate options in the left side panel to avoid error messages or awkward results. The csv file must have one column for each variable for which estimates are needed, one column for PSU identifiers and one column for SSU identifiers. You must be able to see that columns and as many rows as SSU (across all PSU) in the sample. On the top of the table, the gray box shows summary statistics for each column. In the example file, the first column contain SSU identifiers, the second contain PSU identifiers and the remaining contain the variables.<br>
+To see a description of the meaning of each variable, go to RStudio and run <code>help(survey.data)</code>.</p>
 
-<b>Population pyramid</b><br>
-If you checked the box to use example files, fill in the fields from top to bottom with, 5, 4 and 6 respectively (see this column positions in the output from <i>Survey data</i> Tab).<br><br>
+<b>Population pyramid</b>
+<p>If you checked the box to use example files, fill in the fields from top to bottom with, 5, 4 and 6 respectively (see this column positions in the output from <i>Survey data</i> Tab).</p>
 
-<b>Estimates</b><br>
-If you checked the box to use example files, fill in the first three fields from top to bottom with, 2, 1 and 20 respectively (see the first two columns in the output from <i>Survey data</i> Tab). The example survey design included 20 PSU and that is the reason for the last number.<br>
-For systematic sampling, ignore the first three fields, and specify the total number of sampling units in the population (fourth field).<br>
-In the last field, specify the type of estimate for each variable. To estimate a total, type <i>total</i>, to estimate a mean, type <i>mean</i> and to estimate a proportion, type <i>prop</i>. To get estimates of more than one variable, type the appropriate term for each variable and separate them by commas. The order of term from left to right must be the order (left to right) of variables (columns) in the survey file.<br>
-From the command line in RStudio, it is possible to get estimates for specific subpopulations (i.e. by sex). To estimate the total for categorical variables such as "castrated" from the example file (<i>Survey data</i> Tab), the command line is the place to go.<br><br>
+<b>Estimates</b>
+<p>If you checked the box to use example files, fill in the first three fields from top to bottom with, 2, 1 and 20 respectively (see the first two columns in the output from <i>Survey data</i> Tab). The example survey design included 20 PSU and that is the reason for the last number.<br>
+For systematic sampling, ignore the first three fields, and specify the total number of sampling units in the population (fourth field).</p>
 
-<b>Further information</b><br>
+<p>In the last field, specify the type of estimate for each variable. To estimate a total, type <i>total</i>, to estimate a mean, type <i>mean</i> and to estimate a proportion, type <i>prop</i>. To get estimates of more than one variable, type the appropriate term for each variable and separate them by commas. The order of term from left to right must be the order (left to right) of variables (columns) in the survey file.</p>
+
+<p>From the command line in RStudio, it is possible to get estimates for specific subpopulations (i.e. by sex). To estimate the total for categorical variables such as "castrated" from the example file (<i>Survey data</i> Tab), the command line is the place to go.</p>
+
+<b>Further information</b>
+<p>
 <ul>
 <li>The display of some outputs might take a few seconds, be patient!</li>
 <li>Reload the page to reset the fields</li>
@@ -120,7 +122,7 @@ From the command line in RStudio, it is possible to get estimates for specific s
 <li>Torials with more detailed information can be found in <a href="https://github.com/oswaldosantos/capm">https://github.com/oswaldosantos/capm</a></li>
 <li>If you find errors, have suggestions or any question, I will be glad to know <a href="mailto:oswaldosant@gmail.com">oswaldosant@gmail.com</a></li>
 </ul>
-          </p>
+</p>
           ')),
       
       tabPanel('Universe of sampling units', value = 2,
