@@ -36,10 +36,10 @@ shinyServer(function(input, output) {
   }
   
   output$selected <- renderTable({
-    if (is.null(dat()) & !is.na(input$total) & !is.na(input$ssu)) {
-      if (input$total > 0 & input$ssu > 0) {
+    if (!is.na(input$total) & !is.na(input$su)) {
+      if (input$total > 0 & input$su > 0) {
           data.frame(SSU = SampleSystematic(total = input$total,
-                                            ssu = input$ssu))
+                                            ssu = input$su))
       }
     } else if (is.null(dat()) | is.null(psu()) |
                  is.null(input$ssu)) {
