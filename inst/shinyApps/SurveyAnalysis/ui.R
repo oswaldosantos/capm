@@ -119,8 +119,8 @@ For systematic sampling, ignore the first three fields, and specify the total nu
 <li>The display of some outputs might take a few seconds, be patient!</li>
 <li>Reload the page to reset the fields</li>
 <li>Working from command line, you will have more options and flexibility.</li>
-<li>Torials with more detailed information can be found in <a href="https://github.com/oswaldosantos/capm">https://github.com/oswaldosantos/capm</a></li>
-<li>If you find errors, have suggestions or any question, I will be glad to know <a href="mailto:oswaldosant@gmail.com">oswaldosant@gmail.com</a></li>
+<li>Tutorials with more detailed information can be found in <a href="https://github.com/oswaldosantos/capm">https://github.com/oswaldosantos/capm</a></li>
+<li>If you find errors, have suggestions or any question, I will be glad to know it <a href="mailto:oswaldosant@gmail.com">oswaldosant@gmail.com</a></li>
 </ul>
 </p>
           ')),
