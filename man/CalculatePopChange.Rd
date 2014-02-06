@@ -36,23 +36,23 @@
 # Parameters and initial conditions from estimates
 # obtained in examples section from svysumm function but
 # estimating a proportion insted of a total for births.
-pars.solvesi = c(b = 0.245, d = 0.101,
+pars.solve.si = c(b = 0.245, d = 0.101,
                      k = 98050.49, s = .048)
-init.solvesi = c(n = 89136.810, q = 0.198)
+init.solve.si = c(n = 89136.810, q = 0.198)
 
 # Solve for a specific sterilization rate.
-solvesi.pt = SolveSI(pars = pars.solvesi,
-                             init = init.solvesi,
+solve.si.pt = SolveSI(pars = pars.solve.si,
+                             init = init.solve.si,
                              time = 0:30, dd = 'b',
                              im = 100, method = 'rk4')
 
 # Calculate the population change (ratio) between times 0 and 30.
-CalculatePopChange(solvesi.pt, variable = n, t2 = 30, t1 = 0)
+CalculatePopChange(solve.si.pt, variable = n, t2 = 30, t1 = 0)
 
 # Calculate the population change (difference) between times 0 and 30.
-CalculatePopChange(solvesi.pt, variable = n, t2 = 30, t1 = 0, ratio = F)
+CalculatePopChange(solve.si.pt, variable = n, t2 = 30, t1 = 0, ratio = F)
 
 # Calculate the population zises at time 30.
-CalculatePopChange(solvesi.pt, variable = n, t2 = 30)
+CalculatePopChange(solve.si.pt, variable = n, t2 = 30)
 }
 

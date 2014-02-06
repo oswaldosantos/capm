@@ -15,7 +15,7 @@
   must be given to the values.}
 
   \item{init}{a named \code{\link{vector}} of length 2,
-  with the total number of fertil (n) and infertil (cn)
+  with the total number of fertil (n) and infertil (ns)
   animals.}
 
   \item{time}{time sequence for which output is wanted; the
@@ -68,7 +68,7 @@
 pars.solvetc <- c(d = 1 / 6, fr = 0.5, s = 0.2,
                    z = 0.2, dr = 0.1)
 
-init.solvetc <- c(n = 950, cn = 50)
+init.solvetc <- c(n = 950, ns = 50)
 
 # Solve for point estimates.
 solvetc.pt <- SolveTC(pars = pars.solvetc,

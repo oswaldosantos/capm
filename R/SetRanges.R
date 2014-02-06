@@ -35,7 +35,7 @@
 #' #####################
 #' 
 #' ## Parameters and initial conditions.
-#' pars.SolveIASA <- c(
+#' pars.solve.iasa <- c(
 #'    b1 = 21870.897, b2 = 4374.179,
 #'    df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,
 #'    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
@@ -44,7 +44,7 @@
 #' 
 #' ## Set ranges 10 % greater and lesser than the 
 #' ## point estimates.
-#' rg.SolveIASA <- SetRanges(pars.SolveIASA)
+#' rg.solve.iasa <- SetRanges(pars.solve.iasa)
 #' 
 #' 
 SetRanges <- function(pars = NULL, range = 0.1) {

@@ -27,27 +27,27 @@
 
   "f1" (owned intact females).
 
-  "cf1" (owned sterilized females).
+  "fs1" (owned sterilized females).
 
   "m1" (owned intact males).
 
-  "cm1" (owned sterilized males).
+  "ms1" (owned sterilized males).
 
   "f2" (stray intact females).
 
-  "cf2" (stray sterilized females).
+  "fs2" (stray sterilized females).
 
   "m2" (stray intact males).
 
-  "cm2" (stray sterilized males).
+  "ms2" (stray sterilized males).
 
   "n1" (owned intact animals).
 
-  "cn1" (oned sterilized animals).
+  "ns1" (oned sterilized animals).
 
   "n2" (stray intact animals).
 
-  "cn2" (stray sterilized animals).
+  "ns2" (stray sterilized animals).
 
   "N1" (owned animals).
 
@@ -60,15 +60,15 @@
 
   "f" (intact females).
 
-  "cf" (sterilized females).
+  "fs" (sterilized females).
 
   "m" (intact males).
 
-  "cm" (sterilized males).
+  "ms" (sterilized males).
 
   "n" (intact animals).
 
-  "cn" (sterilized animals).
+  "ns" (sterilized animals).
 
   "N" (Total population stratified by reproductive status).
 
@@ -76,9 +76,9 @@
 
   "n" (fertile animals).
 
-  "cn" (sterilized animals).
+  "ns" (sterilized animals).
 
-  "tcn" (cumulative of sterilized animals)}
+  "tns" (cumulative of sterilized animals)}
 
   \item{col}{string indicating the color of ploted line,
   when \code{s.range} is \code{NULL}.}
@@ -178,10 +178,10 @@ pars.solveiasa = c(
    ab = 0.054, ad = 0.1, v = 0.2, z = 0.1)
 
 init.solveiasa = c(
-   f1 = 33425.19, cf1 = 10864.901,
-   m1 = 38038.96, cm1 = 6807.759,
-   f2 = 3342.519, cf2 = 108.64901,
-   m2 = 3803.896, cm2 = 68.07759)
+   f1 = 33425.19, fs1 = 10864.901,
+   m1 = 38038.96, ms1 = 6807.759,
+   f2 = 3342.519, fs2 = 108.64901,
+   m2 = 3803.896, ms2 = 68.07759)
 
 
 # Solve for point estimates.

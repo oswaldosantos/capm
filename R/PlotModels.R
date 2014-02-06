@@ -13,27 +13,27 @@
 #' 
 #' "f1" (owned intact females).
 #' 
-#' "cf1" (owned sterilized females).
+#' "fs1" (owned sterilized females).
 #' 
 #' "m1" (owned intact males).
 #' 
-#' "cm1" (owned sterilized males).
+#' "ms1" (owned sterilized males).
 #'
 #' "f2" (stray intact females).
 #' 
-#' "cf2" (stray sterilized females).
+#' "fs2" (stray sterilized females).
 #' 
 #' "m2" (stray intact males).
 #' 
-#' "cm2" (stray sterilized males). 
+#' "ms2" (stray sterilized males). 
 #' 
 #' "n1" (owned intact animals).
 #' 
-#' "cn1" (oned sterilized animals).
+#' "ns1" (oned sterilized animals).
 #' 
 #' "n2" (stray intact animals).
 #' 
-#' "cn2" (stray sterilized animals).
+#' "ns2" (stray sterilized animals).
 #' 
 #' "N1" (owned animals).
 #' 
@@ -45,15 +45,15 @@
 #' 
 #' "f" (intact females).
 #' 
-#' "cf" (sterilized females).
+#' "fs" (sterilized females).
 #' 
 #' "m" (intact males).
 #' 
-#' "cm" (sterilized males).
+#' "ms" (sterilized males).
 #' 
 #' "n" (intact animals).
 #' 
-#' "cn" (sterilized animals).
+#' "ns" (sterilized animals).
 #' 
 #' "N" (Total population stratified by reproductive status).
 #' 
@@ -61,9 +61,9 @@
 #' 
 #' "n" (fertile animals).
 #' 
-#' "cn" (sterilized animals).
+#' "ns" (sterilized animals).
 #' 
-#' "tcn" (cumulative of sterilized animals)
+#' "tns" (cumulative of sterilized animals)
 #' 
 #' @param col string indicating the color of ploted line, when \code{s.range} is \code{NULL}.
 #' @param col1 \code{\link{character}} \code{\link{vector}} indicating the color of lowest (highest) population sizes (proportion of sterilized animals), when \code{s.range} is not \code{NULL}.
@@ -127,10 +127,10 @@
 #'    ab = 0.054, ad = 0.1, v = 0.2, z = 0.1)
 #'    
 #' init.solveiasa = c(
-#'    f1 = 33425.19, cf1 = 10864.901,
-#'    m1 = 38038.96, cm1 = 6807.759,
-#'    f2 = 3342.519, cf2 = 108.64901,
-#'    m2 = 3803.896, cm2 = 68.07759)
+#'    f1 = 33425.19, fs1 = 10864.901,
+#'    m1 = 38038.96, ms1 = 6807.759,
+#'    f2 = 3342.519, fs2 = 108.64901,
+#'    m2 = 3803.896, ms2 = 68.07759)
 #'    
 #' 
 #' # Solve for point estimates.
@@ -236,9 +236,9 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
     if (model.out$name == 'SolveIASA') {
       if (ncol(model.out$results) == 16) {
         if (length(intersect(variable, 
-                             c('f1', 'cf1', 'm1', 'cm1',
-                               'f2', 'cf2', 'm2', 'cm2',
-                               'n1', 'cn1', 'n2', 'cn2',
+                             c('f1', 'fs1', 'm1', 'ms1',
+                               'f2', 'fs2', 'm2', 'ms2',
+                               'n1', 'ns1', 'n2', 'ns2',
                                'N1', 'N2', 'N'))) == 0) {
           stop(paste0('Invalid variable: "', variable,
                       '". See the help page of PlotModels.'))
@@ -254,37 +254,37 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
           if (variable == 'f1') {
             yla <- 'Owned intact females'
           }
-          if (variable == 'cf1') {
+          if (variable == 'fs1') {
             yla <- 'Owned sterilized females'
           }
           if (variable == 'm1') {
             yla <- 'Owned intact males'
           }
-          if (variable == 'cm1') {
+          if (variable == 'ms1') {
             yla <- 'Owned sterilized males'
           }
           if (variable == 'f2') {
             yla <- 'Stray intact females'
           }
-          if (variable == 'cf2') {
+          if (variable == 'fs2') {
             yla <- 'Stray sterilized females'
           }
           if (variable == 'm2') {
             yla <- 'Stray intact males'
           }
-          if (variable == 'cm2') {
+          if (variable == 'ms2') {
             yla <- 'Stray sterilized males'
           }
           if (variable == 'n1') {
             yla <- 'Owned intact animals'
           }
-          if (variable == 'cn1') {
+          if (variable == 'ns1') {
             yla <- 'Owned sterilized animals'
           }
           if (variable == 'n2') {
             yla <- 'Stray intact animals'
           }
-          if (variable == 'cn2') {
+          if (variable == 'ns2') {
             yla <- 'Stray sterilized animals'
           }
           if (variable == 'N1') {
@@ -301,8 +301,8 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
         }
       } else {
         if (length(intersect(variable, 
-                             c('f', 'cf', 'm', 'cm',
-                               'n', 'cn', 'N'))) == 0) {
+                             c('f', 'fs', 'm', 'ms',
+                               'n', 'ns', 'N'))) == 0) {
           stop(paste('Invalid variable: "', variable, 
                      '". See the help page of PlotModels.'))
         }
@@ -311,7 +311,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
             leglabel <- c('Owned\nintact\nfemales', 
                           'Stray\nintact\nfemales')
           }
-          if (variable == 'cf') {
+          if (variable == 'fs') {
             leglabel <- c('Owned\nsterilized\nfemales', 
                           'Stray\nsterilized\nfemales')
           }
@@ -319,7 +319,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
             leglabel <- c('Owned\nintact\nmales', 
                           'Stray\nintact\nmales')
           }
-          if (variable == 'cm') {
+          if (variable == 'ms') {
             leglabel <- c('Owned\nsterilized\nmales', 
                           'Stray\nsterilized\nmales')
           }
@@ -327,7 +327,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
             leglabel <- c('Owned\nintact\nanimals', 
                           'Stray\nintact\nanimals')
           }
-          if (variable == 'cn') {
+          if (variable == 'ns') {
             leglabel <- c('Owned\nsterilized\nanimals', 
                           'Stray\nsterilized\nanimals')
           }

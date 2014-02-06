@@ -32,7 +32,7 @@
 #' 
 #' The \code{init} argument must contain named values for the inital number of animals, using the following conventions: \code{1}: owned animals; \code{2}: stray animals; \code{f}: females; \code{m}: males; and \code{s}: sterilized. Then, number values must be given for the categories:
 #' 
-#' \code{f1}, \code{cf1}, \code{m1}, \code{cm1}, \code{f2}, \code{cf2}, \code{m2} and \code{cm2}.
+#' \code{f1}, \code{fs1}, \code{m1}, \code{ms1}, \code{f2}, \code{fs2}, \code{m2} and \code{ms2}.
 #' 
 #' If any range is specified (e.g \code{s.range}), the ramining ranges must be specified too (\code{ab.range}, \code{ad.range} and \code{im.range}).
 #' The function is a wrapper around the defaults of \link[deSolve]{ode} function, whose help page must be consulted for details. An exception is the method argument which is defined as "rk4".
@@ -53,28 +53,28 @@
 #' # 20 % greater than those rates in owned animals.
 #' # The consequences of those "guesses" can be quantified
 #' # with globalsens and localsens functions.
-#' pars.solveiasa = c(
+#' pars.solve.iasa = c(
 #'    b1 = 21870.897, b2 = 4374.179,
 #'    df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,
 #'    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
 #'    k1 = 98050.49, k2 = 8055.456, h1 = 1, h2 = .5,
 #'    ab = 0.054, ad = 0.1, v = 0.2, z = 0.1)
 #'    
-#' init.solveiasa = c(
-#'    f1 = 33425.19, cf1 = 10864.901,
-#'    m1 = 38038.96, cm1 = 6807.759,
-#'    f2 = 3342.519, cf2 = 108.64901,
-#'    m2 = 3803.896, cm2 = 68.07759)
+#' init.solve.iasa = c(
+#'    f1 = 33425.19, fs1 = 10864.901,
+#'    m1 = 38038.96, ms1 = 6807.759,
+#'    f2 = 3342.519, fs2 = 108.64901,
+#'    m2 = 3803.896, ms2 = 68.07759)
 #'    
 #' 
 #' # Solve for point estimates.
-#' solveiasa.pt <- SolveIASA(pars = pars.solveiasa, 
-#'                           init = init.solveiasa, 
+#' solve.iasa.pt <- SolveIASA(pars = pars.solve.iasa, 
+#'                           init = init.solve.iasa, 
 #'                           time = 0:30, method = 'rk4')
 #' 
 #' # Solve for parameter ranges.
-#' solveiasa.rg <- SolveIASA(pars = pars.solveiasa, 
-#'                           init = init.solveiasa, 
+#' solve.iasa.rg <- SolveIASA(pars = pars.solve.iasa, 
+#'                           init = init.solve.iasa, 
 #'                           time = 0:20,
 #'                           s.range = seq(0, .4, l = 20), 
 #'                           ab.range = c(0, .2), 
@@ -89,96 +89,96 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, s.range = NULL, ab.
                               'h2', 'ab', 'ad', 'v', 'z'))) {
     stop('Values in pars must have the following names:\nb1, b2, df1, dm1, df2, dm2, sf1, sf2, sm1, sm2, k1, k2, h1, h2, ab, ad, v, z')
   }
-  if(!setequal(names(init), c('f1', 'cf1', 'm1', 'cm1',
-                              'f2', 'cf2', 'm2', 'cm2'))) {
-    stop('Values in init must have the following names:\nf1, cf1, m1, cm1, f2, cf2, m2, cm2')
+  if(!setequal(names(init), c('f1', 'fs1', 'm1', 'ms1',
+                              'f2', 'fs2', 'm2', 'ms2'))) {
+    stop('Values in init must have the following names:\nf1, fs1, m1, ms1, f2, fs2, m2, ms2')
   }
   init['n1'] <- sum(init[c('f1', 'm1')])
-  init['cn1'] <- sum(init[c('cf1', 'cm1')])
+  init['ns1'] <- sum(init[c('fs1', 'ms1')])
   init['n2'] <- sum(init[c('f2', 'm2')])
-  init['cn2'] <- sum(init[c('cf2', 'cm2')])
-  init['N1'] <- sum(init[c('n1', 'cn1')])
-  init['N2'] <- sum(init[c('n2', 'cn2')])
+  init['ns2'] <- sum(init[c('fs2', 'ms2')])
+  init['N1'] <- sum(init[c('n1', 'ns1')])
+  init['N2'] <- sum(init[c('n2', 'ns2')])
   init['N'] <- sum(init[c('N1', 'N2')])
   
   SolveIASAfu <- function(pars, init, time) {
     SolveIASA.fu <- function(time, init, pars) {
       with(as.list(c(init, pars)), {
         
-        if (f1 + cf1 + m1 + cm1 <= k1) {
-          omega1 <- f1 + cf1 + m1 + cm1
+        if (f1 + fs1 + m1 + ms1 <= k1) {
+          omega1 <- f1 + fs1 + m1 + ms1
         } else {
           omega1 <- k1
         }
         
-        if (f2 + cf2 + m2 + cm2 <= k2) {
-          omega2 <- f2 + cf2 + m2 + cm2
+        if (f2 + fs2 + m2 + ms2 <= k2) {
+          omega2 <- f2 + fs2 + m2 + ms2
         } else {
           omega2 <- k2
         }
         
         x1 <- (b1 * (h1 * m1 + f1)) / (2 * h1 * f1 * m1)
         wf1 <- (x1 * m1) / (m1 + f1 * h1 ^ (-1))
-        bet.f1 <- wf1 - (wf1 - df1) * (omega1 / k1)
-        gam.f1 <- df1
-        phi <- k1 * v * (1 - z) / 2
-        phic <- k1 * v * z / 2
+        w.f1 <- wf1 - (wf1 - df1) * (omega1 / k1)
+        c.f1 <- df1
+        q <- k1 * v * (1 - z) / 2
+        qs <- k1 * v * z / 2
         
-        d.f1 <- (bet.f1 - gam.f1 - sf1 - ab) * f1 +
-          (ad * f2 + phi) * (1 - (omega1 / k1))
+        d.f1 <- (w.f1 - c.f1 - sf1 - ab) * f1 +
+          (ad * f2 + q) * (1 - (omega1 / k1))
         
-        d.cf1 <- - (gam.f1 + ab) * cf1 + sf1 * f1 + 
-          (ad * cf2 + phic) * (1 - (omega1 / k1))
+        d.fs1 <- - (c.f1 + ab) * fs1 + sf1 * f1 + 
+          (ad * fs2 + qs) * (1 - (omega1 / k1))
         
         wm1 <- (x1 * f1) / (m1 + f1 * h1 ^ (-1))
-        bet.m1 <- wm1 - (wm1 - dm1) * (omega1 / k1)
-        gam.m1 <- dm1
+        w.m1 <- wm1 - (wm1 - dm1) * (omega1 / k1)
+        c.m1 <- dm1
         
-        d.m1 <- (bet.m1 - gam.m1 - sm1 - ab) * m1 +
-          (ad * m2 + phi) * (1 - (omega1 / k1))
+        d.m1 <- (w.m1 - c.m1 - sm1 - ab) * m1 +
+          (ad * m2 + q) * (1 - (omega1 / k1))
         
-        d.cm1 <- - (gam.m1 + ab) * cm1 + sm1 * m1 + 
-          (ad * cm2 + phic) * (1 - (omega1 / k1))
+        d.ms1 <- - (c.m1 + ab) * ms1 + sm1 * m1 + 
+          (ad * ms2 + qs) * (1 - (omega1 / k1))
         
         x2 <- (b2 * (h2 * m2 + f2)) / (2 * h2 * f2 * m2)
-        bet.f2 <- (m2 * x2) /  (m2 + f2 * h2 ^ (-1))
-        gam.f2 <- df2 + (bet.f2 - df2) * (omega2 / k2)
+        w.f2 <- (m2 * x2) /  (m2 + f2 * h2 ^ (-1))
+        c.f2 <- df2 + (w.f2 - df2) * (omega2 / k2)
         
-        d.f2 <- (bet.f2 - gam.f2 - sf2 - ad) * f2 +
+        d.f2 <- (w.f2 - c.f2 - sf2 - ad) * f2 +
           ab * f1 * (1 - (omega2 / k2))
         
-        d.cf2 <- - (gam.f2 + ad) * cf2 + sf2 * f2 +
-          ab * cf1 * (1 - (omega2 / k2))
+        d.fs2 <- - (c.f2 + ad) * fs2 + sf2 * f2 +
+          ab * fs1 * (1 - (omega2 / k2))
         
-        bet.m2 <- (f2 * x2) / (m2 + f2 * h2 ^ (-1))
-        gam.m2 <- dm2 + (bet.m2 - dm2) * (omega2 / k2)
+        w.m2 <- (f2 * x2) / (m2 + f2 * h2 ^ (-1))
+        c.m2 <- dm2 + (w.m2 - dm2) * (omega2 / k2)
         
-        d.m2 <- (bet.m2 - gam.m2 - sm2 - ad) * m2 +
+        d.m2 <- (w.m2 - c.m2 - sm2 - ad) * m2 +
           ab * m1 * (1 - (omega2 / k2))
         
-        d.cm2 <- - (gam.m2 + ad) * cm2 + sm2 * m2 +
-          ab * cm1 * (1 - (omega2 / k2))
+        d.ms2 <- - (c.m2 + ad) * ms2 + sm2 * m2 +
+          ab * ms1 * (1 - (omega2 / k2))
         
         d.n1 <- d.f1 + d.m1
-        d.cn1 <- d.cf1 + d.cm1
+        d.ns1 <- d.fs1 + d.ms1
         d.n2 <- d.f2 + d.m2
-        d.cn2 <- d.cf2 + d.cm2
-        d.N1 <- d.n1 + d.cn1
-        d.N2 <- d.n2 + d.cn2
+        d.ns2 <- d.fs2 + d.ms2
+        d.N1 <- d.n1 + d.ns1
+        d.N2 <- d.n2 + d.ns2
         d.N <- d.N1 + d.N2
         
-        list(c(d.f1, d.cf1, d.m1, d.cm1, d.f2, d.cf2, 
-               d.m2, d.cm2, d.n1, d.cn1, d.n2, d.cn2,
+        list(c(d.f1, d.fs1, d.m1, d.ms1, d.f2, d.fs2, 
+               d.m2, d.ms2, d.n1, d.ns1, d.n2, d.ns2,
                d.N1, d.N2, d.N))
       })
     }
     
-    init <- c(init['f1'], init['cf1'], 
-              init['m1'], init['cm1'],
-              init['f2'], init['cf2'], 
-              init['m2'], init['cm2'],
-              init['n1'], init['cn1'],
-              init['n2'], init['cn2'],
+    init <- c(init['f1'], init['fs1'], 
+              init['m1'], init['ms1'],
+              init['f2'], init['fs2'], 
+              init['m2'], init['ms2'],
+              init['n1'], init['ns1'],
+              init['n2'], init['ns2'],
               init['N1'], init['N2'], init['N'])
     
     SolveIASA.out <- ode(times = time, 
@@ -251,7 +251,7 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, s.range = NULL, ab.
     output <- data.frame(
       rbind(output[, 1:5], output[, c(1, 6:9)]),
       n = c(rowSums(output[, c(2, 4)]), rowSums(output[, c(6, 8)])),
-      cn = c(rowSums(output[, c(3, 5)]), rowSums(output[, c(7, 9)])),
+      ns = c(rowSums(output[, c(3, 5)]), rowSums(output[, c(7, 9)])),
       N = c(rowSums(output[, 2:5]), rowSums(output[, 6:9])),
       group = rep(1:2, each = nrow(output)),
       s = rep(s.range, each = length(time)),
@@ -263,7 +263,7 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, s.range = NULL, ab.
       im = rep(im.range, 
                each = length(time) * length(s.range) * 
                  length(ad.range) * length(ab.range)))
-    names(output)[1:5] <- c('t', 'f', 'cf', 'm', 'cm')
+    names(output)[1:5] <- c('t', 'f', 'fs', 'm', 'ms')
     SolveIASA <- list(
       name = 'SolveIASA',
       model = SolveIASAfu,

@@ -19,19 +19,19 @@
 #' # Parameters and initial conditions from estimates   
 #' # obtained in examples section from svysumm function but
 #' # estimating a proportion insted of a total for births.
-#' pars.solvesi = c(b = 0.245, d = 0.101, 
+#' pars.solve.si = c(b = 0.245, d = 0.101, 
 #'                  k = 98050.49, s = .048)
-#' init.solvesi = c(n = 89136.810, q = 0.198)
+#' init.solve.si = c(n = 89136.810, q = 0.198)
 #' 
 #' # Solve for a specific sterilization rate.
-#' solvesi.pt = SolveSI(pars = pars.solvesi, 
-#'                      init = init.solvesi, 
+#' solvesi.pt = SolveSI(pars = pars.solve.si, 
+#'                      init = init.solve.si, 
 #'                      time = 0:30, dd = 'b',
 #'                      im = 100, method = 'rk4')
 #' 
 #' # Solve for a range of sterilization rates.
-#' solvesi.rg = SolveSI(pars = pars.solvesi,
-#'                      init = init.solvesi,
+#' solvesi.rg = SolveSI(pars = pars.solve.si,
+#'                      init = init.solve.si,
 #'                      time = 0:30, dd = 'b', im = 100, 
 #'                      s.range = seq(0, .4, l = 50),
 #'                      method = 'rk4')

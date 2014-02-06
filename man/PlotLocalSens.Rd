@@ -72,32 +72,31 @@ PlotLocalSens(local.solvesi)
 #####################
 
 ## Parameters and intial conditions.
-pars.solveiasa <- c(
+pars.solve.iasa = c(
    b1 = 21870.897, b2 = 4374.179,
    df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,
    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
    k1 = 98050.49, k2 = 8055.456, h1 = 1, h2 = .5,
    ab = 0.054, ad = 0.1, v = 0.2, z = 0.1)
 
-init.solveiasa <- c(
-   f1 = 33425.19, cf1 = 10864.901,
-   m1 = 38038.96, cm1 = 6807.759,
-   f2 = 3342.519, cf2 = 108.64901,
-   m2 = 3803.896, cm2 = 68.07759)
+init.solve.iasa = c(
+   f1 = 33425.19, fs1 = 10864.901,
+   m1 = 38038.96, ms1 = 6807.759,
+   f2 = 3342.519, fs2 = 108.64901,
+   m2 = 3803.896, ms2 = 68.07759)
+
 
 # Solve for point estimates.
-solveiasa.pt <- SolveIASA(pars = pars.solveiasa,
-                          init = init.solveiasa,
+solve.iasa.pt <- SolveIASA(pars = pars.solve.iasa,
+                          init = init.solve.iasa,
                           time = 0:30, method = 'rk4')
 
 ## Calculate local sensitivities for all parameters.
-local.solveiasa2 <- CalculateLocalSens(
-  model.out = solveiasa.pt, sensv = 'n2')
-local.solveiasa1 <- CalculateLocalSens(
-  model.out = solveiasa.pt, sensv = 'n1')
+local.solve.iasa2 <- CalculateLocalSens(
+  model.out = solve.iasa.pt, sensv = 'n2')
 
 ## Plot local sensitivities
-PlotLocalSens(local.solveiasa2)
+PlotLocalSens(local.solve.iasa2)
 }
 \references{
   Chang W (2012). R Graphics Cookbook. O'Reilly Media, Inc.
