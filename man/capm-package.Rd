@@ -12,15 +12,16 @@
   \tab R (>= 2.15.0), FME, survey, reshape2, ggplot2, grid,
   rgdal, maptools\cr Encoding: \tab UTF-8\cr License: \tab
   GPL (>= 2)\cr LazyLoad: \tab yes\cr URL: \tab
-  https://github.com/oswaldosantos/capm\cr }
+  \url{https://github.com/oswaldosantos/capm}\cr }
 
-  Provides functions to calculate the size and compostion
-  of samples to estimate dog and cat demographic parameters
-  and functions to simulate population dynamics under
-  different scenarios of population management.
+  Provides functions for quantitative companion animal
+  population management. Further information can be found
+  in the link given above.
 }
 \author{
-  Oswaldo Santos \email{oswaldosant@gmail.com}, Fernando
+  Creator: Oswaldo Santos \email{oswaldosant@gmail.com}\cr
+  Maintainer: Oswaldo Santos
+  \email{oswaldosant@gmail.com}\cr Contributors: Fernando
   Silveira Marques \email{fernandosix@gmail.com}, Marcos
   Amaku \email{amaku@vps.fmvz.usp.br}, Fernando Ferreira
   \email{fernando@vps.fmvz.usp.br}
