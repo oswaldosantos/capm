@@ -9,15 +9,17 @@
 #' Encoding: \tab UTF-8\cr
 #' License: \tab GPL (>= 2)\cr
 #' LazyLoad: \tab yes\cr
-#' URL: \tab https://github.com/oswaldosantos/capm\cr
+#' URL: \tab \url{https://github.com/oswaldosantos/capm}\cr
 #' }
 #'
-#' Provides functions to calculate the size and compostion of samples to estimate dog and cat demographic parameters and functions to simulate population dynamics under different scenarios of population management.
+#' Provides functions for quantitative companion animal population management. Further information can be found in the link given above.
 #'
 #' @aliases capm-package capm
 #' @name capm-package
 #' @docType package
 #' @title The capm Package
-#' @author Oswaldo Santos \email{oswaldosant@@gmail.com}, Fernando Silveira Marques \email{fernandosix@@gmail.com}, Marcos Amaku \email{amaku@@vps.fmvz.usp.br}, Fernando Ferreira \email{fernando@@vps.fmvz.usp.br}
+#' @author Creator: Oswaldo Santos \email{oswaldosant@@gmail.com}\cr
+#' Maintainer: Oswaldo Santos \email{oswaldosant@@gmail.com}\cr
+#' Contributors: Fernando Silveira Marques \email{fernandosix@@gmail.com}, Marcos Amaku \email{amaku@@vps.fmvz.usp.br}, Fernando Ferreira \email{fernando@@vps.fmvz.usp.br}
 #' @keywords package
 NULL
