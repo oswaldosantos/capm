@@ -29,7 +29,7 @@
 #' 
 #' "n1" (owned intact animals).
 #' 
-#' "ns1" (oned sterilized animals).
+#' "ns1" (owned sterilized animals).
 #' 
 #' "n2" (stray intact animals).
 #' 
