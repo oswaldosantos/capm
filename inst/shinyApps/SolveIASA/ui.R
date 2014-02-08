@@ -74,12 +74,12 @@ shinyUI(pageWithSidebar(
                    value = 0.1, min = 0, step = 0.01),      
       
       tags$hr(),    
-      numericInput('time', strong('Simulation time'), value = 30),
+      numericInput('time', strong('Simulation time'), value = 15),
       numericInput('t_steps', 'Time steps', value = 1),
       
       tags$hr(),
       selectInput('output_var', strong('Choose a population'), 
-                  choices = c(
+                  choices = list(
                     'Owned intact animals (n1)',
                     'Owned sterilized animals (ns1)',
                     'Stray intact animals (n2)',
@@ -101,13 +101,57 @@ shinyUI(pageWithSidebar(
     
     conditionalPanel(
       condition = 'input.conditionedPanels == 2', value = 2,
+      HTML('<p><b>Scenarios</b></p>'),
+      
+      tags$hr(),
+      sliderInput('s.range',
+                   'Sterilization range',
+                   min = 0, max = 0.8, value = c(0, 0.2), step = 0.01),
+      numericInput('s.intr', 'Number of intervals', value = 10),
+      checkboxInput('s.fm', 'Sterilization of only females'),
+      
+      tags$hr(),
+      sliderInput('ab.range',
+                  'Abandonment range',
+                  min = 0, max = 0.8, value = c(0, 0.2), step = 0.01),
+      
+      tags$hr(),
+      sliderInput('ad.range',
+                  'Adoption range',
+                  min = 0, max = 0.8, value = c(0, 0.2), step = 0.01),
+      
+      tags$hr(),
+      sliderInput('im.1',
+                  'Immigration 1',
+                  min = 0, max = 0.8, value = 0, step = 0.01),
+      sliderInput('im.2',
+                  'Immigration 2',
+                  min = 0, max = 0.8, value = 0.2, step = 0.01),
+      tags$hr(),
+      selectInput('output_var2', strong('Choose a population'), 
+                  choices = list(
+                    'Intact females (f)',
+                    'Sterilized females (fs)',
+                    'Intact males (m)',
+                    'Sterilized males (ms)',
+                    'Intact animals (n)',
+                    'Sterilized animals (ns)',
+                    'Total population (N)'),
+                  'Sterilized animals (ns)'
+                  ),
+      
+      tags$hr(),
+      helpText('Press the button and wait until full color plots appear'),
+      actionButton('create.scenarios', 'Create scenarios')
+    ),
+    
+    conditionalPanel(
+      condition = 'input.conditionedPanels == 3', value = 3,
       HTML('<p>Sensitivities</p>'),
       numericInput('range',
-                   'Proportional perturbation of parameters in global sensitivity;',
+                   'Proportional perturbation of parameters in global sensitivity',
                    value = 0.1, step = 0.01),
-      radioButtons('sensv', 'Choose variable:',
-                   c(S = 'sS', I = 'sI', R = 'sR'), 'I'),
-      helpText('Sensitivities takes some seconds to be calculated'),
+      helpText('Press the button and wait until full color plots appear'),
       actionButton('sensitivities', 'Calculate sensitivities')
     )
     
@@ -119,9 +163,13 @@ shinyUI(pageWithSidebar(
                plotOutput('points_p', height = 600)),
       tabPanel('Point estimates - table', value = 1,
                dataTableOutput('points_t')),
-      tabPanel('Global sensitivities', plotOutput('globalall'),
-               plotOutput('global')),
-      tabPanel('Local sensitivities', plotOutput('local')),
+      tabPanel('Scenarios', value = 2,
+               plotOutput('scenarios', height = 600)),
+      tabPanel('Global sensitivities', value = 3,
+               plotOutput('globalall', height = 600),
+               plotOutput('global', height = 600)),
+      tabPanel('Local sensitivities',
+               plotOutput('local', height = 1200)),
       id = 'conditionedPanels'
     )
   )
