@@ -35,46 +35,7 @@
   appropriate functions from \code{ggplot2} package.
 }
 \examples{
-###################
-## Example 1     ##
-## SolveSI model ##
-###################
-
-## Parameters and intial conditions from estimates
-## obtained in examples section from the svysumm function.
-pars.solvesi <- c(b = 0.245, d = 0.101,
-                      k = 98050.49, s = .048)
-init.solvesi <- c(n = 89136.810, q = 0.198)
-
-# Solve for a specific sterilization rate.
-solvesi.pt <- SolveSI(pars = pars.solvesi,
-                      init = init.solvesi,
-                      time = 0:30, dd = 'b',
-                      im = 100, , method = 'rk4')
-
-## Set ranges 10 \% greater and lesser than the
-## point estimates.
-rg.solvesi <- SetRanges(pars = pars.solvesi)
-
-## Calculate golobal sensitivity of combined parameters.
-glob.all.solvesi <- CalculateGlobalSens(
-  model.out = solvesi.pt,
-  ranges = rg.solvesi,
-  sensv = 'n', all = TRUE)
-
-## Calculate golobal sensitivity of individual parameters.
-glob.solvesi <- CalculateGlobalSens(
-  model.out = solvesi.pt,
-  ranges = rg.solvesi, sensv = 'n')
-
-#' ### Plot the sensitivities of combined parameters.
-PlotGlobalSens(glob.all.solvesi)
-
-### Plot the sensitivities of individual parameters.
-PlotGlobalSens(glob.solvesi)
-
 #####################
-## Example 2       ##
 ## SolveIASA model ##
 #####################
 
@@ -96,29 +57,22 @@ init.solve.iasa = c(
 # Solve for point estimates.
 solve.iasa.pt <- SolveIASA(pars = pars.solve.iasa,
                           init = init.solve.iasa,
-                          time = 0:30, method = 'rk4')
+                          time = 0:15, method = 'rk4')
 
 ## Set ranges 10 \% greater and lesser than the
 ## point estimates.
 rg.solve.iasa <- SetRanges(pars = pars.solve.iasa)
 
 ## Calculate golobal sensitivity of combined parameters.
+## To calculate global sensitivity to each parameter, set
+## all as FALSE.
 glob.all.solve.iasa <- CalculateGlobalSens(
   model.out = solve.iasa.pt,
   ranges = rg.solve.iasa,
   sensv = 'n2', all = TRUE)
 
-## Calculate golobal sensitivity of an individual parameter.
-glob.solve.iasa <- CalculateGlobalSens(
-  model.out = solve.iasa.pt,
-  ranges = rg.solve.iasa,
-  sensv = 'n2')
-
 ### Plot the sensitivities of combined parameters.
 PlotGlobalSens(glob.all.solve.iasa)
-
-### Plot the sensitivities of individual parameters.
-PlotGlobalSens(glob.solve.iasa)
 }
 \seealso{
   \link[deSolve]{plot.deSolve}.

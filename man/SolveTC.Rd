@@ -73,12 +73,12 @@ init.solvetc <- c(n = 950, ns = 50)
 # Solve for point estimates.
 solvetc.pt <- SolveTC(pars = pars.solvetc,
                       init = init.solvetc,
-                      time = 0:30, method = 'rk4')
+                      time = 0:15, method = 'rk4')
 
 # Solve for parameter ranges.
 solvetc.rg <- SolveTC(pars = pars.solvetc,
                       init = init.solvetc,
-                      time = 0:20,
+                      time = 0:15,
                       fr.range = seq(0, 1, 0.01),
                       s.range = c(0.05, 0.4),
                       z.range = c(0.05, 0.4),

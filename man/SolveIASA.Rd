@@ -147,12 +147,12 @@ init.solve.iasa = c(
 # Solve for point estimates.
 solve.iasa.pt <- SolveIASA(pars = pars.solve.iasa,
                           init = init.solve.iasa,
-                          time = 0:30, method = 'rk4')
+                          time = 0:15, method = 'rk4')
 
 # Solve for parameter ranges.
 solve.iasa.rg <- SolveIASA(pars = pars.solve.iasa,
                           init = init.solve.iasa,
-                          time = 0:20,
+                          time = 0:14,
                           s.range = seq(0, .4, l = 20),
                           ab.range = c(0, .2),
                           ad.range = c(0, .2),

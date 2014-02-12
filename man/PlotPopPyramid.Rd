@@ -85,8 +85,9 @@
 \examples{
 ## Load data with information about age, sex and reproductive status of individuals.
 data(survey.data)
-PlotPopPyramid(survey.data, age.col = 5, sex.col = 4, str.col = 6)
-PlotPopPyramid(survey.data, age.col = 5, sex.col = 4)
+# Uncomment the following lines:
+# PlotPopPyramid(survey.data, age.col = 5, sex.col = 4, str.col = 6)
+# PlotPopPyramid(survey.data, age.col = 5, sex.col = 4)
 }
 \seealso{
   \link[plotrix]{pyramid.plot}.

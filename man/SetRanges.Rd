@@ -6,7 +6,7 @@
 }
 \arguments{
   \item{pars}{the same \code{pars} vector used in one of
-  the following functions: \code{\link{SolveSterIm}} or
+  the following functions: \code{\link{SolveSI}} or
   \code{\link{SolveIASA}}.}
 
   \item{range}{scale factor to define the minimum and
@@ -42,12 +42,12 @@ data(survey.data)
 
 ## Parameters and initial conditions from estimates
 ## obtained in examples section from SummarySurvey function.
-pars.SolveSterIm <- c(b = 0.245, d = 0.101,
+pars.solve.si <- c(b = 0.245, d = 0.101,
                      k = 98050.49, s = .048)
 
 ## Set ranges 10 \% greater and lesser than the
 ## point estimates.
-rg.SolveSterIm <- SetRanges(pars = pars.SolveSterIm)
+rg.solve.si <- SetRanges(pars = pars.solve.si)
 
 
 #####################
@@ -78,6 +78,6 @@ rg.solve.iasa <- SetRanges(pars.solve.iasa)
   1015-1030.
 }
 \seealso{
-  \code{\link{sensRange}} and \code{\link{SolveSterIm}}.
+  \code{\link{sensRange}} and \code{\link{SolveSI}}.
 }
 

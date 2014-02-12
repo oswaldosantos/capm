@@ -16,7 +16,7 @@ This data set list dog demographic variables obtained from simulations based on 
     \item{\code{dogs}}{Indicate if there is a dog in secondary sampling unit (SSU). For each interviewed ssu with more than one dog, there is as many rows as dogs in it.}
     \item{\code{sex}}{Sex of the dog.}
     \item{\code{age}}{Age of the dog}
-    \item{\code{sterilizeded}}{Indicate if the dog is sterilized (spyied/neutered).}
+    \item{\code{sterilized}}{Indicate if the dog is sterilized (spayed/neutered).}
     \item{\code{sterilized.ly}}{Indicate if the dog was sterilized during the last year.}
     \item{\code{adopted}}{Indicate if the dog was adopted.}
     \item{\code{births}}{Number of puppies per female.}

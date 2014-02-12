@@ -42,32 +42,7 @@
   sizes, see the final result in saved (or preview) plots.
 }
 \examples{
-###################
-## Example 1     ##
-## SolveSI model ##
-###################
-
-## Parameters and intial conditions from estimates
-## obtained in examples section from the svysumm function.
-pars.solvesi <- c(b = 0.245, d = 0.101,
-                  k = 98050.49, s = .048)
-init.solvesi <- c(n = 89136.810, q = 0.198)
-
-# Solve for a specific sterilization rate.
-solvesi.pt <- SolveSI(pars = pars.solvesi,
-                      init = init.solvesi,
-                      time = 0:30, dd = 'b',
-                      im = 100, method = 'rk4')
-
-## Calculate local sensitivities for all parameters.
-local.solvesi <- CalculateLocalSens(
-  model.out = solvesi.pt, sensv = 'n')
-
-## Plot local sensitivities
-PlotLocalSens(local.solvesi)
-
 #####################
-## Example 2       ##
 ## SolveIASA model ##
 #####################
 
@@ -89,14 +64,15 @@ init.solve.iasa = c(
 # Solve for point estimates.
 solve.iasa.pt <- SolveIASA(pars = pars.solve.iasa,
                           init = init.solve.iasa,
-                          time = 0:30, method = 'rk4')
+                          time = 0:15, method = 'rk4')
 
-## Calculate local sensitivities for all parameters.
+## Calculate local sensitivities to all parameters.
 local.solve.iasa2 <- CalculateLocalSens(
   model.out = solve.iasa.pt, sensv = 'n2')
 
 ## Plot local sensitivities
-PlotLocalSens(local.solve.iasa2)
+# Uncomment the following line:
+# PlotLocalSens(local.solve.iasa2)
 }
 \references{
   Chang W (2012). R Graphics Cookbook. O'Reilly Media, Inc.

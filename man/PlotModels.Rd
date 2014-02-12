@@ -131,41 +131,7 @@
   appropriate functions from \code{ggplot2} package.
 }
 \examples{
-###################
-## Example 1     ##
-## SolveSI model ##
-###################
-
-# Parameters and initial conditions from estimates
-# obtained in examples section from svysumm function but
-# estimating a proportion insted of a total for births.
-pars.solvesi = c(b = 0.245, d = 0.101,
-                 k = 98050.49, s = .048)
-init.solvesi = c(n = 89136.810, q = 0.198)
-
-# Solve for a specific sterilization rate.
-solvesi.pt = SolveSI(pars = pars.solvesi,
-                     init = init.solvesi,
-                     time = 0:30, dd = 'b',
-                     im = 100, method = 'rk4')
-
-# Solve for a range of sterilization rates.
-solvesi.rg = SolveSI(pars = pars.solvesi,
-                     init = init.solvesi,
-                     time = 0:30, dd = 'b', im = 100,
-                     s.range = seq(0, .4, l = 50),
-                     method = 'rk4')
-
-## Plot the population size
-PlotModels(solvesi.pt, variable = 'n')
-PlotModels(solvesi.rg, variable = 'n')
-
-## Plot the proportion of sterilized animals
-PlotModels(solvesi.pt, variable = 'q')
-PlotModels(solvesi.rg, variable = 'q')
-
 #####################
-## Example 2       ##
 ## SolveIASA model ##
 #####################
 
@@ -187,12 +153,12 @@ init.solveiasa = c(
 # Solve for point estimates.
 solveiasa.pt <- SolveIASA(pars = pars.solveiasa,
                           init = init.solveiasa,
-                          time = 0:30, method = 'rk4')
+                          time = 0:15, method = 'rk4')
 
 # Solve for parameter ranges.
 solveiasa.rg <- SolveIASA(pars = pars.solveiasa,
                           init = init.solveiasa,
-                          time = 0:20,
+                          time = 0:15,
                           s.range = seq(0, .4, l = 20),
                           ab.range = c(0, .2),
                           ad.range = c(0, .2),
@@ -200,10 +166,12 @@ solveiasa.rg <- SolveIASA(pars = pars.solveiasa,
                           method = 'rk4')
 
 ## Plot stray population sizes using point estimates
-PlotModels(solveiasa.pt, variable = "n2")
+# Uncomment the following line:
+# PlotModels(solveiasa.pt, variable = "n2")
 
 ## Plot all scenarios and change the label for the scenarios.
-PlotModels(solveiasa.rg, variable = 'N')
+# Uncomment the following line:
+# PlotModels(solveiasa.rg, variable = 'N')
 }
 \references{
   Chang W (2012). R Graphics Cookbook. O'Reilly Media, Inc.

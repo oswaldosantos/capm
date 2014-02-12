@@ -66,10 +66,10 @@ estimates <- SummarySurvey(design, variables = variables,
 # variables of interest.
 sample1 <- survey.data[, c(1:4, 6:7, 11)]
 
-# Transform to numeric the "castrated" variable in order
+# Transform to numeric the "sterilized" variable in order
 # to estimate its total.
 sample1[, 5] <- as.character(sample1[, 5])
-sample1[which(sample1$castrated == "yes"), 5] <- 1
+sample1[which(sample1$sterilized == "yes"), 5] <- 1
 sample1[which(sample1[, 5] == "no"), 5] <- 0
 sample1[, 5] <- as.numeric(sample1[, 5])
 

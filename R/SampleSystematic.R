@@ -13,9 +13,9 @@
 #' # Load data with PSU identifiers and sizes.
 #' data(psu.ssu)
 #' 
-#' # Take a sample of 20 PSU, with probability 
+#' # Take a sample of 10 PSU, with probability 
 #' # proportional to size and with replacement.
-#' selected.psu <- SamplePPS(psu.ssu, 20, write = FALSE)
+#' selected.psu <- SamplePPS(psu.ssu, 10, write = FALSE)
 #' 
 #' # Take a sistematic sampling of 5 SSU within each 
 #' # PSU of selected.psu.

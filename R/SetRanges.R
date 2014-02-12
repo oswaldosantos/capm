@@ -1,13 +1,13 @@
 #' Parameter ranges for global sensitivity analysis
 #' @description Define the minimum and maximum values for parameters whose global sensitivities are to be assesses with \code{\link{CalculateGlobalSens}} or \code{\link{sensRange}} functions.
-#' @param pars the same \code{pars} vector used in one of the following functions: \code{\link{SolveSterIm}} or \code{\link{SolveIASA}}.
+#' @param pars the same \code{pars} vector used in one of the following functions: \code{\link{SolveSI}} or \code{\link{SolveIASA}}.
 #' @param range scale factor to define the minimum and maximum for each parameter. The default is 0.1, which set the minimum and maximum as 10 percent lesser and greater than the \code{pars} values.
 #' @details \code{estimates} and \code{rowpars} are optional arguments to be used together. When used, \code{pars} must be a \code{setrange} output. The confidence limits for the parameters specified in \code{rowpars} will replace the corresponding ranges initially dfined.
 #' @return a \code{\link{data.frame}} with the complete set of parameter ranges.
 #' @references Soetaert K and Petzoldt T (2010). Inverse modelling, sensitivity and monte carlo analysis in R using package FME. Journal of Statistical Software, 33(3), pp. 1-28.
 #' 
 #' Reichert P and Kfinsch HR (2001). Practical identifiability analysis of large environmental simulation models. Water Resources Research, 37(4), pp. 1015-1030.
-#' @seealso \code{\link{sensRange}} and \code{\link{SolveSterIm}}.
+#' @seealso \code{\link{sensRange}} and \code{\link{SolveSI}}.
 #' @export
 #' @examples
 #' 
@@ -21,12 +21,12 @@
 #' 
 #' ## Parameters and initial conditions from estimates   
 #' ## obtained in examples section from SummarySurvey function.
-#' pars.SolveSterIm <- c(b = 0.245, d = 0.101, 
+#' pars.solve.si <- c(b = 0.245, d = 0.101, 
 #'                      k = 98050.49, s = .048)
 #'              
 #' ## Set ranges 10 % greater and lesser than the
 #' ## point estimates.
-#' rg.SolveSterIm <- SetRanges(pars = pars.SolveSterIm)
+#' rg.solve.si <- SetRanges(pars = pars.solve.si)
 #' 
 #'  
 #' #####################

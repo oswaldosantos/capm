@@ -1,0 +1,16 @@
+capm 0.2.0
+==========
+
+* Package version increment now refletcs changes in the package, using Semantic Versioning as a reference (http://semver.org/).
+
+* `GraphicInterface`: `SolveIASA` argument now produces a graphic interface with restructured Tab order and contents. The new "Introduction" Tab explains the basic functionality of the interface.
+
+* `GraphicInterface`: complete documentation.
+
+* "Debian" directory removed.
+
+* Directory tree restructured to match CRAN requirements.
+
+* Examples for functions simplified to be run in less time.
+
+* General documentation improvements.

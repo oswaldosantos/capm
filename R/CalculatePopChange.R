@@ -18,17 +18,17 @@
 #' # Solve for a specific sterilization rate.
 #' solve.si.pt = SolveSI(pars = pars.solve.si, 
 #'                              init = init.solve.si, 
-#'                              time = 0:30, dd = 'b',
+#'                              time = 0:15, dd = 'b',
 #'                              im = 100, method = 'rk4')
 #' 
-#' # Calculate the population change (ratio) between times 0 and 30.
-#' CalculatePopChange(solve.si.pt, variable = n, t2 = 30, t1 = 0)
+#' # Calculate the population change (ratio) between times 0 and 15.
+#' CalculatePopChange(solve.si.pt, variable = 'n', t2 = 15, t1 = 0)
 #' 
-#' # Calculate the population change (difference) between times 0 and 30.
-#' CalculatePopChange(solve.si.pt, variable = n, t2 = 30, t1 = 0, ratio = F)
+#' # Calculate the population change (difference) between times 0 and 15.
+#' CalculatePopChange(solve.si.pt, variable = 'n', t2 = 15, t1 = 0, ratio = FALSE)
 #' 
-#' # Calculate the population zises at time 30.
-#' CalculatePopChange(solve.si.pt, variable = n, t2 = 30)
+#' # Calculate the population zises at time 15.
+#' CalculatePopChange(solve.si.pt, variable = 'n', t2 = 15)
 #' 
 CalculatePopChange <- function(model.out = NULL, variable = NULL, t1 = NULL, t2 = NULL, ratio = TRUE) {
   if (is.null(t1) & !is.null(t2)) {

@@ -74,13 +74,13 @@ init.solve.si = c(n = 89136.810, q = 0.198)
 # Solve for a specific sterilization rate.
 solvesi.pt = SolveSI(pars = pars.solve.si,
                      init = init.solve.si,
-                     time = 0:30, dd = 'b',
+                     time = 0:15, dd = 'b',
                      im = 100, method = 'rk4')
 
 # Solve for a range of sterilization rates.
 solvesi.rg = SolveSI(pars = pars.solve.si,
                      init = init.solve.si,
-                     time = 0:30, dd = 'b', im = 100,
+                     time = 0:15, dd = 'b', im = 100,
                      s.range = seq(0, .4, l = 50),
                      method = 'rk4')
 }

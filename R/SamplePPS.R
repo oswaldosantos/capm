@@ -12,8 +12,8 @@
 #' # Load data with PSU identifiers and sizes.
 #' data(psu.ssu)
 #' 
-#' # Take a sample of 20 PSU with probability proportional to size with replacement.
-#' (selected.psu <- SamplePPS(psu.ssu, 20, write = FALSE))
+#' # Take a sample of 10 PSU with probability proportional to size with replacement.
+#' (selected.psu <- SamplePPS(psu.ssu, 10, write = FALSE))
 #' 
 SamplePPS <- function (psu.ssu = NULL, psu = NULL, write = FALSE, ...) {
   inv <- c(which(!is.finite(psu.ssu[, 2])), which(psu.ssu[, 2] <= 0))

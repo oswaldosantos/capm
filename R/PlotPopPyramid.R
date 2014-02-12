@@ -26,13 +26,15 @@
 #' @examples 
 #' ## Load data with information about age, sex and reproductive status of individuals.
 #' data(survey.data)
-#' PlotPopPyramid(survey.data, age.col = 5, sex.col = 4, str.col = 6)
-#' PlotPopPyramid(survey.data, age.col = 5, sex.col = 4)
+#' # Uncomment the following lines:
+#' # PlotPopPyramid(survey.data, age.col = 5, sex.col = 4, str.col = 6)
+#' # PlotPopPyramid(survey.data, age.col = 5, sex.col = 4)
 #' 
 PlotPopPyramid <- function(dat = NULL, age.col = NULL, sex.col = NULL, str.col = NULL, x.label = 'Total', stage.label = 'Years', inner.color = 'Gold2', outer.color = 'DarkOliveGreen') {
   if (!is.numeric(dat[, age.col])) {
     stop('The column containing age information must be numeric.')
   }
+  age <- sex <- ster <- count <- NULL
   if (!is.null(str.col)) {
     if (is.numeric(str.col)) {
       str.col <- names(dat)[str.col]
@@ -41,11 +43,13 @@ PlotPopPyramid <- function(dat = NULL, age.col = NULL, sex.col = NULL, str.col =
                                 dat[, sex.col],
                                 dat[, str.col]),
                       length)
-    names(dat2) <- c('age', 'sex', 'cas', 'count')
+    dat2 <- dat2[ , 1:4]
+    names(dat2) <- c('age', 'sex', 'ster', 'count')
   } else {
     dat2 <- aggregate(dat, list(dat[, age.col],
                                 dat[, sex.col]),
                       length)
+    dat2 <- dat2[ , 1:3]
     names(dat2) <- c('age', 'sex', 'count')
   }
   ylb <- max(dat2$count)
@@ -58,11 +62,11 @@ PlotPopPyramid <- function(dat = NULL, age.col = NULL, sex.col = NULL, str.col =
   dat.f <- rbind(dat.f, c(max(dat2$age), rep(0, ncol(dat2) - 1)))
   dat.m <- dat2[which(dat2[, 2] == levels(dat2$sex)[2]), ]
   dat.m <- rbind(dat.m, c(max(dat2$age), rep(0, ncol(dat2) - 1)))
-  options(warn = -1)
+  #options(warn = -1)
   if (!is.null(str.col)) {
-    plot.f <- ggplot(dat.f, aes(x = age, y = count , fill = cas)) +
+    plot.f <- ggplot(dat.f, aes(x = age, y = count , fill = ster)) +
       scale_fill_manual(values = c(inner.color, outer.color))
-    plot.m <- ggplot(dat.m, aes(x = age, y = count , fill = cas)) +
+    plot.m <- ggplot(dat.m, aes(x = age, y = count , fill = ster)) +
       scale_fill_manual(values = c(inner.color, outer.color))
   } else {
     plot.f <- ggplot(dat.f, aes(x = age, y = count , fill = sex)) +

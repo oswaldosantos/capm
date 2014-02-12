@@ -41,22 +41,22 @@
 # Load data with the polygon identifiers.
 data(psu.ssu)
 
-# Take a sample of 20 PSU with probability
+# Take a sample of 10 PSU with probability
 # proportional to size with replacement.
-(selected.psu <- SamplePPS(psu.ssu, 20, write = FALSE))
+(selected.psu <- SamplePPS(psu.ssu, 10, write = FALSE))
 
 ## Define shape from shapefile.
-shp.path <- system.file('shp', package="capm")
+shp.path <- system.file('data', package="capm")
 # The code above used a shapefile avaliable in the
 # capm package.
 # You might want to write a code like:
 # shp.path  <- 'path_to_the_folder_with_the_shapefile'
 
 # Create *kml files of 10 polygons.
-MapkmlPSU('santos', selected.psu[, 1], 1, shp.path)
+# Uncomment the following line:
+# MapkmlPSU('santos', selected.psu[, 1], 1, shp.path)
 
-## Define shape form an object x of class
-## SpatialPolygonsDataFrame.
+## Define shape from an object x of class SpatialPolygonsDataFrame.
 # MapkmlPSU(x, selected.psu[, 1], 1)
 }
 \seealso{
