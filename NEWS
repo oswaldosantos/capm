@@ -1,3 +1,10 @@
+capm 0.2.1
+==========
+
+* Encoding field removed from DESCRIPTION file to aovid warning message during package checking.
+
+* `psu.ssu.Rd`: accent removed from documentation to aovid warning message during package checking.
+
 capm 0.2.0
 ==========
 

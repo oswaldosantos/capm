@@ -5,7 +5,7 @@
 Primary and secondary sampling frames from Santos, Brazil.
 }
 \description{
-This data set list the primary (enumeration units/setores censitarios) and secondary (household/domicilios) sampling units from urban area of Santos city, according to the census of 2010, made by the Instituto Brasileiro de Geografia e Estatística - IBGE.
+This data set list the primary (enumeration units/setores censitarios) and secondary (household/domicilios) sampling units from urban area of Santos city, according to the census of 2010, made by the Instituto Brasileiro de Geografia e Estatistica - IBGE.
 }
 \usage{data(psu.ssu)}
 \format{

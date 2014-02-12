@@ -14,7 +14,6 @@ Depends:
 Description: Provides functions for quantitative companion animal population
     management.
 License: GPL (>= 2)
-Encoding: UTF-8
 LazyLoad: yes
 URL: https://github.com/oswaldosantos/capm
 Authors@R: c(person(given='Oswaldo', family='Santos',
