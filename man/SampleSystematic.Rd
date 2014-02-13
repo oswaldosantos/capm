@@ -15,8 +15,8 @@
 
   \item{total}{\code{\link{numeric}} indicating the number
   of sampling units in the population. This is an
-  alternative to \code{psu.ssu}, intended for non complex
-  designs.}
+  alternative to \code{psu.ssu}, intended for simple
+  sampling designs.}
 
   \item{write}{logical. If \code{TRUE}, a *.csv file
   containing the psu and their ssu is writed in the current
@@ -33,8 +33,10 @@
   correspond to the selected ssu within each psu.
 }
 \description{
-  Select Secondary Sampling Units (SSU) in one or more
-  Primary Sampling Units (PSU), using systematic sampling.
+  Select sampling units using systematic samplin. In the
+  context of two-stage cluster sampling, select Secondary
+  Sampling Units (SSU) in one or more Primary Sampling
+  Units (PSU), using systematic sampling.
 }
 \examples{
 # Load data with PSU identifiers and sizes.
@@ -47,11 +49,16 @@ selected.psu <- SamplePPS(psu.ssu, 10, write = FALSE)
 # Take a sistematic sampling of 5 SSU within each
 # PSU of selected.psu.
 (selected.ssu <- SampleSystematic(selected.psu, 5, write = FALSE))
+
+# Simple systematic sampling
+(simp.syst.sampling <- SampleSystematic(ssu = 5, total = 100))
 }
 \references{
   Levy P and Lemeshow S (2008). Sampling of populations:
   methods and applications, Fourth edition. John Wiley and
   Sons, Inc.
+
+  \url{https://github.com/oswaldosantos/capm}
 }
 \seealso{
   \code{\link{SamplePPS}}.

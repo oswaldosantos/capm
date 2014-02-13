@@ -6,10 +6,6 @@ shinyUI(pageWithSidebar(
     
     conditionalPanel(
       condition = 'input.conditionedPanels == 1',
-      checkboxInput('examples', 'Use example files from capm package instead of your own data.', F)),
-    
-    conditionalPanel(
-      condition = 'input.conditionedPanels == 2',
       helpText('Choose a csv file having PSU unique identifiers in the first column and PSU sizes in the second column.'),
       checkboxInput('header', 'Header', TRUE),
       radioButtons('sep', 'Separator',
@@ -25,10 +21,13 @@ shinyUI(pageWithSidebar(
       fileInput('universe', '',
                 accept=c('text/csv',
                          'text/comma-separated-values,text/plain',
-                         '.csv'))),
+                         '.csv')),
+      
+      tags$hr(),
+      checkboxInput('examples', 'Use example files from capm package instead of your own data.', F)),
     
     conditionalPanel(
-      condition = 'input.conditionedPanels == 3',
+      condition = 'input.conditionedPanels == 2',
       helpText('Choose a csv file with sample data.'),
       checkboxInput('header', 'Header', TRUE),
       radioButtons('sep', 'Separator',
@@ -47,8 +46,9 @@ shinyUI(pageWithSidebar(
                          '.csv'))),
     
     conditionalPanel(
-      condition = 'input.conditionedPanels == 4',
-      helpText('Population pyramid.'),
+      condition = 'input.conditionedPanels == 3',
+      HTML('<b>Population pyramid</b>'),
+      tags$hr(),
       numericInput('age.col',
                    'Column in sample data containing age variable.',
                    value = NULL, min = 0),
@@ -61,7 +61,7 @@ shinyUI(pageWithSidebar(
     ),
     
     conditionalPanel(
-      condition = 'input.conditionedPanels == 5',
+      condition = 'input.conditionedPanels == 4',
       numericInput('psu.col',
                    'Column in sample data that contain PSU identifiers.',
                    value = NULL, min = 0),
@@ -71,6 +71,9 @@ shinyUI(pageWithSidebar(
       numericInput('psu.2cdl',
                    'Number  of PSU included in the design.',
                    value = NULL, min = 0),
+      numericInput('level', 'Confidence level',
+                   value = 0.95, min = 0, max = 1),
+      
       tags$hr(),
       HTML('<p> Type of estimates <br> If you are using example files, copy and paste the following terms: <br> total, prop, mean, prop, prop, prop, total, prop, prop, prop'),
       textInput('variables', '',
@@ -80,7 +83,7 @@ shinyUI(pageWithSidebar(
                    'For systematic sampling, ingore the first three fields and specify here the total number of sampling units in the population.',
                    value = NULL, min = 0),
       tags$hr(),
-      helpText('Press the buttom and wait'), br(),
+      helpText('Press the button and wait'), br(),
       actionButton('calc.estimates', 'Get estimates'))
   ),
   
@@ -90,16 +93,15 @@ shinyUI(pageWithSidebar(
       tabPanel(
         'Introduction', value = 1,
         HTML(
-          '<p>With this App, you can upload data collected in a survey, make some descriptive analysis, and estimate population parameters. To get the estimates, it is necessary to specify the survey design used to collect the data.</p>
-
-<b>Runing example files</b>
-<p>To run the App with example files from capm package instead of your own data, check the box in the left side panel.</p>
+          '<p>With this interface, you can upload data collected in a survey, make some descriptive analysis, and estimate population parameters. To get the estimates, it is necessary to specify the survey design used to collect the data.</p>
 
 <b>Universe of sampling units</b>
-<p>If you checked the box to use example files, ignore the left side panel of the <i>Universe of sampling units</i> Tab. If you are using your own files, make sure you choose the apropriate options in the left side panel to avoid error messages or awkward results. You must be able to see a table with two columns and as many rows as sampling units in the population.</p>
+<p>If you checked the box to use example files, ignore the left side panel of the <i>Universe of sampling units</i> Tab. If you are using your own files, make sure you choose the appropriate options in the left side panel to avoid error messages or awkward results. You must be able to see a table with two columns and as many rows as sampling units in the population.</p>
+
+<p>To run example files from capm package instead of your own data, check the box in the left side panel.</p>
 
 <b>Survey data</b>
-<p>If you checked the box to use example files, ignore the left side panel of the <i>Survey data</i> Tab.  If you are using your own files, make sure you choose the apropriate options in the left side panel to avoid error messages or awkward results. The csv file must have one column for each variable for which estimates are needed, one column for PSU identifiers and one column for SSU identifiers. You must be able to see that columns and as many rows as SSU (across all PSU) in the sample. On the top of the table, the gray box shows summary statistics for each column. In the example file, the first column contain SSU identifiers, the second contain PSU identifiers and the remaining contain the variables.<br>
+<p>If you checked the box to use example files, ignore the left side panel of the <i>Survey data</i> Tab.  If you are using your own files, make sure you choose the appropriate options in the left side panel to avoid error messages or awkward results. The csv file must have one column for each variable for which estimates are needed, one column for PSU identifiers and one column for SSU identifiers. You must be able to see that columns and as many rows as SSU (across all PSU) in the sample. On the top of the table, the gray box shows summary statistics for each column. In the example file, the first column contain SSU identifiers, the second contain PSU identifiers and the remaining contain the variables.<br>
 To see a description of the meaning of each variable, go to RStudio and run <code>help(survey.data)</code>.</p>
 
 <b>Population pyramid</b>
@@ -109,7 +111,7 @@ To see a description of the meaning of each variable, go to RStudio and run <cod
 <p>If you checked the box to use example files, fill in the first three fields from top to bottom with, 2, 1 and 20 respectively (see the first two columns in the output from <i>Survey data</i> Tab). The example survey design included 20 PSU and that is the reason for the last number.<br>
 For systematic sampling, ignore the first three fields, and specify the total number of sampling units in the population (fourth field).</p>
 
-<p>In the last field, specify the type of estimate for each variable. To estimate a total, type <i>total</i>, to estimate a mean, type <i>mean</i> and to estimate a proportion, type <i>prop</i>. To get estimates of more than one variable, type the appropriate term for each variable and separate them by commas. The order of term from left to right must be the order (left to right) of variables (columns) in the survey file.</p>
+<p>In the last field, specify the type of estimate for each variable. To estimate a total, type <i>total</i>, to estimate a mean, type <i>mean</i> and to estimate a proportion, type <i>prop</i>. To get estimates of more than one variable, type the appropriate term for each variable and separate them by commas. The order of terms from left to right must be the order (left to right) of variables (columns) in the survey file.</p>
 
 <p>From the command line in RStudio, it is possible to get estimates for specific subpopulations (i.e. by sex). To estimate the total for categorical variables such as "castrated" from the example file (<i>Survey data</i> Tab), the command line is the place to go.</p>
 
@@ -125,17 +127,17 @@ For systematic sampling, ignore the first three fields, and specify the total nu
 </p>
           ')),
       
-      tabPanel('Universe of sampling units', value = 2,
+      tabPanel('Universe of sampling units', value = 1,
                dataTableOutput('universe')),
       
-      tabPanel('Survey data', value = 3,
+      tabPanel('Survey data', value = 2,
                verbatimTextOutput('summ.sample'),
                dataTableOutput('sample')),
       
-      tabPanel('Population pyramid', value = 4,
+      tabPanel('Population pyramid', value = 3,
                plotOutput('pyramid', height = 600)),
       
-      tabPanel('Estimates', value = 5,
+      tabPanel('Estimates', value = 4,
                tableOutput('variables'),
                tags$hr(),
                tableOutput('estimates')),

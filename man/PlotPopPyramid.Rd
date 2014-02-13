@@ -23,7 +23,7 @@
   status of individuals (see Details).}
 
   \item{x.label}{a string to be used as a label for x-axis.
-  If non defined, \code{xlabel} is equal to "Total" (see
+  If non defined, \code{x.label} is equal to "Total" (see
   Details).}
 
   \item{stage.label}{a string to be used as a label for
@@ -34,13 +34,17 @@
   \code{str.col} is \code{NULL}, \code{inner.color} is the
   color of bars. When \code{str.col} is not \code{NULL},
   \code{innercolor} is the inner color of bars. If non
-  defined, \code{inner.color} is equal to "Gold2".}
+  defined, \code{inner.color} is equal to \code{"Gold2"}.}
 
   \item{outer.color}{any valid way to specify colors. When
   \code{str.col} is \code{NULL}, \code{outer.color} is
   ignored. When \code{str.col} is not \code{NULL},
   \code{outer.color} is the outer color of bars. If non
-  defined, \code{outercolor} is equal to "DarkOliveGreen".}
+  defined, \code{outercolor} is equal to
+  \code{"DarkOliveGreen"}.}
+}
+\value{
+  Two opposed horizontal barplots.
 }
 \description{
   Dysplays two opposed horizontal barplots (pyramid).
@@ -52,12 +56,11 @@
   modification of the arguments.
 
   The bars to the left of \code{0} on the x axis correspond
-  to the minimum value of
-  \code{\link{as.numeric}}(\code{dat[, sex.col]}). If
-  \code{str.col} is not \code{NULL}, bars will be stacked,
-  with the minimum value of
-  \code{\link{as.numeric}}(\code{dat[, str.col]}) as their
-  base.
+  to the minimum value of \code{\link{as.numeric}}
+  (\code{dat[, sex.col]}). If \code{str.col} is not
+  \code{NULL}, bars will be stacked, with the minimum value
+  of \code{\link{as.numeric}}(\code{dat[, str.col]}) as
+  their base.
 
   On the top of the plot, it is displayed the total number
   of observations of each level of \code{dat[, sex.col]}.
@@ -88,6 +91,9 @@ data(survey.data)
 # Uncomment the following lines:
 # PlotPopPyramid(survey.data, age.col = 5, sex.col = 4, str.col = 6)
 # PlotPopPyramid(survey.data, age.col = 5, sex.col = 4)
+}
+\references{
+  \url{https://github.com/oswaldosantos/capm}
 }
 \seealso{
   \link[plotrix]{pyramid.plot}.

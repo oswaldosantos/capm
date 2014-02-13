@@ -42,6 +42,8 @@ data(psu.ssu)
   Levy P and Lemeshow S (2008). Sampling of populations:
   methods and applications, Fourth edition. John Wiley and
   Sons, Inc.
+
+  \url{https://github.com/oswaldosantos/capm}
 }
 \seealso{
   \code{\link{SampleSystematic}}.

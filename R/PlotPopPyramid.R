@@ -4,13 +4,13 @@
 #' @param age.col the number or name of \code{dat} column which have a \code{\link{numeric}} \code{\link{vector}} representing ages or stage categories.
 #' @param sex.col the number or name of \code{dat} column which have a \code{\link{factor}} with two levels representing the sex of individuals (see Details).
 #' @param str.col the number of \code{dat} column which have a \code{\link{factor}} representing the reproductive status of individuals (see Details).
-#' @param x.label a string to be used as a label for x-axis. If non defined, \code{xlabel} is equal to "Total" (see Details).
+#' @param x.label a string to be used as a label for x-axis. If non defined, \code{x.label} is equal to "Total" (see Details).
 #' @param stage.label a string to be used as a label for ages or stages categories. If non defined, \code{stage.label} is equal to "Years" (see Details).
-#' @param inner.color any valid way to specify colors. When \code{str.col} is \code{NULL}, \code{inner.color} is the color of bars. When \code{str.col} is not \code{NULL}, \code{innercolor} is the inner color of bars. If non defined, \code{inner.color} is equal to "Gold2".
-#' @param outer.color any valid way to specify colors. When \code{str.col} is \code{NULL}, \code{outer.color} is ignored. When \code{str.col} is not \code{NULL}, \code{outer.color} is the outer color of bars. If non defined, \code{outercolor} is equal to "DarkOliveGreen".
+#' @param inner.color any valid way to specify colors. When \code{str.col} is \code{NULL}, \code{inner.color} is the color of bars. When \code{str.col} is not \code{NULL}, \code{innercolor} is the inner color of bars. If non defined, \code{inner.color} is equal to \code{"Gold2"}.
+#' @param outer.color any valid way to specify colors. When \code{str.col} is \code{NULL}, \code{outer.color} is ignored. When \code{str.col} is not \code{NULL}, \code{outer.color} is the outer color of bars. If non defined, \code{outercolor} is equal to \code{"DarkOliveGreen"}.
 #' @details \code{PlotPopPyramid} is mainly intended for companion animals population pyramids, although it can display other types of opposed bar charts with suitable modification of the arguments.
 #' 
-#' The bars to the left of \code{0} on the x axis correspond to the minimum value of \code{\link{as.numeric}}(\code{dat[, sex.col]}). If \code{str.col} is not \code{NULL}, bars will be stacked, with the minimum value of \code{\link{as.numeric}}(\code{dat[, str.col]}) as their base.
+#' The bars to the left of \code{0} on the x axis correspond to the minimum value of \code{\link{as.numeric}} (\code{dat[, sex.col]}). If \code{str.col} is not \code{NULL}, bars will be stacked, with the minimum value of \code{\link{as.numeric}}(\code{dat[, str.col]}) as their base.
 #' 
 #' On the top of the plot, it is displayed the total number of observations of each level of \code{dat[, sex.col]}. The \code{\link{levels}} of \code{sex.col} are used as \code{\link{labels}}.
 #' 
@@ -21,6 +21,8 @@
 #' Other details of the plot can be modifyed using appropriate functions from \code{ggplot2} package (see examples).
 #'  
 #' @note In companion animals population surveys, some age categories might be empty. One difference between \code{PlotPopPyramid} and \code{pryramid.plot} is that the first does not drop empty age categories.
+#' @return Two opposed horizontal barplots.
+#' @references \url{https://github.com/oswaldosantos/capm}
 #' @seealso \link[plotrix]{pyramid.plot}.
 #' @export
 #' @examples 

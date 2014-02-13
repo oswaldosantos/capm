@@ -1,13 +1,13 @@
 #' Creates *.kml files of a subset of polygons from a polygon shapefile
 #' @description Subset polygons acording to the matches between a vector and a specified column from a \link[sp]{SpatialPolygonsDataFrame}.
-#' @param shape \code{\link{character}} string with the name of a polygon shapefile or an object of \code{\link{class}} \link[sp]{SpatialPolygonsDataFrame} (see examples).
+#' @param shape string with the name of a polygon shapefile or an object of \code{\link{class}} \link[sp]{SpatialPolygonsDataFrame} (see examples).
 #' @param psu the values to be matched.
 #' @param id column of the *.dbf file with the values to be matched against.
-#' @param path \code{\link{character}} string indicating the path to the folder containing the shapfile. If the shapefile is in the working directory or if \code{shape} argument is a shapefile, \code{path} can be ignored.
+#' @param path string indicating the path to the folder containing the shapfile. If the shapefile is in the working directory or if \code{shape} argument is a shapefile, \code{path} can be ignored.
 #' @return *.kml files of the subsetted polygons.
-#' @details If there is *.kml files in the working directory, the new files created will overwrite it in case of name matching.
+#' @details If there are *.kml files in the working directory, the new created files will overwrite it in case of name matching.
 #' 
-#' \code{shape} must receive a shapefile with apropriate coordinate reference system, otherwise, \code{MapkmlPSU} report an error.
+#' \code{shape} must receive a shapefile with appropriate coordinate reference system, otherwise, \code{MapkmlPSU} report an error.
 #' @seealso \code{\link{readShapeSpatial}}
 #' @export
 #' @examples
@@ -26,7 +26,7 @@
 #' # shp.path  <- 'path_to_the_folder_with_the_shapefile'
 #' 
 #' # Create *kml files of 10 polygons.
-#' # Uncomment the following line:
+#' # Uncomment the following line to create kml files:
 #' # MapkmlPSU('santos', selected.psu[, 1], 1, shp.path)
 #' 
 #' ## Define shape from an object x of class SpatialPolygonsDataFrame.

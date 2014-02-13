@@ -98,5 +98,7 @@ estimates.m <- SummarySurvey(design.m, variables.sex, rnd = 3)
 \references{
   Lumley, T. (2011). Complex surveys: A guide to analysis
   using R (Vol. 565). Wiley.
+
+  \url{https://github.com/oswaldosantos/capm}
 }
 

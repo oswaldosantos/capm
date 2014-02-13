@@ -6,7 +6,10 @@
     t1 = NULL, t2 = NULL, ratio = TRUE)
 }
 \arguments{
-  \item{model.out}{an object of class \code{capmModels}.}
+  \item{model.out}{an output from one of the following
+  functions or a \code{\link{list}} with equivalent
+  structure: \code{\link{SolveIASA}}, \code{\link{SolveSI}}
+  or \code{\link{SolveTC}}.}
 
   \item{variable}{string with the name of the the output
   variable for which the change needs to be calculated.}
@@ -16,26 +19,29 @@
   \item{t2}{value specifying the second time.}
 
   \item{ratio}{logical. When \code{TRUE}, the calculated
-  change is based on poulation size at t2 / population size
-  at t1. When \code{FALSE}, the calculated change is based
-  on poulation size at t2 / population size at t1.}
+  change is based on poulation size at t2 divided by
+  population size at t1. When \code{FALSE}, the calculated
+  change is based on poulation size at t2 minus population
+  size at t1.}
 }
 \value{
   Value representing the ratio (if \code{ratio} is
   \code{TRUE}) or the difference (if \code{ratio} is
   \code{FALSE}) between population size at time t2 and t1.
-  If only time time is specified, the value is the
+  If only one time is specified, the value is the
   population size at that time.
 }
 \description{
   Calculate the change in population size between two
   times. When only one time is specified, the population
-  size at moment is returned.
+  size at that time is returned.
 }
 \examples{
-# Parameters and initial conditions from estimates
-# obtained in examples section from svysumm function but
-# estimating a proportion insted of a total for births.
+###################
+## SolveSI model ##
+###################
+
+# Parameters and initial conditions.
 pars.solve.si = c(b = 0.245, d = 0.101,
                      k = 98050.49, s = .048)
 init.solve.si = c(n = 89136.810, q = 0.198)
@@ -54,5 +60,8 @@ CalculatePopChange(solve.si.pt, variable = 'n', t2 = 15, t1 = 0, ratio = FALSE)
 
 # Calculate the population zises at time 15.
 CalculatePopChange(solve.si.pt, variable = 'n', t2 = 15)
+}
+\references{
+  \url{https://github.com/oswaldosantos/capm}
 }
 

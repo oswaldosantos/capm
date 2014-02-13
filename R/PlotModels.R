@@ -1,5 +1,5 @@
 #' Plot results of capm model functions
-#' @description Plot results of objects of class \code{capmModels}.
+#' @description Plot results of one of the following functions: \code{\link{SolveIASA}}, \code{\link{SolveSI}} or \code{\link{SolveTC}}.
 #' @param model.out output of one of the function previously mentioned.
 #' @param variable string to specify the variable to be ploted. 
 #' 
@@ -67,16 +67,18 @@
 #' 
 #' @param col string indicating the color of ploted line, when \code{s.range} is \code{NULL}.
 #' @param col1 \code{\link{character}} \code{\link{vector}} indicating the color of lowest (highest) population sizes (proportion of sterilized animals), when \code{s.range} is not \code{NULL}.
-#' @param col2 \code{\link{character}} \code{\link{vector}} indicating the color of lowest (highest) population sizes (proportion of sterilized animals), when \code{s.range} is not \code{NULL}.
-#' @param xlabel string with the name of x axis.
-#' @param ylabel string with the name of y axis.
-#' @param leglabel string with the name of legend, for plots of \code{\link{SolveIASA}} output.
-#' @param scenlabel string with the name of scenarios of \code{\link{SolveIASA}} output, determined by the immigartion rates. Within the string, use the expression __ in the location where you want to appear the value of the immigartion rate. For line breaking, use \code{\\n} (see examples).
-#' @param pop a value indicating the output of \code{\link{SolveIASA}} to be ploted. When \code{NULL} (default), plots for owned and stray populations under scenarios created by immigartion rate are created. If \code{1}, the plots of owned population for the minimum immigartion rate are ploted. When \code{2}, the plots of stray population for the minimum immigartion rate are ploted. If \code{3}, the plots of owned population for the maximum immigartion rate are ploted. When \code{4}, the plots of owned population for the maximum immigartion rate are ploted.
+#' @param col2 \code{\link{character}} \code{\link{vector}} indicating the color of highest (lowest) population sizes (proportion of sterilized animals), when \code{s.range} is not \code{NULL}.
+#' @param x.label string with the name of x axis.
+#' @param y.label string with the name of y axis.
+#' @param leg.label string with the name of legend, for plots of \code{\link{SolveIASA}} output.
+#' @param scen.label string with the name of scenarios of \code{\link{SolveIASA}} output, determined by the immigartion rates. Within the string, use the expression __ in the location where you want to appear the value of the immigartion rate. For line breaking, use \code{\\n} (see examples).
+#' @param pop value indicating the output of \code{\link{SolveIASA}} to be ploted. When \code{NULL} (default), plots for owned and stray populations under scenarios created by immigartion rate are created. If \code{1}, the plots of owned population for the minimum immigartion rate are ploted. When \code{2}, the plots of stray population for the minimum immigartion rate are ploted. If \code{3}, the plots of owned population for the maximum immigartion rate are ploted. When \code{4}, the plots of owned population for the maximum immigartion rate are ploted.
 #' @details Font size of saved plots is usually different to the font size seen in graphic browsers. Before changing font sizes, see the final result in saved (or preview) plots.
 #'  
 #' Other details of the plot can be modifyed using appropriate functions from \code{ggplot2} package.
 #' @references Chang W (2012). R Graphics Cookbook. O'Reilly Media, Inc.
+#' 
+#' \url{https://github.com/oswaldosantos/capm}
 #' @seealso \link[deSolve]{plot.deSolve}.
 #' @export
 #' @examples
@@ -120,9 +122,9 @@
 #' 
 #' ## Plot all scenarios and change the label for the scenarios.
 #' # Uncomment the following line:
-#' # PlotModels(solveiasa.rg, variable = 'N')
+#' # PlotModels(solveiasa.rg, variable = 'N', scen.label = 'Im = (__ * de la capacidad de carga)')
 #'
-PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c('cadetblue1', 'yellow', 'red'), col2 = c('blue', 'darkgreen', 'darkred'), xlabel = 'Years', ylabel = NULL, scenlabel = 'Im = (__ * owned carrying capacity)', leglabel = NULL, pop = NULL) {
+PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c('cadetblue1', 'yellow', 'red'), col2 = c('blue', 'darkgreen', 'darkred'), x.label = 'Years', y.label = NULL, scen.label = 'Im = (__ * owned carrying capacity)', leg.label = NULL, pop = NULL) {
   if (class(model.out) != 'capmModels') {
     stop('model.out must be of class "capmModels".')
   }
@@ -135,39 +137,39 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
       tmp <- ggplot(model.out$results, 
                     aes_string(x = 'time', y = variable)) + 
         geom_line(colour = col) +
-        xlab(xlabel)
-      if (!is.null(ylabel)) {
-        tmp + ylab(ylabel) +
+        xlab(x.label)
+      if (!is.null(y.label)) {
+        tmp + ylab(y.label) +
           ylim(0, max(model.out$results[ , variable]))
       } else {
         if (variable == 'n') {
-          ylabel <- 'Population size'
+          y.label <- 'Population size'
         }
         if (variable == 'q') {
-          ylabel <- 'Proportion of sterilized animals'
+          y.label <- 'Proportion of sterilized animals'
         }
-        tmp + ylab(ylabel) +
+        tmp + ylab(y.label) +
           ylim(0, max(model.out$results[ , variable]))
       }
     }  else {
-      if (is.null(ylabel)) {
-        ylabel <- 'Sterilization rate'
+      if (is.null(y.label)) {
+        y.label <- 'Sterilization rate'
       }
       scl <- nchar(as.character(
         round(max(model.out$results[, variable])))) - 2
       if (variable == 'n') {
-        if (is.null(leglabel)) {
-          leglabel = 'Population size'
+        if (is.null(leg.label)) {
+          leg.label = 'Population size'
         }
         ggplot(
           model.out$results, 
           aes_string(x = 'time', y = 's.rate',
                      fill = variable)) +
-          xlab(xlabel) + 
-          ylab(ylabel) +
+          xlab(x.label) + 
+          ylab(y.label) +
           geom_raster() + 
           scale_fill_continuous(
-            name = paste0(leglabel,' (x ', 10 ^ scl, ')'),
+            name = paste0(leg.label,' (x ', 10 ^ scl, ')'),
             limits = c(0, max(model.out$results[, variable])), 
             breaks = round(
               seq(0 , max(model.out$results[, variable]),
@@ -180,18 +182,18 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
           theme(legend.position = 'top',
                 legend.title = element_text(size = 12))
       } else {
-        if (is.null(leglabel)) {
-          leglabel == 'Proportion of sterilized animals'
+        if (is.null(leg.label)) {
+          leg.label == 'Proportion of sterilized animals'
         }
         ggplot(
           model.out$results, 
           aes_string(x = 'time', y = 's.rate',
                      fill = variable)) +
-          xlab(xlabel) + 
-          ylab(ylabel) +
+          xlab(x.label) + 
+          ylab(y.label) +
           geom_raster() +
           scale_fill_continuous(
-            name = leglabel,
+            name = leg.label,
             limits = c(0, 1), breaks = seq(0 , 1, .2),
             low = rev(col2), 
             high = rev(col1)) +
@@ -214,9 +216,9 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
         tmp <- ggplot(model.out$results, 
                       aes_string(x = 'time', y = variable)) + 
           geom_line(colour = col) +
-          xlab(xlabel)
-        if (!is.null(ylabel)) {
-          tmp + ylab(ylabel) +
+          xlab(x.label)
+        if (!is.null(y.label)) {
+          tmp + ylab(y.label) +
             ylim(0, max(model.out$results[ , variable]))
         } else {
           if (variable == 'f1') {
@@ -274,33 +276,33 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
           stop(paste('Invalid variable: "', variable, 
                      '". See the help page of PlotModels.'))
         }
-        if (is.null(leglabel)) {
+        if (is.null(leg.label)) {
           if (variable == 'f') {
-            leglabel <- c('Owned\nintact\nfemales', 
+            leg.label <- c('Owned\nintact\nfemales', 
                           'Stray\nintact\nfemales')
           }
           if (variable == 'fs') {
-            leglabel <- c('Owned\nsterilized\nfemales', 
+            leg.label <- c('Owned\nsterilized\nfemales', 
                           'Stray\nsterilized\nfemales')
           }
           if (variable == 'm') {
-            leglabel <- c('Owned\nintact\nmales', 
+            leg.label <- c('Owned\nintact\nmales', 
                           'Stray\nintact\nmales')
           }
           if (variable == 'ms') {
-            leglabel <- c('Owned\nsterilized\nmales', 
+            leg.label <- c('Owned\nsterilized\nmales', 
                           'Stray\nsterilized\nmales')
           }
           if (variable == 'n') {
-            leglabel <- c('Owned\nintact\nanimals', 
+            leg.label <- c('Owned\nintact\nanimals', 
                           'Stray\nintact\nanimals')
           }
           if (variable == 'ns') {
-            leglabel <- c('Owned\nsterilized\nanimals', 
+            leg.label <- c('Owned\nsterilized\nanimals', 
                           'Stray\nsterilized\nanimals')
           }
           if (variable == 'N') {
-            leglabel <- c('Owned\nanimals', 
+            leg.label <- c('Owned\nanimals', 
                           'Stray\nanimals')
           }
         }
@@ -308,8 +310,8 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
           paste('Ab =', round(model.out$results[, 'ab'], 2))
         model.out$results[, 'ad'] = 
           paste('Ad =', round(model.out$results[, 'ad'], 2))
-        if (is.null(ylabel)) {
-          ylabel <- 'Sterilization rate'
+        if (is.null(y.label)) {
+          y.label <- 'Sterilization rate'
         }
         s11 <- s12 <- s21 <- s22 <- NULL
         for (i in 1:2) {
@@ -325,15 +327,15 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
                      dat,
                      aes_string(x = 't', y = 's',
                                 fill = variable)) +
-                     xlab(xlabel) + 
-                     ylab(ylabel) +
+                     xlab(x.label) + 
+                     ylab(y.label) +
                      ggtitle(
                        gsub('__', unique(
                          model.out$results[, 'im'])[i],
-                            scenlabel)) +
+                            scen.label)) +
                      geom_raster() + 
                      scale_fill_continuous(
-                       name = paste0(leglabel[j], '\n',
+                       name = paste0(leg.label[j], '\n',
                                      '(x ', 10 ^ scl, ')\n'),
                        limits = c(0, max(model.out$results[
                          model.out$results$group == j, variable])), 
@@ -396,38 +398,38 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
           tmp <- ggplot(model.out$results, 
                         aes_string(x = 'time', y = variable)) + 
             geom_line(colour = col) +
-            xlab(xlabel)
-          if (!is.null(ylabel)) {
-            tmp + ylab(ylabel) +
+            xlab(x.label)
+          if (!is.null(y.label)) {
+            tmp + ylab(y.label) +
               ylim(0, max(model.out$results[ , variable]))
           } else {
             if (variable == 'n') {
-              ylabel <- 'Fertile animals'
+              y.label <- 'Fertile animals'
             }
             if (variable == 'cn') {
-              ylabel <- 'Infertile animals'
+              y.label <- 'Infertile animals'
             }
             if (variable == 'tcn') {
-              ylabel <- 'Sterilized animals (cumulative)'
+              y.label <- 'Sterilized animals (cumulative)'
             }
-            tmp + ylab(ylabel) +
+            tmp + ylab(y.label) +
               ylim(0, max(model.out$results[ , variable]))
           }
         } else {
-          if (is.null(ylabel)) {
-            ylabel <- 'Fertility recovery rate'
+          if (is.null(y.label)) {
+            y.label <- 'Fertility recovery rate'
           }
           scl <- nchar(as.character(
             round(max(model.out$results[, variable])))) - 2
-          if (is.null(leglabel)) {
+          if (is.null(leg.label)) {
             if (variable == 'n') {
-              leglabel = 'Fertile animals'
+              leg.label = 'Fertile animals'
             }
             if (variable == 'cn') {
-              leglabel = 'Inertile animals'
+              leg.label = 'Inertile animals'
             }
             if (variable == 'tcn') {
-              leglabel = 'Sterilized animals (cumulative)'
+              leg.label = 'Sterilized animals (cumulative)'
             }
           }
           model.out$results[, 's'] <- 
@@ -438,11 +440,11 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
             model.out$results,
             aes_string(x = 'time', y = 'f',
                        fill = variable)) +
-            xlab(xlabel) + 
-            ylab(ylabel) +
+            xlab(x.label) + 
+            ylab(y.label) +
             geom_raster() + 
             scale_fill_continuous(
-              name = paste0(leglabel,' (x ', 10 ^ scl, ')'),
+              name = paste0(leg.label,' (x ', 10 ^ scl, ')'),
               limits = c(0, max(model.out$results[, variable])), 
               breaks = round(
                 seq(0 , max(model.out$results[, variable]),

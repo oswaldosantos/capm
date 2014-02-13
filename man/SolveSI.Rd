@@ -1,6 +1,6 @@
 \name{SolveSI}
 \alias{SolveSI}
-\title{Sterilization and immigration effects.}
+\title{Modelling of sterilization and immigration of comapnion animals.}
 \usage{
   SolveSI(pars = NULL, init = NULL, time = NULL, dd = "b",
     im = 0, s.range = NULL, ...)
@@ -33,19 +33,18 @@
   \link[deSolve]{ode} function.}
 }
 \value{
-  \code{\link{list}} of class \code{capmModels}. The first
-  element, \code{name}, is a string with the name of the
-  function, the second element, \code{*$model}, is the
-  model function. The third, fourth and fifth elements are
-  vectors (\code{*$pars}, \code{*$init}, \code{*$time},
-  respectively) containing the \code{pars}, \code{init} and
-  \code{time} arguments of the function. The sisxthth
-  element \code{*$results} is a \code{\link{data.frame}}
-  with up to as many rows as elements in time. First column
-  contains the time, second column the population size and
-  third column the proportion of sterilized animals. If
-  \code{s.range} is specified, fourth column contains its
-  specific instances.
+  \code{\link{list}}. The first element, \code{name}, is a
+  string with the name of the function, the second element,
+  \code{model}, is the model function. The third, fourth
+  and fifth elements are vectors (\code{pars}, \code{init},
+  \code{time}, respectively) containing the \code{pars},
+  \code{init} and \code{time} arguments of the function.
+  The sisxth element \code{results} is a
+  \code{\link{data.frame}} with up to as many rows as
+  elements in time. First column contains the time, second
+  column the population size and third column the
+  proportion of sterilized animals. If \code{s.range} is
+  specified, fourth column contains its specific instances.
 }
 \description{
   System of ordinary differential equations to simulate the
@@ -92,6 +91,8 @@ solvesi.rg = SolveSI(pars = pars.solve.si,
 
   Soetaert K, Cash J and Mazzia F (2012). Solving
   differential equations in R. Springer.
+
+  \url{https://github.com/oswaldosantos/capm}
 }
 \seealso{
   \link[deSolve]{ode}.

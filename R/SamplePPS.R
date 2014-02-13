@@ -6,6 +6,8 @@
 #' @param ... further arguments passed to \code{\link{write.table}} function.
 #' @return \code{\link{data.frame}}. First column contains the selected psu identifiers, coerced by \code{\link{as.character}}, to avoid scientific notation in case the identifiers be large numbers of \code{\link{class}} \code{\link{numeric}}. Second column contain PSU sizes, a variable needed for second stage sampling with \code{\link{SampleSystematic}}.
 #' @references Levy P and Lemeshow S (2008). Sampling of populations: methods and applications, Fourth edition. John Wiley and Sons, Inc.
+#' 
+#' \url{https://github.com/oswaldosantos/capm}
 #' @seealso \code{\link{SampleSystematic}}.
 #' @export
 #' @examples 

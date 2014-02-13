@@ -2,8 +2,8 @@
 \alias{PlotGlobalSens}
 \title{Plot results of GlobalSens function}
 \usage{
-  PlotGlobalSens(global.out = NULL, xlabel = "Time",
-    ylabel = "Population", nam.leg = "Sensitivity range",
+  PlotGlobalSens(global.out = NULL, x.label = "Time",
+    y.label = "Population", nam.leg = "Sensitivity range",
     mm.leg = "min - max", sd.leg = "mean +- sd   ")
 }
 \arguments{
@@ -12,9 +12,9 @@
 
   \item{nam.leg}{string with name for the legend.}
 
-  \item{xlabel}{string with the name of x axis.}
+  \item{x.label}{string with the name of x axis.}
 
-  \item{ylabel}{string with the name of y axis.}
+  \item{y.label}{string with the name of y axis.}
 
   \item{mm.leg}{string with the name of the "envelope"
   calculated using the minimum and maximum ranges.}
@@ -73,6 +73,9 @@ glob.all.solve.iasa <- CalculateGlobalSens(
 
 ### Plot the sensitivities of combined parameters.
 PlotGlobalSens(glob.all.solve.iasa)
+}
+\references{
+  \url{https://github.com/oswaldosantos/capm}
 }
 \seealso{
   \link[deSolve]{plot.deSolve}.

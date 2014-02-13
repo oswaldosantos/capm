@@ -25,9 +25,8 @@
   \item{y.sens}{string with the name of y axis for
   sensitivity functions.}
 
-  \item{y.ind}{\code{\link{character}} \code{\link{vector}}
-  with the name of y axis for the parameter importance
-  indices.}
+  \item{y.ind}{string with the name of y axis for the
+  parameter importance indices.}
 
   \item{ax.size}{a number to specify the size of axes
   labels and text.}
@@ -79,6 +78,8 @@ local.solve.iasa2 <- CalculateLocalSens(
 
   Soetaert K, Cash J and Mazzia F (2012). Solving
   differential equations in R. Springer.
+
+  \url{https://github.com/oswaldosantos/capm}
 }
 \seealso{
   \link[FME]{plot.sensFun}.

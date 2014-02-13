@@ -6,20 +6,19 @@
     path = ".")
 }
 \arguments{
-  \item{shape}{\code{\link{character}} string with the name
-  of a polygon shapefile or an object of
-  \code{\link{class}} \link[sp]{SpatialPolygonsDataFrame}
-  (see examples).}
+  \item{shape}{string with the name of a polygon shapefile
+  or an object of \code{\link{class}}
+  \link[sp]{SpatialPolygonsDataFrame} (see examples).}
 
   \item{psu}{the values to be matched.}
 
   \item{id}{column of the *.dbf file with the values to be
   matched against.}
 
-  \item{path}{\code{\link{character}} string indicating the
-  path to the folder containing the shapfile. If the
-  shapefile is in the working directory or if \code{shape}
-  argument is a shapefile, \code{path} can be ignored.}
+  \item{path}{string indicating the path to the folder
+  containing the shapfile. If the shapefile is in the
+  working directory or if \code{shape} argument is a
+  shapefile, \code{path} can be ignored.}
 }
 \value{
   *.kml files of the subsetted polygons.
@@ -30,10 +29,11 @@
   \link[sp]{SpatialPolygonsDataFrame}.
 }
 \details{
-  If there is *.kml files in the working directory, the new
-  files created will overwrite it in case of name matching.
+  If there are *.kml files in the working directory, the
+  new created files will overwrite it in case of name
+  matching.
 
-  \code{shape} must receive a shapefile with apropriate
+  \code{shape} must receive a shapefile with appropriate
   coordinate reference system, otherwise, \code{MapkmlPSU}
   report an error.
 }
@@ -53,7 +53,7 @@ shp.path <- system.file('data', package="capm")
 # shp.path  <- 'path_to_the_folder_with_the_shapefile'
 
 # Create *kml files of 10 polygons.
-# Uncomment the following line:
+# Uncomment the following line to create kml files:
 # MapkmlPSU('santos', selected.psu[, 1], 1, shp.path)
 
 ## Define shape from an object x of class SpatialPolygonsDataFrame.

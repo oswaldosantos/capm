@@ -15,7 +15,7 @@
   than the \code{pars} values.}
 }
 \value{
-  a \code{\link{data.frame}} with the complete set of
+  \code{\link{data.frame}} with the complete set of
   parameter ranges.
 }
 \description{
@@ -24,38 +24,15 @@
   \code{\link{CalculateGlobalSens}} or
   \code{\link{sensRange}} functions.
 }
-\details{
-  \code{estimates} and \code{rowpars} are optional
-  arguments to be used together. When used, \code{pars}
-  must be a \code{setrange} output. The confidence limits
-  for the parameters specified in \code{rowpars} will
-  replace the corresponding ranges initially dfined.
-}
 \examples{
 data(psu.ssu)
 data(survey.data)
 
-#######################
-## Example 1         ##
-## General estimates ##
-#######################
-
-## Parameters and initial conditions from estimates
-## obtained in examples section from SummarySurvey function.
-pars.solve.si <- c(b = 0.245, d = 0.101,
-                     k = 98050.49, s = .048)
-
-## Set ranges 10 \% greater and lesser than the
-## point estimates.
-rg.solve.si <- SetRanges(pars = pars.solve.si)
-
-
 #####################
-## Example 2       ##
 ## SolveIASA model ##
 #####################
 
-## Parameters and initial conditions.
+# Parameters and initial conditions.
 pars.solve.iasa <- c(
    b1 = 21870.897, b2 = 4374.179,
    df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,
@@ -63,8 +40,8 @@ pars.solve.iasa <- c(
    k1 = 98050.49, k2 = 8055.456, h1 = 1, h2 = .5,
    ab = 0.054, ad = 0.1, v = 0.1)
 
-## Set ranges 10 \% greater and lesser than the
-## point estimates.
+# Set ranges 10 \% greater and lesser than the
+# point estimates.
 rg.solve.iasa <- SetRanges(pars.solve.iasa)
 }
 \references{
@@ -76,6 +53,8 @@ rg.solve.iasa <- SetRanges(pars.solve.iasa)
   identifiability analysis of large environmental
   simulation models. Water Resources Research, 37(4), pp.
   1015-1030.
+
+  \url{https://github.com/oswaldosantos/capm}
 }
 \seealso{
   \code{\link{sensRange}} and \code{\link{SolveSI}}.

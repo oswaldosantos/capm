@@ -1,12 +1,14 @@
 #' Systematic sampling
-#' @description Select Secondary Sampling Units (SSU) in one or more Primary Sampling Units (PSU), using systematic sampling.
+#' @description Select sampling units using systematic samplin. In the context of two-stage cluster sampling, select Secondary Sampling Units (SSU) in one or more Primary Sampling Units (PSU), using systematic sampling.
 #' @param psu.ssu \code{\link{data.frame}} with all PSU. First column contains PSU unique identifiers. Second column contains \code{\link{numeric}} PSU sizes.
 #' @param ssu \code{\link{numeric}} indicating SSU to be selected.
-#' @param total \code{\link{numeric}} indicating the number of sampling units in the population. This is an alternative to \code{psu.ssu}, intended for non complex designs.
+#' @param total \code{\link{numeric}} indicating the number of sampling units in the population. This is an alternative to \code{psu.ssu}, intended for simple sampling designs.
 #' @param write logical. If \code{TRUE}, a *.csv file containing the psu and their ssu is writed in the current working directory.
 #' @param ... further arguments passed to \code{\link{write.table}} function.
 #' @return A \code{matrix}. The names of columns are the identifiers of selected psu, coerced by \code{\link{as.character}} to avoid scientific notation in case the identifiers be of \code{\link{class}} \code{\link{numeric}}. The rows correspond to the selected ssu within each psu.
 #' @references Levy P and Lemeshow S (2008). Sampling of populations: methods and applications, Fourth edition. John Wiley and Sons, Inc.
+#' 
+#' \url{https://github.com/oswaldosantos/capm}
 #' @seealso \code{\link{SamplePPS}}.
 #' @export
 #' @examples 
@@ -20,6 +22,9 @@
 #' # Take a sistematic sampling of 5 SSU within each 
 #' # PSU of selected.psu.
 #' (selected.ssu <- SampleSystematic(selected.psu, 5, write = FALSE))
+#' 
+#' # Simple systematic sampling
+#' (simp.syst.sampling <- SampleSystematic(ssu = 5, total = 100))
 SampleSystematic <- function(psu.ssu = NULL, ssu = NULL, total = NULL, write = FALSE, ...) {
   if (!is.null(total)) {
     int <- total / ssu

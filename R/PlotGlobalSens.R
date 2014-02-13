@@ -2,13 +2,14 @@
 #' @description Plot results of of \code{\link{CalculateGlobalSens}} function.
 #' @param global.out output from \code{\link{CalculateGlobalSens}} function.
 #' @param nam.leg string with name for the legend.
-#' @param xlabel string with the name of x axis.
-#' @param ylabel string with the name of y axis.
+#' @param x.label string with the name of x axis.
+#' @param y.label string with the name of y axis.
 #' @param mm.leg string with the name of the "envelope" calculated using the minimum and maximum ranges.
 #' @param sd.leg string with the name of the "envelope" calculated using the mean +- standard deviation ranges.
 #' @details Font size of saved plots is usually different to the font size seen in graphic browsers. Before changing font sizes, see the final result in saved (or preview) plots.
 #'  
 #' Other details of the plot can be modifyed using appropriate functions from \code{ggplot2} package.
+#' @references \url{https://github.com/oswaldosantos/capm}
 #' @seealso \link[deSolve]{plot.deSolve}.
 #' @export
 #' @examples 
@@ -51,7 +52,7 @@
 #' ### Plot the sensitivities of combined parameters.
 #' PlotGlobalSens(glob.all.solve.iasa)
 #'
-PlotGlobalSens <- function(global.out = NULL, xlabel = 'Time', ylabel = 'Population', nam.leg = 'Sensitivity range', mm.leg = 'min - max', sd.leg = 'mean +- sd   ') {
+PlotGlobalSens <- function(global.out = NULL, x.label = 'Time', y.label = 'Population', nam.leg = 'Sensitivity range', mm.leg = 'min - max', sd.leg = 'mean +- sd   ') {
   x <- Mean <- Min <- Max <- Sd <- NULL
   if (colnames(global.out)[length(global.out)] == 'param') {
     ggplot(global.out, aes(x = x, y = Mean)) +
@@ -60,7 +61,7 @@ PlotGlobalSens <- function(global.out = NULL, xlabel = 'Time', ylabel = 'Populat
       geom_ribbon(aes(ymin = Mean - Sd, ymax = Mean + Sd, fill = 'blue'), 
                   alpha = .6) +
       geom_line() + facet_wrap( ~ param) +
-      xlab(xlabel) + ylab(ylabel) +
+      xlab(x.label) + ylab(y.label) +
       scale_fill_manual(
         name = nam.leg,
         values = c('blue', 'red'),
@@ -75,7 +76,7 @@ PlotGlobalSens <- function(global.out = NULL, xlabel = 'Time', ylabel = 'Populat
       geom_ribbon(aes(ymin = Mean - Sd, ymax = Mean + Sd, fill = 'blue'), 
                   alpha = .6) +
       geom_line() +
-      xlab(xlabel) + ylab(ylabel) +
+      xlab(x.label) + ylab(y.label) +
       ylim(0, max(global.out$Max)) +
       scale_fill_manual(
         name = nam.leg,

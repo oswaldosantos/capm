@@ -9,6 +9,7 @@ shinyUI(pageWithSidebar(
     conditionalPanel(
       condition = 'input.conditionedPanels == 1', value = 1,
       HTML('<p><b>Initial conditions</b></p>'),
+      br(),br(),
       HTML('<p>Owned population</p>'),
       numericInput('f1', 'Intact females (f1)',
                    value = 33425, min = 0),
@@ -31,7 +32,8 @@ shinyUI(pageWithSidebar(
                    value = 68, min = 0),
       
       tags$hr(),
-      HTML('<p><b>Parameters</b></p>'),      
+      HTML('<p><b>Parameters</b></p>'),
+      br(),br(),
       HTML('<p>Owned population</p>'),
       numericInput('b1', 'Births per year (b1)',
                    value = 21871, min = 0),
@@ -101,14 +103,15 @@ shinyUI(pageWithSidebar(
     
     conditionalPanel(
       condition = 'input.conditionedPanels == 2', value = 2,
-      HTML('<p>Sensitivities</p>'),
+      HTML('<p><b>Sensitivities</b></p>'),
+      tags$hr(),
       numericInput('range',
                    'Proportional perturbation of parameters in global sensitivity',
                    value = 0.1, step = 0.01),
       helpText('Press the button and wait until full color plots appear'),
       actionButton('sensitivities', 'Calculate sensitivities'),
       br(),
-      HTML('If you pressed this button in another Tab <i>(Global/Local sensitivities)</i>, do not press it again.')
+      HTML('If you pressed this button in another Tab <i>(Global/Local sensitivities)</i>, do not press it again at least you want to recalculate sensitivities.')
     ),
     
     conditionalPanel(

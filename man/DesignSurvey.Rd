@@ -1,6 +1,6 @@
 \name{DesignSurvey}
 \alias{DesignSurvey}
-\title{Two-stage cluster sampling analysis}
+\title{Two-stage cluster sampling and systematic sampling analysis}
 \usage{
   DesignSurvey(psu.ssu = NULL, sample = NULL,
     psu.col = NULL, ssu.col = NULL, design = "2clusterPPS",
@@ -16,7 +16,7 @@
   observations. One of the columns must contain unique
   identifiers for PSU. Another column must contain unique
   identifiers for Secondary Sampling Units (SSU). The rest
-  of the columns corresponds to the variables surveyed.}
+  of the columns corresponds to the surveyed variables.}
 
   \item{psu.col}{the column of \code{sample} containing the
   psu identifiers (for two-stage cluster designs).}
@@ -45,12 +45,12 @@
 \description{
   A wraper for \code{\link{svydesign}} function from the
   survey package, to specify a two-stage cluster sampling
-  analysis. Weights are calculated considering a
-  probability proportional to size sampling with
-  replacement for the first stage and a simple random
-  sampling for the second stage. Finite population
-  correction is specified as the population size for each
-  level of sampling.
+  analysis or a systematic sampling. In the first case,
+  weights are calculated considering a probability
+  proportional to size sampling with replacement for the
+  first stage and a simple random sampling for the second
+  stage. Finite population correction is specified as the
+  population size for each level of sampling.
 }
 \details{
   A PSU appearing in both \code{psu.ssu} and in
@@ -66,7 +66,7 @@ data(psu.ssu)
 data(survey.data)
 
 # Specify the two-stage cluster design that included 20 PSU.
-design <- DesignSurvey(psu.ssu, survey.data, psu.col = 2, ssu.col = 1, psu.2cd = 20)
+(design <- DesignSurvey(psu.ssu, survey.data, psu.col = 2, ssu.col = 1, psu.2cd = 20))
 }
 \references{
   Lumley, T. (2011). Complex surveys: A guide to analysis

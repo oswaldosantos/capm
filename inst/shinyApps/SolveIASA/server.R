@@ -43,7 +43,7 @@ shinyServer(function(input, output) {
       ab.range <- c(min(input$ab.range), max(input$ab.range)),
       ad.range <- c(min(input$ad.range), max(input$ad.range)),
       im.range <- c(input$im.1, input$im.2),
-      s.fm <- input$s.fm)
+      s.fm <- !input$s.fm)
     return(sol)
   }
   

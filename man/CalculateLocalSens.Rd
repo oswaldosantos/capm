@@ -6,11 +6,11 @@
 }
 \arguments{
   \item{model.out}{an output from one of the previous
-  function.}
+  functions or a \code{\link{list}} with equivalent
+  structure.}
 
-  \item{sensv}{string with the name of the the output
-  variables for which the sensitivity needs to be
-  estimated.}
+  \item{sensv}{string with the name of the output variables
+  for which sensitivity needs to be estimated.}
 }
 \value{
   a \code{\link{data.frame}} of class \code{\link{sensFun}}
@@ -75,6 +75,8 @@ local.solve.iasa1 <- CalculateLocalSens(
   identifiability analysis of large environmental
   simulation models. Water Resources Research, 37(4),
   pp.1015-1030.
+
+  \url{https://github.com/oswaldosantos/capm}
 }
 \seealso{
   \code{\link{sensRange}}.

@@ -1,3 +1,11 @@
+capm 0.2.3
+==========
+
+* General documentation improvements.
+
+* `GraphicInterface`: In `SurveyAnalysis` interface, the "Estimates" Tab now have a field to specifcy the confidence level required.
+
+
 capm 0.2.2
 ==========
 
@@ -13,6 +21,7 @@ capm 0.2.2
 
 capm 0.2.1
 ==========
+
 
 * Encoding field removed from DESCRIPTION file to aovid warning message during package checking.
 

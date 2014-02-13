@@ -7,7 +7,8 @@
 }
 \arguments{
   \item{model.out}{an output from one of the previous
-  function.}
+  function or a \code{\link{list}} with equivalent
+  structure.}
 
   \item{ranges}{output from the \code{\link{SetRanges}}
   function, applied to the \code{pars} argument used in the
@@ -33,7 +34,7 @@
   calculates population size sensitivities, to parameters
   used in one of the following functions:
   \code{\link{SolveIASA}}, \code{\link{SolveSI}} or
-  \code{\link{SolveTC}} .
+  \code{\link{SolveTC}}.
 }
 \details{
   When \code{all} is equal to TRUE, \code{dist} argument in

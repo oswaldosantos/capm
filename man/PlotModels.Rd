@@ -5,9 +5,9 @@
   PlotModels(model.out = NULL, variable = NULL,
     col = "red", col1 = c("cadetblue1", "yellow", "red"),
     col2 = c("blue", "darkgreen", "darkred"),
-    xlabel = "Years", ylabel = NULL,
-    scenlabel = "Im = (__ * owned carrying capacity)",
-    leglabel = NULL, pop = NULL)
+    x.label = "Years", y.label = NULL,
+    scen.label = "Im = (__ * owned carrying capacity)",
+    leg.label = NULL, pop = NULL)
 }
 \arguments{
   \item{model.out}{output of one of the function previously
@@ -89,25 +89,25 @@
   is not \code{NULL}.}
 
   \item{col2}{\code{\link{character}} \code{\link{vector}}
-  indicating the color of lowest (highest) population sizes
+  indicating the color of highest (lowest) population sizes
   (proportion of sterilized animals), when \code{s.range}
   is not \code{NULL}.}
 
-  \item{xlabel}{string with the name of x axis.}
+  \item{x.label}{string with the name of x axis.}
 
-  \item{ylabel}{string with the name of y axis.}
+  \item{y.label}{string with the name of y axis.}
 
-  \item{leglabel}{string with the name of legend, for plots
-  of \code{\link{SolveIASA}} output.}
+  \item{leg.label}{string with the name of legend, for
+  plots of \code{\link{SolveIASA}} output.}
 
-  \item{scenlabel}{string with the name of scenarios of
+  \item{scen.label}{string with the name of scenarios of
   \code{\link{SolveIASA}} output, determined by the
   immigartion rates. Within the string, use the expression
   __ in the location where you want to appear the value of
   the immigartion rate. For line breaking, use \code{\\n}
   (see examples).}
 
-  \item{pop}{a value indicating the output of
+  \item{pop}{value indicating the output of
   \code{\link{SolveIASA}} to be ploted. When \code{NULL}
   (default), plots for owned and stray populations under
   scenarios created by immigartion rate are created. If
@@ -120,7 +120,9 @@
   rate are ploted.}
 }
 \description{
-  Plot results of objects of class \code{capmModels}.
+  Plot results of one of the following functions:
+  \code{\link{SolveIASA}}, \code{\link{SolveSI}} or
+  \code{\link{SolveTC}}.
 }
 \details{
   Font size of saved plots is usually different to the font
@@ -171,10 +173,12 @@ solveiasa.rg <- SolveIASA(pars = pars.solveiasa,
 
 ## Plot all scenarios and change the label for the scenarios.
 # Uncomment the following line:
-# PlotModels(solveiasa.rg, variable = 'N')
+# PlotModels(solveiasa.rg, variable = 'N', scen.label = 'Im = (__ * de la capacidad de carga)')
 }
 \references{
   Chang W (2012). R Graphics Cookbook. O'Reilly Media, Inc.
+
+  \url{https://github.com/oswaldosantos/capm}
 }
 \seealso{
   \link[deSolve]{plot.deSolve}.

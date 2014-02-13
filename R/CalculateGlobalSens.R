@@ -1,6 +1,6 @@
 #' Global sensitivity analysis
-#' @description Wraper for \code{\link{sensRange}} function, which calculates population size sensitivities, to parameters used in one of the following functions: \code{\link{SolveIASA}}, \code{\link{SolveSI}} or \code{\link{SolveTC}} .
-#' @param model.out an output from one of the previous function.
+#' @description Wraper for \code{\link{sensRange}} function, which calculates population size sensitivities, to parameters used in one of the following functions: \code{\link{SolveIASA}}, \code{\link{SolveSI}} or \code{\link{SolveTC}}.
+#' @param model.out an output from one of the previous function or a \code{\link{list}} with equivalent structure.
 #' @param ranges output from the \code{\link{SetRanges}} function, applied to the \code{pars} argument used in the function previously specified in \code{model.out}.
 #' @param sensv string with the name of the the output variables for which the sensitivity needs to be estimated.
 #' @param all logical. If \code{\link{FALSE}}, sensitivity ranges are calculated for each parameter. If \code{TRUE}, sensitivity ranges are calculated for the combination of all aparameters.

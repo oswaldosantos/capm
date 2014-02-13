@@ -4,12 +4,14 @@
 #' @param type a number to define the type of graphical output. \code{6}: sensitivity functions and all importance indices are ploted; \code{1}: importance index L1; \code{2}:  importance index L2; \code{3}: mean of sensitivity functions; \code{5}: minimum of sensitivity functions; and \code{5}: maximum of sensitivity functions. 
 #' @param x.sens string with the name of x axis for sensitivity functions.
 #' @param y.sens string with the name of y axis for sensitivity functions.
-#' @param y.ind \code{\link{character}} \code{\link{vector}} with the name of y axis for the parameter importance indices.
+#' @param y.ind string with the name of y axis for the parameter importance indices.
 #' @param ax.size a number to specify the size of axes labels and text.
 #' @details Font size of saved plots is usually different to the font size seen in graphic browsers. Before changing font sizes, see the final result in saved (or preview) plots.
 #' @references Chang W (2012). R Graphics Cookbook. O'Reilly Media, Inc.
 #' 
 #' Soetaert K, Cash J and Mazzia F (2012). Solving differential equations in R. Springer.
+#' 
+#' \url{https://github.com/oswaldosantos/capm}
 #' @seealso \link[FME]{plot.sensFun}.
 #' @export
 #' @examples 

@@ -1,4 +1,4 @@
-#' Immigration, abandonment, sterilization and adoption of companion animals
+#' Modelling of immigration, abandonment, sterilization and adoption of companion animals
 #' @description System of ordinary differential equations to simulate the effect of immigration of owned dogs, abandonment, sterilization of owned and stray dogs and adoption, on population dynamics.
 #' @param pars a named \code{\link{vector}} of length 21, with point estimates of model parameters (see details).
 #' @param init a named \code{\link{vector}} of length 8, with point estimates of model parameters (see details).
@@ -30,29 +30,20 @@
 #' 
 #' \code{z}: proportion of sterilized immigrants.
 #' 
-#' The \code{init} argument must contain named values for the inital number of animals, using the following conventions: \code{1}: owned animals; \code{2}: stray animals; \code{f}: females; \code{m}: males; and \code{s}: sterilized. Then, number values must be given for the categories:
+#' The \code{init} argument must contain named values for the inital number of animals, using the following conventions: \code{1}: owned animals; \code{2}: stray animals; \code{f}: females; \code{m}: males; and \code{s}: sterilized. Then, the names are:
 #' 
 #' \code{f1}, \code{fs1}, \code{m1}, \code{ms1}, \code{f2}, \code{fs2}, \code{m2} and \code{ms2}.
 #' 
-#' If any range is specified (e.g \code{s.range}), the ramining ranges must be specified too (\code{ab.range}, \code{ad.range} and \code{im.range}).
-#' The function is a wrapper around the defaults of \link[deSolve]{ode} function, whose help page must be consulted for details. An exception is the method argument which is defined as "rk4".
-#' @return \code{\link{list}} of class \code{capmModels}. The first element, \code{name}, is a string with the name of the function, the second element, \code{*$model}, is the model function. The third, fourth and fifth elements are vectors (\code{*$pars}, \code{*$init}, \code{*$time}, respectively) containing the \code{pars}, \code{init} and \code{time} arguments of the function. The sisxthth element \code{*$results} is a \code{\link{data.frame}} with up to as many rows as elements in time. The first column contain the time and subsequent columns contain the sise of specific subpopulations, named according to above conventions. The \code{group} column differentiate between owned and strays. When *.range arguments are given, the last fourth columsn specify their instances.
+#' If any range is specified (e.g \code{s.range}), the remaining ranges must be specified too (\code{ab.range}, \code{ad.range} and \code{im.range}).
+#' The function is a wrapper around the defaults of \link[deSolve]{ode} function, whose help page must be consulted for details. An exception is the method argument, which here has "rk4" as a default.
+#' @return \code{\link{list}}. The first element, \code{name}, is a string with the name of the function, the second element, \code{model}, is the model function. The third, fourth and fifth elements are vectors (\code{pars}, \code{init}, \code{time}, respectively) containing the \code{pars}, \code{init} and \code{time} arguments of the function. The sisxthth element \code{results} is a \code{\link{data.frame}} with up to as many rows as elements in time. The first column contain the time and subsequent columns contain the size of specific subpopulations, named according to conventions above. The \code{group} column differentiate between owned and strays. When *.range arguments are given, the last fourth columsn specify their instances.
 #' @note Logistic growth models are not intended for scenarios in which
 #' population size is greater than carrying capacity and growth rate is negative.
-#' @note The implemented model is part of an ongoing PhD thesis (student: Oswaldo Santos; adviser: Fernando Ferreira) to be finished on the next months.
+#' @references \url{https://github.com/oswaldosantos/capm}
 #' @seealso \link[deSolve]{ode}.
 #' @export
 #' @examples 
-#' # Parameters and initial conditions from estimates   
-#' # obtained in examples section from svysumm function.
-#' # Note that there is not estimates for all arguments
-#' # and thus, some are a priori defined.
-#' # For example, carrying capacities were estimated as 
-#' # 10 % greater than population sizes and birth and  
-#' # death rates for stray animals were estimated as 
-#' # 20 % greater than those rates in owned animals.
-#' # The consequences of those "guesses" can be quantified
-#' # with globalsens and localsens functions.
+#' # Parameters and initial conditions.
 #' pars.solve.iasa = c(
 #'    b1 = 21870.897, b2 = 4374.179,
 #'    df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,

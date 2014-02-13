@@ -109,7 +109,7 @@ shinyServer(function(input, output) {
         if (is.null(Design()) | is.null(Variables())) {
           return()
         } else {
-          SummarySurvey(Design(), Variables())
+          SummarySurvey(Design(), Variables(), level = input$level)
         }
       })
     })
