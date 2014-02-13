@@ -30,7 +30,7 @@
 }
 \value{
   Matrix with the sample size and composition and with
-  estimates of variability.
+  variability estimates.
 }
 \description{
   Calculates sample size and composition for a two-stage
@@ -40,7 +40,7 @@
   It is assumed that psu from the pilot are selected with
   probability proportional to size (PPS) and with
   replacement. ssu are assumed to be selected via simple
-  random sampling.
+  (systematic) random sampling.
 
   PSU must have the same identifiers in \code{psu.ssu} and
   in \code{psu.x}.
@@ -59,5 +59,7 @@ data(pilot)
   Levy P and Lemeshow S (2008). Sampling of populations:
   methods and applications, Fourth edition. John Wiley and
   Sons, Inc.
+
+  \url{https://github.com/oswaldosantos/capm}
 }
 

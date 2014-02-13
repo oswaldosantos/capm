@@ -5,11 +5,13 @@
 #' @param level the confidence level required. It must be \code{\link{numeric}} between 0 and 1 inclusive.
 #' @param error the maximum relative difference between the estimate and the unknown population value. It must be \code{\link{numeric}} between 0 and 1 inclusive.
 #' @param cost the ratio of the cost of sampling a PSU to the cost of sampling a SSU.
-#' @return Matrix with the sample size and composition and with estimates of variability.
-#' @details It is assumed that psu from the pilot are selected with probability proportional to size (PPS) and with replacement. ssu are assumed to be selected via simple random sampling.
+#' @return Matrix with the sample size and composition and with variability estimates.
+#' @details It is assumed that psu from the pilot are selected with probability proportional to size (PPS) and with replacement. ssu are assumed to be selected via simple (systematic) random sampling.
 #' 
 #' PSU must have the same identifiers in \code{psu.ssu} and in \code{psu.x}.
 #' @references Levy P and Lemeshow S (2008). Sampling of populations: methods and applications, Fourth edition. John Wiley and Sons, Inc.
+#' 
+#' \url{https://github.com/oswaldosantos/capm}
 #' @export
 #' @examples 
 #' # Load data with psu identifiers and sizes.

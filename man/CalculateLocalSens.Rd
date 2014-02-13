@@ -5,10 +5,10 @@
   CalculateLocalSens(model.out = NULL, sensv = "n")
 }
 \arguments{
-  \item{model.out}{an object of class \code{capmModels}.}
+  \item{model.out}{an output from one of the previous
+  function.}
 
-  \item{sensv}{string or \code{\link{character}}
-  \code{\link{vector}} with the name of the the output
+  \item{sensv}{string with the name of the the output
   variables for which the sensitivity needs to be
   estimated.}
 }
@@ -22,12 +22,13 @@
   parameters.
 }
 \description{
-  Wraper for \code{\link{sensFun}} function which estimates
-  local effect of all model parameters on population size,
-  applying the so-called sensitivity functions. The set of
-  parameters used in any of the following functions can be
-  assessed: \code{\link{SolveIASA}}, \code{\link{SolveSI}}
-  or \code{\link{SolveTC}}.
+  Wraper for \code{\link{sensFun}} function, which
+  estimates local effect of all model parameters on
+  population size, applying the so-called sensitivity
+  functions. The set of parameters used in any of the
+  following functions can be assessed:
+  \code{\link{SolveIASA}}, \code{\link{SolveSI}} or
+  \code{\link{SolveTC}}.
 }
 \details{
   For further arguments of \code{\link{sensFun}}, defaults

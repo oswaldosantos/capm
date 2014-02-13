@@ -6,14 +6,14 @@
     sensv = NULL, all = FALSE)
 }
 \arguments{
-  \item{model.out}{an object of class \code{capmModels}.}
+  \item{model.out}{an output from one of the previous
+  function.}
 
   \item{ranges}{output from the \code{\link{SetRanges}}
   function, applied to the \code{pars} argument used in the
-  function specified previously in \code{model.out}.}
+  function previously specified in \code{model.out}.}
 
-  \item{sensv}{string or \code{\link{character}}
-  \code{\link{vector}} with the name of the the output
+  \item{sensv}{string with the name of the the output
   variables for which the sensitivity needs to be
   estimated.}
 
@@ -29,8 +29,8 @@
   variables.
 }
 \description{
-  Wraper for \code{\link{sensRange}} function which
-  calculate sensitivities of population size, to parameters
+  Wraper for \code{\link{sensRange}} function, which
+  calculates population size sensitivities, to parameters
   used in one of the following functions:
   \code{\link{SolveIASA}}, \code{\link{SolveSI}} or
   \code{\link{SolveTC}} .
@@ -87,6 +87,8 @@ glob.all.solve.iasa <- CalculateGlobalSens(
   identifiability analysis of large environmental
   simulation models. Water Resources Research, 37(4),
   pp.1015-1030.
+
+  \url{https://github.com/oswaldosantos/capm}
 }
 \seealso{
   \code{\link{sensRange}}.

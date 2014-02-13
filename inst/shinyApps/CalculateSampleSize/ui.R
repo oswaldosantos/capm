@@ -1,6 +1,6 @@
 shinyUI(pageWithSidebar(
   
-  headerPanel("Selection of sampling units"),
+  headerPanel("Calculate sample size and composition"),
   
   sidebarPanel(
     

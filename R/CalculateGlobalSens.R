@@ -1,14 +1,16 @@
 #' Global sensitivity analysis
-#' @description Wraper for \code{\link{sensRange}} function which calculate sensitivities of population size, to parameters used in one of the following functions: \code{\link{SolveIASA}}, \code{\link{SolveSI}} or \code{\link{SolveTC}} .
-#' @param model.out an object of class \code{capmModels}.
-#' @param ranges output from the \code{\link{SetRanges}} function, applied to the \code{pars} argument used in the function specified previously in \code{model.out}.
-#' @param sensv string or \code{\link{character}} \code{\link{vector}} with the name of the the output variables for which the sensitivity needs to be estimated.
+#' @description Wraper for \code{\link{sensRange}} function, which calculates population size sensitivities, to parameters used in one of the following functions: \code{\link{SolveIASA}}, \code{\link{SolveSI}} or \code{\link{SolveTC}} .
+#' @param model.out an output from one of the previous function.
+#' @param ranges output from the \code{\link{SetRanges}} function, applied to the \code{pars} argument used in the function previously specified in \code{model.out}.
+#' @param sensv string with the name of the the output variables for which the sensitivity needs to be estimated.
 #' @param all logical. If \code{\link{FALSE}}, sensitivity ranges are calculated for each parameter. If \code{TRUE}, sensitivity ranges are calculated for the combination of all aparameters.
 #' @details When \code{all} is equal to TRUE, \code{dist} argument in \code{\link{sensRange}} is defined as "latin" and when equal to \code{\link{FALSE}}, as "grid". The \code{num} argument in \code{\link{sensRange}} is defined as 100.
 #' @return A \code{data.frame} (extended by \code{summary.sensRange} when \code{all == TRUE}) containing the parameter set and the corresponding values of the sensitivity output variables.
 #' @references Soetaert K and Petzoldt T (2010). Inverse modelling, sensitivity and monte carlo analysis in R using package FME. Journal of Statistical Software, 33(3), pp. 1-28.
 #' 
 #' Reichert P and Kfinsch HR (2001). Practical identifiability analysis of large environmental simulation models. Water Resources Research, 37(4), pp.1015-1030.
+#' 
+#' \url{https://github.com/oswaldosantos/capm}
 #' @seealso \code{\link{sensRange}}.
 #' @export
 #' @examples

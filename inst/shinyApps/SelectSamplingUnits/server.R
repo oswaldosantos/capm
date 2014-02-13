@@ -25,7 +25,7 @@ shinyServer(function(input, output) {
   
   map <- function() {
     if (input$examples) {
-      shape.path <- system.file('shp', package="capm")
+      shape.path <- system.file('extdata', package="capm")
       shape.name <- 'santos'
     } else {
       shape.path <- input$shape.path
