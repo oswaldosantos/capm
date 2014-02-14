@@ -10,7 +10,7 @@ Current version offers functions that allow users to implement the following wor
 
 1. Selection of sampling units for simple and complex surveys (pilot/final).
 2. Mapping primary sampling units to be visited (complex surveys).
-3. Calculation of size and composition for a complex (final) sampling design.
+3. Calculation of sample size and composition (complex designs).
 4. Repetition of steps 1 and 2, for the final survey, if the workflow begun with a pilot survey.
 5. Estimation of demographic characteristics (totals, proportions, means and ratios).
 6. Construction of population pyramids, conditioned on sex, age and another categorical variable such as reproductive status.
