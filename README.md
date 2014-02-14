@@ -6,17 +6,16 @@ capm
 
 `capm` stands for **C**ompanion **A**nimal **P**opulation **M**anagement and is an initiative to guide and automate quantitative analysis to support companion animal population management.
 
-Current version offer functions that allow users to implement the following workflow:
+Current version offers functions that allow users to implement the following workflow:
 
-1. Calculation of size and composition for a complex pilot sampling design.
-2. Selection of sampling units according to previous step.
-3. Mapping primary sampling units to be visited.
-4. Calculation of size and composition for a complex (final) sampling design.
-5. Repetition of steps 2 and 3, using sample data.
-6. Estimation of demographic characteristics (totals, proportions, means and ratios).
-7. Construction of population pyramids, conditioned on sex, age and another categorical variable such as reproductive status.
-8. Assessment of the effect produced by population management intervention, through mathematical modelling.
-9. Classification of interventions according to the effect they produce, through sensitivity analysis.
+1. Selection of sampling units for simple and complex surveys.
+2. Mapping primary sampling units to be visited (complex surveys).
+3. Calculation of size and composition for a complex (final) sampling design.
+4. Repetition of steps 1 and 2, for the final survey.
+5. Estimation of demographic characteristics (totals, proportions, means and ratios).
+6. Construction of population pyramids, conditioned on sex, age and another categorical variable such as reproductive status.
+7. Assessment of the effect produced by population management interventions, through mathematical modelling.
+8. Prioritize interventions according to the effect they produce, through sensitivity analysis.
 
 You can use `install_github()` from `devtools` package to install the development version or wait for a more stable version uploaded to CRAN.
 
