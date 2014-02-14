@@ -20,6 +20,6 @@ Current version offer functions that allow users to implement the following work
 
 You can use `install_github()` from `devtools` package to install the development version or wait for a more stable version uploaded to CRAN.
 
-[Documentacíon en español](https://github.com/oswaldosantos/capm/wiki/1-ESPA%C3%91OL)
-[Documentação em português](https://github.com/oswaldosantos/capm/wiki/2-PORTUGU%C3%8AS)
-[English documentation](https://github.com/oswaldosantos/capm/wiki/3-ENGLISH)
+[Documentacíon en español](https://github.com/oswaldosantos/capm/wiki/1-ESPA%C3%91OL)  
+[Documentação em português](https://github.com/oswaldosantos/capm/wiki/2-PORTUGU%C3%8AS)  
+[English documentation](https://github.com/oswaldosantos/capm/wiki/3-ENGLISH) 
