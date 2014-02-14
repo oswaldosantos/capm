@@ -19,7 +19,7 @@ Current version offers functions that allow users to implement the following wor
 
 You can use `install_github()` function from `devtools` package to install the development version or wait for a more stable version uploaded to [CRAN](http://cran.r-project.org/).
 
-If you find any error or have suggestions to improve or include functionality to `capm` I will glad to know it. Please get in touch so I can better understand your needs.
+If you find any error or have suggestions to improve or include functionality to `capm`, I will glad to know it. Please get in touch so I can better understand your needs.
 
 **Current development version:** 0.2.3
 
