@@ -1,7 +1,7 @@
 capm
 ====
 
-`capm` is a [R](http://www.r-project.org/) package, a free software environment for statistical computing and graphics. 
+`capm` is a package for [R](http://www.r-project.org/), a free software environment for statistical computing and graphics. 
 
 
 `capm` stands for **C**ompanion **A**nimal **P**opulation **M**anagement and is an initiative to guide and automate quantitative analysis to support companion animal population management.
