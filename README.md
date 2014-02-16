@@ -23,6 +23,6 @@ If you find any error or have suggestions to improve or include functionality to
 
 **Current development version:** 0.2.4
 
-[Documentacíon en español](https://github.com/oswaldosantos/capm/wiki/1-ESPA%C3%91OL)  
+[Documentación en español](https://github.com/oswaldosantos/capm/wiki/1-ESPA%C3%91OL)  
 [Documentação em português](https://github.com/oswaldosantos/capm/wiki/2-PORTUGU%C3%8AS)  
 [English documentation](https://github.com/oswaldosantos/capm/wiki/3-ENGLISH) 
