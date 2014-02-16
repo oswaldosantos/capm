@@ -39,7 +39,7 @@
 #' @return \code{\link{list}}. The first element, \code{name}, is a string with the name of the function, the second element, \code{model}, is the model function. The third, fourth and fifth elements are vectors (\code{pars}, \code{init}, \code{time}, respectively) containing the \code{pars}, \code{init} and \code{time} arguments of the function. The sisxthth element \code{results} is a \code{\link{data.frame}} with up to as many rows as elements in time. The first column contain the time and subsequent columns contain the size of specific subpopulations, named according to conventions above. The \code{group} column differentiate between owned and strays. When *.range arguments are given, the last fourth columsn specify their instances.
 #' @note Logistic growth models are not intended for scenarios in which
 #' population size is greater than carrying capacity and growth rate is negative.
-#' @references \url{https://github.com/oswaldosantos/capm}
+#' @references \url{http://oswaldosantos.github.io/capm}
 #' @seealso \link[deSolve]{ode}.
 #' @export
 #' @examples 

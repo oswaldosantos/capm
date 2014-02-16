@@ -11,7 +11,7 @@
 #' PSU must have the same identifiers in \code{psu.ssu} and in \code{psu.x}.
 #' @references Levy P and Lemeshow S (2008). Sampling of populations: methods and applications, Fourth edition. John Wiley and Sons, Inc.
 #' 
-#' \url{https://github.com/oswaldosantos/capm}
+#' \url{http://oswaldosantos.github.io/capm}
 #' @export
 #' @examples 
 #' # Load data with psu identifiers and sizes.

@@ -22,7 +22,7 @@
 #'  
 #' @note In companion animals population surveys, some age categories might be empty. One difference between \code{PlotPopPyramid} and \code{pryramid.plot} is that the first does not drop empty age categories.
 #' @return Two opposed horizontal barplots.
-#' @references \url{https://github.com/oswaldosantos/capm}
+#' @references \url{http://oswaldosantos.github.io/capm}
 #' @seealso \link[plotrix]{pyramid.plot}.
 #' @export
 #' @examples 

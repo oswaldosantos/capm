@@ -59,6 +59,9 @@ shp.path <- system.file('data', package="capm")
 ## Define shape from an object x of class SpatialPolygonsDataFrame.
 # MapkmlPSU(x, selected.psu[, 1], 1)
 }
+\references{
+  \url{http://oswaldosantos.github.io/capm}
+}
 \seealso{
   \code{\link{readShapeSpatial}}
 }

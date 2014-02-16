@@ -75,7 +75,7 @@ glob.all.solve.iasa <- CalculateGlobalSens(
 PlotGlobalSens(glob.all.solve.iasa)
 }
 \references{
-  \url{https://github.com/oswaldosantos/capm}
+  \url{http://oswaldosantos.github.io/capm}
 }
 \seealso{
   \link[deSolve]{plot.deSolve}.

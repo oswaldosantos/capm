@@ -8,7 +8,7 @@
 #' @return A \code{matrix}. The names of columns are the identifiers of selected psu, coerced by \code{\link{as.character}} to avoid scientific notation in case the identifiers be of \code{\link{class}} \code{\link{numeric}}. The rows correspond to the selected ssu within each psu.
 #' @references Levy P and Lemeshow S (2008). Sampling of populations: methods and applications, Fourth edition. John Wiley and Sons, Inc.
 #' 
-#' \url{https://github.com/oswaldosantos/capm}
+#' \url{http://oswaldosantos.github.io/capm}
 #' @seealso \code{\link{SamplePPS}}.
 #' @export
 #' @examples 

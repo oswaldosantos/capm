@@ -146,7 +146,7 @@ solve.iasa.rg <- SolveIASA(pars = pars.solve.iasa,
                           method = 'rk4')
 }
 \references{
-  \url{https://github.com/oswaldosantos/capm}
+  \url{http://oswaldosantos.github.io/capm}
 }
 \seealso{
   \link[deSolve]{ode}.

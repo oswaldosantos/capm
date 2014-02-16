@@ -54,7 +54,7 @@ rg.solve.iasa <- SetRanges(pars.solve.iasa)
   simulation models. Water Resources Research, 37(4), pp.
   1015-1030.
 
-  \url{https://github.com/oswaldosantos/capm}
+  \url{http://oswaldosantos.github.io/capm}
 }
 \seealso{
   \code{\link{sensRange}} and \code{\link{SolveSI}}.

@@ -15,7 +15,7 @@ Description: Provides functions for quantitative companion animal population
     management.
 License: GPL (>= 2)
 LazyLoad: yes
-URL: https://github.com/oswaldosantos/capm
+URL: http://oswaldosantos.github.io/capm
 Authors@R: c(person(given='Oswaldo', family='Santos',
     email='oswaldosant@gmail.com', role=c("aut", "cre")),
     person(given='Fernando', family='Silveira Marques',
@@ -23,8 +23,8 @@ Authors@R: c(person(given='Oswaldo', family='Santos',
     family='Amaku', email='amaku@vps.fmvz.usp.br', role="ctb"),
     person(given='Fernando', family='Ferreira',
     email='fernando@vps.fmvz.usp.br', role="ctb"))
-Version: 0.2.4
-Date: 2014-02-15
+Version: 0.2.5
+Date: 2014-02-16
 Collate:
     'Calculate2StageSampleSize.R'
     'CalculateGlobalSens.R'

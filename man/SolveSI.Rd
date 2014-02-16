@@ -92,7 +92,7 @@ solvesi.rg = SolveSI(pars = pars.solve.si,
   Soetaert K, Cash J and Mazzia F (2012). Solving
   differential equations in R. Springer.
 
-  \url{https://github.com/oswaldosantos/capm}
+  \url{http://oswaldosantos.github.io/capm}
 }
 \seealso{
   \link[deSolve]{ode}.

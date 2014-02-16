@@ -8,6 +8,7 @@
 #' @details If there are *.kml files in the working directory, the new created files will overwrite it in case of name matching.
 #' 
 #' \code{shape} must receive a shapefile with appropriate coordinate reference system, otherwise, \code{MapkmlPSU} report an error.
+#' @references \url{http://oswaldosantos.github.io/capm}
 #' @seealso \code{\link{readShapeSpatial}}
 #' @export
 #' @examples

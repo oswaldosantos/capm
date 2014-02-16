@@ -62,6 +62,6 @@ CalculatePopChange(solve.si.pt, variable = 'n', t2 = 15, t1 = 0, ratio = FALSE)
 CalculatePopChange(solve.si.pt, variable = 'n', t2 = 15)
 }
 \references{
-  \url{https://github.com/oswaldosantos/capm}
+  \url{http://oswaldosantos.github.io/capm}
 }
 

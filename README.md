@@ -17,11 +17,11 @@ Current version offers functions that allow users to implement the following wor
 7. Assessment of the effect produced by population management interventions, through mathematical modelling.
 8. Prioritize interventions according to the effect they produce, through sensitivity analysis.
 
-You can use `install_github()` function from `devtools` package to install the development version or wait for a more stable version uploaded to [CRAN](http://cran.r-project.org/).
+To install the development version, run `install_github('capm', 'oswaldosantos')` in (ideally) RStudio.
 
 If you find any error or have suggestions to improve or include functionality to `capm`, I will glad to know it. Please get in touch so I can better understand your needs.
 
-**Current development version:** 0.2.4
+**Current development version:** 0.2.5
 
 [Documentación en español](https://github.com/oswaldosantos/capm/wiki/1-ESPA%C3%91OL)  
 [Documentação em português](https://github.com/oswaldosantos/capm/wiki/2-PORTUGU%C3%8AS)  

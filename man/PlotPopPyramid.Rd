@@ -93,7 +93,7 @@ data(survey.data)
 # PlotPopPyramid(survey.data, age.col = 5, sex.col = 4)
 }
 \references{
-  \url{https://github.com/oswaldosantos/capm}
+  \url{http://oswaldosantos.github.io/capm}
 }
 \seealso{
   \link[plotrix]{pyramid.plot}.

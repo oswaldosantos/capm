@@ -8,7 +8,7 @@
 #' @details The length of \code{variables} must be equal to the length of \code{names(design$variables)} (see examples).
 #' @references Lumley, T. (2011). Complex surveys: A guide to analysis using R (Vol. 565). Wiley.
 #' 
-#' \url{https://github.com/oswaldosantos/capm}
+#' \url{http://oswaldosantos.github.io/capm}
 #' @export
 #' @examples
 #' # Load data.

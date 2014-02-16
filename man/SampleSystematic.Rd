@@ -58,7 +58,7 @@ selected.psu <- SamplePPS(psu.ssu, 10, write = FALSE)
   methods and applications, Fourth edition. John Wiley and
   Sons, Inc.
 
-  \url{https://github.com/oswaldosantos/capm}
+  \url{http://oswaldosantos.github.io/capm}
 }
 \seealso{
   \code{\link{SamplePPS}}.

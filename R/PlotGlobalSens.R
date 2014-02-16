@@ -9,7 +9,7 @@
 #' @details Font size of saved plots is usually different to the font size seen in graphic browsers. Before changing font sizes, see the final result in saved (or preview) plots.
 #'  
 #' Other details of the plot can be modifyed using appropriate functions from \code{ggplot2} package.
-#' @references \url{https://github.com/oswaldosantos/capm}
+#' @references \url{http://oswaldosantos.github.io/capm}
 #' @seealso \link[deSolve]{plot.deSolve}.
 #' @export
 #' @examples 

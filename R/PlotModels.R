@@ -78,7 +78,7 @@
 #' Other details of the plot can be modifyed using appropriate functions from \code{ggplot2} package.
 #' @references Chang W (2012). R Graphics Cookbook. O'Reilly Media, Inc.
 #' 
-#' \url{https://github.com/oswaldosantos/capm}
+#' \url{http://oswaldosantos.github.io/capm}
 #' @seealso \link[deSolve]{plot.deSolve}.
 #' @export
 #' @examples

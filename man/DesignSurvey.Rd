@@ -71,5 +71,7 @@ data(survey.data)
 \references{
   Lumley, T. (2011). Complex surveys: A guide to analysis
   using R (Vol. 565). Wiley.
+
+  \url{http://oswaldosantos.github.io/capm}
 }
 

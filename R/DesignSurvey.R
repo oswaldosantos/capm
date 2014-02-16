@@ -10,6 +10,8 @@
 #' @param ... further arguments passed to \code{\link{svydesign}} function. 
 #' @details A PSU appearing in both \code{psu.ssu} and in \code{sample} must have the same identifier. SSU identifiers must be unique but can appear more than once if there is more than one observation per SSU.
 #' @references Lumley, T. (2011). Complex surveys: A guide to analysis using R (Vol. 565). Wiley.
+#' 
+#' \url{http://oswaldosantos.github.io/capm}
 #' @export
 #' @examples 
 #' # Load data with PSU identifiers and sizes.

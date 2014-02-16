@@ -6,7 +6,7 @@
 #' @param t2 value specifying the second time.
 #' @param ratio logical. When \code{TRUE}, the calculated change is based on poulation size at t2 divided by population size at t1. When \code{FALSE}, the calculated change is based on poulation size at t2 minus population size at t1.
 #' @return Value representing the ratio (if \code{ratio} is \code{TRUE}) or the difference (if \code{ratio} is \code{FALSE}) between population size at time t2 and t1. If only one time is specified, the value is the population size at that time.
-#' @references \url{https://github.com/oswaldosantos/capm}
+#' @references \url{http://oswaldosantos.github.io/capm}
 #' @export
 #' @examples
 #' ###################
