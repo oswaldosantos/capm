@@ -1,23 +1,31 @@
+capm 0.2.4
+==========
+
+* capm-package.R: "capm" alias removed to avoid duplicaed help pages.
+
+* GraphicInterface: documentation improvements.
+
+
 capm 0.2.3
 ==========
 
 * General documentation improvements.
 
-* `GraphicInterface`: In `SurveyAnalysis` interface, the "Estimates" Tab now have a field to specifcy the confidence level required.
+* GraphicInterface: In SurveyAnalysis interface, the "Estimates" Tab now have a field to specifcy the confidence level required.
 
 
 capm 0.2.2
 ==========
 
-* `GraphicInterface`: bug fixed in `SelectSamplingUnits` to show example map.
+* GraphicInterface: bug fixed in SelectSamplingUnits to show example map.
 
-* `GraphicInterface`: `CalculateSampleSize` interface now have an appropriate title.
+* GraphicInterface: CalculateSampleSize interface now have an appropriate title.
 
-* `Calculate2StageSampleSize`: documentation improvements.
+* Calculate2StageSampleSize: documentation improvements.
 
-* `CalculateGlobalSens`: documentation improvements.
+* CalculateGlobalSens: documentation improvements.
 
-* `CalculateLocalSens`: documentation improvements.
+* CalculateLocalSens: documentation improvements.
 
 capm 0.2.1
 ==========
@@ -25,16 +33,16 @@ capm 0.2.1
 
 * Encoding field removed from DESCRIPTION file to aovid warning message during package checking.
 
-* `psu.ssu.Rd`: accent removed from documentation to aovid warning message during package checking.
+* psu.ssu.Rd: accent removed from documentation to aovid warning message during package checking.
 
 capm 0.2.0
 ==========
 
 * Package version increment now refletcs changes in the package, using Semantic Versioning as a reference (http://semver.org/).
 
-* `GraphicInterface`: `SolveIASA` argument now produces a graphic interface with restructured Tab order and contents. The new "Introduction" Tab explains the basic functionality of the interface.
+* GraphicInterface: SolveIASA argument now produces a graphic interface with restructured Tab order and contents. The new "Introduction" Tab explains the basic functionality of the interface.
 
-* `GraphicInterface`: complete documentation.
+* GraphicInterface: complete documentation.
 
 * "Debian" directory removed.
 

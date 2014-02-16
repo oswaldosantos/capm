@@ -3,10 +3,9 @@
 #' \tabular{ll}{
 #' Package: \tab capm\cr
 #' Type: \tab Package\cr
-#' Version: \tab 0.2.3\cr
-#' Date: \tab 2014-02-13\cr
+#' Version: \tab 0.2.4\cr
+#' Date: \tab 2014-02-15\cr
 #' Depends: \tab R (>= 3.0.2), FME, survey, reshape2, ggplot2, shiny, grid, rgdal, maptools\cr
-#' Encoding: \tab UTF-8\cr
 #' License: \tab GPL (>= 2)\cr
 #' LazyLoad: \tab yes\cr
 #' URL: \tab \url{https://github.com/oswaldosantos/capm}\cr
@@ -14,7 +13,7 @@
 #'
 #' Provides functions for quantitative companion animal population management. Further information can be found in the link given above.
 #'
-#' @aliases capm-package capm
+#' @aliases capm-package
 #' @name capm-package
 #' @docType package
 #' @title The capm Package

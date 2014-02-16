@@ -21,7 +21,7 @@ You can use `install_github()` function from `devtools` package to install the d
 
 If you find any error or have suggestions to improve or include functionality to `capm`, I will glad to know it. Please get in touch so I can better understand your needs.
 
-**Current development version:** 0.2.3
+**Current development version:** 0.2.4
 
 [Documentacíon en español](https://github.com/oswaldosantos/capm/wiki/1-ESPA%C3%91OL)  
 [Documentação em português](https://github.com/oswaldosantos/capm/wiki/2-PORTUGU%C3%8AS)  
