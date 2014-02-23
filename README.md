@@ -21,7 +21,7 @@ To install the development version, run `install_github('capm', 'oswaldosantos')
 
 If you find any error or have suggestions to improve or include functionality to `capm`, I will glad to know it. Please get in touch so I can better understand your needs.
 
-**Current development version:** 0.2.5
+**Current development version:** 0.2.6
 
 [Documentación en español](https://github.com/oswaldosantos/capm/wiki/1-ESPA%C3%91OL)  
 [Documentação em português](https://github.com/oswaldosantos/capm/wiki/2-PORTUGU%C3%8AS)  
