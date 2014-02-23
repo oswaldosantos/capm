@@ -2,8 +2,8 @@
 \alias{CalculatePopChange}
 \title{Population change.}
 \usage{
-  CalculatePopChange(model.out = NULL, variable = NULL,
-    t1 = NULL, t2 = NULL, ratio = TRUE)
+CalculatePopChange(model.out = NULL, variable = NULL, t1 = NULL,
+  t2 = NULL, ratio = TRUE)
 }
 \arguments{
   \item{model.out}{an output from one of the following
@@ -25,16 +25,16 @@
   size at t1.}
 }
 \value{
-  Value representing the ratio (if \code{ratio} is
-  \code{TRUE}) or the difference (if \code{ratio} is
-  \code{FALSE}) between population size at time t2 and t1.
-  If only one time is specified, the value is the
-  population size at that time.
+Value representing the ratio (if \code{ratio} is
+\code{TRUE}) or the difference (if \code{ratio} is
+\code{FALSE}) between population size at time t2 and t1. If
+only one time is specified, the value is the population
+size at that time.
 }
 \description{
-  Calculate the change in population size between two
-  times. When only one time is specified, the population
-  size at that time is returned.
+Calculate the change in population size between two times.
+When only one time is specified, the population size at
+that time is returned.
 }
 \examples{
 ###################
@@ -62,6 +62,6 @@ CalculatePopChange(solve.si.pt, variable = 'n', t2 = 15, t1 = 0, ratio = FALSE)
 CalculatePopChange(solve.si.pt, variable = 'n', t2 = 15)
 }
 \references{
-  \url{http://oswaldosantos.github.io/capm}
+\url{http://oswaldosantos.github.io/capm}
 }
 

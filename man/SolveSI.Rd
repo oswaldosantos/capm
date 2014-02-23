@@ -2,8 +2,8 @@
 \alias{SolveSI}
 \title{Modelling of sterilization and immigration of comapnion animals.}
 \usage{
-  SolveSI(pars = NULL, init = NULL, time = NULL, dd = "b",
-    im = 0, s.range = NULL, ...)
+SolveSI(pars = NULL, init = NULL, time = NULL, dd = "b", im = 0,
+  s.range = NULL, ...)
 }
 \arguments{
   \item{pars}{\code{\link{vector}} of length 4. The values
@@ -33,34 +33,34 @@
   \link[deSolve]{ode} function.}
 }
 \value{
-  \code{\link{list}}. The first element, \code{name}, is a
-  string with the name of the function, the second element,
-  \code{model}, is the model function. The third, fourth
-  and fifth elements are vectors (\code{pars}, \code{init},
-  \code{time}, respectively) containing the \code{pars},
-  \code{init} and \code{time} arguments of the function.
-  The sisxth element \code{results} is a
-  \code{\link{data.frame}} with up to as many rows as
-  elements in time. First column contains the time, second
-  column the population size and third column the
-  proportion of sterilized animals. If \code{s.range} is
-  specified, fourth column contains its specific instances.
+\code{\link{list}}. The first element, \code{name}, is a
+string with the name of the function, the second element,
+\code{model}, is the model function. The third, fourth and
+fifth elements are vectors (\code{pars}, \code{init},
+\code{time}, respectively) containing the \code{pars},
+\code{init} and \code{time} arguments of the function. The
+sisxth element \code{results} is a \code{\link{data.frame}}
+with up to as many rows as elements in time. First column
+contains the time, second column the population size and
+third column the proportion of sterilized animals. If
+\code{s.range} is specified, fourth column contains its
+specific instances.
 }
 \description{
-  System of ordinary differential equations to simulate the
-  effect of sterilization and immigration on population
-  dynamics.
+System of ordinary differential equations to simulate the
+effect of sterilization and immigration on population
+dynamics.
 }
 \details{
-  The implemented model is described by Amaku, et. al.,
-  2009 and the function is a wrapper around the defaults of
-  \link[deSolve]{ode} function, whose help page must be
-  consulted for details.
+The implemented model is described by Amaku, et. al., 2009
+and the function is a wrapper around the defaults of
+\link[deSolve]{ode} function, whose help page must be
+consulted for details.
 }
 \note{
-  Logistic growth models are not intended for scenarios in
-  which population size is greater than carrying capacity
-  and growth rate is negative.
+Logistic growth models are not intended for scenarios in
+which population size is greater than carrying capacity and
+growth rate is negative.
 }
 \examples{
 # Parameters and initial conditions from estimates
@@ -84,17 +84,17 @@ solvesi.rg = SolveSI(pars = pars.solve.si,
                      method = 'rk4')
 }
 \references{
-  Amaku M, Dias R and Ferreira F (2009). Dinamica
-  populacional canina: potenciais efeitos de campanhas de
-  esterilizacao. Revista Panamericana de Salud Publica,
-  25(4), pp. 300-304.
+Amaku M, Dias R and Ferreira F (2009). Dinamica
+populacional canina: potenciais efeitos de campanhas de
+esterilizacao. Revista Panamericana de Salud Publica,
+25(4), pp. 300-304.
 
-  Soetaert K, Cash J and Mazzia F (2012). Solving
-  differential equations in R. Springer.
+Soetaert K, Cash J and Mazzia F (2012). Solving
+differential equations in R. Springer.
 
-  \url{http://oswaldosantos.github.io/capm}
+\url{http://oswaldosantos.github.io/capm}
 }
 \seealso{
-  \link[deSolve]{ode}.
+\link[deSolve]{ode}.
 }
 

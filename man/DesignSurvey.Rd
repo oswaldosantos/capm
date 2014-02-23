@@ -2,9 +2,9 @@
 \alias{DesignSurvey}
 \title{Two-stage cluster sampling and systematic sampling analysis}
 \usage{
-  DesignSurvey(psu.ssu = NULL, sample = NULL,
-    psu.col = NULL, ssu.col = NULL, design = "2clusterPPS",
-    psu.2cd = NULL, total = NULL, ...)
+DesignSurvey(psu.ssu = NULL, sample = NULL, psu.col = NULL,
+  ssu.col = NULL, design = "2clusterPPS", psu.2cd = NULL, total = NULL,
+  ...)
 }
 \arguments{
   \item{psu.ssu}{\code{\link{data.frame}} with all Primary
@@ -43,20 +43,20 @@
   \code{\link{svydesign}} function.}
 }
 \description{
-  A wraper for \code{\link{svydesign}} function from the
-  survey package, to specify a two-stage cluster sampling
-  analysis or a systematic sampling. In the first case,
-  weights are calculated considering a probability
-  proportional to size sampling with replacement for the
-  first stage and a simple random sampling for the second
-  stage. Finite population correction is specified as the
-  population size for each level of sampling.
+A wraper for \code{\link{svydesign}} function from the
+survey package, to specify a two-stage cluster sampling
+analysis or a systematic sampling. In the first case,
+weights are calculated considering a probability
+proportional to size sampling with replacement for the
+first stage and a simple random sampling for the second
+stage. Finite population correction is specified as the
+population size for each level of sampling.
 }
 \details{
-  A PSU appearing in both \code{psu.ssu} and in
-  \code{sample} must have the same identifier. SSU
-  identifiers must be unique but can appear more than once
-  if there is more than one observation per SSU.
+A PSU appearing in both \code{psu.ssu} and in \code{sample}
+must have the same identifier. SSU identifiers must be
+unique but can appear more than once if there is more than
+one observation per SSU.
 }
 \examples{
 # Load data with PSU identifiers and sizes.
@@ -69,9 +69,9 @@ data(survey.data)
 (design <- DesignSurvey(psu.ssu, survey.data, psu.col = 2, ssu.col = 1, psu.2cd = 20))
 }
 \references{
-  Lumley, T. (2011). Complex surveys: A guide to analysis
-  using R (Vol. 565). Wiley.
+Lumley, T. (2011). Complex surveys: A guide to analysis
+using R (Vol. 565). Wiley.
 
-  \url{http://oswaldosantos.github.io/capm}
+\url{http://oswaldosantos.github.io/capm}
 }
 

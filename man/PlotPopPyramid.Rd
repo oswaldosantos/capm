@@ -2,10 +2,9 @@
 \alias{PlotPopPyramid}
 \title{Population PlotPopPyramid}
 \usage{
-  PlotPopPyramid(dat = NULL, age.col = NULL,
-    sex.col = NULL, str.col = NULL, x.label = "Total",
-    stage.label = "Years", inner.color = "Gold2",
-    outer.color = "DarkOliveGreen")
+PlotPopPyramid(dat = NULL, age.col = NULL, sex.col = NULL,
+  str.col = NULL, x.label = "Total", stage.label = "Years",
+  inner.color = "Gold2", outer.color = "DarkOliveGreen")
 }
 \arguments{
   \item{dat}{\code{\link{data.frame}}.}
@@ -44,46 +43,45 @@
   \code{"DarkOliveGreen"}.}
 }
 \value{
-  Two opposed horizontal barplots.
+Two opposed horizontal barplots.
 }
 \description{
-  Dysplays two opposed horizontal barplots (pyramid).
+Dysplays two opposed horizontal barplots (pyramid).
 }
 \details{
-  \code{PlotPopPyramid} is mainly intended for companion
-  animals population pyramids, although it can display
-  other types of opposed bar charts with suitable
-  modification of the arguments.
+\code{PlotPopPyramid} is mainly intended for companion
+animals population pyramids, although it can display other
+types of opposed bar charts with suitable modification of
+the arguments.
 
-  The bars to the left of \code{0} on the x axis correspond
-  to the minimum value of \code{\link{as.numeric}}
-  (\code{dat[, sex.col]}). If \code{str.col} is not
-  \code{NULL}, bars will be stacked, with the minimum value
-  of \code{\link{as.numeric}}(\code{dat[, str.col]}) as
-  their base.
+The bars to the left of \code{0} on the x axis correspond
+to the minimum value of \code{\link{as.numeric}}
+(\code{dat[, sex.col]}). If \code{str.col} is not
+\code{NULL}, bars will be stacked, with the minimum value
+of \code{\link{as.numeric}}(\code{dat[, str.col]}) as their
+base.
 
-  On the top of the plot, it is displayed the total number
-  of observations of each level of \code{dat[, sex.col]}.
-  The \code{\link{levels}} of \code{sex.col} are used as
-  \code{\link{labels}}.
+On the top of the plot, it is displayed the total number of
+observations of each level of \code{dat[, sex.col]}. The
+\code{\link{levels}} of \code{sex.col} are used as
+\code{\link{labels}}.
 
-  The legend title is equal to \code{names(dat[, str.col])}
-  and the legend \code{\link{labels}} are equal to the
-  \code{\link{levels}} of \code{dat[, str.col]}.
+The legend title is equal to \code{names(dat[, str.col])}
+and the legend \code{\link{labels}} are equal to the
+\code{\link{levels}} of \code{dat[, str.col]}.
 
-  Font size of saved plots is usually different to the font
-  size seen in graphic browsers. Before changing font
-  sizes, see the final result in saved (or preview) plots.
+Font size of saved plots is usually different to the font
+size seen in graphic browsers. Before changing font sizes,
+see the final result in saved (or preview) plots.
 
-  Other details of the plot can be modifyed using
-  appropriate functions from \code{ggplot2} package (see
-  examples).
+Other details of the plot can be modifyed using appropriate
+functions from \code{ggplot2} package (see examples).
 }
 \note{
-  In companion animals population surveys, some age
-  categories might be empty. One difference between
-  \code{PlotPopPyramid} and \code{pryramid.plot} is that
-  the first does not drop empty age categories.
+In companion animals population surveys, some age
+categories might be empty. One difference between
+\code{PlotPopPyramid} and \code{pryramid.plot} is that the
+first does not drop empty age categories.
 }
 \examples{
 ## Load data with information about age, sex and reproductive status of individuals.
@@ -93,9 +91,9 @@ data(survey.data)
 # PlotPopPyramid(survey.data, age.col = 5, sex.col = 4)
 }
 \references{
-  \url{http://oswaldosantos.github.io/capm}
+\url{http://oswaldosantos.github.io/capm}
 }
 \seealso{
-  \link[plotrix]{pyramid.plot}.
+\link[plotrix]{pyramid.plot}.
 }
 

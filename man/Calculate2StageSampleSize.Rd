@@ -2,8 +2,8 @@
 \alias{Calculate2StageSampleSize}
 \title{Two-stage cluster sampling size and composition}
 \usage{
-  Calculate2StageSampleSize(psu.ssu = NULL, psu.x = NULL,
-    level = 0.95, error = 0.1, cost = 4)
+Calculate2StageSampleSize(psu.ssu = NULL, psu.x = NULL, level = 0.95,
+  error = 0.1, cost = 4)
 }
 \arguments{
   \item{psu.ssu}{\code{\link{data.frame}} with all primary
@@ -29,21 +29,21 @@
   the cost of sampling a SSU.}
 }
 \value{
-  Matrix with the sample size and composition and with
-  variability estimates.
+Matrix with the sample size and composition and with
+variability estimates.
 }
 \description{
-  Calculates sample size and composition for a two-stage
-  cluster sampling design to estimate a total.
+Calculates sample size and composition for a two-stage
+cluster sampling design to estimate a total.
 }
 \details{
-  It is assumed that psu from the pilot are selected with
-  probability proportional to size (PPS) and with
-  replacement. ssu are assumed to be selected via simple
-  (systematic) random sampling.
+It is assumed that psu from the pilot are selected with
+probability proportional to size (PPS) and with
+replacement. ssu are assumed to be selected via simple
+(systematic) random sampling.
 
-  PSU must have the same identifiers in \code{psu.ssu} and
-  in \code{psu.x}.
+PSU must have the same identifiers in \code{psu.ssu} and in
+\code{psu.x}.
 }
 \examples{
 # Load data with psu identifiers and sizes.
@@ -56,10 +56,10 @@ data(pilot)
 (sample.sc <- Calculate2StageSampleSize(psu.ssu, pilot, level = 0.95, error = 0.1, cost = 4))
 }
 \references{
-  Levy P and Lemeshow S (2008). Sampling of populations:
-  methods and applications, Fourth edition. John Wiley and
-  Sons, Inc.
+Levy P and Lemeshow S (2008). Sampling of populations:
+methods and applications, Fourth edition. John Wiley and
+Sons, Inc.
 
-  \url{http://oswaldosantos.github.io/capm}
+\url{http://oswaldosantos.github.io/capm}
 }
 

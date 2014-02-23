@@ -2,10 +2,8 @@
 \alias{PlotLocalSens}
 \title{Plot results of CalculateLocalSens function}
 \usage{
-  PlotLocalSens(local.out = NULL, x.sens = "Time",
-    y.sens = "Sensitivity",
-    y.ind = c("L1", "L2", "Mean", "Min", "Max"),
-    ax.size = 10, type = 6)
+PlotLocalSens(local.out = NULL, x.sens = "Time", y.sens = "Sensitivity",
+  y.ind = c("L1", "L2", "Mean", "Min", "Max"), ax.size = 10, type = 6)
 }
 \arguments{
   \item{local.out}{output from
@@ -32,13 +30,13 @@
   labels and text.}
 }
 \description{
-  Plot results of the \code{\link{CalculateLocalSens}}
-  function.
+Plot results of the \code{\link{CalculateLocalSens}}
+function.
 }
 \details{
-  Font size of saved plots is usually different to the font
-  size seen in graphic browsers. Before changing font
-  sizes, see the final result in saved (or preview) plots.
+Font size of saved plots is usually different to the font
+size seen in graphic browsers. Before changing font sizes,
+see the final result in saved (or preview) plots.
 }
 \examples{
 #####################
@@ -74,14 +72,14 @@ local.solve.iasa2 <- CalculateLocalSens(
 # PlotLocalSens(local.solve.iasa2)
 }
 \references{
-  Chang W (2012). R Graphics Cookbook. O'Reilly Media, Inc.
+Chang W (2012). R Graphics Cookbook. O'Reilly Media, Inc.
 
-  Soetaert K, Cash J and Mazzia F (2012). Solving
-  differential equations in R. Springer.
+Soetaert K, Cash J and Mazzia F (2012). Solving
+differential equations in R. Springer.
 
-  \url{http://oswaldosantos.github.io/capm}
+\url{http://oswaldosantos.github.io/capm}
 }
 \seealso{
-  \link[FME]{plot.sensFun}.
+\link[FME]{plot.sensFun}.
 }
 

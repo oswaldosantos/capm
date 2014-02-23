@@ -2,8 +2,8 @@
 \alias{CalculateGlobalSens}
 \title{Global sensitivity analysis}
 \usage{
-  CalculateGlobalSens(model.out = NULL, ranges = NULL,
-    sensv = NULL, all = FALSE)
+CalculateGlobalSens(model.out = NULL, ranges = NULL, sensv = NULL,
+  all = FALSE)
 }
 \arguments{
   \item{model.out}{an output from one of the previous
@@ -24,23 +24,23 @@
   all aparameters.}
 }
 \value{
-  A \code{data.frame} (extended by \code{summary.sensRange}
-  when \code{all == TRUE}) containing the parameter set and
-  the corresponding values of the sensitivity output
-  variables.
+A \code{data.frame} (extended by \code{summary.sensRange}
+when \code{all == TRUE}) containing the parameter set and
+the corresponding values of the sensitivity output
+variables.
 }
 \description{
-  Wraper for \code{\link{sensRange}} function, which
-  calculates population size sensitivities, to parameters
-  used in one of the following functions:
-  \code{\link{SolveIASA}}, \code{\link{SolveSI}} or
-  \code{\link{SolveTC}}.
+Wraper for \code{\link{sensRange}} function, which
+calculates population size sensitivities, to parameters
+used in one of the following functions:
+\code{\link{SolveIASA}}, \code{\link{SolveSI}} or
+\code{\link{SolveTC}}.
 }
 \details{
-  When \code{all} is equal to TRUE, \code{dist} argument in
-  \code{\link{sensRange}} is defined as "latin" and when
-  equal to \code{\link{FALSE}}, as "grid". The \code{num}
-  argument in \code{\link{sensRange}} is defined as 100.
+When \code{all} is equal to TRUE, \code{dist} argument in
+\code{\link{sensRange}} is defined as "latin" and when
+equal to \code{\link{FALSE}}, as "grid". The \code{num}
+argument in \code{\link{sensRange}} is defined as 100.
 }
 \examples{
 #####################
@@ -80,18 +80,17 @@ glob.all.solve.iasa <- CalculateGlobalSens(
   sensv = 'n2', all = TRUE)
 }
 \references{
-  Soetaert K and Petzoldt T (2010). Inverse modelling,
-  sensitivity and monte carlo analysis in R using package
-  FME. Journal of Statistical Software, 33(3), pp. 1-28.
+Soetaert K and Petzoldt T (2010). Inverse modelling,
+sensitivity and monte carlo analysis in R using package
+FME. Journal of Statistical Software, 33(3), pp. 1-28.
 
-  Reichert P and Kfinsch HR (2001). Practical
-  identifiability analysis of large environmental
-  simulation models. Water Resources Research, 37(4),
-  pp.1015-1030.
+Reichert P and Kfinsch HR (2001). Practical identifiability
+analysis of large environmental simulation models. Water
+Resources Research, 37(4), pp.1015-1030.
 
-  \url{http://oswaldosantos.github.io/capm}
+\url{http://oswaldosantos.github.io/capm}
 }
 \seealso{
-  \code{\link{sensRange}}.
+\code{\link{sensRange}}.
 }
 

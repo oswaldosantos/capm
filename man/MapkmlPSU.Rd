@@ -2,8 +2,7 @@
 \alias{MapkmlPSU}
 \title{Creates *.kml files of a subset of polygons from a polygon shapefile}
 \usage{
-  MapkmlPSU(shape = NULL, psu = NULL, id = NULL,
-    path = ".")
+MapkmlPSU(shape = NULL, psu = NULL, id = NULL, path = ".")
 }
 \arguments{
   \item{shape}{string with the name of a polygon shapefile
@@ -21,21 +20,20 @@
   shapefile, \code{path} can be ignored.}
 }
 \value{
-  *.kml files of the subsetted polygons.
+*.kml files of the subsetted polygons.
 }
 \description{
-  Subset polygons acording to the matches between a vector
-  and a specified column from a
-  \link[sp]{SpatialPolygonsDataFrame}.
+Subset polygons acording to the matches between a vector
+and a specified column from a
+\link[sp]{SpatialPolygonsDataFrame}.
 }
 \details{
-  If there are *.kml files in the working directory, the
-  new created files will overwrite it in case of name
-  matching.
+If there are *.kml files in the working directory, the new
+created files will overwrite it in case of name matching.
 
-  \code{shape} must receive a shapefile with appropriate
-  coordinate reference system, otherwise, \code{MapkmlPSU}
-  report an error.
+\code{shape} must receive a shapefile with appropriate
+coordinate reference system, otherwise, \code{MapkmlPSU}
+report an error.
 }
 \examples{
 # Load data with the polygon identifiers.
@@ -60,9 +58,9 @@ shp.path <- system.file('data', package="capm")
 # MapkmlPSU(x, selected.psu[, 1], 1)
 }
 \references{
-  \url{http://oswaldosantos.github.io/capm}
+\url{http://oswaldosantos.github.io/capm}
 }
 \seealso{
-  \code{\link{readShapeSpatial}}
+\code{\link{readShapeSpatial}}
 }
 

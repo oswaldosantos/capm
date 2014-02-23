@@ -2,8 +2,8 @@
 \alias{SolveTC}
 \title{Modelling of reversible contraception for companion animals}
 \usage{
-  SolveTC(pars = NULL, init = NULL, time = NULL,
-    fr.range = NULL, s.range = NULL, z.range = NULL, ...)
+SolveTC(pars = NULL, init = NULL, time = NULL, fr.range = NULL,
+  s.range = NULL, z.range = NULL, ...)
 }
 \arguments{
   \item{pars}{a named \code{\link{vector}} of length 5. The
@@ -38,25 +38,24 @@
   \link[deSolve]{ode} function.}
 }
 \value{
-  \code{\link{list}}. The first element, \code{name}, is a
-  string with the name of the function, the second element,
-  \code{model}, is the model function. The third, fourth
-  and fifth elements are vectors (\code{pars}, \code{init},
-  \code{time}, respectively) containing the \code{pars},
-  \code{init} and \code{time} arguments of the function.
-  The sisxthth element \code{results} is a
-  \code{\link{data.frame}} with up to as many rows as
-  elements in time. The first fourth columns contain the
-  time and the variables: \code{n}, \code{cn} and
-  \code{tcn}. When *.range arguments are given, additional
-  columns contain the variables \code{f}, \code{s} and
-  \code{z}.
+\code{\link{list}}. The first element, \code{name}, is a
+string with the name of the function, the second element,
+\code{model}, is the model function. The third, fourth and
+fifth elements are vectors (\code{pars}, \code{init},
+\code{time}, respectively) containing the \code{pars},
+\code{init} and \code{time} arguments of the function. The
+sisxthth element \code{results} is a
+\code{\link{data.frame}} with up to as many rows as
+elements in time. The first fourth columns contain the time
+and the variables: \code{n}, \code{cn} and \code{tcn}. When
+*.range arguments are given, additional columns contain the
+variables \code{f}, \code{s} and \code{z}.
 }
 \description{
-  System of ordinary differential equations to simulate the
-  effect of reversible contraception in a population at
-  equilibrium, where deaths are compensated by births and
-  net immigration.
+System of ordinary differential equations to simulate the
+effect of reversible contraception in a population at
+equilibrium, where deaths are compensated by births and net
+immigration.
 }
 \examples{
 # Parameters and initial conditions.
@@ -80,9 +79,9 @@ solvetc.rg <- SolveTC(pars = pars.solvetc,
                       method = 'rk4')
 }
 \references{
-  \url{http://oswaldosantos.github.io/capm}
+\url{http://oswaldosantos.github.io/capm}
 }
 \seealso{
-  \link[deSolve]{ode}.
+\link[deSolve]{ode}.
 }
 

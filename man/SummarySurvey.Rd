@@ -2,8 +2,7 @@
 \alias{SummarySurvey}
 \title{Summary statistics for sample surveys}
 \usage{
-  SummarySurvey(design = NULL, variables = NULL,
-    level = 0.95, rnd = 3)
+SummarySurvey(design = NULL, variables = NULL, level = 0.95, rnd = 3)
 }
 \arguments{
   \item{design}{an output form \code{\link{DesignSurvey}}
@@ -20,15 +19,14 @@
   scientific notation is used.}
 }
 \value{
-  Matrix with survey summaries.
+Matrix with survey summaries.
 }
 \description{
-  Wraps functions for summary statistics from survey
-  package.
+Wraps functions for summary statistics from survey package.
 }
 \details{
-  The length of \code{variables} must be equal to the
-  length of \code{names(design$variables)} (see examples).
+The length of \code{variables} must be equal to the length
+of \code{names(design$variables)} (see examples).
 }
 \examples{
 # Load data.
@@ -96,9 +94,9 @@ estimates.f <- SummarySurvey(design.f, variables.sex, rnd = 3)
 estimates.m <- SummarySurvey(design.m, variables.sex, rnd = 3)
 }
 \references{
-  Lumley, T. (2011). Complex surveys: A guide to analysis
-  using R (Vol. 565). Wiley.
+Lumley, T. (2011). Complex surveys: A guide to analysis
+using R (Vol. 565). Wiley.
 
-  \url{http://oswaldosantos.github.io/capm}
+\url{http://oswaldosantos.github.io/capm}
 }
 

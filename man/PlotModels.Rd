@@ -2,12 +2,11 @@
 \alias{PlotModels}
 \title{Plot results of capm model functions}
 \usage{
-  PlotModels(model.out = NULL, variable = NULL,
-    col = "red", col1 = c("cadetblue1", "yellow", "red"),
-    col2 = c("blue", "darkgreen", "darkred"),
-    x.label = "Years", y.label = NULL,
-    scen.label = "Im = (__ * owned carrying capacity)",
-    leg.label = NULL, pop = NULL)
+PlotModels(model.out = NULL, variable = NULL, col = "red",
+  col1 = c("cadetblue1", "yellow", "red"), col2 = c("blue", "darkgreen",
+  "darkred"), x.label = "Years", y.label = NULL,
+  scen.label = "Im = (__ * owned carrying capacity)", leg.label = NULL,
+  pop = NULL)
 }
 \arguments{
   \item{model.out}{output of one of the function previously
@@ -120,17 +119,17 @@
   rate are ploted.}
 }
 \description{
-  Plot results of one of the following functions:
-  \code{\link{SolveIASA}}, \code{\link{SolveSI}} or
-  \code{\link{SolveTC}}.
+Plot results of one of the following functions:
+\code{\link{SolveIASA}}, \code{\link{SolveSI}} or
+\code{\link{SolveTC}}.
 }
 \details{
-  Font size of saved plots is usually different to the font
-  size seen in graphic browsers. Before changing font
-  sizes, see the final result in saved (or preview) plots.
+Font size of saved plots is usually different to the font
+size seen in graphic browsers. Before changing font sizes,
+see the final result in saved (or preview) plots.
 
-  Other details of the plot can be modifyed using
-  appropriate functions from \code{ggplot2} package.
+Other details of the plot can be modifyed using appropriate
+functions from \code{ggplot2} package.
 }
 \examples{
 #####################
@@ -176,11 +175,11 @@ solveiasa.rg <- SolveIASA(pars = pars.solveiasa,
 # PlotModels(solveiasa.rg, variable = 'N', scen.label = 'Im = (__ * de la capacidad de carga)')
 }
 \references{
-  Chang W (2012). R Graphics Cookbook. O'Reilly Media, Inc.
+Chang W (2012). R Graphics Cookbook. O'Reilly Media, Inc.
 
-  \url{http://oswaldosantos.github.io/capm}
+\url{http://oswaldosantos.github.io/capm}
 }
 \seealso{
-  \link[deSolve]{plot.deSolve}.
+\link[deSolve]{plot.deSolve}.
 }
 

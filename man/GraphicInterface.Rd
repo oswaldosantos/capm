@@ -2,7 +2,7 @@
 \alias{GraphicInterface}
 \title{Graphic interface to use some capm functions}
 \usage{
-  GraphicInterface(set.func)
+GraphicInterface(set.func)
 }
 \arguments{
   \item{set.func}{string to select a graphic interface for
@@ -17,16 +17,16 @@
   to assess population-based interventions.}
 }
 \value{
-  a graphic interface in a browser.
+a graphic interface in a browser.
 }
 \description{
-  Graphic interface to use some capm functions
+Graphic interface to use some capm functions
 }
 \examples{
 # Uncomment the following line:
 # GraphicInterface(set.func = 'SelectSamplingUnits')
 }
 \references{
-  \url{http://oswaldosantos.github.io/capm}
+\url{http://oswaldosantos.github.io/capm}
 }
 

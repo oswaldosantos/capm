@@ -2,9 +2,9 @@
 \alias{PlotGlobalSens}
 \title{Plot results of GlobalSens function}
 \usage{
-  PlotGlobalSens(global.out = NULL, x.label = "Time",
-    y.label = "Population", nam.leg = "Sensitivity range",
-    mm.leg = "min - max", sd.leg = "mean +- sd   ")
+PlotGlobalSens(global.out = NULL, x.label = "Time",
+  y.label = "Population", nam.leg = "Sensitivity range",
+  mm.leg = "min - max", sd.leg = "mean +- sd   ")
 }
 \arguments{
   \item{global.out}{output from
@@ -23,16 +23,16 @@
   calculated using the mean +- standard deviation ranges.}
 }
 \description{
-  Plot results of of \code{\link{CalculateGlobalSens}}
-  function.
+Plot results of of \code{\link{CalculateGlobalSens}}
+function.
 }
 \details{
-  Font size of saved plots is usually different to the font
-  size seen in graphic browsers. Before changing font
-  sizes, see the final result in saved (or preview) plots.
+Font size of saved plots is usually different to the font
+size seen in graphic browsers. Before changing font sizes,
+see the final result in saved (or preview) plots.
 
-  Other details of the plot can be modifyed using
-  appropriate functions from \code{ggplot2} package.
+Other details of the plot can be modifyed using appropriate
+functions from \code{ggplot2} package.
 }
 \examples{
 #####################
@@ -75,9 +75,9 @@ glob.all.solve.iasa <- CalculateGlobalSens(
 PlotGlobalSens(glob.all.solve.iasa)
 }
 \references{
-  \url{http://oswaldosantos.github.io/capm}
+\url{http://oswaldosantos.github.io/capm}
 }
 \seealso{
-  \link[deSolve]{plot.deSolve}.
+\link[deSolve]{plot.deSolve}.
 }
 

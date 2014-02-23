@@ -2,7 +2,7 @@
 \alias{SamplePPS}
 \title{Probability proportional to size sampling with replacement}
 \usage{
-  SamplePPS(psu.ssu = NULL, psu = NULL, write = FALSE, ...)
+SamplePPS(psu.ssu = NULL, psu = NULL, write = FALSE, ...)
 }
 \arguments{
   \item{psu.ssu}{\code{\link{data.frame}} with all PSU.
@@ -19,17 +19,17 @@
   \code{\link{write.table}} function.}
 }
 \value{
-  \code{\link{data.frame}}. First column contains the
-  selected psu identifiers, coerced by
-  \code{\link{as.character}}, to avoid scientific notation
-  in case the identifiers be large numbers of
-  \code{\link{class}} \code{\link{numeric}}. Second column
-  contain PSU sizes, a variable needed for second stage
-  sampling with \code{\link{SampleSystematic}}.
+\code{\link{data.frame}}. First column contains the
+selected psu identifiers, coerced by
+\code{\link{as.character}}, to avoid scientific notation in
+case the identifiers be large numbers of
+\code{\link{class}} \code{\link{numeric}}. Second column
+contain PSU sizes, a variable needed for second stage
+sampling with \code{\link{SampleSystematic}}.
 }
 \description{
-  Select Primary Sampling Units (PSU) with probability
-  proportional to size with replacement.
+Select Primary Sampling Units (PSU) with probability
+proportional to size with replacement.
 }
 \examples{
 # Load data with PSU identifiers and sizes.
@@ -39,13 +39,13 @@ data(psu.ssu)
 (selected.psu <- SamplePPS(psu.ssu, 10, write = FALSE))
 }
 \references{
-  Levy P and Lemeshow S (2008). Sampling of populations:
-  methods and applications, Fourth edition. John Wiley and
-  Sons, Inc.
+Levy P and Lemeshow S (2008). Sampling of populations:
+methods and applications, Fourth edition. John Wiley and
+Sons, Inc.
 
-  \url{http://oswaldosantos.github.io/capm}
+\url{http://oswaldosantos.github.io/capm}
 }
 \seealso{
-  \code{\link{SampleSystematic}}.
+\code{\link{SampleSystematic}}.
 }
 
