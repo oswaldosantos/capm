@@ -1,11 +1,11 @@
 library(devtools)
 
 # Development workflow
-setwd('~/Documents/Projects')
+setwd('~/Documents/Projectos')
 load_all('capm')
 document('capm')
 install('capm')
-setwd('~/Documents/Projects/capm')
+setwd('~/Documents/Projectos/capm')
 
 # News preview
 show_news('capm')
@@ -16,8 +16,6 @@ check_doc()
 run_examples()
 build_win()
 
-
-###############
-## Relsease  ##
-## release() ##
-##############
+####################
+## release('capm) ##
+####################
