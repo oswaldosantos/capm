@@ -1,7 +1,16 @@
+capm 0.3
+========
+
+* First stable version.
+
+* Packages dependencies removed. Packages are now imported.
+
+
 capm 0.2.6
 ==========
 
 * GraphicInterface: documentation improvements.
+
 
 capm 0.2.5
 ==========
