@@ -104,13 +104,13 @@
 #' # Solve for point estimates.
 #' solveiasa.pt <- SolveIASA(pars = pars.solveiasa, 
 #'                           init = init.solveiasa, 
-#'                           time = 0:15, method = 'rk4')
+#'                           time = 0:10, method = 'rk4')
 #' 
 #' # Solve for parameter ranges.
 #' solveiasa.rg <- SolveIASA(pars = pars.solveiasa, 
 #'                           init = init.solveiasa, 
-#'                           time = 0:15,
-#'                           s.range = seq(0, .4, l = 20), 
+#'                           time = 0:10,
+#'                           s.range = seq(0, .4, l = 15), 
 #'                           ab.range = c(0, .2), 
 #'                           ad.range = c(0, .2),
 #'                           im.range = c(0, .1),
@@ -118,11 +118,11 @@
 #'                 
 #' ## Plot stray population sizes using point estimates
 #' # Uncomment the following line:
-#' # PlotModels(solveiasa.pt, variable = "n2")
+#' # PlotModels(solveiasa.pt, variable = "ns2")
 #' 
 #' ## Plot all scenarios and change the label for the scenarios.
 #' # Uncomment the following line:
-#' # PlotModels(solveiasa.rg, variable = 'N', scen.label = 'Im = (__ * de la capacidad de carga)')
+#' # PlotModels(solveiasa.rg, variable = 'ns', scen.label = 'Im = (__ * de la capacidad de carga)')
 #'
 PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c('cadetblue1', 'yellow', 'red'), col2 = c('blue', 'darkgreen', 'darkred'), x.label = 'Years', y.label = NULL, scen.label = 'Im = (__ * owned carrying capacity)', leg.label = NULL, pop = NULL) {
   if (class(model.out) != 'capmModels') {

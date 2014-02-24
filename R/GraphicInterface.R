@@ -6,7 +6,7 @@
 #' @export
 #' 
 #' @examples
-#' # Uncomment the following line:
+#' # Uncomment the following line to open the graphic interface in a browser:
 #' # GraphicInterface(set.func = 'SelectSamplingUnits')
 #' 
 GraphicInterface <- function(set.func) {

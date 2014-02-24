@@ -20,7 +20,7 @@
 #' (selected.psu <- SamplePPS(psu.ssu, 10, write = FALSE))
 #' 
 #' ## Define shape from shapefile.
-#' shp.path <- system.file('data', package="capm")
+#' shp.path <- system.file('extdata', package="capm")
 #' # The code above used a shapefile avaliable in the
 #' # capm package.
 #' # You might want to write a code like:
@@ -30,7 +30,7 @@
 #' # Uncomment the following line to create kml files:
 #' # MapkmlPSU('santos', selected.psu[, 1], 1, shp.path)
 #' 
-#' ## Define shape from an object x of class SpatialPolygonsDataFrame.
+#' ## Define the shape argument as an object x of class SpatialPolygonsDataFrame.
 #' # MapkmlPSU(x, selected.psu[, 1], 1)
 #' 
 #' 

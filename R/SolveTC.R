@@ -21,13 +21,13 @@
 #' # Solve for point estimates.
 #' solvetc.pt <- SolveTC(pars = pars.solvetc, 
 #'                       init = init.solvetc, 
-#'                       time = 0:15, method = 'rk4')
+#'                       time = 0:10, method = 'rk4')
 #' 
 #' # Solve for parameter ranges.
 #' solvetc.rg <- SolveTC(pars = pars.solvetc, 
 #'                       init = init.solvetc, 
 #'                       time = 0:15,
-#'                       fr.range = seq(0, 1, 0.01), 
+#'                       fr.range = seq(0, 1, 0.1), 
 #'                       s.range = c(0.05, 0.4), 
 #'                       z.range = c(0.05, 0.4),
 #'                       method = 'rk4')

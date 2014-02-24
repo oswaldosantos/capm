@@ -52,8 +52,9 @@ variables <- c("", "", "total", "prop", "mean", rep("prop", 3),
 cbind(names(design$variables), variables)
 
 # Calculate the summary statistics for the survey.
-estimates <- SummarySurvey(design, variables = variables,
-                           rnd = 3)
+# Uncomment the following two lines (will take some seconds).
+# estimates <- SummarySurvey(design, variables = variables,
+#                           rnd = 3)
 
 ############################
 ## Example 2              ##
@@ -90,8 +91,9 @@ variables.sex <- c("", "", "total", "", "total",
 cbind(names(design.sex$variables), variables.sex)
 
 # Calculate the summary statistics for the surveys.
-estimates.f <- SummarySurvey(design.f, variables.sex, rnd = 3)
-estimates.m <- SummarySurvey(design.m, variables.sex, rnd = 3)
+# Uncomment the following two lines (will take some seconds).
+# estimates.f <- SummarySurvey(design.f, variables.sex, rnd = 3)
+# estimates.m <- SummarySurvey(design.m, variables.sex, rnd = 3)
 }
 \references{
 Lumley, T. (2011). Complex surveys: A guide to analysis

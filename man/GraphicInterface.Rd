@@ -22,8 +22,12 @@ a graphic interface in a browser.
 \description{
 Graphic interface to use some capm functions
 }
+\details{
+The graphic interfaces are created with the \code{shiny}
+package and thus will open in a browser.
+}
 \examples{
-# Uncomment the following line:
+# Uncomment the following line to open the graphic interface in a browser:
 # GraphicInterface(set.func = 'SelectSamplingUnits')
 }
 \references{

@@ -3,27 +3,22 @@
 \alias{capm-package}
 \title{The capm Package}
 \description{
-Companion Animal Population Management.
+Companion Animal Population Management. Provides functions
+for quantitative Companion Animal Population Management.
+Further information can be found in the URL given below.
 }
 \details{
 \tabular{ll}{ Package: \tab capm\cr Type: \tab Package\cr
-Version: \tab 0.2.6\cr Date: \tab 2014-02-23\cr Depends:
-\tab R (>= 3.0.2), FME, survey, reshape2, ggplot2, shiny,
-grid, rgdal, maptools\cr License: \tab GPL (>= 2)\cr
-LazyLoad: \tab yes\cr URL: \tab
-\url{http://oswaldosantos.github.io/capm}\cr }
-
-Provides functions for quantitative companion animal
-population management. Further information can be found in
-the link given above.
-}
-\author{
-Author: Oswaldo Santos \email{oswaldosant@gmail.com}\cr
-Maintainer: Oswaldo Santos \email{oswaldosant@gmail.com}\cr
-Contributors: Fernando Silveira Marques
-\email{fernandosix@gmail.com}, Marcos Amaku
+Version: \tab 0.3\cr Date: \tab 2014-02-23\cr Depends: \tab
+R (>= 3.0.2)\cr Imports: \tab deSolve, FME, survey,
+reshape2, ggplot2, shiny, grid, rgdal, maptools, sp\cr
+License: \tab GPL (>= 2)\cr LazyLoad: \tab yes\cr URL: \tab
+\url{http://oswaldosantos.github.io/capm}\cr Author: \tab
+Oswaldo Santos \email{oswaldosant@gmail.com}\cr Maintainer:
+\tab Oswaldo Santos \email{oswaldosant@gmail.com}\cr
+Contributors: \tab Marcos Amaku
 \email{amaku@vps.fmvz.usp.br}, Fernando Ferreira
-\email{fernando@vps.fmvz.usp.br}
+\email{fernando@vps.fmvz.usp.br} }
 }
 \keyword{package}
 
