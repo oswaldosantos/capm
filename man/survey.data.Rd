@@ -9,7 +9,7 @@ This data set list dog demographic variables obtained from simulations based on 
 }
 \usage{data(survey.data)}
 \format{
-  A data frame with 16622 observations on the following 13 variables.
+  A data frame with 469 observations on the following 12 variables.
   \describe{
     \item{\code{interview_id}}{Interview Id.}
     \item{\code{psu}}{Primary sampling unit Id.}

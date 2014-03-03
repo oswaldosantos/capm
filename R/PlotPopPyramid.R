@@ -61,10 +61,13 @@ PlotPopPyramid <- function(dat = NULL, age.col = NULL, sex.col = NULL, str.col =
   dat2[dat2$sex == levels(dat2$sex)[1], 'count'] <-
     dat2[dat2$sex == levels(dat2$sex)[1], 'count'] * (-1)
   dat.f <- dat2[which(dat2[, 2] == levels(dat2$sex)[1]), ]
-  dat.f <- rbind(dat.f, c(max(dat2$age), rep(0, ncol(dat2) - 1)))
+  dat.f <- rbind(dat.f, c(max(dat2$age), rep(NA, ncol(dat2) - 1)))
+  dat.f[nrow(dat.f), 'sex'] <- levels(dat2$sex)[1]
+  dat.f$count[is.na(dat.f$count)] <- 0
   dat.m <- dat2[which(dat2[, 2] == levels(dat2$sex)[2]), ]
-  dat.m <- rbind(dat.m, c(max(dat2$age), rep(0, ncol(dat2) - 1)))
-  #options(warn = -1)
+  dat.m <- rbind(dat.m, c(max(dat2$age), rep(NA, ncol(dat2) - 1)))
+  dat.m[nrow(dat.m), 'sex'] <- levels(dat2$sex)[2]
+  dat.m$count[is.na(dat.m$count)] <- 0
   if (!is.null(str.col)) {
     plot.f <- ggplot(dat.f, aes(x = age, y = count , fill = ster)) +
       scale_fill_manual(values = c(inner.color, outer.color))
@@ -133,6 +136,7 @@ PlotPopPyramid <- function(dat = NULL, age.col = NULL, sex.col = NULL, str.col =
   }
   grid.newpage()
   pushViewport(viewport(layout = grid.layout(1, 200)))
+  options(warn = -1) # Expected behvaior
   print(plot.f, vp = vplayout(1, 1:92))
   print(plot.m, vp = vplayout(1, 108:200))
   print(ages, vp = vplayout(1, 93:107))
