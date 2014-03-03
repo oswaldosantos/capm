@@ -3,3 +3,5 @@
 dev_tools
 .gitignore
 .Rhistory
+Documentation
+Gemfile
