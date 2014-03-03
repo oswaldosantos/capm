@@ -14,7 +14,7 @@ santos.dat = read.table('Basico_SP2.csv', sep = ';', dec = '.',
 setwd("~/Copy/Projectos/capm/inst/extdata")
 santos.shp = shape[shape@data[, 'NM_MUNICIP'] == 'SANTOS', ]
 santos = santos.shp[santos.shp@data[, 'TIPO'] == 'URBANO', 2]
-names(santos@data) = 'psu'
+names(santos@data) = 'PSU'
 writeOGR(santos, dsn = ".", layer = "santos", driver = "ESRI Shapefile")
 
 #### psu.ssu (universe) ####
@@ -29,16 +29,23 @@ save(psu.ssu, file = 'psu.ssu.rda')
 #### pilot ####
 set.seed(4)
 pilot = SamplePPS(psu.ssu, 10)
-pilot = data.frame(psu = rep(pilot[, 1], each = 5), dogs = rpois(50, .8))
+set.seed(4)
+pilot = data.frame(psu = rep(pilot[, 1], each = 10), dogs = rpois(50, .8))
 save(pilot, file = 'pilot.rda')
 
 #### survey.data ####
 Calculate2StageSampleSize(psu.ssu, pilot, cost = 10)
 set.seed(4)
-sa1 = SamplePPS(psu.ssu, 38)
-sa1 = data.frame(interview_id = 1:(38 * 12), 
-                 psu = as.numeric(rep(sa1[, 1], each = 12)),
-                 dogs = rpois((38 * 12), 0.8))
+sa1 = SamplePPS(psu.ssu, 20)
+sa1 = data.frame(interview_id = 1:(20 * 19), 
+                 psu = as.numeric(rep(sa1[, 1], each = 19)),
+                 dogs = rpois((20 * 19), 0.8))
+
+set.seed(17)
+sa1 = SamplePPS(psu.ssu, 20)
+sa1 = data.frame(interview_id = 1:(20 * 19), 
+                 psu = as.numeric(rep(sa1[, 1], each = 19)),
+                 dogs = rpois((20 * 19), 0.8))
 
 survey.data <- NULL
 for (i in 1:nrow(sa1)) {
@@ -55,9 +62,9 @@ for (i in 1:nrow(sa1)) {
 
 survey.data[survey.data$dogs > 1, 'dogs'] <- 1
 survey.data <- cbind(survey.data, sex = NA, age = NA,
-                esterilized = 0, esterilized1 = 0,
-                adopted = NA, births = 0, 
-                present = 0, death = 0, lost = 0)
+                     esterilized = 0, esterilized1 = 0,
+                     adopted = NA, births = 0, 
+                     present = 0, death = 0, lost = 0)
 
 for (i in 1:nrow(survey.data)) {
   if (survey.data[i, 'dogs'] == 1) {
@@ -67,7 +74,7 @@ for (i in 1:nrow(survey.data)) {
 
 for (i in 1:nrow(survey.data)) {
   if (survey.data[i, 'dogs'] == 1) {
-    survey.data[i, 'age'] <- sample(0:18, 1, prob = seq(.999, .001, length.out = 19))
+    survey.data[i, 'age'] <- sample(0:18, 1, prob = seq(.999, .005, length.out = 19))
   }
 }
 
@@ -85,7 +92,7 @@ for (i in 1:nrow(survey.data)) {
     survey.data[i, 'esterilized1'] <- sample(c('yes', 'no'), 1, prob = c(.3, .7))
   }
   if (survey.data[i, 'esterilized'] == 'yes' & survey.data[i, 'sex'] == 'Male') {    
-    survey.data[i, 'esterilized1'] <- sample(c('yes', 'no'), 1, prob = c(.20, .70))
+    survey.data[i, 'esterilized1'] <- sample(c('yes', 'no'), 1, prob = c(.25, .75))
   }
 }
 
