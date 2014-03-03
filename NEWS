@@ -1,3 +1,12 @@
+capm 0.3.1
+==========
+
+pilot, psu.ssu, survey.data: updated data files to improve examples. `pilot` file now represents 10 PSU and 5 SSU per SSU (a more realistic pilot sample). `survey.data` file now has 469 observations.
+
+* PlotPopPyramid: bug fixed to prevent generation of NA's during internal data transformations. Now calling the function do not produce warning messages.
+
+* shapefile for examples: wkbPolygon with 2 dimensions, insted of 3 dimension do not produce warning messages.
+
 capm 0.3
 ========
 
