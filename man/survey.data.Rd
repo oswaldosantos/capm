@@ -9,20 +9,24 @@ This data set list dog demographic variables obtained from simulations based on 
 }
 \usage{data(survey.data)}
 \format{
-  A data frame with 469 observations on the following 12 variables.
+  A data frame with 469 observations on the following 16 variables.
   \describe{
     \item{\code{interview_id}}{Interview Id.}
     \item{\code{psu}}{Primary sampling unit Id.}
-    \item{\code{dogs}}{Indicate if there is a dog in secondary sampling unit (SSU). For each interviewed ssu with more than one dog, there is as many rows as dogs in it.}
+    \item{\code{dogs}}{There is a dog in the secondary sampling unit (SSU). For each interviewed SSU with more than one dog, there is as many rows as dogs in it.}
     \item{\code{sex}}{Sex of the dog.}
     \item{\code{age}}{Age of the dog}
-    \item{\code{sterilized}}{Indicate if the dog is sterilized (spayed/neutered).}
-    \item{\code{sterilized.ly}}{Indicate if the dog was sterilized during the last year.}
-    \item{\code{adopted}}{Indicate if the dog was adopted.}
-    \item{\code{births}}{Number of puppies per female.}
-    \item{\code{present}}{Indicate if the dog was present in the ssu at the moment of the interview.}
-    \item{\code{death}}{Indicate if the dog who lived in the ssu during the last year but was not present at the moment of the interview, died.}
-    \item{\code{lost}}{Indicate if the dog who lived in the ssu during the last year but was not present at the moment of the interview, disapear or was abandoned.}
+    \item{\code{sterilized}}{The dog is sterilized (spayed/neutered).}
+    \item{\code{sterilized.ly}}{The dog was sterilized during the last year.}
+    \item{\code{births}}{Number of puppies during the last year.}
+    \item{\code{present}}{The dog was present in the SSU at the moment of the interview.}
+    \item{\code{fate}}{Fate of dogs: died, given, in_home (remains in home), lost or sold.}
+    \item{\code{acquired}}{Mode in which the dog was acquired: adopted, born_in_home, bought, gift (given by someone).}
+    \item{\code{outside}}{The dog was acquired in another city.}
+    \item{\code{acquired.ly}}{The dog was acquired during the last year}
+    \item{\code{immigrant}}{"acquired"" equals to "bought" or "outside"" equales to "yes". Immigration is understood as the movements from outside populations (populations from other cities and populations which maintain the pet market of the city.). Movements from stray populations are parameterized under category "adopted" of the variable "acquired".}
+    \item{\code{immigrant.ly}}{The dog immigrated during the last year.}
+    \item{\code{immigrant.ly}}{The dog who immigrated during the last year was already sterilized.}
   }
 }
 \details{

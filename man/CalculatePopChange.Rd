@@ -12,7 +12,8 @@ CalculatePopChange(model.out = NULL, variable = NULL, t1 = NULL,
   or \code{\link{SolveTC}}.}
 
   \item{variable}{string with the name of the the output
-  variable for which the change needs to be calculated.}
+  variable for which the change needs to be calculated (see
+  the variable argument for \code{\link{PlotModels}}.}
 
   \item{t1}{value specifying the first time.}
 

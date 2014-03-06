@@ -75,7 +75,7 @@ shinyUI(pageWithSidebar(
                    value = 0.95, min = 0, max = 1),
       
       tags$hr(),
-      HTML('<p> Type of estimates <br> If you are using example files, copy and paste the following terms: <br> total, prop, mean, prop, prop, prop, total, prop, prop, prop'),
+      HTML('<p> Type of estimates <br> If you are using example files, copy and paste the following terms: <br> total, prop, mean, prop, prop, total, prop, prop, prop, prop, prop, prop, prop, prop'),
       textInput('variables', '',
                 value = NULL),
       tags$hr(),

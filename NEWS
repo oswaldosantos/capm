@@ -1,3 +1,14 @@
+capm 0.3.2
+==========
+
+* Calculate2StageSampleSize: minor documentation improvements.
+
+* CalculatePopChange: minor documentation improvements.
+
+* survey.data: new variables to improve examples.
+
+* GraphicInterface: update in SurveyAnalysis to use examples based on survey.data.
+
 capm 0.3.1
 ==========
 

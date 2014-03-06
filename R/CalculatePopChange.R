@@ -1,7 +1,7 @@
 #' Population change.
 #' @description Calculate the change in population size between two times. When only one time is specified, the population size at that time is returned.
 #' @param model.out an output from one of the following functions or a \code{\link{list}} with equivalent structure: \code{\link{SolveIASA}}, \code{\link{SolveSI}} or \code{\link{SolveTC}}.
-#' @param variable string with the name of the the output variable for which the change needs to be calculated.
+#' @param variable string with the name of the the output variable for which the change needs to be calculated (see the variable argument for \code{\link{PlotModels}}.
 #' @param t1 value specifying the first time.
 #' @param t2 value specifying the second time.
 #' @param ratio logical. When \code{TRUE}, the calculated change is based on poulation size at t2 divided by population size at t1. When \code{FALSE}, the calculated change is based on poulation size at t2 minus population size at t1.

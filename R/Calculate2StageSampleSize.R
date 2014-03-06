@@ -66,8 +66,8 @@ Calculate2StageSampleSize <- function(psu.ssu = NULL, psu.x = NULL, level = .95,
   sam <- matrix(c(m * nb, m, nb, vec, vdc, d), 
                 ncol = 1)
   rownames(sam) <- c('Sample size',
-                     'Number of psu to be sampled',
-                     'Number of ssu to be sampled in each psu',
+                     'Number of PSU to be sampled',
+                     'Number of SSU to be sampled in each psu',
                      'Intercluster variance',
                      'Intracluster variance',
                      'Intraclass correlation coefficient')
