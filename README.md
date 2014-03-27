@@ -21,7 +21,12 @@ The current workflow is mainly focused on dog populations but also applies to ca
 
 To install the unstable version, run `install_github('capm', 'oswaldosantos')` in (ideally) RStudio. `devtools` package must be previously loaded.
 
-To install the stable version, run `install.packages('capm')` in the R (ideally from RStudio) console.
+To install the stable version, run `install.packages('capm')` in (ideally) RStudio.
+
+**Current unstable version:** 0.4.0
+
+**Current stable version:** 0.4
+
 
 If you find any error or have suggestions to improve or include functionality to `capm`, I will glad to know it. Please get in touch so I can better understand your needs.
 
