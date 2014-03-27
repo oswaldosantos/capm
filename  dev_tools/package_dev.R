@@ -21,6 +21,7 @@ build_win()
 #   capm-package
 #   README.md
 #   NEWS
+#   CITATION
 #   Home web page
 #   Web documentation in all languages
 
