@@ -1,3 +1,12 @@
+capm 0.4
+========
+
+* CITATION file added.
+
+* PlotPopPyramid: documentation improvements.
+
+* GraphicInterface: bug fixed to plot global and local sensitivity analysis when "SolveIasa" argument is used (thanks to Ricardo Dias who detected the bug).
+
 capm 0.3.2
 ==========
 

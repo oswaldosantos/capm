@@ -1,5 +1,5 @@
 #' Population PlotPopPyramid
-#' @description Dysplays two opposed horizontal barplots (pyramid).
+#' @description Display two opposed horizontal barplots (pyramid).
 #' @param dat \code{\link{data.frame}}.
 #' @param age.col the number or name of \code{dat} column which have a \code{\link{numeric}} \code{\link{vector}} representing ages or stage categories.
 #' @param sex.col the number or name of \code{dat} column which have a \code{\link{factor}} with two levels representing the sex of individuals (see Details).

@@ -1,0 +1,12 @@
+textVersion =
+         c("Oswaldo Santos, Marcos Amaku and Fernando Ferreira (2014). capm: Companion Animal Population Management. R package version 0.4
+  http://oswaldosantos.github.io/capm")
+
+bibentry(bibtype = "Manual",
+         title = "{capm}: Companion Animal Population Management",
+         author = c(person("Oswaldo", "Santos"),
+                    person("Marcos", "Amaku"),
+                    person("Fernando", "Ferreira")),
+         year = "2014",
+         note = "R package version 0.4",
+         url = "http://oswaldosantos.github.io/capm")

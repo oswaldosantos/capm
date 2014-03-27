@@ -26,7 +26,7 @@ This data set list dog demographic variables obtained from simulations based on 
     \item{\code{acquired.ly}}{The dog was acquired during the last year}
     \item{\code{immigrant}}{"acquired"" equals to "bought" or "outside"" equales to "yes". Immigration is understood as the movements from outside populations (populations from other cities and populations which maintain the pet market of the city.). Movements from stray populations are parameterized under category "adopted" of the variable "acquired".}
     \item{\code{immigrant.ly}}{The dog immigrated during the last year.}
-    \item{\code{immigrant.ly}}{The dog who immigrated during the last year was already sterilized.}
+    \item{\code{immigrant.sterilized.ly}}{The dog who immigrated during the last year was already sterilized.}
   }
 }
 \details{

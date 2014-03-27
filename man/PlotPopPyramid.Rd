@@ -46,7 +46,7 @@ PlotPopPyramid(dat = NULL, age.col = NULL, sex.col = NULL,
 Two opposed horizontal barplots.
 }
 \description{
-Dysplays two opposed horizontal barplots (pyramid).
+Display two opposed horizontal barplots (pyramid).
 }
 \details{
 \code{PlotPopPyramid} is mainly intended for companion

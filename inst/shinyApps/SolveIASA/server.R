@@ -1,3 +1,4 @@
+library(ggplot2)
 shinyServer(function(input, output) {
   
   #### Functions ####
