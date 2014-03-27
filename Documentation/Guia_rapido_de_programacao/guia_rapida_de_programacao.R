@@ -1,5 +1,5 @@
 #+ echo=F
-# Si sua intenção é compilar um notebook, descomente a linha 5.
+# Si sua intenção é compilar um notebook, scomente a linha 5.
 
 #+ echo=F
 opts_chunk$set(comment=NA, tidy=FALSE, message=F, warnings=F, fig.align='center')

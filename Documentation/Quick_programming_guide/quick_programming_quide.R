@@ -1,8 +1,8 @@
 #+ echo=F
-# Uncomment the fifth line if you do not intend to compile a notebook.
+# Comment the fifth line if you do not intend to compile a notebook.
 
 #+ echo=F
-#opts_chunk$set(comment=NA, tidy=FALSE, message=F, warnings=F, fig.align='center')
+opts_chunk$set(comment=NA, tidy=FALSE, message=F, warnings=F, fig.align='center')
 
 #' # Quick programming guide with capm 0.4 in R version 3.0.3
  
