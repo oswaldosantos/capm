@@ -1,3 +1,4 @@
+library(survey)
 shinyServer(function(input, output) {
   
   Universe <- function() {

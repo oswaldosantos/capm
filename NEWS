@@ -1,3 +1,8 @@
+capm 0.4.1
+========
+
+* FraphicInterface: bug fixed to load the necessary packages.
+
 capm 0.4
 ========
 

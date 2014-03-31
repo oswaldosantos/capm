@@ -1,3 +1,4 @@
+library(rgdal)
 shinyServer(function(input, output) {
   
   dat <- function() {
