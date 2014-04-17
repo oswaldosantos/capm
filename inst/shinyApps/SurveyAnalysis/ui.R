@@ -1,6 +1,6 @@
-shinyUI(pageWithSidebar(
+shinyUI(fluidPage(
   
-  headerPanel("Survey analysis"),
+  titlePanel("Survey analysis"),
   
   sidebarPanel(
     

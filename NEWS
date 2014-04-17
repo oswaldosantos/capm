@@ -1,7 +1,20 @@
-capm 0.4.1
-========
+capm 0.4.2
+==========
 
-* FraphicInterface: bug fixed to load the necessary packages.
+* GraphicInterface (SelectedSamplingUnits): a CSV file with selected sampling units can be downloaded and KML files of selected PSU can be written. 
+
+* GraphicInterface: bug fixed to load the necessary packages and pages are created with fluidPge function.
+
+* MapkmlPSU: function code simplification.
+
+* SampleSystematic: rise and error if samplu units to be selected are greater than sampling units in the population.
+
+* CITATION: update.
+
+capm 0.4.1
+==========
+
+* GraphicInterface: bug fixed to load the necessary packages.
 
 capm 0.4
 ========

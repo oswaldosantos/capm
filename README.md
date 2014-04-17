@@ -19,13 +19,13 @@ Current version offers functions that allow users to implement the following wor
 
 The current workflow is mainly focused on dog populations but also applies to cat populations. Future versions probably will include functions to address particularities of cat populations.
 
-To install the unstable version, run `install_github('capm', 'oswaldosantos')` in (ideally) RStudio. `devtools` package must be previously loaded.
+To install the development version, run `install_github('capm', 'oswaldosantos')` in (ideally) RStudio. `devtools` package must be previously loaded.
 
-To install the stable version, run `install.packages('capm')` in (ideally) RStudio.
+To install the production version, run `install.packages('capm')` in (ideally) RStudio.
 
-**Current unstable version:** 0.4.1
+**Current development version:** 0.4.2
 
-**Current stable version:** 0.4
+**Current production version:** 0.4
 
 
 If you find any error or have suggestions to improve or include functionality to `capm`, I will glad to know it. Please get in touch so I can better understand your needs.

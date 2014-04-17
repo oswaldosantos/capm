@@ -44,19 +44,16 @@ MapkmlPSU <- function(shape = NULL, psu = NULL, id = NULL, path = '.') {
   tmp <- spTransform(tmp, CRS('+proj=longlat +ellps=WGS84'))
   tmp2 = NULL
   for(i in 1:length(psu)) {
-    if (file.exists(paste(eval(psu[i]), '.kml', sep =''))) {
-      file.remove(paste(eval(psu[i]), '.kml', sep =''))
-    }
     tmp1 <- tmp[which(as.character(tmp@data[ , id]) == psu[i]), ]
     writeOGR(tmp1, dsn = paste(eval(psu[i]), '.kml', sep =''), 
-             layer = 'selected_psu', driver = 'KML')
+             layer = 'selected_psu', driver = 'KML', overwrite_layer = TRUE)
     tmp2[i] <- which(as.character(tmp@data[ , id]) == psu[i])
   }
   tmp2 <- tmp[tmp2, ]
   if (file.exists('all_psu.kml')) {
     file.remove('all_psu.kml')
   }
-  writeOGR(tmp2, dsn = 'all_psu.kml', 
-           layer = 'all_selected_psu', driver = 'KML')
+  writeOGR(tmp2, dsn = 'all_psu.kml', layer = 'all_selected_psu',
+           driver = 'KML', overwrite_layer = TRUE)
   return(cat('\n', 'The maps are in the directory:', '\n\n', getwd()))
 }

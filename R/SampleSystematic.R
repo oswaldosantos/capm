@@ -27,6 +27,9 @@
 #' (simp.syst.sampling <- SampleSystematic(ssu = 5, total = 100))
 SampleSystematic <- function(psu.ssu = NULL, ssu = NULL, total = NULL, write = FALSE, ...) {
   if (!is.null(total)) {
+    if (total <= ssu) {
+      stop('Sampling units in the sample must be lesser than in population.')
+    }
     int <- total / ssu
     k <- sample(int, 1)
     Ssu <- rep(NA, ssu)

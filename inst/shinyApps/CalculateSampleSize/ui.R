@@ -1,6 +1,6 @@
-shinyUI(pageWithSidebar(
+shinyUI(fluidPage(
   
-  headerPanel("Calculate sample size and composition"),
+  titlePanel("Calculate sample size and composition"),
   
   sidebarPanel(
     
@@ -12,12 +12,12 @@ shinyUI(pageWithSidebar(
                    c(Comma=',',
                      Semicolon=';',
                      Tab='\t'),
-                   'Semicolon'),
+                   ','),
       radioButtons('quote', 'Quote',
                    c(None='',
                      'Double Quote'='"',
                      'Single Quote'="'"),
-                   'Double Quote'),    
+                   '"'),    
       fileInput('psu.ssu', '',
                 accept=c('text/csv',
                          'text/comma-separated-values,text/plain',
@@ -29,12 +29,12 @@ shinyUI(pageWithSidebar(
                    c(Comma=',',
                      Semicolon=';',
                      Tab='\t'),
-                   'Semicolon'),
+                   ','),
       radioButtons('quote', 'Quote',
                    c(None='',
                      'Double Quote'='"',
                      'Single Quote'="'"),
-                   'Double Quote'),    
+                   '"'),    
       fileInput('psu.x', '',
                 accept=c('text/csv',
                          'text/comma-separated-values,text/plain',

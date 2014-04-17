@@ -1,8 +1,8 @@
 #library(shiny)
 
-shinyUI(pageWithSidebar(
+shinyUI(fluidPage(
   
-  headerPanel('IASA model: Immigration, Abandonment, Sterilization and Adoption'),
+  titlePanel('IASA model: Immigration, Abandonment, Sterilization and Adoption'),
   
   sidebarPanel(
     

@@ -9,7 +9,7 @@ Further information can be found in the URL given below.
 }
 \details{
 \tabular{ll}{ Package: \tab capm\cr Type: \tab Package\cr
-Version: \tab 0.4.1\cr Date: \tab 2014-03-31\cr Depends:
+Version: \tab 0.4.2\cr Date: \tab 2014-04-17\cr Depends:
 \tab R (>= 3.0.2)\cr Imports: \tab deSolve, FME, survey,
 reshape2, ggplot2, shiny, grid, rgdal, maptools, sp\cr
 License: \tab GPL (>= 2)\cr LazyLoad: \tab yes\cr URL: \tab
