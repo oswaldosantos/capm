@@ -15,8 +15,8 @@
 #' 
 #' # Parameters and initial conditions.
 #' pars.solve.si = c(b = 0.245, d = 0.101, 
-#'                      k = 98050.49, s = .048)
-#' init.solve.si = c(n = 89136.810, q = 0.198)
+#'                  k = 98050, s = 0.048)
+#' init.solve.si = c(n = 89137, q = 0.198)
 #' 
 #' # Solve for a specific sterilization rate.
 #' solve.si.pt = SolveSI(pars = pars.solve.si, 
@@ -28,7 +28,8 @@
 #' CalculatePopChange(solve.si.pt, variable = 'n', t2 = 15, t1 = 0)
 #' 
 #' # Calculate the population change (difference) between times 0 and 15.
-#' CalculatePopChange(solve.si.pt, variable = 'n', t2 = 15, t1 = 0, ratio = FALSE)
+#' CalculatePopChange(solve.si.pt, variable = 'n', t2 = 15,
+#'                    t1 = 0, ratio = FALSE)
 #' 
 #' # Calculate the population zises at time 15.
 #' CalculatePopChange(solve.si.pt, variable = 'n', t2 = 15)

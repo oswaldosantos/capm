@@ -1,3 +1,23 @@
+capm 0.4.3
+==========
+
+* GraphicInterface: support for simple and stratified designs. sidebarPanel layout changed to multiple columns.
+
+* CalculateSimpleSampleSize: new function to calculate sample size under simple or systematic designs.
+
+* CalculateStratifiedSampleSize: new function to calculate sample size under simple or systematic designs.
+
+* DesignSurvey: now supports simple and stratified designs. Arguments for column specification accept names or position to index columns.
+
+* Calculate2StageSampleSize: level argument renamed as conf.level.
+
+* SampleSystematic: code adapted to allow sampling in each strata of a stratified sampling design. Arguments ssu and total renamed as su and N, respectively.
+
+* SummarySurvey: variables created to define the type of design now do not appear as variables to be estimated. Argumetn level renamed as conf.level. Position of the first two arguments exchanged.
+
+* pilot, psu.ssu and survey.data: updated to include the rural area of Santos.
+
+
 capm 0.4.2
 ==========
 
@@ -7,7 +27,7 @@ capm 0.4.2
 
 * MapkmlPSU: function code simplification.
 
-* SampleSystematic: rise and error if samplu units to be selected are greater than sampling units in the population.
+* SampleSystematic: rise and error if sample units to be selected are greater than sampling units in the population.
 
 * CITATION: update.
 

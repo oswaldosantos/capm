@@ -2,7 +2,7 @@
 \alias{Calculate2StageSampleSize}
 \title{Two-stage cluster sampling size and composition}
 \usage{
-Calculate2StageSampleSize(psu.ssu = NULL, psu.x = NULL, level = 0.95,
+Calculate2StageSampleSize(psu.ssu = NULL, psu.x = NULL, conf.level = 0.95,
   error = 0.1, cost = 4)
 }
 \arguments{
@@ -18,8 +18,8 @@ Calculate2StageSampleSize(psu.ssu = NULL, psu.x = NULL, level = 0.95,
   contains the totals observed in the ssu and must be
   \code{\link{numeric}}.}
 
-  \item{level}{the confidence level required. It must be
-  \code{\link{numeric}} between 0 and 1 inclusive.}
+  \item{conf.level}{the confidence level required. It must
+  be \code{\link{numeric}} between 0 and 1 inclusive.}
 
   \item{error}{the maximum relative difference between the
   estimate and the unknown population value. It must be
@@ -53,7 +53,7 @@ data(psu.ssu)
 data(pilot)
 
 # Calculate sample size and composition.
-(sample.sc <- Calculate2StageSampleSize(psu.ssu, pilot, level = 0.95, error = 0.1, cost = 4))
+(sample.sc <- Calculate2StageSampleSize(psu.ssu, pilot, conf.level = 0.95, error = 0.1, cost = 4))
 }
 \references{
 Levy P and Lemeshow S (2008). Sampling of populations:

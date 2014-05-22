@@ -1,8 +1,9 @@
 library(rgdal)
 shinyServer(function(input, output) {
   
-  # Universe of PSUs and SSUs.
-  dat <- function() {
+  ## Two-stage cluster sampling.
+  
+  Universe <- function() {
     if (input$examples) {
       data(psu.ssu)
       return(psu.ssu)
@@ -16,29 +17,43 @@ shinyServer(function(input, output) {
     }
   }
   
-  # Selection of PSUs.
-  psu <- function() {
-    if (is.null(dat()) | !is.numeric(input$psu)) {
-      return()
+  ## Title to render above the respective uploaded files.
+  FileTitle <- function() {
+    if(is.null(Universe())) {
+      return() 
     } else {
-      return(SamplePPS(dat(), input$psu))
+      return('Uploaded file:')
     }
   }
   
-  # Selection of SSUs or simple sampling units.
-  ssu <- function() {
-    if (is.numeric(input$total) & is.numeric(input$su)) {
-      return(data.frame('Sampling_units' = SampleSystematic(total = input$total,
-                                                            ssu = input$su)))
-    } else if (is.null(psu()) | !is.numeric(input$ssu)) {
+  ## Selection of PSUs.
+  PSU <- function() {
+    if (input$design != 'twostage') {
       return()
     } else {
-      return(SampleSystematic(psu(), input$ssu))
-    } 
+      if (is.null(Universe()) | !is.numeric(input$psu)) {
+        return()
+      } else {
+        return(SamplePPS(Universe(), input$psu))
+      }
+    }
   }
   
-  # Shapefile with the universe of PSUs.
-  map <- function() {
+  ## Selection of SSUs or simple sampling units.
+  SSU <- function() {
+    if (input$design != 'twostage') {
+      return()
+    } else {
+      if (is.null(PSU()) | !is.numeric(input$ssu)) {
+        return()
+      } else {
+        return(SampleSystematic(psu.ssu = PSU(), su = input$ssu))
+      } 
+    }
+  }
+  
+  ## Shapefile with the universe of PSUs.
+  Maps <- function() {
     if (input$examples) {
       shape.path <- system.file('extdata', package="capm")
       shape.name <- 'santos'
@@ -50,9 +65,9 @@ shinyServer(function(input, output) {
     
   }
   
-  # Write kml files of the selected PSUs.
+  ## Write kml files of the selected PSUs.  
   
-  # Redefinitio of MapkmlPSU function from capm to write KMLs in a
+  # Redefinition of MapkmlPSU function from capm to write KMLs in a
   # user-defined directory (new argument: write.to.path).
   MapkmlPSU2 <- function (shape = NULL, psu = NULL, id = NULL,
                           path = '.', write.to.path = NULL) 
@@ -82,6 +97,7 @@ shinyServer(function(input, output) {
              driver = "KML")
   }
   
+  # Write the kmls.
   observe({
     if (input$examples) {
       shape.path <- system.file('extdata', package="capm")
@@ -98,38 +114,86 @@ shinyServer(function(input, output) {
       } else {
         shape.path <- input$shape.path
       }
-      MapkmlPSU2(shape.name, psu()[ , 1], 1,
+      MapkmlPSU2(shape.name, PSU()[ , 1], 1,
                  path = shape.path, write.to.path = input$write.to.path)
     })
   })
   
-  output$selected <- renderTable(ssu())
+  ## Systematic sampling.
+  Systematic <- function() {
+    if (input$design != 'systematic') {
+      return()
+    } else {
+      if (is.numeric(input$N) & is.numeric(input$su)) {
+        return(data.frame('Sampling_units' = SampleSystematic(N = input$N,
+                                                              su = input$su)))
+      } else {
+        return()
+      }
+    }
+  }
   
-  output$dataset <- renderDataTable({
-    dat()
+  ## Stratified sampling.
+  Stratified <- function() {
+    if (input$design != 'stratified') {
+      return()
+    } else {
+      if (!is.null(input$strata.N) & !is.null(input$strata.su)) {
+        N <- as.numeric(strsplit(input$strata.N, ',')[[1]])
+        names.N <- strsplit(input$strata.names, ',')[[1]]
+        su <- as.numeric(strsplit(input$strata.su, ',')[[1]])
+        if (length(N) == length(su) &
+              length(N) == length(names.N) & length(N) > 1) {
+        names(N) <- names.N
+          return(SampleSystematic(N = N, su = su))
+        }
+      } else {
+        return()
+      }
+    }
+  }
+    
+  output$selected <- renderTable(
+    if (!is.null(SSU()) & input$design == 'twostage') {
+      SSU()
+    } else {
+      if (!is.null(Systematic()) & input$design == 'systematic') {
+        Systematic()
+      } else {
+        if (!is.null(Stratified()) & input$design == 'stratified') {
+          Stratified()
+        }
+      }
+    }
+  )
+  
+  output$universe <- renderDataTable({
+    Universe()
   }, options = list(aLengthMenu = c(5, 30, 50), iDisplayLength = 5))
   
   output$downloadData <- downloadHandler(
     filename = 'selected_psu.csv',
     content = function(file) {
-      write.csv(ssu(), file, row.names = FALSE)
+      write.csv(SSU(), file, row.names = FALSE)
     }
   )
   
-  output$map <- renderPlot({
+  output$file.tilte <- renderText(FileTitle())
+  
+  output$maps <- renderPlot({
     if (input$get.map == 0)
       return()
     
     isolate({
-      if (!is.null(input$psu) & !is.null(dat())) {
+      if (!is.null(input$psu) & !is.null(Universe())) {
         tmp <- NULL
-        for (i in 1:length(psu()[ , 1])) {
+        for (i in 1:length(PSU()[ , 1])) {
           tmp[i] <- which(
-            as.character(map()@data[, input$col]) == psu()[ , 1][i])
+            as.character(Maps()@data[, input$col]) == PSU()[ , 1][i])
         }
-        plot(map(), border = 'grey', axes = T, las = 1,
+        plot(Maps(), border = 'grey', axes = T, las = 1,
              xlab = 'Easting', ylab = 'Northing')
-        plot(map()[tmp, ], col = 'red', border = 'red', add = T)
+        plot(Maps()[tmp, ], col = 'red', border = 'red', add = T)
       }
     })
   })
