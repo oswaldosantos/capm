@@ -40,17 +40,17 @@ Methods for class "sensFun" can be used.
 
 ## Parameters and intial conditions.
 pars.solve.iasa = c(
-   b1 = 21870.897, b2 = 4374.179,
-   df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,
+   b1 = 21871, b2 = 4374,
+   df1 = 0.104, dm1 = 0.098, df2 = 0.125, dm2 = 0.118,
    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
-   k1 = 98050.49, k2 = 8055.456, h1 = 1, h2 = .5,
+   k1 = 98050, k2 = 8055, h1 = 1, h2 = 0.5,
    ab = 0.054, ad = 0.1, v = 0.2, z = 0.1)
 
 init.solve.iasa = c(
-   f1 = 33425.19, fs1 = 10864.901,
-   m1 = 38038.96, ms1 = 6807.759,
-   f2 = 3342.519, fs2 = 108.64901,
-   m2 = 3803.896, ms2 = 68.07759)
+   f1 = 33425, fs1 = 10865,
+   m1 = 38039, ms1 = 6808,
+   f2 = 3343, fs2 = 109,
+   m2 = 3804, ms2 = 68)
 
 
 # Solve for point estimates.

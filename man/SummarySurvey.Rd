@@ -2,7 +2,8 @@
 \alias{SummarySurvey}
 \title{Summary statistics for sample surveys}
 \usage{
-SummarySurvey(design = NULL, variables = NULL, level = 0.95, rnd = 3)
+SummarySurvey(design = NULL, variables = NULL, conf.level = 0.95,
+  rnd = 3)
 }
 \arguments{
   \item{design}{an output form \code{\link{DesignSurvey}}
@@ -12,7 +13,7 @@ SummarySurvey(design = NULL, variables = NULL, level = 0.95, rnd = 3)
   \code{\link{vector}} with the type of estimate for each
   variable contained in \code{design} (see details).}
 
-  \item{level}{the confidence level required.}
+  \item{conf.level}{the confidence level required.}
 
   \item{rnd}{the number of decimal places (round) or
   significant digits (signif) to be used. If \code{NA},
@@ -33,33 +34,33 @@ of \code{names(design$variables)} (see examples).
 data(psu.ssu)
 data(survey.data)
 
-#######################
-## Example 1         ##
-## General estimates ##
-#######################
+##########################################
+## Example 1 (two-stage cluster design) ##
+## General estimates                    ##
+##########################################
 
 # Specify the two-stage cluster design.
-design <- DesignSurvey(psu.ssu, survey.data, psu.col = 2, ssu.col = 1, psu.2cd = 20)
+design <- DesignSurvey(sample = survey.data, psu.ssu = psu.ssu,
+                       psu.col = 2, ssu.col = 1, psu.2cd = 20)
 
 # Look at the variables contained in the survey design
 names(design$variables)
 
 # Specify the type of estimate for each variable
-variables <- c("", "", "total", "prop", "mean", rep("prop", 3),
-              "total", rep("prop", 3), "", "", "")
+variables <- c("total", "prop", "mean", rep("prop", 2),
+               "total", rep("prop", 8))
 
 # Make sure you specify the correct type of estimate for each variable
 cbind(names(design$variables), variables)
 
 # Calculate the summary statistics for the survey.
 # Uncomment the following two lines (will take some seconds).
-# estimates <- SummarySurvey(design, variables = variables,
-#                           rnd = 3)
+# estimates <- SummarySurvey(design, variables = variables, rnd = 3)
 
-############################
-## Example 2              ##
-## Sex-specific estimates ##
-############################
+##########################################
+## Example 2 (two-stage cluster design) ##
+## Sex-specific estimates               ##
+##########################################
 
 # Make a copy of the dataset and select some
 # variables of interest.
@@ -73,9 +74,8 @@ sample1[which(sample1[, 5] == "no"), 5] <- 0
 sample1[, 5] <- as.numeric(sample1[, 5])
 
 # Define a survey design for each sex.
-design.sex <- DesignSurvey(psu.ssu, sample1,
-                   psu.col = 2,
-                   ssu.col = 1, psu.2cd = 20)
+design.sex <- DesignSurvey(sample = sample1, psu.ssu = psu.ssu,
+                           psu.col = 2, ssu.col = 1, psu.2cd = 20)
 design.f <- subset(design.sex, sex == 'Female')
 design.m <- subset(design.sex, sex == 'Male')
 
@@ -83,8 +83,7 @@ design.m <- subset(design.sex, sex == 'Male')
 names(design.sex$variables)
 
 # Specify the type of estimate for each variable
-variables.sex <- c("", "", "total", "", "total",
-                  "prop", "prop", "", "", "")
+variables.sex <- c("total", "", "total", "prop", "prop")
 
 # Make sure you specify the correct type of
 # estimate for each variable

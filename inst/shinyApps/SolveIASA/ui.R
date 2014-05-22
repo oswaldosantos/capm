@@ -1,5 +1,3 @@
-#library(shiny)
-
 shinyUI(fluidPage(
   
   titlePanel('IASA model: Immigration, Abandonment, Sterilization and Adoption'),
@@ -9,71 +7,100 @@ shinyUI(fluidPage(
     conditionalPanel(
       condition = 'input.conditionedPanels == 1', value = 1,
       HTML('<p><b>Initial conditions</b></p>'),
-      br(),br(),
+      br(),
       HTML('<p>Owned population</p>'),
-      numericInput('f1', 'Intact females (f1)',
-                   value = 33425, min = 0),
-      numericInput('fs1', 'Sterilized females (fs1)',
-                   value = 10865, min = 0),
-      numericInput('m1', 'Intact males (m1)',
-                   value = 38039, min = 0),
-      numericInput('ms1', 'Sterilized males (ms1)',
-                   value = 6008, min = 0),
-      
-      br(),br(),
+      fluidRow(
+        column(6,
+               numericInput('f1', 'Intact females (f1)',
+                            value = 33425, min = 0),
+               numericInput('m1', 'Intact males (m1)',
+                            value = 38039, min = 0)
+               ),
+        column(6,
+               numericInput('fs1', 'Sterilized females (fs1)',
+                            value = 10865, min = 0),
+               numericInput('ms1', 'Sterilized males (ms1)',
+                            value = 6008, min = 0)
+               )
+        ),
+            
+      br(),
       HTML('<p>Stray population</p>'),
-      numericInput('f2', 'Intact females (f2)',
-                   value = 3343, min = 0),
-      numericInput('fs2', 'Sterilized females (fs2)',
-                   value = 109, min = 0),
-      numericInput('m2', 'Intact males (m2)',
-                   value = 3804, min = 0),
-      numericInput('ms2', 'Sterilized males (ms2)',
-                   value = 68, min = 0),
+      fluidRow(
+        column(6,
+               numericInput('f2', 'Intact females (f2)',
+                            value = 3343, min = 0),
+               numericInput('m2', 'Intact males (m2)',
+                            value = 3804, min = 0)
+               ),
+        column(6,
+               numericInput('fs2', 'Sterilized females (fs2)',
+                            value = 109, min = 0),
+               numericInput('ms2', 'Sterilized males (ms2)',
+                            value = 68, min = 0))
+        ),
       
       tags$hr(),
       HTML('<p><b>Parameters</b></p>'),
-      br(),br(),
+      br(),
       HTML('<p>Owned population</p>'),
-      numericInput('b1', 'Births per year (b1)',
-                   value = 21871, min = 0),
-      numericInput('df1', 'Female death rate (df1)',
-                   value = 0.104, min = 0, step = 0.01),
-      numericInput('dm1', 'Male death rate (dm1)',
-                   value = 0.098, min = 0, step = 0.01),
-      numericInput('sf1', 'Female sterilization rate (sf1)',
-                   value = 0.069, min = 0, step = 0.01),
-      numericInput('sm1', 'Male sterilization rate (sm1)',
-                   value = 0.028, min = 0, step = 0.01),
-      numericInput('k1', 'Carrying capacity (k1)',
-                   value = 98050, min = 0),
-      numericInput('h1', 'Mean harem size (h1)',
-                   value = 1, min = 0, step = 0.1),
-      numericInput('ab', 'Abandonment rate (ab)',
-                   value = 0.054, min = 0, step = 0.01),
-      numericInput('v', 'Immigration rate (v)',
-                   value = 0.2, min = 0, step = 0.01),
-      numericInput('z', 'Proportion of sterilized immigrants (z)',
-                   value = 0.1, min = 0, step = 0.01),
+      fluidRow(
+        column(6,
+               numericInput('b1', 'Births per year (b1)',
+                            value = 21871, min = 0),
+               numericInput('dm1', 'Male death rate (dm1)',
+                            value = 0.098, min = 0, step = 0.01),
+               numericInput('sm1', 'Male steril. rate (sm1)',
+                            value = 0.028, min = 0, step = 0.01),
+               numericInput('h1', 'Mean harem size (h1)',
+                            value = 1, min = 0, step = 0.1)
+               ),
+        column(6,
+               numericInput('df1', 'Female death rate (df1)',
+                            value = 0.104, min = 0, step = 0.01),
+               numericInput('sf1', 'Female steril. rate (sf1)',
+                            value = 0.069, min = 0, step = 0.01),
+               numericInput('k1', 'Carrying capacity (k1)',
+                            value = 98050, min = 0),
+               numericInput('ab', 'Abandonment rate (ab)',
+                            value = 0.054, min = 0, step = 0.01)
+               )
+        ),
+      fluidRow(
+        column(5,
+               numericInput('v', 'Immigration rate (v)',
+                            value = 0.2, min = 0, step = 0.01)
+               ),
+        column(7,
+               numericInput('z', 'Prop. of steril. immigrants (z)',
+                            value = 0.1, min = 0, step = 0.01)
+               )
+        ),
       
-      br(),br(),
+      br(),
       HTML('<p>Stray population</p>'),
-      numericInput('b2', 'Births per year (b2)',
-                   value = 4374, min = 0),
-      numericInput('df2', 'Female death rate (df2)',
-                   value = 0.125, min = 0, step = 0.01),
-      numericInput('dm2', 'Male death rate (dm2)',
-                   value = 0.118, min = 0, step = 0.01),
-      numericInput('sf2', 'Female sterilization rate (sf2)',
-                   value = 0.05, min = 0, step = 0.01),
-      numericInput('sm2', 'Male sterilization rate (sm2)',
-                   value = 0.03, min = 0, step = 0.01),
-      numericInput('k2', 'Carrying capacity (k2)',
-                   value = 8055, min = 0),
-      numericInput('h2', 'Mean harem size (h2)',
-                   value = 0.5, min = 0, step = 0.1),
-      numericInput('ad', 'Adoption rate (ad)',
-                   value = 0.1, min = 0, step = 0.01),      
+      fluidRow(
+        column(6,
+               numericInput('b2', 'Births per year (b2)',
+                            value = 4374, min = 0),
+               numericInput('dm2', 'Male death rate (dm2)',
+                            value = 0.118, min = 0, step = 0.01),
+               numericInput('sm2', 'Male steril. rate (sm2)',
+                            value = 0.03, min = 0, step = 0.01),
+               numericInput('h2', 'Mean harem size (h2)',
+                            value = 0.5, min = 0, step = 0.1)
+               ),
+        column(6,
+               numericInput('df2', 'Female death rate (df2)',
+                            value = 0.125, min = 0, step = 0.01),
+               numericInput('sf2', 'Female steril. rate (sf2)',
+                            value = 0.05, min = 0, step = 0.01),
+               numericInput('k2', 'Carrying capacity (k2)',
+                            value = 8055, min = 0),
+               numericInput('ad', 'Adoption rate (ad)',
+                            value = 0.1, min = 0, step = 0.01)
+               )
+        ),
       
       tags$hr(),    
       numericInput('time', strong('Simulation time (initial time is 0)'), value = 15),
@@ -168,7 +195,9 @@ shinyUI(fluidPage(
                HTML(
                  '<p>With this App, you will run a mathematical model of population dynamics. We are preparing a peer-reviewed paper to explain technical details. See also the link at the bottom.</p>
                  
-<p>Set the initial conditions and parameters. Define realistic values to avoid awkward results. The longer the simulation time, the longer the time to calculate and display results. The lesser the time step, the greater the output resoultion and the time to calculate and display results.</P>
+<p>Set the initial conditions and parameters. Define realistic values to avoid awkward results. The longer the simulation time, the longer the time to calculate and display results. The lesser the time step, the greater the output resoultion and the time to calculate and display results.</p>
+
+<p><i>Abbreviations:</i> steril: sterilization; Prop: proportion.</p>
 
 <b>Point estimates</b><br>
 <p>In <i>Point estimates - plot</i> and <i>Point estimates - table</i> Tabs you will see the simulation results, which use values defined in the left side panel from <i>Introduction</i>, <i>Point estimates - plot, Point estimates - table</i> Tabs.</p>

@@ -23,11 +23,6 @@ To install the development version, run `install_github('capm', 'oswaldosantos')
 
 To install the production version, run `install.packages('capm')` in (ideally) RStudio.
 
-**Current development version:** 0.4.2
-
-**Current production version:** 0.4
-
-
 If you find any error or have suggestions to improve or include functionality to `capm`, I will glad to know it. Please get in touch so I can better understand your needs.
 
 [Web page of the package](http://oswaldosantos.github.io/capm/)  

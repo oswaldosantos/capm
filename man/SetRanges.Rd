@@ -33,12 +33,12 @@ data(survey.data)
 #####################
 
 # Parameters and initial conditions.
-pars.solve.iasa <- c(
-   b1 = 21870.897, b2 = 4374.179,
-   df1 = 0.104, dm1 = 0.098, df2 = 0.1248, dm2 = 0.1176,
+pars.solve.iasa = c(
+   b1 = 21871, b2 = 4374,
+   df1 = 0.104, dm1 = 0.098, df2 = 0.125, dm2 = 0.118,
    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
-   k1 = 98050.49, k2 = 8055.456, h1 = 1, h2 = .5,
-   ab = 0.054, ad = 0.1, v = 0.1)
+   k1 = 98050, k2 = 8055, h1 = 1, h2 = 0.5,
+   ab = 0.054, ad = 0.1, v = 0.2, z = 0.1)
 
 # Set ranges 10 \% greater and lesser than the
 # point estimates.

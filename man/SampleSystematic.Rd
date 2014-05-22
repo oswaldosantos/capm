@@ -1,42 +1,61 @@
 \name{SampleSystematic}
 \alias{SampleSystematic}
-\title{Systematic sampling}
+\title{Simple and stratified systematic sampling}
 \usage{
-SampleSystematic(psu.ssu = NULL, ssu = NULL, total = NULL,
-  write = FALSE, ...)
+SampleSystematic(psu.ssu = NULL, su = NULL, N = NULL, write = FALSE,
+  ...)
 }
 \arguments{
   \item{psu.ssu}{\code{\link{data.frame}} with all PSU.
   First column contains PSU unique identifiers. Second
-  column contains \code{\link{numeric}} PSU sizes.}
+  column contains \code{\link{numeric}} PSU sizes. Only
+  used for the second stage of a two-stage cluster design
+  (see details).}
 
-  \item{ssu}{\code{\link{numeric}} indicating SSU to be
-  selected.}
+  \item{su}{\code{\link{numeric}} indicating the number of
+  sampling units to be selected. If \code{su} has more than
+  one element, stratified sampling is applied and
+  \code{psu.ssu} is ignored (see details).}
 
-  \item{total}{\code{\link{numeric}} indicating the number
-  of sampling units in the population. This is an
-  alternative to \code{psu.ssu}, intended for simple
-  sampling designs.}
+  \item{N}{\code{\link{numeric}} indicating the number of
+  sampling units in the population. It is intended for
+  simple or stratified sampling designs and when used,
+  \code{psu.ssu} is ignored (see details).}
 
   \item{write}{logical. If \code{TRUE}, a *.csv file
-  containing the psu and their ssu is writed in the current
+  containing the PSU and their SSU is writed in the current
   working directory.}
 
   \item{...}{further arguments passed to
   \code{\link{write.table}} function.}
 }
 \value{
-A \code{matrix}. The names of columns are the identifiers
+A \code{matrix}. For the second stage in a two-stage
+cluster sampling, the names of columns are the identifiers
 of selected psu, coerced by \code{\link{as.character}} to
 avoid scientific notation in case the identifiers be of
 \code{\link{class}} \code{\link{numeric}}. The rows
-correspond to the selected ssu within each psu.
+correspond to the selected SSU within each psu. For simple
+systematic sampling, the rows correspond to the selected
+sampling units. For stratified sampling, each column
+represent an strata and the rows correspond to the selected
+sampling units in each strata.
 }
 \description{
-Select sampling units using systematic samplin. In the
-context of two-stage cluster sampling, select Secondary
-Sampling Units (SSU) in one or more Primary Sampling Units
-(PSU), using systematic sampling.
+Select sampling units using simple or stratified systematic
+samplin. In the context of two-stage cluster sampling,
+select Secondary Sampling Units (SSU) in one or more
+Primary Sampling Units (PSU), using systematic sampling.
+}
+\details{
+When \code{N} is defined, \code{psu.ssu} is ignored (not
+need to be defined). If \code{N} has one element, \code{su}
+must too and the result is a simple systematic selection.
+If \code{N} has more than one element, \code{su} must have
+the same number of elements and each oredered pair
+represent an strata. Thus, when N has more than one
+element, the result is a stratified sampling with
+systematic selection within each strata (see examples).
 }
 \examples{
 # Load data with PSU identifiers and sizes.
@@ -46,12 +65,16 @@ data(psu.ssu)
 # proportional to size and with replacement.
 selected.psu <- SamplePPS(psu.ssu, 10, write = FALSE)
 
-# Take a sistematic sampling of 5 SSU within each
+# Take a systematic sampling of 5 SSU within each
 # PSU of selected.psu.
-(selected.ssu <- SampleSystematic(selected.psu, 5, write = FALSE))
+SampleSystematic(selected.psu, 5, write = FALSE)
 
 # Simple systematic sampling
-(simp.syst.sampling <- SampleSystematic(ssu = 5, total = 100))
+SampleSystematic(su = 5, N = 100)
+
+# Stratified systematic sampling
+SampleSystematic(su = c('Urban' = 50, 'Rural' = 10),
+                 N = c('Urban' = 4000, 'Rural' = 150))
 }
 \references{
 Levy P and Lemeshow S (2008). Sampling of populations:
