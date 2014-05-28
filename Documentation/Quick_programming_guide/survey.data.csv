@@ -1,4 +1,4 @@
-"interview_id","psu","dogs","sex","age","sterilized","sterilized.ly","births","present","fate","acquired","outside","acquired.ly","immigrant","immigrant.ly","immigrated.sterilized.ly"
+"interview_id","psu","dogs","sex","age","sterilized","sterilized.ly","births","present","fate","acquired","outside","acquired.ly","immigrant","immigrant.ly","immigrant.sterilized.ly"
 1,354850005000114,1,"Male",9,"yes","yes",0,"yes","in_home","bought","no","no","yes",NA,NA
 1,354850005000114,1,"Female",1,"no","no",0,"yes","in_home","bought","no","yes","yes","yes","no"
 2,354850005000114,1,"Female",7,"yes","no",0,"yes","in_home","bought","no","yes","yes","yes","no"

@@ -1,15 +1,16 @@
-#+ echo=F
+#+ echo = F
 # Comment the fifth line if you do not intend to compile a notebook.
 
-#+ echo=F
-opts_chunk$set(comment=NA, tidy=FALSE, message=F, warnings=F, fig.align='center')
+#+ echo = F
+opts_chunk$set(comment = NA, tidy = FALSE, message = F, warnings = F,
+               fig.align = 'center')
 
-#' # Quick programming guide with capm 0.4 in R version 3.0.3
+#' # Quick programming guide with capm 0.5 in R version 3.1.0
  
 #' ### Oswaldo Santos, oswaldosant@gmail.com
 #' ### [My Github repository](https://github.com/oswaldosantos)
 #' ### [Web page for the `capm`](http://oswaldosantos.github.io/capm/)
-#' ### Last update: 25/03/2014
+#' ### Last update: 27/05/2014
 #' ***
  
 ####' ### Introduction ####
@@ -21,7 +22,6 @@ opts_chunk$set(comment=NA, tidy=FALSE, message=F, warnings=F, fig.align='center'
 #' Assumptions to reproduce this guide:
 
 #' - Minimal background in R programming.
-#' - Versions R 3.0.2 and RStudio 0.98.501. 
 #' - Familiarity with R functions' help pages.
 #' - The current working directory contains the following files, available [here](https://github.com/oswaldosantos/capm/tree/master/Documentation/Quick_programming_guide). 
 #'  * pilot.csv
@@ -31,7 +31,7 @@ opts_chunk$set(comment=NA, tidy=FALSE, message=F, warnings=F, fig.align='center'
 #'  * santos.shp
 #'  * santos.shx
 #'  * survey.data.csv
-#'  In the previous link you also will find a file named quick_programming_guide_capm_0.3.2.R with the code for this guide.
+#'  In the previous link you also will find a file named quick_programming_guide_capm_0.5.R with the code for this guide.
 
 #+ 
 library(capm)
@@ -45,9 +45,9 @@ library(capm)
 #' After importing the file
 
 #+
-psu.ssu <- read.csv(file='psu.ssu.csv')
+psu.ssu <- read.csv(file = 'psu.ssu.csv')
 
-#' we can see that there are 649 PSU.
+#' we can see that there are 652 PSU.
 
 #+
 str(psu.ssu)
@@ -60,7 +60,7 @@ head(psu.ssu)
 #' PSU's identifiers seems all equal but this just a scientific notation output. The identifiers must be unique for each PSU. To verify this requirement we can change the printing default or verify that the number of different identifiers is equal to the number of PSU.
 
 #+
-print(head(psu.ssu), digits=15)
+print(head(psu.ssu), digits = 15)
 length(unique(psu.ssu[ , 1]))
 
 #' The file contains exactly the information we need to sample PSU's with probability proportional to their sizes, with replacement. If the `write` argument of `SamplePPS` is set as TRUE, selected PSU will be saved in a csv file, which can be viewed in a spreadsheet software. The output will have as many rows as selected PSU's. Remember that the same PSU can be selected more than once because sampling is with replacement.<br>  
@@ -69,7 +69,7 @@ length(unique(psu.ssu[ , 1]))
 
 #+ 
 set.seed(4)
-pilot.psu <- SamplePPS(psu.ssu=psu.ssu, psu=10, write=FALSE)
+pilot.psu <- SamplePPS(psu.ssu = psu.ssu, psu = 10, write = FALSE)
 
 #' Inspecting the object we just created, we can see that the PSU's identifiers `class` were converted to `character`. This means that identifiers are now represented as text, not as numbers.
 
@@ -81,7 +81,7 @@ head(pilot.psu)
 
 #+
 set.seed(4)
-pilot.ssu <- SampleSystematic(psu.ssu=pilot.psu, 5, write=F)
+pilot.ssu <- SampleSystematic(psu.ssu = pilot.psu, su = 5, write = F)
 
 #' Let's see the first four columns to have an idea.
 
@@ -95,29 +95,32 @@ head(pilot.ssu[ , 1:4])
 #' Having selected the sampling units, we need to know their geographic location. Fortunately, `capm` has a function to locate the PSU's. If we have a shapefile of the PSU, we are done as in this case. In the working directory, there are five files named as "santos", each one with a different extension. All those files are a shapefile representation of the PSU's from the sampled area (Santos city). I got the files in the bureau of statistics previously mentioned.<br>  
 
 #+
-MapkmlPSU(shape='santos', psu=pilot.psu[, 1], id=1)
+#MapkmlPSU(shape = 'santos', psu = pilot.psu[, 1], id = 1)
 
 #' `MapkmlPSU` creates a kml file for each selected PSU plus a kml with all selected PSU's. Those kml files can be opened with Google Hearth just clicking on them. [QGIS](www.qgis.org) is an open source tool, which can also render different layers as a background to the kml files.<br>  
 
 #' Of course, R allow us to plot the locations of the selected PSU's. Do not worry if you do not understand the following code snippet, it is just an alternative to Google Hearth or QGIS, which I am using here just to show that you can map the selected PSU.<br>  
 
 #+
+# The package rgeos must be installed.
 library(rgdal); library(ggmap); library(maptools); library(plyr)
 
-#+ fig.width=11, fig.height=11
-santos <- readOGR(dsn='.', layer='santos')
+#+ fig.width = 11, fig.height = 11
+santos <- readOGR(dsn = '.', layer = 'santos')
 santos.pilot <- santos[as.character(santos@data[ , 1]) %in% pilot.psu[ , 1], ]
 santos.pilot <- spTransform(santos.pilot, CRS('+init=epsg:4326'))
 
 santos.pilot@data$id <- rownames(santos.pilot@data)
-santos.pilot.points <- fortify(santos.pilot, region="id")
-santos.pilot.df <- join(santos.pilot.points, santos.pilot@data, by="id")
+santos.pilot.points <- fortify(santos.pilot, region = "id")
+santos.pilot.df <- join(santos.pilot.points, santos.pilot@data, by = "id")
 
+# If '503 Service Unavailable' error appears, try later to see if 
+# OSM servers come back (see the help page of get_openstreetmap).
 osm.all.psu <- get_openstreetmap(bbox = c(-46.384, -23.989, -46.299, -23.930),
-                                 scale=34000, color='bw')
+                                 scale = 34000, color = 'bw')
 ggmap(osm.all.psu) + 
-  geom_polygon(data=santos.pilot.df, aes(x=long, y=lat, fill=PSU),
-               color='yellow', size=1.2) +
+  geom_polygon(data = santos.pilot.df, aes(x = long, y = lat, fill = PSU),
+               color = 'yellow', size = 1.2) +
   coord_equal()
 
 #' Whatever the method used to produce the maps, we must to scketch a route in the map of each selected PSU, in order to go over all streets. We can set a household in an arbitrary point (i.e. the lower left location) as the first household. From it, we can go through the route counting the households (including both sides of streets fragment totally contained in the PSU) and interviewing those that were selected.<br>  
@@ -126,10 +129,10 @@ ggmap(osm.all.psu) +
 
 #+ 
 osm.psu4 <- get_openstreetmap(bbox = c(-46.349, -23.962, -46.345, -23.957),
-                              scale=5000)
+                              scale = 5000)
 ggmap(osm.psu4) +
-  geom_polygon(data=santos.pilot[4, ], aes(x=long, y=lat), fill=NA,
-               color='yellow', size=2) +
+  geom_polygon(data = santos.pilot[4, ], aes(x = long, y = lat), fill = NA,
+               color = 'yellow', size = 2) +
   coord_equal()
 
 #' ***
@@ -142,8 +145,8 @@ ggmap(osm.psu4) +
 
 #+ 
 pilot <- read.csv('pilot.csv')
-Calculate2StageSampleSize(psu.ssu=psu.ssu, psu.x=pilot,
-                          level=0.95, error=0.1, cost=10)
+Calculate2StageSampleSize(psu.ssu = psu.ssu, psu.x = pilot,
+                          conf.level = 0.95, error = 0.1, cost = 10)
 
 #' ***
 
@@ -154,10 +157,10 @@ Calculate2StageSampleSize(psu.ssu=psu.ssu, psu.x=pilot,
 #' 
 
 #+
-final.psu <- SamplePPS(psu.ssu, 20, write=F)
-final.ssu <- SampleSystematic(final.psu, 19, write=F)
+final.psu <- SamplePPS(psu.ssu, 20, write = F)
+final.ssu <- SampleSystematic(final.psu, 19, write = F)
 # Uncomment the next line to creat the kml files.
-#MapkmlPSU(shape='santos', psu=final.psu[, 1], id=1)
+#MapkmlPSU(shape = 'santos', psu = final.psu[, 1], id = 1)
 
 #' ***
 
@@ -175,8 +178,8 @@ head(survey.data)
 #' To estimate the population parameters, the first step is to define the sampling design from which the data come from. To do this, we need a file containing all the sampling units in the population (`psu.ssu`) and a file with the sampling data (`survey.data`). In this last file, the columns containing PSU's and SSU's identifiers must be specified, as well as the number of PSU's included in the sample (for PSU's included more than once, each occurrence must be counted).
 
 #+ 
-design <- DesignSurvey(psu.ssu=psu.ssu, sample=survey.data, psu.col=2,
-                       ssu.col=1, psu.2cd=20)
+design <- DesignSurvey(sample = survey.data, psu.ssu = psu.ssu, psu.col = 2,
+                       ssu.col = 1, psu.2cd = 20)
 
 #' Looking at the variables included in the design, we can see that the first two and the last three do not represent variables to be estimated. Those variables were created to define the sample design.
 
@@ -186,8 +189,8 @@ names(design$variables)
 #' Setting the type of estimate for each variable is easy. Empty quotes exclude a variable from the estimation procedure.
 
 #+ 
-variables <- c("", "", "total", "prop", "mean", "prop", "prop",
-               "total", rep("prop", 8), "", "", "")
+variables <- c("total", "prop", "mean", "prop", "prop",
+               "total", rep("prop", 8))
 
 #' It is convenient to confirm we defined the type of estimates we wanted.
 
@@ -197,7 +200,7 @@ cbind(names(design$variables), variables)
 #' Now we are ready to get our first estimates.
 
 #+
-(estimates <- SummarySurvey(design=design, variables=variables, rnd=3))
+(estimates <- SummarySurvey(design = design, variables = variables, rnd = 3))
 
 #' The previous output is very useful but might not be enough. Let's make a copy (`sample1`) of a transformed subset of `survey.data`, to estimate the total number of sterilized animals (instead of the proportion) and to get estimates conditioned on sex.
 
@@ -205,31 +208,30 @@ cbind(names(design$variables), variables)
 sample1 <- survey.data[, c('interview_id', 'psu', 'dogs', 'sex', 'sterilized',
                            'sterilized.ly', 'fate')]
 sample1[, 'sterilized'] <- as.character(sample1[, 'sterilized'])
-sample1[which(sample1$sterilized == "yes"), 'sterilized'] <- 1
-sample1[which(sample1[, 'sterilized'] == "no"), 'sterilized'] <- 0
+sample1[which(sample1$sterilized ==   "yes"), 'sterilized'] <- 1
+sample1[which(sample1[, 'sterilized'] ==   "no"), 'sterilized'] <- 0
 sample1[, 'sterilized'] <- as.numeric(sample1[, 'sterilized'])
 
 #' After defining a sampling design in the usual way
 
 #+
-design.sex <- DesignSurvey(psu.ssu=psu.ssu, sample=sample1, 
-                           psu.col=2, ssu.col=1, psu.2cd=20)
+design.sex <- DesignSurvey(sample = sample1, psu.ssu = psu.ssu,
+                           psu.col = 2, ssu.col = 1, psu.2cd = 20)
 
 #' we can create a design for each sex.
 
 #+ 
-design.f <- subset(design.sex, sex == 'Female')
-design.m <- subset(design.sex, sex == 'Male')
+design.f <- subset(design.sex, sex ==   'Female')
+design.m <- subset(design.sex, sex ==   'Male')
 
 #' From here, there is nothing new.
 
 #+
 names(design.sex$variables)
-variables.sex <- c("", "", "total", "", "total",
-                   "prop", "prop", "", "", "")
+variables.sex <- c('total', '', 'total', 'prop', 'prop')
 cbind(names(design.sex$variables), variables.sex)
-(estimates.f <- SummarySurvey(design.f, variables.sex, rnd=3))
-(estimates.m <- SummarySurvey(design.m, variables.sex, rnd=3))
+(estimates.f <- SummarySurvey(design.f, variables.sex, rnd = 3))
+(estimates.m <- SummarySurvey(design.m, variables.sex, rnd = 3))
 
 #' ***
 
@@ -238,9 +240,9 @@ cbind(names(design.sex$variables), variables.sex)
 #' Population pyramids summarizes the basic composition of a population. At minimum, they are built from age and sex variables but can be conditioned on a third categorical variable. The data to be used must have each variable in a separate column and those columns must be specified in the respective arguments' function.
 
 #+
-matrix(names(survey.data), ncol=1)
-PlotPopPyramid(dat=survey.data, age.col='age', sex.col='sex')
-PlotPopPyramid(dat=survey.data, age.col=5, sex.col=4, str.col=6)
+matrix(names(survey.data), ncol = 1)
+PlotPopPyramid(dat = survey.data, age.col = 'age', sex.col = 'sex')
+PlotPopPyramid(dat = survey.data, age.col = 5, sex.col = 4, str.col = 6)
 
 #' ***
 
@@ -254,16 +256,16 @@ PlotPopPyramid(dat=survey.data, age.col=5, sex.col=4, str.col=6)
 # Initial conditions
 
 # Owned dogs                  # Stray dogs
-f1 <- 39537.848 - 12773.921;  f2 <- f1 * 0.1
-fs1 <- 12773.921;             fs2 <- fs1 * 0.05
-m1 <- 50254.640 - 9339.458;   m2 <- m1 * 0.1
-ms1 <- 9339.458;              ms2 <- ms1 * 0.05
+f1 <- 39565 - 12783;          f2 <- f1 * 0.1
+fs1 <- 12783;                 fs2 <- fs1 * 0.05
+m1 <- 50289 - 9346;           m2 <- m1 * 0.1
+ms1 <- 9346;                  ms2 <- ms1 * 0.05
 
 
 # Parameters
 
 # Owned dogs                  # Stray dogs
-b1 <-  7719.074;              b2 <- b1 * 0.15
+b1 <-  7724;                  b2 <- b1 * 0.15
 df1 <- 0.046;                 df2 <- df1 * 1.15
 dm1 <- 0.053;                 dm2 <- dm1 * 1.15
 sf1 <- 0.13;                  sf2 <- sf1 * 0.05
@@ -276,54 +278,54 @@ z <- v * 0.11
 
 #+
 init.solve.iasa = c(
-  f1=f1, fs1=fs1, m1=m1, ms1=ms1,
-  f2=f2, fs2=fs2, m2=m2, ms2=ms2)
+  f1 = f1, fs1 = fs1, m1 = m1, ms1 = ms1,
+  f2 = f2, fs2 = fs2, m2 = m2, ms2 = ms2)
 
 pars.solve.iasa = c(
-  b1=b1, b2=b2, df1=df1, dm1=dm1, df2=df2, dm2=dm2,
-  sf1=sf1, sf2=sf2, sm1=sm1, sm2=sm2, k1=k1, k2=k2,
-  h1=h1, h2=h2, ab=ab, ad=ad, v=v, z=z)
+  b1 = b1, b2 = b2, df1 = df1, dm1 = dm1, df2 = df2, dm2 = dm2,
+  sf1 = sf1, sf2 = sf2, sm1 = sm1, sm2 = sm2, k1 = k1, k2 = k2,
+  h1 = h1, h2 = h2, ab = ab, ad = ad, v = v, z = z)
 
 
 #' Solving the model for point estimates (those we defined above) is straightforward.
 
 #+
-solve.iasa.pt <- SolveIASA(pars=pars.solve.iasa,
-                           init=init.solve.iasa,
-                           time=0:20, method='rk4')
+solve.iasa.pt <- SolveIASA(pars = pars.solve.iasa,
+                           init = init.solve.iasa,
+                           time = 0:20, method = 'rk4')
 
 #' We might be interested in how much different subopulations change through time.<br>  
 
 #' For example, let's calculate the relative change in the total number of owned sterilized dogs from the beginning to the end of the simulated period
 
 #+
-CalculatePopChange(model.out=solve.iasa.pt, variable='ns1', t1=0, t2=20)
+CalculatePopChange(model.out = solve.iasa.pt, variable = 'ns1', t1 = 0, t2 = 20)
 
 #' and the absolute change in the number of stray intact females from the fifth to the tenth year.
 
 #+
-CalculatePopChange(model.out=solve.iasa.pt, variable='fs2',
-                   t1=5, t2=10, ratio=F)
+CalculatePopChange(model.out = solve.iasa.pt, variable = 'fs2',
+                   t1 = 5, t2 = 10, ratio = F)
 
 #' The dynamics of different subpopulations can be plotted too (see the help page for `PlotModels`).
 
 #+
-PlotModels(model.out=solve.iasa.pt, variable='ns2')
+PlotModels(model.out = solve.iasa.pt, variable = 'ns2')
 
 #' We can also simulate scenarios to assess the interaction between different combinations of sterilization, abandonment, adoptions and immigration rates. In the following example we will create 900 scenarios (50 sterilization rates, 3 abandonment rates, 3 adoption rates and 2 immigration rates).
 
 #+
-solve.iasa.rg <- SolveIASA(pars=pars.solve.iasa,
-                           init=init.solve.iasa,
-                           time=seq(0, 20, by=0.5),
-                           s.range=seq(from=0, to=0.4, length.out=50),
-                           ab.range=c(0, .2),
-                           ad.range=c(0, .2),
-                           im.range=c(0, .2),
-                           method='rk4')
+solve.iasa.rg <- SolveIASA(pars = pars.solve.iasa,
+                           init = init.solve.iasa,
+                           time = seq(0, 20, by = 0.5),
+                           s.range = seq(from = 0, to = 0.4, length.out = 50),
+                           ab.range = c(0, .2),
+                           ad.range = c(0, .2),
+                           im.range = c(0, .2),
+                           method = 'rk4')
 
-#+ fig.width=11, fig.height=11
-PlotModels(model.out=solve.iasa.rg, variable='ns')
+#+ fig.width = 11, fig.height = 11
+PlotModels(model.out = solve.iasa.rg, variable = 'ns')
 
 #' ***
 
@@ -334,12 +336,12 @@ PlotModels(model.out=solve.iasa.rg, variable='ns')
 #' In global sensitivity analysis, we perturb each one of the previous estimates to see how sensible is the population dynamics to those perturbations. Let's make 100 (fixed by the function) simulations selecting at random, in each simulation, one possible value for each parameter. Each parameter will be sampled from a set of values, being the minimum and maxim equal to 90% and 110% of the respective point estimate.
 
 #+
-rg.solve.iasa <- SetRanges(pars=pars.solve.iasa, range=0.1)
+rg.solve.iasa <- SetRanges(pars = pars.solve.iasa, range = 0.1)
 glob.all.solve.iasa <- CalculateGlobalSens(
-  model.out=solve.iasa.pt,
-  ranges=rg.solve.iasa,
-  sensv='n2', all = T)
-PlotGlobalSens(global.out=glob.all.solve.iasa)
+  model.out = solve.iasa.pt,
+  ranges = rg.solve.iasa,
+  sensv = 'n2', all = T)
+PlotGlobalSens(global.out = glob.all.solve.iasa)
 glob.all.solve.iasa
 
 #' In contrast to simulations based just in point estimates, here we got a set of possible results represented by an envelope, instead of a unique result represented by a line.<br>  
@@ -348,19 +350,19 @@ glob.all.solve.iasa
 
 #' A natural question arises. Population dynamics are equally sensible to all parameters? If not, what are the most influent parameters? To answer these questions, one approach is to make global sensitivity analysis perturbing one parameter at a time and fixing the others in the point estimates.
 
-#+ fig.width=11, fig.height=11
+#+ fig.width = 11, fig.height = 11
 glob.solve.iasa <- CalculateGlobalSens(
-  model.out=solve.iasa.pt,
-  ranges=rg.solve.iasa,
-  sensv='n2', all=F)
-PlotGlobalSens(global.out=glob.solve.iasa)
+  model.out = solve.iasa.pt,
+  ranges = rg.solve.iasa,
+  sensv = 'n2', all = F)
+PlotGlobalSens(global.out = glob.solve.iasa)
 head(glob.solve.iasa)
 
 #' Another approach is given by local sensitivity analysis. Here the idea is to make very small perturbations and determine the sensitivity to each parameter using measurements of influence.
 
-#+ fig.width=11, fig.height=15
-local.solve.iasa <- CalculateLocalSens(model.out=solve.iasa.pt, sensv='n2')
-PlotLocalSens(local.out=local.solve.iasa)
+#+ fig.width = 11, fig.height = 15
+local.solve.iasa <- CalculateLocalSens(model.out = solve.iasa.pt, sensv = 'n2')
+PlotLocalSens(local.out = local.solve.iasa)
 summary(local.solve.iasa)
 
 #' Looking at the global sensitivities to each parameters or looking at the local sensitivities (in L1 or L2 subplots), it is clear that carrying capacity for the stray population is by far the more influent parameter for total number of stray dogs (the greater the bar the greater the influence of the respective parameter).

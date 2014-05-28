@@ -1,20 +1,18 @@
 library(devtools)
 
 # Development workflow
-setwd('~/Documents/Projectos')
-load_all('capm')
-document('capm')
-install('capm')
-setwd('~/Documents/Projectos/capm')
+load_all()
+document()
+install()
 
 # News preview
-show_news('capm')
+show_news()
 
 # Checking
 check()
 check_doc()
 run_examples()
-build_win()
+#build_win()
 
 # Update version in:
 #   DESCRIPTION
@@ -26,5 +24,5 @@ build_win()
 #   Web documentation in all languages
 
 #####################
-## release('capm') ##
+## release() ##
 #####################

@@ -5,24 +5,22 @@ library(capm); library(rgdal)
 wd = getwd()
 setwd('~/Downloads/sp')
 shape = readOGR('.', '35SEE250GC_SIR')
-setwd('~/Downloads/base/CSV')
-santos.dat = read.table('Basico_SP2.csv', sep = ';', dec = '.',
-                        head = T, quote = '\"')
+setwd('~/Downloads')
+santos.dat = read.csv('Basico_SP2.csv', sep = ';')
 
 #### santos shapefile ####
 
 setwd("~/Copy/Projectos/capm/inst/extdata")
-santos.shp = shape[shape@data[, 'NM_MUNICIP'] == 'SANTOS', ]
-santos = santos.shp[santos.shp@data[, 'TIPO'] == 'URBANO', 2]
-names(santos@data) = 'PSU'
-writeOGR(santos, dsn = ".", layer = "santos", driver = "ESRI Shapefile")
+santos.shp = shape[shape@data[, 'NM_MUNICIP'] == 'SANTOS', 2]
+names(santos.shp@data) = 'PSU'
+writeOGR(santos.shp, dsn = ".", layer = "santos",
+         driver = "ESRI Shapefile", overwrite_layer = T)
 
 #### psu.ssu (universe) ####
 
 setwd("~/Copy/Projectos/capm/data")
-psu.ssu = merge(santos.dat, santos.shp@data, by.x = 1, by.y = 2)
-psu.ssu = psu.ssu[psu.ssu[, 20] < 4, c(1, 21)]
-psu.ssu = psu.ssu[complete.cases(psu.ssu), ]
+psu.ssu = merge(santos.dat, santos.shp@data, by = 1)
+psu.ssu = psu.ssu[complete.cases(psu.ssu), c(1, 21)]
 names(psu.ssu) = c('psu', 'ssu')
 save(psu.ssu, file = 'psu.ssu.rda')
 
@@ -58,7 +56,7 @@ survey.data[survey.data$dogs > 1, 'dogs'] <- 1
 survey.data <- cbind(survey.data, sex = 0, age = NA, sterilized = 0,
                      sterilized.ly = 0, births = 0, present = 0, fate = NA,
                      acquired = 0, outside = 0, acquired.ly = 0, immigrant = 0,
-                     immigrant.ly = 0, immigrated.sterilized.ly = 0)
+                     immigrant.ly = 0, immigrant.sterilized.ly = 0)
 
 for (i in 1:nrow(survey.data)) {
   if (survey.data[i, 'dogs'] == 1) {
@@ -82,7 +80,7 @@ for (i in 1:nrow(survey.data)) {
     survey.data[i, 'fate'] <- 'in_home'
   }
   if (survey.data[i, 'present'] == 'no') {    
-    survey.data[i, 'fate'] <- sample(c('deied', 'lost', 'given', 'sold'), 1,
+    survey.data[i, 'fate'] <- sample(c('died', 'lost', 'given', 'sold'), 1,
                                      p = c(.4, .2, .2, .2))
   }
   if (survey.data[i, 'sterilized'] == 'yes' & survey.data[i, 'sex'] == 'Female') {
@@ -98,7 +96,8 @@ for (i in 1:nrow(survey.data)) {
         survey.data[i, 'outside'] == 'yes') {    
     survey.data[i, 'immigrant'] <- 'yes'
   }
-  if (survey.data[i, 'acquired'] != 0 & survey.data[i, 'acquired'] != 'bought' &
+  if (survey.data[i, 'acquired'] != 0 &
+        survey.data[i, 'acquired'] != 'bought' &
         survey.data[i, 'outside'] != 0 & survey.data[i, 'outside'] != 'yes') {
     survey.data[i, 'immigrant'] <- 'no'
   }
@@ -106,18 +105,21 @@ for (i in 1:nrow(survey.data)) {
         survey.data[i, 'acquired.ly'] == 'yes') {
     survey.data[i, 'immigrant.ly'] <- 'yes'
   }
-  if (survey.data[i, 'immigrant'] == 'no') {
+  if ((survey.data[i, 'immigrant'] == 'yes' &
+         survey.data[i, 'acquired.ly'] == 'no') |
+        survey.data[i, 'immigrant'] == 'no') {
     survey.data[i, 'immigrant.ly'] <- 'no'
+    survey.data[i, 'immigrant.sterilized.ly'] <- 'no'
   }
   if (survey.data[i, 'immigrant.ly'] == 'yes') {
-    survey.data[i, 'immigrated.sterilized.ly'] <- sample(c('yes', 'no'), 1,
+    survey.data[i, 'immigrant.sterilized.ly'] <- sample(c('yes', 'no'), 1,
                                                         prob = c(.2, .8))
   }
 }
 
 survey.data[survey.data[, 'dogs'] == 0, 4:ncol(survey.data)] <- NA
 survey.data$immigrant.ly[survey.data$immigrant.ly == '0'] <- NA
-survey.data$immigrated.sterilized.ly[survey.data$immigrated.sterilized.ly == '0'] <- NA
+survey.data$immigrant.sterilized.ly[survey.data$immigrant.sterilized.ly == '0'] <- NA
 
 for (i in 1:ncol(survey.data)) {
   if (is.character(survey.data[, i])) {
