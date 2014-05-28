@@ -10,7 +10,7 @@ opts_chunk$set(comment = NA, tidy = FALSE, message = F, warnings = F,
 #' ### Oswaldo Santos, oswaldosant@gmail.com
 #' ### [Mi repositorio Github](https://github.com/oswaldosantos)
 #' ### [Página web del `capm`](http://oswaldosantos.github.io/capm/)
-#' ### Última actualización: 25/03/2014
+#' ### Última actualización: 25/05/2014
 #' ***
  
 ####' ### Introducción ####
