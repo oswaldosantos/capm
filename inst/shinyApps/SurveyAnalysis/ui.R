@@ -212,14 +212,13 @@ shinyUI(fluidPage(
 </ul>
 </p>
           ')),
-      
       tabPanel('Uploaded files',
                h4(textOutput('file.title1')),
                dataTableOutput('universe'),
                tags$hr(),
                h4(textOutput('file.title2')),
                dataTableOutput('sample')),
-      
+          
       tabPanel('Sample data summary',
                verbatimTextOutput('summ.sample')),
       

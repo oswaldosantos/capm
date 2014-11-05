@@ -5,6 +5,7 @@
 #' @param conf.level the confidence level required. It must be \code{\link{numeric}} between 0 and 1 inclusive.
 #' @param error the maximum relative difference between the estimate and the unknown population value. It must be \code{\link{numeric}} between 0 and 1 inclusive.
 #' @param cost the ratio of the cost of sampling a PSU to the cost of sampling a SSU.
+#' @param minimum.ssu integer to define the minimum number of SSU to be selected per PSU. If the calculated number of SSU to be selected is lesser than \code{minimum.ssu}, it is redefined as \code{minimum.ssu}. To avoid any lower threshold, define \code{minimum.ssu} as equal to 0.
 #' @return Matrix with the sample size and composition and with variability estimates.
 #' @details It is assumed that psu from the pilot are selected with probability proportional to size (PPS) and with replacement. ssu are assumed to be selected via simple (systematic) random sampling.
 #' 
@@ -23,7 +24,7 @@
 #' # Calculate sample size and composition.
 #' (sample.sc <- Calculate2StageSampleSize(psu.ssu, pilot, conf.level = 0.95, error = 0.1, cost = 4))
 
-Calculate2StageSampleSize <- function(psu.ssu = NULL, psu.x = NULL, conf.level = .95, error = 0.1, cost = 4) {
+Calculate2StageSampleSize <- function(psu.ssu = NULL, psu.x = NULL, conf.level = .95, error = 0.1, cost = 4, minimum.ssu = 15) {
   if (length(intersect(psu.ssu[, 1], psu.x[, 1])) == 0) {
     stop('PSU identifiers must be equal in psu.ssu and in psu.x')
   }
@@ -54,8 +55,8 @@ Calculate2StageSampleSize <- function(psu.ssu = NULL, psu.x = NULL, conf.level =
   d <- (((M / (M - 1)) * vec) - (Nb * vdc)) / 
     (((M / (M - 1)) * vec) + (Nb * (Nb - 1) * vdc)) 
   d <- if (d < 0 | d == 0) {d = 1e-03} else {d = d}
-  nb <- ceiling(sqrt(12 * cost * ((1 - d) / d)))
-  if (nb < 2) {nb = 2}
+  nb <- ceiling(sqrt(cost * ((1 - d) / d)))
+  if (nb < minimum.ssu) {nb = minimum.ssu}
   X <- sum(N / sum(nip) * tapply(psu.ssu.x[ , 3], 
                                  psu.ssu.x[ , 1], sum)) 
   z <- abs(round(qnorm((1 - conf.level) / 2, 0, 1), 2))

@@ -45,7 +45,7 @@ shinyUI(fluidPage(
       br(),br(),
       textInput('shape.path', 'Path to the shapefile:'),
       textInput('shape.name', 'Name of the shapefile:'),
-      numericInput('col', 'Column with PSU identifiers (in dbf file):',
+      numericInput('col', 'Number of the column with PSU identifiers (in dbf file):',
                    value = NULL, min = 0),
       helpText('Press the buttom and wait'),
       actionButton('get.map', 'Get/Update map'),
@@ -87,26 +87,26 @@ shinyUI(fluidPage(
 <p>The sample size can be calculated according to one of the three designs listed on the top of the left side panel. After choosing the survey design and defining the required information, click on the <i>Selected sampling units</i> Tab.</p><br>
 
 <p><b>Two-stage cluster sampling</b></p>
-<p>In the context of two-stage cluster sampling, suppose that census tracks are PSU and the number of households in each census track represent PSU sizes. In the left side panel, you are asked to choose a csv file. This file must have just two columns with that information. Make sure you choose the appropriate options (header, separator and quote), otherwise, you will get an error or an awkward result. You can also use example files from capm package, checking the respective box in the left side panel. In this case you do not need to choose any csv file.</p>
+<p>In the context of two-stage cluster sampling, suppose that census tracks are primary sampling units (PSU) and the number of households in each census track represent PSU sizes. In the left side panel, you are asked to choose a csv file. This file must have just two columns with that information. Make sure you choose the appropriate options (header, separator and quote), otherwise, you will get an error or an awkward result. You can also use example files from capm package, checking the respective box in the left side panel. In this case you do not need to choose any csv file.</p>
 
-<p>Too specify the sample size and composition, define the number of PSU and SSU units ti be selected.</p><br>
+<p>To specify the sample size and composition, define the number of PSU and secondary sampling units (SSU) to be selected.</p><br>
 
 <i>Maps</i>
 <p>The use of <i>Map</i> Tab is optional and is intended for mapping PSU of a two-stage cluster sampling design.</p>
-<p>Using the first section of the left side panel, you can map the selected PSU in the browser. Indicate the path to the directory containing the shapefile with PSU (see below - <i>Specifying paths</i>). In the dbf file associated with the shapefile, there must be a column with the same PSU identifiers contained in the csv file uploaded in the <i>Introduction</i> Tab. Specify this column in the respective field.</p>
-<p> The second section allows you to write a KML file of each selected PSU plus a KML file with all selected PSU. These files can be opened in Goole Earth or in a GIS software such as QGIS, to locate the areas that must be visited. Specify the directory to save the files in as described below.</p><br>
+<p>Using the first section of the left side panel, you can map the selected PSU in the browser. Indicate the path to the directory containing the shapefile with PSU (see below - <i>Specifying paths</i>). In the dbf file associated with the shapefile, there must be a column with the same PSU identifiers contained in the csv file previously uploaded. Specify this column in the respective field.</p>
+<p> The second section allows you to write a KML file of each selected PSU plus a KML file with all selected PSU. These files can be opened in Goole Earth or in a GIS software such as QGIS, to locate the areas that must be visited. Specify the directory to save the files as described below.</p><br>
 
 <i>Specifying paths</i>
 <p>Specification of a path to a given directory is operating system dependent.</p>
 
 <p>Windows<br>
-Suppose the shapefile is in C:\\Users\\Oswaldo\\Documents and I want to save the KML files in this directory to. I must to write the following in the "Path to the shapefile" and "Save KML files in this directory" fields: C:/Users/Oswaldo/Documents</p>
+Suppose the shapefile is in C:\\Users\\Oswaldo\\Documents and I want to save the KML files in this directory. I must to write the following in the "Path to the shapefile" and "Save KML files in this directory" fields: C:/Users/Oswaldo/Documents</p>
 
 <p>Mac<br>
 Suppose the shapefile is in Users/Oswaldo/Desktop and I want to save the KML files in this directory to. I must to write the following in the "Path to the shapefile" and "Save KML files in this directory" fields: /Users/Oswaldo/Documents</p>
 
 <p>Linux<br>
-Suppose the shapefile is in home/Oswaldo/Documents and I want to save the KML files in this directory to. I must to write the following in the "Path to shapefile" and "Save KML files in this directory" fields: home/Oswaldo/Documents </p><br>
+Suppose the shapefile is in home/Oswaldo/Documents and I want to save the KML files in this directory to. I must to write the following in the "Path to shapefile" and "Save KML files in this directory" fields: /home/Oswaldo/Documents </p><br>
 
 <p><b>Simple random sampling</b></p>
 <p>Specify the total number of sampling units (i.e. the number of households) in the population and the number of sampling units to be selected.
@@ -133,7 +133,8 @@ Suppose the shapefile is in home/Oswaldo/Documents and I want to save the KML fi
                downloadButton('downloadData','Download'),
                tags$hr(),
                h4(textOutput('file.title')),
-               dataTableOutput('universe')),
+               dataTableOutput('universe')
+      ),
       tabPanel('Maps',
                plotOutput('maps', height = 600)),
       id = "conditionedPanels"

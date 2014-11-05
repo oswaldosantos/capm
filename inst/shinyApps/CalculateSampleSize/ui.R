@@ -53,7 +53,9 @@ shinyUI(fluidPage(
       numericInput('error', 'Accepted error',
                    value = 0.1, min = 0, max = 1),
       numericInput('cost', 'Cost',
-                   value = 4, min = 0)
+                   value = 4, min = 0),
+      numericInput('min.ssu', 'Minimum number of SSU',
+                   value = 15, min = 0)
     ),
     
     conditionalPanel(
@@ -93,17 +95,17 @@ shinyUI(fluidPage(
           '<p>The sample size can be calculated according to one of the three designs listed on the top of the left side panel. After choosing the survey design and defining the required information, click on the <i>Sample size</i> Tab.</p><br>
 
 <p><b>Two-stage cluster sampling</b></p>
-<p>Suppose that census tracks are PSU and the number of households in each census track represent PSU sizes. In the left side panel, you are asked to choose two csv files. The first file must have just two columns with that information. The second file must have one row per SSU sampled in a pilot study. The first column contains the PSU identifier to which the SSU belongs to. The second column contains the total observed in that SSU, for the variable of interest.</P>
+<p>Suppose that census tracks are PSU and the number of households in each census track represent primary sampling units (PSU) sizes. In the left side panel, you are asked to choose two csv files. The first file must have just two columns with that information. The second file must have one row per secondary sampling unit (SSU) sampled in a pilot study. The first column contains the PSU identifier to which the SSU belongs to. The second column contains the total observed in that SSU, for the variable of interest.</P>
 
 <p>Make sure you choose the appropriate options (header, separator and quote), otherwise, you will get an error or an awkward result. You can also use example files from capm package cheking the respective box in the left side panel. In this case you do not need to choose any csv file.</p>
 
-<p> The confidence level and the accepted error must numbers between 0 and 1 inclusive. <i>Cost </i>is the ratio of the cost of sampling a PSU to the cost of sampling a SSU.</p><br>
+<p> The confidence level and the accepted error must be numbers between 0 and 1 inclusive. <i>Cost </i>is the ratio of the cost of sampling a PSU to the cost of sampling a SSU. <i>Minimum number of SSU </i> is the minimum number of SSU to be selected per PSU.</p><br>
 
 <p><b>Simple random sampling</b></p>
-<p>Specify the total number of sampling units (i.e. the number of households) in the population and the expected mean and variance (both values can be obtained from a pilot study or from a survey made in a similar context). The confidence level and the accepted error must numbers between 0 and 1 inclusive.</p><br>
+<p>Specify the total number of sampling units (i.e. the number of households) in the population and the expected mean and variance (both values can be obtained from a pilot study or from a survey made in a similar context). The confidence level and the accepted error must be numbers between 0 and 1 inclusive.</p><br>
 
 <p><b>Stratified random sampling</b></p>
-<p>Define a name for each strata and specify the total number of sampling units (i.e. the number of households) in the population. Specify also the expected mean and variance for each strata (both values can be obtained from a pilot study or from a survey made in a similar context). The confidence level and the accepted error must numbers between 0 and 1 inclusive.
+<p>Define a name for each strata and specify the total number of sampling units (i.e. the number of households) in the population. Specify also the expected mean and variance for each strata (both values can be obtained from a pilot study or from a survey made in a similar context). The confidence level and the accepted error must be numbers between 0 and 1 inclusive.
 </p><br>
 
 <p>

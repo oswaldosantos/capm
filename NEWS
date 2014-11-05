@@ -1,3 +1,24 @@
+capm 0.5.1
+==========
+
+* Now depends on Depends: R (>= 3.1.2).
+
+* GraphicInterface: bug fix to avoid an error when Windows users define a path directory using the "SelectSamplingUnits" interface.
+
+* GraphicInterface (CalculateSampleSize): name of a function argument corrected. New argument for Calculate2StageSampleSize is available. Names of function arguments were updated for compatibility with newer shiny versions.
+
+* GraphicInterface (SelectSamplingUnits): Title added to an uploaded file. Names of function arguments were updated for compatibility with newer shiny versions.
+
+* GraphicInterface (SurveyAnalysis): summary statistics for sample data now exclude columns with sampling unit ID's (datasets for two stage cluster designs). For printing, uploaded sample data is coerced to character to avoid scientific notation. Names of function arguments were updated for compatibility with newer shiny versions.
+
+* PlotPopPyramid: "label.size" argument added to allow control labels font size.
+
+* SampleSystematic: the computed interval size is rounded dwon to make all intervals of the same size.
+
+* Calculate2StageSampleSize: new argument "minimum.ssu" to define the minimum number of SSU to be selected in each PSU.
+
+
+
 capm 0.5
 ========
 

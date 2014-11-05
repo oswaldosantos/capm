@@ -10,5 +10,8 @@
 #' # GraphicInterface(set.func = 'SelectSamplingUnits')
 #' 
 GraphicInterface <- function(set.func) {
-  runApp(paste0(system.file('shinyApps/', package = 'capm'), set.func))
+  if (Sys.info()['sysname'] == 'Windows') {
+    set.func <- paste0('/', set.func)
+  }
+  runApp(paste0(system.file('shinyApps/', package = 'capm'), '/', set.func))
 }

@@ -40,7 +40,7 @@ SampleSystematic <- function(psu.ssu = NULL, su = NULL, N = NULL, write = FALSE,
       if (length(N) != length(su)) {
         stop('N and su must have the same number of elements.')
       }
-      int <- N[i] / su[i]
+      int <- floor(N[i] / su[i])
       k <- sample(int, 1)
       Su <- rep(NA, su[i])
       for(j in 1:su[i]) {
@@ -68,7 +68,7 @@ SampleSystematic <- function(psu.ssu = NULL, su = NULL, N = NULL, write = FALSE,
       stop('The number of secondary sampling units to be selected (', su, ') is greater than the size of the following primary sampling units:', '\n', paste('   ', inv1))
     }
     sus <- matrix(rep(NA, nrow(psu.ssu) * su), ncol = nrow(psu.ssu))
-    int <- psu.ssu[, 2] / su
+    int <- floor(psu.ssu[, 2] / su)
     for(i in 1:length(int)) {
       k <- sample(int[i], 1)
       Su <- rep(NA, su)

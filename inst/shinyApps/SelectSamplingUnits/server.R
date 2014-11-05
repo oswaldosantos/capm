@@ -19,10 +19,10 @@ shinyServer(function(input, output) {
   
   ## Title to render above the respective uploaded files.
   FileTitle <- function() {
-    if(is.null(Universe())) {
-      return() 
+    if(!is.null(Universe())) {
+      return('Uploaded file')
     } else {
-      return('Uploaded file:')
+      return()
     }
   }
   
@@ -164,12 +164,9 @@ shinyServer(function(input, output) {
           Stratified()
         }
       }
-    }
+    },
+    digits = 0
   )
-  
-  output$universe <- renderDataTable({
-    Universe()
-  }, options = list(aLengthMenu = c(5, 30, 50), iDisplayLength = 5))
   
   output$downloadData <- downloadHandler(
     filename = 'selected_psu.csv',
@@ -178,7 +175,10 @@ shinyServer(function(input, output) {
     }
   )
   
-  output$file.tilte <- renderText(FileTitle())
+  output$file.title <- renderText(FileTitle())
+  output$universe <- renderDataTable({
+    Universe()
+  }, options = list(lengthMenu = c(5, 30, 50), pageLength = 5))
   
   output$maps <- renderPlot({
     if (input$get.map == 0)

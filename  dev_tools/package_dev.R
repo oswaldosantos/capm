@@ -1,9 +1,9 @@
 library(devtools)
 
 # Development workflow
+install()
 load_all()
 document()
-install()
 
 # News preview
 show_news()
@@ -17,7 +17,6 @@ run_examples()
 # Update version in:
 #   DESCRIPTION
 #   capm-package
-#   README.md
 #   NEWS
 #   CITATION
 #   Home web page

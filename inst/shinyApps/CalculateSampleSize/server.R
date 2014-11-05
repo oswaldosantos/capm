@@ -76,7 +76,7 @@ shinyServer(function(input, output) {
   output$size <- renderTable({
     if (!is.null(Universe()) & !is.null(SampleData())) {
       Calculate2StageSampleSize(Universe(), SampleData(), input$level,
-                                input$error, input$cost)
+                                input$error, input$cost, input$min.ssu)
     } else {
       if (!is.null(Systematic())) {
         matrix(c(CalculateSimpleSampleSize(Systematic(), input$N,
@@ -86,7 +86,7 @@ shinyServer(function(input, output) {
       } else {
         if (!is.null(Stratified())) {
           CalculateStratifiedSampleSize(Stratified(),
-                                        level = input$level,
+                                        conf.level = input$level,
                                         error = input$error)
         } else {
           return() 

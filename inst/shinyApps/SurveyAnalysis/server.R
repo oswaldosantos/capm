@@ -21,14 +21,14 @@ shinyServer(function(input, output) {
     if (input$design == 'twostage') {
       if (input$examples.twostage) {
         data(survey.data)
-        return(survey.data)
+        return(sapply(survey.data, as.character))
       } else if (is.null(input$sample)) {
         return()
       } else {
-        return(read.csv(input$sample$datapath,
+        return(sapply(read.csv(input$sample$datapath,
                         sep=input$sep.two2,
                         quote=input$quote.two2,
-                        header = input$header)) 
+                        header = input$header), as.character)) 
       }
     } else if (input$design == 'systematic') {
       if (input$example.systematic) {
@@ -37,10 +37,10 @@ shinyServer(function(input, output) {
       } else if (is.null(input$sample)) {
         return()
       } else {
-        return(read.csv(input$sample$datapath,
+        return(sapply(read.csv(input$sample$datapath,
                         sep=input$sep.syst,
                         quote=input$quote.syst,
-                        header = input$header))
+                        header = input$header), as.character))
       }
     } else if (input$design == 'stratified') {
       if (input$example.stratified) {
@@ -54,10 +54,10 @@ shinyServer(function(input, output) {
       } else if (is.null(input$sample)) {
         return()
       } else {
-        return(read.csv(input$sample$datapath,
+        return(sapply(read.csv(input$sample$datapath,
                         sep=input$sep.strat,
                         quote=input$quote.strat,
-                        header = input$header))
+                        header = input$header), as.character))
       }
     }
   }
@@ -131,18 +131,19 @@ shinyServer(function(input, output) {
   
   output$universe <- renderDataTable({
     Universe()
-  }, options = list(aLengthMenu = c(5, 30, 50), iDisplayLength = 5))
+  }, options = list(lengthMenu = c(5, 30, 50), pageLength = 5))
   
   output$sample <- renderDataTable({
     SampleData()
-  }, options = list(aLengthMenu = c(5, 30, 50), iDisplayLength = 5))
+  }, options = list(lengthMenu = c(5, 30, 50), pageLength = 5))
   
   output$file.title1 <- renderText(FileTitle()[[1]])
   output$file.title2 <- renderText(FileTitle()[[2]])
   
   output$summ.sample <- renderPrint({
-    if (!is.null(SampleData())) {
-      summary(SampleData())
+    if (!is.null(SampleData()) & !is.na(input$psu.col) &
+          !is.na(input$ssu.col)) {
+      summary(SampleData()[ , -c(1:2)])
     }
   })
   
