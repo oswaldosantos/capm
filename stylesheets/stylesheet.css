@@ -242,12 +242,12 @@ th {
   padding: 10px;
   background: #373737;
   color: #fff;
-  text-align: center; /*Non original code*/
  }
 
 td {
   padding: 10px;
   border: none; /* original code: 1px solid #373737;*/
+  text-align: center; /*Non original code*/
  }
 
 form {
