@@ -40,8 +40,12 @@ ol, ul {
 }
 
 table {
+  /* Original code:
   border-collapse: collapse;
   border-spacing: 0;
+  */
+  border: none;
+  text-align: center;
 }
 
 /*******************************************************************************
