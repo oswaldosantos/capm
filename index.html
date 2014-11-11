@@ -40,15 +40,15 @@
 
 <p>Current version offers functions that allow users to implement the workflow outlined in Figure 1. The basic idea is simple, some functions are to implement a data collection process and other functions are to analyse collected data. Information generated in the analysis process support the design, implementation and assessment of population management programs. Detailed descriptions of workflow steps and used methods will be added to the links at the end of this page.</p>
 
-<p><b>Figure 1. Workflow supported by the <code>capm</code>.</b></p>
-<img src="https://cloud.githubusercontent.com/assets/3876657/4993008/36c000b0-6990-11e4-83a2-db1172962022.jpeg"style="width:300px;height:300px">
+<p><em>Figure 1. Workflow supported by the <code>capm</code>.</em></p>
+<img src="https://cloud.githubusercontent.com/assets/3876657/4993008/36c000b0-6990-11e4-83a2-db1172962022.jpeg"style="width:700px;height:500px">
 
-<p>Data collection</p>
-<p>Data collection is the first of the two main components of the workflow. When data is collected in censuses surveys, this component must be omitted. Remember that a census is a survey that includes ALL the elements of the <i>study population</i>. For example, a household survey in a city is a census only if ALL the households in that city are included in the survey. Costs associated with cenuses are often prohibited and thus, sample surveys are the most common alternative to collect population data. The <b>Data collection</> component is intended to support sample surveys.</p>
+<p><em>Data collection</em></p>
+<p>Data collection is the first of the two main components of the workflow. When data is collected in censuses surveys, this component must be omitted. Remember that a census is a survey that includes ALL the elements of the <i>study population</i>. For example, a household survey in a city is a census only if ALL the households in that city are included in the survey. Costs associated with cenuses are often prohibited and thus, sample surveys are the most common alternative to collect population data. The <em>Data collection</> component is intended to support sample surveys.</p>
 
 <p>The sample is a subset of population elements. Because we want information of the whole population, we must to infer that information (population parameters) from the sample. This process incorporates errors. We can not know the exact values of population parameters but we can get approximations (estimates). Estimates can be misleading but reasonable and useful estimates can be generated if a sound statistical process is followed to calculate the sample size and to select sampling units (elements included in the sample). To calculate the sample size, it is necessary to have a preliminar estimate of the parameters to be estimated. This preliminary estimates can be obtained in pilot studies or from previous studies. Using the <code>capm</code>, sample surveys for companion animal populations can be easily designed and implemented following well known statistical processes but without need to worry about them.</p>
 
-<p>Data analysis</p>
+<p><em>Data analysis</em></p>
 <p>With sample or census data, some analysis can be made to support population management programs. For this second component, the <code>capm</code> has functions to estimate population parameters from sample data, according to the data collection process. Also, it is possible to build population pyramids conditioned not only on sex and age but on other characteristics such as reproductive status. The estimates of population parameters can be used as inputs in mathematical models to simulate population dynamics, prioritize interventions and build scenarios to assess the interaction between some interventions. The use of these models is strightforward in the <code>capm</code>.</p>
 
 <!--
