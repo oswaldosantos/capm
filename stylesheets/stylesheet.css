@@ -42,15 +42,6 @@ ol, ul {
 table {
   border-collapse: collapse;
   border-spacing: 0;
-  /* Non original code:*/
-  border: none;
-}
-
-/* Non original code:*/
-td, th {
-  text-align: center;
-  border:none;
-  outline:none;
 }
 
 /*******************************************************************************
@@ -241,7 +232,7 @@ hr {
 }
 
 table {
-  border: 1px solid #373737;
+  border: none; /* original code: 1px solid #373737;*/
   margin-bottom: 20px;
   text-align: left;
  }
@@ -255,7 +246,7 @@ th {
 
 td {
   padding: 10px;
-  border: 1px solid #373737;
+  border: none; /* original code: 1px solid #373737;*/
  }
 
 form {
