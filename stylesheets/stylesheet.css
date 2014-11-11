@@ -47,10 +47,10 @@ table {
 }
 
 /* Non original code:*/
-td {
+td, th {
   text-align: center;
   border:none;
-   outline:none;
+  outline:none;
 }
 
 /*******************************************************************************
