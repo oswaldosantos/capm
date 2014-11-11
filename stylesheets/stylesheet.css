@@ -42,12 +42,15 @@ ol, ul {
 table {
   border-collapse: collapse;
   border-spacing: 0;
-  /* Added:*/
+  /* Non original code:*/
   border: none;
 }
 
+/* Non original code:*/
 td {
   text-align: center;
+  border:none;
+   outline:none;
 }
 
 /*******************************************************************************
