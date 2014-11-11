@@ -232,7 +232,7 @@ hr {
 }
 
 table {
-  border: none; /* original code: 1px solid #373737;*/
+  border: 1px solid #373737;
   margin-bottom: 20px;
   text-align: left;
  }
@@ -246,8 +246,7 @@ th {
 
 td {
   padding: 10px;
-  border: none; /* original code: 1px solid #373737;*/
-  text-align: center; /*Non original code*/
+  border: 1px solid #373737;
  }
 
 form {
