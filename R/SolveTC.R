@@ -33,8 +33,8 @@
 #'                       method = 'rk4')
 #'
 SolveTC <- function(pars = NULL, init = NULL, time = NULL, f.range = NULL, s.range = NULL, z.range = NULL, ...) {
-  if(!setequal(names(pars), c('d', 'f', 's', 'z', 'd'))) {
-    stop('Values in pars must have the following names:\nd, f s, z, d.')
+  if(!setequal(names(pars), c('d', 'f', 'r', 's', 'z', 'd'))) {
+    stop('Values in pars must have the following names:\nd, f, s, z, d.')
   }
   if(!setequal(names(init), c('n', 'g'))) {
     stop('Values in init must have the following names:\nn, g.')
@@ -43,10 +43,9 @@ SolveTC <- function(pars = NULL, init = NULL, time = NULL, f.range = NULL, s.ran
     init['tcn'] <- 0
     SolveTC.fu <- function(time, init, pars) {
       with(as.list(c(init, pars)), { 
-        dn <- d * (n + g) * d + d * (n + g) * (1 - d) * (1 - z) +
-          f * g - n * (d + s)
-        dg <- d * (n + g) * (1 - d) * z + s * n - 
-          g * (d + f)
+        dn <- r * d * (n + g) + (1 - r) * d * (1 - z) * (n + g) + f * g -
+          (d + s) * n
+        dg <- (1 - r) * d * z * (n + g) + s * n - (d - f) * g
         du <- s * n    
         list(c(dn, dg, du))
       })
