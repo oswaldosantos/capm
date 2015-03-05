@@ -5,7 +5,7 @@
 \title{Modelling of immigration, abandonment, sterilization and adoption of companion animals}
 \usage{
 SolveIASA(pars = NULL, init = NULL, time = NULL, s.range = NULL,
-  ab.range = NULL, ad.range = NULL, im.range = NULL, s.fm = TRUE, ...)
+  a.range = NULL, alpha.range = NULL, v.range = NULL, s.fm = TRUE, ...)
 }
 \arguments{
 \item{pars}{a named \code{\link{vector}} of length 21, with point estimates of model parameters (see details).}
@@ -16,11 +16,11 @@ SolveIASA(pars = NULL, init = NULL, time = NULL, s.range = NULL,
 
 \item{s.range}{optional sequence (between 0 and 1) of the sterilization rates to be simulated.}
 
-\item{ab.range}{optional \code{\link{vector}} of length 2, with range (ie, confidence interval) of abandonment rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.}
+\item{a.range}{optional \code{\link{vector}} of length 2, with range (ie, confidence interval) of abandonment rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.}
 
-\item{ad.range}{optional \code{\link{vector}} of length 2, with range (ie, confidence interval) of adoption rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.}
+\item{alpha.range}{optional \code{\link{vector}} of length 2, with range (ie, confidence interval) of adoption rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.}
 
-\item{im.range}{optional \code{\link{vector}} of length 2, with range of values of immigration rates to be assessed. This must be expressed as a percentage of owned animals carrying capacity.}
+\item{v.range}{optional \code{\link{vector}} of length 2, with range of values of immigration rates to be assessed. This must be expressed as a percentage of owned animals carrying capacity.}
 
 \item{s.fm}{logical. If \code{TRUE}, s.range is used for females and males and if \code{FALSE}, it is only used for females (for males, the point estimate given in \code{pars} is used.)}
 
@@ -46,9 +46,9 @@ The \code{pars} argument must contain named values, using the following conventi
 
 \code{h1} and \code{h2}: mean harem size.
 
-\code{ab}: abandonment rate.
+\code{a}: abandonment rate.
 
-\code{ad}: adoption rate.
+\code{alpha}: adoption rate.
 
 \code{v}: immigration rate.
 
@@ -58,7 +58,7 @@ The \code{init} argument must contain named values for the inital number of anim
 
 \code{f1}, \code{fs1}, \code{m1}, \code{ms1}, \code{f2}, \code{fs2}, \code{m2} and \code{ms2}.
 
-If any range is specified (e.g \code{s.range}), the remaining ranges must be specified too (\code{ab.range}, \code{ad.range} and \code{im.range}).
+If any range is specified (e.g \code{s.range}), the remaining ranges must be specified too (\code{a.range}, \code{alpha.range} and \code{v.range}).
 The function is a wrapper around the defaults of \link[deSolve]{ode} function, whose help page must be consulted for details. An exception is the method argument, which here has "rk4" as a default.
 }
 \note{
@@ -72,7 +72,7 @@ pars.solve.iasa = c(
    df1 = 0.104, dm1 = 0.098, df2 = 0.125, dm2 = 0.118,
    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
    k1 = 98050, k2 = 8055, h1 = 1, h2 = 0.5,
-   ab = 0.054, ad = 0.1, v = 0.2, z = 0.1)
+   a = 0.054, alpha = 0.1, v = 0.2, z = 0.1)
 
 init.solve.iasa = c(
    f1 = 33425, fs1 = 10865,
@@ -91,9 +91,9 @@ solve.iasa.rg <- SolveIASA(pars = pars.solve.iasa,
                           init = init.solve.iasa,
                           time = 0:8,
                           s.range = seq(0, .4, l = 15),
-                          ab.range = c(0, .2),
-                          ad.range = c(0, .2),
-                          im.range = c(0, .1),
+                          a.range = c(0, .2),
+                          alpha.range = c(0, .2),
+                          v.range = c(0, .1),
                           method = 'rk4')
 }
 \references{

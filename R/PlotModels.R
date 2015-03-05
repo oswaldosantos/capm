@@ -92,7 +92,7 @@
 #'    df1 = 0.104, dm1 = 0.098, df2 = 0.125, dm2 = 0.118,
 #'    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
 #'    k1 = 98050, k2 = 8055, h1 = 1, h2 = 0.5,
-#'    ab = 0.054, ad = 0.1, v = 0.2, z = 0.1)
+#'    a = 0.054, alpha = 0.1, v = 0.2, z = 0.1)
 #'    
 #' init.solve.iasa = c(
 #'    f1 = 33425, fs1 = 10865,
@@ -111,9 +111,9 @@
 #'                           init = init.solve.iasa, 
 #'                           time = 0:10,
 #'                           s.range = seq(0, .4, l = 15), 
-#'                           ab.range = c(0, .2), 
-#'                           ad.range = c(0, .2),
-#'                           im.range = c(0, .1),
+#'                           a.range = c(0, .2), 
+#'                           alpha.range = c(0, .2),
+#'                           v.range = c(0, .1),
 #'                           method = 'rk4')
 #'                 
 #' ## Plot stray population sizes using point estimates
@@ -124,7 +124,7 @@
 #' # Uncomment the following line:
 #' # PlotModels(solveiasa.rg, variable = 'ns', scen.label = 'Im = (__ * de la capacidad de carga)')
 #'
-PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c('cadetblue1', 'yellow', 'red'), col2 = c('blue', 'darkgreen', 'darkred'), x.label = 'Years', y.label = NULL, scen.label = 'Im = (__ * owned carrying capacity)', leg.label = NULL, pop = NULL) {
+PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c('cadetblue1', 'yellow', 'red'), col2 = c('blue', 'darkgreen', 'darkred'), x.label = 'Years', y.label = NULL, scen.label = 'v = (__ * owned carrying capacity)', leg.label = NULL, pop = NULL) {
   if (class(model.out) != 'capmModels') {
     stop('model.out must be of class "capmModels".')
   }
@@ -306,10 +306,10 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
                           'Stray\nanimals')
           }
         }
-        model.out$results[, 'ab'] = 
-          paste('Ab =', round(model.out$results[, 'ab'], 2))
+        model.out$results[, 'a'] = 
+          paste('a =', round(model.out$results[, 'a'], 2))
         model.out$results[, 'ad'] = 
-          paste('Ad =', round(model.out$results[, 'ad'], 2))
+          paste('alpha =', round(model.out$results[, 'alpha'], 2))
         if (is.null(y.label)) {
           y.label <- 'Sterilization rate'
         }
@@ -356,7 +356,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
                              unit(c(.5, 0, 0, 0), 'lines'),
                            plot.title = 
                              element_text(size = 12)) +
-                     facet_grid(ad ~ ab)
+                     facet_grid(a ~ alpha, labeller = label_parsed)
             )
           }
         }
@@ -390,7 +390,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
       }
     } else {
       if (model.out$name == 'SolveTC') {
-        if (length(intersect(variable, c('n', 'cn', 'tcn'))) == 0) {
+        if (length(intersect(variable, c('n', 'g', 'u'))) == 0) {
           stop(paste0('Invalid variable: "', variable,
                       '". See the help page of PlotModels.'))
         }
@@ -406,10 +406,10 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
             if (variable == 'n') {
               y.label <- 'Fertile animals'
             }
-            if (variable == 'cn') {
+            if (variable == 'g') {
               y.label <- 'Infertile animals'
             }
-            if (variable == 'tcn') {
+            if (variable == 'u') {
               y.label <- 'Sterilized animals (cumulative)'
             }
             tmp + ylab(y.label) +
@@ -425,17 +425,17 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
             if (variable == 'n') {
               leg.label = 'Fertile animals'
             }
-            if (variable == 'cn') {
+            if (variable == 'g') {
               leg.label = 'Inertile animals'
             }
-            if (variable == 'tcn') {
+            if (variable == 'u') {
               leg.label = 'Sterilized animals (cumulative)'
             }
           }
           model.out$results[, 's'] <- 
-            paste('S =', round(model.out$results[, 's'], 2))
+            paste('s =', round(model.out$results[, 's'], 2))
           model.out$results[, 'z'] <- 
-            paste('Z =', round(model.out$results[, 'z'], 2))
+            paste('z =', round(model.out$results[, 'z'], 2))
           ggplot(
             model.out$results,
             aes_string(x = 'time', y = 'f',

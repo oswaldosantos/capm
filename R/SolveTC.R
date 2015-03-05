@@ -1,9 +1,9 @@
 #' Modelling of reversible contraception for companion animals
 #' @description System of ordinary differential equations to simulate the effect of reversible contraception in a population at equilibrium, where deaths are compensated by births and net immigration.
-#' @param pars a named \code{\link{vector}} of length 5. The values are point estimates of the death rate (d), the fertility recovery rate (fr), the sterilization rate (s), the proportion of infertile immigrants (z) and the proportion of the death rate compensated by immigration (r). Abreviations in parentheses indicate the names that must be given to the values.
-#' @param init a named \code{\link{vector}} of length 2, with the total number of fertil (n) and infertil (ns) animals.
+#' @param pars a named \code{\link{vector}} of length 5. The values are point estimates of the death rate (d), the fertility recovery rate (f), the sterilization rate (s), the proportion of infertile immigrants (z) and the proportion of the death rate compensated by immigration (r). Abreviations in parentheses indicate the names that must be given to the values.
+#' @param init a named \code{\link{vector}} of length 2, with the total number of fertil (n) and infertil (g) animals.
 #' @param time time sequence for which output is wanted; the first value of times must be the initial time.
-#' @param fr.range optional sequence (between 0 and 1) with the fertility recovery rates to be simulated.
+#' @param f.range optional sequence (between 0 and 1) with the fertility recovery rates to be simulated.
 #' @param s.range optional \code{\link{vector}} of length 2, with a range of sterilization rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.
 #' @param z.range optional \code{\link{vector}} of length 2, with a range of the proportion of infertile immigrants. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.
 #' @param ... further arguments passed to \link[deSolve]{ode} function.
@@ -13,10 +13,10 @@
 #' @export
 #' @examples 
 #' # Parameters and initial conditions.
-#' pars.solvetc <- c(d = 1 / 6, fr = 0.5, s = 0.2, 
-#'                    z = 0.2, dr = 0.1)
+#' pars.solvetc <- c(d = 1 / 6, f = 0.5, s = 0.2, 
+#'                    z = 0.2, d = 0.1)
 #'
-#' init.solvetc <- c(n = 950, ns = 50)
+#' init.solvetc <- c(n = 950, g = 50)
 #' 
 #' # Solve for point estimates.
 #' solvetc.pt <- SolveTC(pars = pars.solvetc, 
@@ -27,38 +27,38 @@
 #' solvetc.rg <- SolveTC(pars = pars.solvetc, 
 #'                       init = init.solvetc, 
 #'                       time = 0:15,
-#'                       fr.range = seq(0, 1, 0.1), 
+#'                       f.range = seq(0, 1, 0.1), 
 #'                       s.range = c(0.05, 0.4), 
 #'                       z.range = c(0.05, 0.4),
 #'                       method = 'rk4')
 #'
-SolveTC <- function(pars = NULL, init = NULL, time = NULL, fr.range = NULL, s.range = NULL, z.range = NULL, ...) {
-  if(!setequal(names(pars), c('d', 'fr', 's', 'z', 'dr'))) {
-    stop('Values in pars must have the following names:\nd, fr s, z, dr.')
+SolveTC <- function(pars = NULL, init = NULL, time = NULL, f.range = NULL, s.range = NULL, z.range = NULL, ...) {
+  if(!setequal(names(pars), c('d', 'f', 's', 'z', 'd'))) {
+    stop('Values in pars must have the following names:\nd, f s, z, d.')
   }
-  if(!setequal(names(init), c('n', 'ns'))) {
-    stop('Values in init must have the following names:\nn, ns.')
+  if(!setequal(names(init), c('n', 'g'))) {
+    stop('Values in init must have the following names:\nn, g.')
   }
   SolveTCfu <- function(pars = NULL, init = NULL, time = NULL) {
     init['tcn'] <- 0
     SolveTC.fu <- function(time, init, pars) {
       with(as.list(c(init, pars)), { 
-        dn <- d * (n + ns) * dr + d * (n + ns) * (1 - dr) * (1 - z) +
-          fr * ns - n * (d + s)
-        dns <- d * (n + ns) * (1 - dr) * z + s * n - 
-          ns * (d + fr)
-        dtns <- s * n    
-        list(c(dn, dns, dtns))
+        dn <- d * (n + g) * d + d * (n + g) * (1 - d) * (1 - z) +
+          f * g - n * (d + s)
+        dg <- d * (n + g) * (1 - d) * z + s * n - 
+          g * (d + f)
+        du <- s * n    
+        list(c(dn, dg, du))
       })
     }
-    init <- c(init['n'], init['ns'], init['tns'])
+    init <- c(init['n'], init['g'], init['u'])
     
     SolveTC.out <- ode(times = time, func = SolveTC.fu, 
                        y = init, parms = pars, ...)
     return(as.data.frame(SolveTC.out))
   }
   
-  if (is.null(fr.range) & is.null(s.range) & is.null(z.range)) {
+  if (is.null(f.range) & is.null(s.range) & is.null(z.range)) {
     output <- SolveTCfu(pars = pars, init = init, time = time)
     SolveTC <- list(
       name = 'SolveTC',
@@ -76,9 +76,9 @@ SolveTC <- function(pars = NULL, init = NULL, time = NULL, fr.range = NULL, s.ra
     s.range <- c(s.range[1], pars['s'], s.range[2])
     for (i3 in 1:length(z.range)) {
       for (i2 in 1:length(s.range)) {
-        for (i1 in 1:length(fr.range)) {
-          paras[c('z', 's', 'fr') ] <- 
-            c(z.range[i3], s.range[i2], fr.range[i1])
+        for (i1 in 1:length(f.range)) {
+          paras[c('z', 's', 'f') ] <- 
+            c(z.range[i3], s.range[i2], f.range[i1])
           output <- rbind(output,
                           SolveTCfu(pars = paras, 
                                     init = init, 
@@ -88,11 +88,11 @@ SolveTC <- function(pars = NULL, init = NULL, time = NULL, fr.range = NULL, s.ra
     }
     output <- data.frame(
       output,
-      f = rep(fr.range, each = length(time)),
+      f = rep(f.range, each = length(time)),
       s = rep(s.range, 
-                 each = length(time) * length(fr.range)),
+                 each = length(time) * length(f.range)),
       z = rep(z.range, 
-                   each = length(time) * length(fr.range) * 
+                   each = length(time) * length(f.range) * 
                      length(s.range)))
     SolveTC <- list(
       name = 'SolveTC',

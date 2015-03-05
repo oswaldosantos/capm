@@ -1,7 +1,7 @@
 #' Plot results of CalculateLocalSens function
 #' @description Plot results of the \code{\link{CalculateLocalSens}} function.
 #' @param local.out output from \code{\link{CalculateLocalSens}} function.
-#' @param type a number to define the type of graphical output. \code{6}: sensitivity functions and all importance indices are ploted; \code{1}: importance index L1; \code{2}:  importance index L2; \code{3}: mean of sensitivity functions; \code{5}: minimum of sensitivity functions; and \code{5}: maximum of sensitivity functions. 
+#' @param type a number to define the type of graphical output. \code{1}: importance index L1; \code{2}:  importance index L2; \code{3}: mean of sensitivity functions; \code{5}: minimum of sensitivity functions; and \code{5}: maximum of sensitivity functions; \code{6}: sensitivity functions and all importance indices are ploted. 
 #' @param x.sens string with the name of x axis for sensitivity functions.
 #' @param y.sens string with the name of y axis for sensitivity functions.
 #' @param y.ind string with the name of y axis for the parameter importance indices.
@@ -25,7 +25,7 @@
 #'    df1 = 0.104, dm1 = 0.098, df2 = 0.125, dm2 = 0.118,
 #'    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
 #'    k1 = 98050, k2 = 8055, h1 = 1, h2 = 0.5,
-#'    ab = 0.054, ad = 0.1, v = 0.2, z = 0.1)
+#'    a = 0.054, alpha = 0.1, v = 0.2, z = 0.1)
 #'    
 #' init.solve.iasa = c(
 #'    f1 = 33425, fs1 = 10865,
@@ -47,7 +47,7 @@
 #' # Uncomment the following line:
 #' # PlotLocalSens(local.solve.iasa2)
 #' 
-PlotLocalSens <- function(local.out = NULL, x.sens = "Time", y.sens = "Sensitivity", y.ind = c("L1", "L2", "Mean", "Min", "Max"), ax.size = 10, type = 6) {
+PlotLocalSens <- function(local.out = NULL, x.sens = "Time", y.sens = "Sensitivity", y.ind = c("L1", "L2", "Mean", "Min", "Max"), ax.size = 10, type = 1) {
   if (length(y.ind) != 5) {
     stop('The length of y.ind must be equal to 5.')
   }
