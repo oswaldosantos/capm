@@ -251,7 +251,7 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, s.range = NULL, a.r
       a = rep(a.range, 
                  each = length(time) * length(s.range) * 
                    length(alpha.range)),
-      im = rep(v.range, 
+      v = rep(v.range, 
                each = length(time) * length(s.range) * 
                  length(alpha.range) * length(a.range)))
     names(output)[1:5] <- c('t', 'f', 'fs', 'm', 'ms')

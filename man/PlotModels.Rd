@@ -142,7 +142,7 @@ solveiasa.rg <- SolveIASA(pars = pars.solve.iasa,
 
 ## Plot all scenarios and change the label for the scenarios.
 # Uncomment the following line:
-# PlotModels(solveiasa.rg, variable = 'ns', scen.label = 'Im = (__ * de la capacidad de carga)')
+# PlotModels(solveiasa.rg, variable = 'ns')
 }
 \references{
 Chang W (2012). R Graphics Cookbook. O'Reilly Media, Inc.

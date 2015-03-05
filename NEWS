@@ -1,3 +1,8 @@
+capm 0.7.1
+==========
+PlotModels: bug fix for facet names.
+PlotLocalSens: Descending oreder (left to right) for L1 and L2.
+
 capm 0.7.0
 ==========
 Changes intended to appear in version 0.6.0 were not included. Now they appear in this version.

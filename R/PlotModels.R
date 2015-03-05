@@ -122,7 +122,7 @@
 #' 
 #' ## Plot all scenarios and change the label for the scenarios.
 #' # Uncomment the following line:
-#' # PlotModels(solveiasa.rg, variable = 'ns', scen.label = 'Im = (__ * de la capacidad de carga)')
+#' # PlotModels(solveiasa.rg, variable = 'ns')
 #'
 PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c('cadetblue1', 'yellow', 'red'), col2 = c('blue', 'darkgreen', 'darkred'), x.label = 'Years', y.label = NULL, scen.label = 'v = (__ * owned carrying capacity)', leg.label = NULL, pop = NULL) {
   if (class(model.out) != 'capmModels') {
@@ -306,10 +306,10 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
                           'Stray\nanimals')
           }
         }
-        model.out$results[, 'a'] = 
-          paste('a =', round(model.out$results[, 'a'], 2))
-        model.out$results[, 'ad'] = 
-          paste('alpha =', round(model.out$results[, 'alpha'], 2))
+        model.out$results[, 'a'] <- 
+          paste('a', '==', round(model.out$results[, 'a'], 2))
+        model.out$results[, 'alpha'] <- 
+          paste('alpha', '==', round(model.out$results[, 'alpha'], 2))
         if (is.null(y.label)) {
           y.label <- 'Sterilization rate'
         }
@@ -319,7 +319,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
             dat <- model.out$results
             dat <- dat[
               dat[, 'group'] == unique(dat[, 'group'])[j] &
-                dat[, 'im'] == unique(dat[, 'im'])[i], ]
+                dat[, 'v'] == unique(dat[, 'v'])[i], ]
             scl <- nchar(as.character(
               round(max(dat[, variable])))) - 2
             assign(paste0('s', i, j), 
@@ -331,7 +331,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
                      ylab(y.label) +
                      ggtitle(
                        gsub('__', unique(
-                         model.out$results[, 'im'])[i],
+                         model.out$results[, 'v'])[i],
                             scen.label)) +
                      geom_raster() + 
                      scale_fill_continuous(
@@ -356,7 +356,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
                              unit(c(.5, 0, 0, 0), 'lines'),
                            plot.title = 
                              element_text(size = 12)) +
-                     facet_grid(a ~ alpha, labeller = label_parsed)
+                     facet_grid(alpha ~ a, labeller = label_parsed)
             )
           }
         }
