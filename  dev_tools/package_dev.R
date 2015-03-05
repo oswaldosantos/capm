@@ -21,7 +21,3 @@ run_examples()
 #   CITATION
 #   Home web page
 #   Web documentation in all languages
-
-#####################
-## release() ##
-#####################
