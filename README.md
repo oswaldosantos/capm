@@ -15,7 +15,7 @@ Current version offers functions that allow users to implement the following wor
   5. Estimation of demographic characteristics (totals, proportions, means and ratios).
   6. Construction of population pyramids, conditioned on sex, age and another categorical variable such as reproductive status.
   7. Assessment of the effect produced by population management interventions, through mathematical modelling.
-  8. Prioritize interventions according to the effect they produce, through sensitivity analysis.  
+  8. Prioritization interventions according to the effect they produce, through sensitivity analysis.  
 
 The current workflow is mainly focused on dog populations but also applies to cat populations. Future versions probably will include functions to address particularities of cat populations.
 
