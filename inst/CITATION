@@ -1,7 +1,7 @@
 citHeader("To cite capm in publications, please use:")
 
 citEntry(entry = "Misc",
-  author = c(person("Oswaldo", "Santos"),
+  author = c(person("Oswaldo", "Santos Baquero"),
                     person("Marcos", "Amaku"),
                     person("Fernando", "Ferreira")),
   title = "capm: an R package for Companion Animal Population Management",
