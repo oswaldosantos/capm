@@ -1,11 +1,11 @@
 #' Plot results of GlobalSens function
 #' @description Plot results of of \code{\link{CalculateGlobalSens}} function.
 #' @param global.out output from \code{\link{CalculateGlobalSens}} function.
-#' @param nam.leg string with name for the legend.
+#' @param legend.label string with name for the legend.
 #' @param x.label string with the name of x axis.
 #' @param y.label string with the name of y axis.
-#' @param mm.leg string with the name of the "envelope" calculated using the minimum and maximum ranges.
-#' @param sd.leg string with the name of the "envelope" calculated using the mean +- standard deviation ranges.
+#' @param mm.label string with the name of the "envelope" calculated using the minimum and maximum ranges.
+#' @param sd.label string with the name of the "envelope" calculated using the mean +- standard deviation ranges.
 #' @details Font size of saved plots is usually different to the font size seen in graphic browsers. Before changing font sizes, see the final result in saved (or preview) plots.
 #'  
 #' Other details of the plot can be modifyed using appropriate functions from \code{ggplot2} package.
@@ -52,7 +52,7 @@
 #' ### Plot the sensitivities of combined parameters.
 #' PlotGlobalSens(glob.all.solve.iasa)
 #'
-PlotGlobalSens <- function(global.out = NULL, x.label = 'Time', y.label = 'Population', nam.leg = 'Sensitivity range', mm.leg = 'min - max', sd.leg = 'mean +- sd   ') {
+PlotGlobalSens <- function(global.out = NULL, x.label = 'Time', y.label = 'Population', legend.label = 'Sensitivity range', mm.label = 'min - max', sd.label = 'mean +- sd   ') {
   x <- Mean <- Min <- Max <- Sd <- NULL
   if (colnames(global.out)[length(global.out)] == 'param') {
     ggplot(global.out, aes(x = x, y = Mean)) +
@@ -63,9 +63,9 @@ PlotGlobalSens <- function(global.out = NULL, x.label = 'Time', y.label = 'Popul
       geom_line() + facet_wrap( ~ param) +
       xlab(x.label) + ylab(y.label) +
       scale_fill_manual(
-        name = nam.leg,
+        name = legend.label,
         values = c('blue', 'red'),
-        labels = c(sd.leg, mm.leg)) +
+        labels = c(sd.label, mm.label)) +
       theme(legend.position = 'top') +
       guides(fill = guide_legend(
         override.aes = list(alpha = 0.5)))
@@ -79,9 +79,9 @@ PlotGlobalSens <- function(global.out = NULL, x.label = 'Time', y.label = 'Popul
       xlab(x.label) + ylab(y.label) +
       ylim(0, max(global.out$Max)) +
       scale_fill_manual(
-        name = nam.leg,
+        name = legend.label,
         values = c('blue', 'red'),
-        labels = c(sd.leg, mm.leg)) +
+        labels = c(sd.label, mm.label)) +
       theme(legend.position = 'top') +
       guides(fill = guide_legend(
         override.aes = list(alpha = 0.4)))    
