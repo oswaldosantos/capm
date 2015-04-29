@@ -5,7 +5,7 @@
 #' @param x.sens string with the name of x axis for sensitivity functions.
 #' @param y.sens string with the name of y axis for sensitivity functions.
 #' @param y.ind string with the name of y axis for the parameter importance indices.
-#' @param ax.size a number to specify the size of axes labels and text.
+#' @param label.size a number to specify the size of axes labels and text.
 #' @details Font size of saved plots is usually different to the font size seen in graphic browsers. Before changing font sizes, see the final result in saved (or preview) plots.
 #' @references Chang W (2012). R Graphics Cookbook. O'Reilly Media, Inc.
 #' 
@@ -47,7 +47,7 @@
 #' # Uncomment the following line:
 #' # PlotLocalSens(local.solve.iasa2)
 #' 
-PlotLocalSens <- function (local.out = NULL, x.sens = "Time", y.sens = "Sensitivity", y.ind = c("L1", "L2", "Mean", "Min", "Max"), ax.size = 10, type = 1) {
+PlotLocalSens <- function (local.out = NULL, x.sens = "Time", y.sens = "Sensitivity", y.ind = c("L1", "L2", "Mean", "Min", "Max"), label.size = 10, type = 1) {
   if (length(y.ind) != 5) {
     stop("The length of y.ind must be equal to 5.")
   }
@@ -77,10 +77,10 @@ PlotLocalSens <- function (local.out = NULL, x.sens = "Time", y.sens = "Sensitiv
              geom_bar(stat = "identity") + 
              theme(legend.position = "none", 
                    axis.title.x = element_blank(), 
-                   axis.text.x = element_text(size = ax.size - 1, 
+                   axis.text.x = element_text(size = label.size - 1, 
                                               angle = 90, vjust = 0.5),
-                   axis.title.y = element_text(size = ax.size + 2),
-                   axis.text.y = element_text(size = ax.size)) + 
+                   axis.title.y = element_text(size = label.size + 2),
+                   axis.text.y = element_text(size = label.size)) + 
              ylab(y.ind[i]) +
              scale_x_discrete(labels = x.axis.lab)) 
   }
@@ -97,21 +97,21 @@ PlotLocalSens <- function (local.out = NULL, x.sens = "Time", y.sens = "Sensitiv
     options(warn = 0)
   }
   if (type == 0) {
-    print(loc + theme(legend.position = "right"))
+    return(loc + theme(legend.position = "right"))
   }
   if (type == 1) {
-    print(loc1)
+    return(loc1)
   }
   if (type == 2) {
-    print(loc1)
+    return(loc2)
   }
   if (type == 3) {
-    print(loc3)
+    return(loc3)
   }
   if (type == 4) {
-    print(loc4)
+    return(loc4)
   }
   if (type == 5) {
-    print(loc5)
+    return(loc5)
   }
 }

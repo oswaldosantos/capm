@@ -1,11 +1,10 @@
-capm 0.7.1
+capm 7.1
 ==========
-* SolveTC: bug fix in equations.
+* PlotModels: bug fix for facet names.  Changes in arugment names: leg.label to legend.label and scen.label to scenarios.label.
 
-capm 0.7.1
-==========
-* PlotModels: bug fix for facet names.
-* PlotLocalSens: Descending oreder (left to right) for L1 and L2.
+* PlotLocalSens: Descending oreder (left to right) for L1 and L2.  Change in argument name: ax.size to label.size. Plots are returned explicitly to allow further ggplot2 arguments.
+
+* SolveTC: bug fix in equations.
 
 capm 0.7.0
 ==========

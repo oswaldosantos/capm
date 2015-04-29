@@ -7,14 +7,14 @@
 #' @param s.range optional \code{\link{vector}} of length 2, with a range of sterilization rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.
 #' @param z.range optional \code{\link{vector}} of length 2, with a range of the proportion of infertile immigrants. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.
 #' @param ... further arguments passed to \link[deSolve]{ode} function.
-#' @return \code{\link{list}}. The first element, \code{name}, is a string with the name of the function, the second element, \code{model}, is the model function. The third, fourth and fifth elements are vectors (\code{pars}, \code{init}, \code{time}, respectively) containing the \code{pars}, \code{init} and \code{time} arguments of the function. The sisxthth element \code{results} is a \code{\link{data.frame}} with up to as many rows as elements in time. The first fourth columns contain the time and the variables: \code{n}, \code{cn} and \code{tcn}. When *.range arguments are given, additional columns contain the variables \code{f}, \code{s} and \code{z}.
+#' @return \code{\link{list}}. The first element, \code{name}, is a string with the name of the function, the second element, \code{model}, is the model function. The third, fourth and fifth elements are vectors (\code{pars}, \code{init}, \code{time}, respectively) containing the \code{pars}, \code{init} and \code{time} arguments of the function. The sisxthth element \code{results} is a \code{\link{data.frame}} with up to as many rows as elements in time. The first fourth columns contain the time and the variables: \code{n}, \code{g} and \code{u}. When *.range arguments are given, additional columns contain the variables \code{f}, \code{s} and \code{z}.
 #' @references \url{http://oswaldosantos.github.io/capm}
 #' @seealso \link[deSolve]{ode}.
 #' @export
 #' @examples 
 #' # Parameters and initial conditions.
 #' pars.solvetc <- c(d = 1 / 6, f = 0.5, s = 0.2, 
-#'                    z = 0.2, d = 0.1)
+#'                    z = 0.2, r = 0.8)
 #'
 #' init.solvetc <- c(n = 950, g = 50)
 #' 
@@ -40,12 +40,12 @@ SolveTC <- function(pars = NULL, init = NULL, time = NULL, f.range = NULL, s.ran
     stop('Values in init must have the following names:\nn, g.')
   }
   SolveTCfu <- function(pars = NULL, init = NULL, time = NULL) {
-    init['tcn'] <- 0
+    init['u'] <- 0
     SolveTC.fu <- function(time, init, pars) {
       with(as.list(c(init, pars)), { 
         dn <- r * d * (n + g) + (1 - r) * d * (1 - z) * (n + g) + f * g -
           (d + s) * n
-        dg <- (1 - r) * d * z * (n + g) + s * n - (d - f) * g
+        dg <- (1 - r) * d * z * (n + g) + s * n - (d + f) * g
         du <- s * n    
         list(c(dn, dg, du))
       })

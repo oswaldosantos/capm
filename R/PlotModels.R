@@ -61,17 +61,17 @@
 #' 
 #' "n" (fertile animals).
 #' 
-#' "ns" (sterilized animals).
+#' "g" (sterilized animals).
 #' 
-#' "tns" (cumulative of sterilized animals)
+#' "u" (cumulative of sterilized animals)
 #' 
 #' @param col string indicating the color of ploted line, when \code{s.range} is \code{NULL}.
 #' @param col1 \code{\link{character}} \code{\link{vector}} indicating the color of lowest (highest) population sizes (proportion of sterilized animals), when \code{s.range} is not \code{NULL}.
 #' @param col2 \code{\link{character}} \code{\link{vector}} indicating the color of highest (lowest) population sizes (proportion of sterilized animals), when \code{s.range} is not \code{NULL}.
 #' @param x.label string with the name of x axis.
 #' @param y.label string with the name of y axis.
-#' @param leg.label string with the name of legend, for plots of \code{\link{SolveIASA}} output.
-#' @param scen.label string with the name of scenarios of \code{\link{SolveIASA}} output, determined by the immigartion rates. Within the string, use the expression __ in the location where you want to appear the value of the immigartion rate. For line breaking, use \code{\\n} (see examples).
+#' @param legend.label string with the name of legend, for plots of \code{\link{SolveIASA}} output.
+#' @param scenarios.label string with the name of scenarios of \code{\link{SolveIASA}} output, determined by the immigartion rates. Within the string, use the expression __ in the location where you want to appear the value of the immigartion rate. For line breaking, use \code{\\n} (see examples).
 #' @param pop value indicating the output of \code{\link{SolveIASA}} to be ploted. When \code{NULL} (default), plots for owned and stray populations under scenarios created by immigartion rate are created. If \code{1}, the plots of owned population for the minimum immigartion rate are ploted. When \code{2}, the plots of stray population for the minimum immigartion rate are ploted. If \code{3}, the plots of owned population for the maximum immigartion rate are ploted. When \code{4}, the plots of owned population for the maximum immigartion rate are ploted.
 #' @details Font size of saved plots is usually different to the font size seen in graphic browsers. Before changing font sizes, see the final result in saved (or preview) plots.
 #'  
@@ -124,7 +124,7 @@
 #' # Uncomment the following line:
 #' # PlotModels(solveiasa.rg, variable = 'ns')
 #'
-PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c('cadetblue1', 'yellow', 'red'), col2 = c('blue', 'darkgreen', 'darkred'), x.label = 'Years', y.label = NULL, scen.label = 'v = (__ * owned carrying capacity)', leg.label = NULL, pop = NULL) {
+PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c('cadetblue1', 'yellow', 'red'), col2 = c('blue', 'darkgreen', 'darkred'), x.label = 'Years', y.label = NULL, scenarios.label = 'v = (__ * owned carrying capacity)', legend.label = NULL, pop = NULL) {
   if (class(model.out) != 'capmModels') {
     stop('model.out must be of class "capmModels".')
   }
@@ -158,8 +158,8 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
       scl <- nchar(as.character(
         round(max(model.out$results[, variable])))) - 2
       if (variable == 'n') {
-        if (is.null(leg.label)) {
-          leg.label = 'Population size'
+        if (is.null(legend.label)) {
+          legend.label = 'Population size'
         }
         ggplot(
           model.out$results, 
@@ -169,7 +169,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
           ylab(y.label) +
           geom_raster() + 
           scale_fill_continuous(
-            name = paste0(leg.label,' (x ', 10 ^ scl, ')'),
+            name = paste0(legend.label,' (x ', 10 ^ scl, ')'),
             limits = c(0, max(model.out$results[, variable])), 
             breaks = round(
               seq(0 , max(model.out$results[, variable]),
@@ -182,8 +182,8 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
           theme(legend.position = 'top',
                 legend.title = element_text(size = 12))
       } else {
-        if (is.null(leg.label)) {
-          leg.label == 'Proportion of sterilized animals'
+        if (is.null(legend.label)) {
+          legend.label == 'Proportion of sterilized animals'
         }
         ggplot(
           model.out$results, 
@@ -193,7 +193,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
           ylab(y.label) +
           geom_raster() +
           scale_fill_continuous(
-            name = leg.label,
+            name = legend.label,
             limits = c(0, 1), breaks = seq(0 , 1, .2),
             low = rev(col2), 
             high = rev(col1)) +
@@ -276,34 +276,34 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
           stop(paste('Invalid variable: "', variable, 
                      '". See the help page of PlotModels.'))
         }
-        if (is.null(leg.label)) {
+        if (is.null(legend.label)) {
           if (variable == 'f') {
-            leg.label <- c('Owned\nintact\nfemales', 
-                          'Stray\nintact\nfemales')
+            legend.label <- c('Owned\nintact\nfemales', 
+                              'Stray\nintact\nfemales')
           }
           if (variable == 'fs') {
-            leg.label <- c('Owned\nsterilized\nfemales', 
-                          'Stray\nsterilized\nfemales')
+            legend.label <- c('Owned\nsterilized\nfemales', 
+                              'Stray\nsterilized\nfemales')
           }
           if (variable == 'm') {
-            leg.label <- c('Owned\nintact\nmales', 
-                          'Stray\nintact\nmales')
+            legend.label <- c('Owned\nintact\nmales', 
+                              'Stray\nintact\nmales')
           }
           if (variable == 'ms') {
-            leg.label <- c('Owned\nsterilized\nmales', 
-                          'Stray\nsterilized\nmales')
+            legend.label <- c('Owned\nsterilized\nmales', 
+                              'Stray\nsterilized\nmales')
           }
           if (variable == 'n') {
-            leg.label <- c('Owned\nintact\nanimals', 
-                          'Stray\nintact\nanimals')
+            legend.label <- c('Owned\nintact\nanimals', 
+                              'Stray\nintact\nanimals')
           }
           if (variable == 'ns') {
-            leg.label <- c('Owned\nsterilized\nanimals', 
-                          'Stray\nsterilized\nanimals')
+            legend.label <- c('Owned\nsterilized\nanimals', 
+                              'Stray\nsterilized\nanimals')
           }
           if (variable == 'N') {
-            leg.label <- c('Owned\nanimals', 
-                          'Stray\nanimals')
+            legend.label <- c('Owned\nanimals', 
+                              'Stray\nanimals')
           }
         }
         model.out$results[, 'a'] <- 
@@ -332,21 +332,21 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
                      ggtitle(
                        gsub('__', unique(
                          model.out$results[, 'v'])[i],
-                            scen.label)) +
+                         scenarios.label)) +
                      geom_raster() + 
                      scale_fill_continuous(
-                       name = paste0(leg.label[j], '\n',
+                       name = paste0(legend.label[j], '\n',
                                      '(x ', 10 ^ scl, ')\n'),
                        limits = c(0, max(model.out$results[
                          model.out$results$group == j, variable])), 
                        breaks = 
                          seq(0 , max(model.out$results[
                            model.out$results$group == j, variable]),
-                             length.out = 5),
+                           length.out = 5),
                        labels = round(
                          seq(0 , max(model.out$results[
                            model.out$results$group == j, variable]),
-                             length.out = 5) / (10 ^ scl), 1),
+                           length.out = 5) / (10 ^ scl), 1),
                        low = col1,
                        high = col2) +
                      theme(legend.position = 'right',
@@ -421,15 +421,15 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
           }
           scl <- nchar(as.character(
             round(max(model.out$results[, variable])))) - 2
-          if (is.null(leg.label)) {
+          if (is.null(legend.label)) {
             if (variable == 'n') {
-              leg.label = 'Fertile animals'
+              legend.label = 'Fertile animals'
             }
             if (variable == 'g') {
-              leg.label = 'Inertile animals'
+              legend.label = 'Inertile animals'
             }
             if (variable == 'u') {
-              leg.label = 'Sterilized animals (cumulative)'
+              legend.label = 'Sterilized animals (cumulative)'
             }
           }
           model.out$results[, 's'] <- 
@@ -444,7 +444,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
             ylab(y.label) +
             geom_raster() + 
             scale_fill_continuous(
-              name = paste0(leg.label,' (x ', 10 ^ scl, ')'),
+              name = paste0(legend.label,' (x ', 10 ^ scl, ')'),
               limits = c(0, max(model.out$results[, variable])), 
               breaks = round(
                 seq(0 , max(model.out$results[, variable]),
