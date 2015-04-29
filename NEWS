@@ -1,3 +1,7 @@
+capm 0.7.3
+==========
+* PlotPopPyramid: argument legend.label added. x-axis marks are now correctly displayed.
+
 capm 0.7.2
 ==========
 * PlotGlobalSens: changes in arugment names: nam.leg to legend.label; mm.leg to mm.label; sd.leg to sd.label.

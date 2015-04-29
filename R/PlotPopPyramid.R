@@ -6,6 +6,7 @@
 #' @param str.col the number of \code{dat} column which have a \code{\link{factor}} representing the reproductive status of individuals (see Details).
 #' @param x.label string to be used as a label for x-axis. If non defined, \code{x.label} is equal to "Total" (see Details).
 #' @param stage.label a string to be used as a label for ages or stages categories. If non defined, \code{stage.label} is equal to "Years" (see Details).
+#' @param legend.label a string to be used as a label for the legend. If not defined, \code{legend.label} is equal to "Sterilized".
 #' @param inner.color any valid way to specify colors. When \code{str.col} is \code{NULL}, \code{inner.color} is the color of bars. When \code{str.col} is not \code{NULL}, \code{innercolor} is the inner color of bars. If non defined, \code{inner.color} is equal to \code{"Gold2"}.
 #' @param outer.color any valid way to specify colors. When \code{str.col} is \code{NULL}, \code{outer.color} is ignored. When \code{str.col} is not \code{NULL}, \code{outer.color} is the outer color of bars. If non defined, \code{outercolor} is equal to \code{"DarkOliveGreen"}.
 #' @param label.size string to define the font size for labels.
@@ -15,7 +16,7 @@
 #' 
 #' On the top of the plot, it is displayed the total number of observations of each level of \code{dat[, sex.col]}. The \code{\link{levels}} of \code{sex.col} are used as \code{\link{labels}}.
 #' 
-#' The legend title is equal to \code{names(dat[, str.col])} and the legend \code{\link{labels}} are equal to the \code{\link{levels}} of \code{dat[, str.col]}.
+#' The legend \code{\link{labels}} are equal to the \code{\link{levels}} of \code{dat[, str.col]}.
 #' 
 #' Font size of saved plots is usually different to the font size seen in graphic browsers. Before changing font sizes, see the final result in saved (or preview) plots.
 #'  
@@ -24,7 +25,6 @@
 #' @note In companion animals population surveys, some age categories might be empty. One difference between \code{PlotPopPyramid} and \code{pryramid.plot} is that the first does not drop empty age categories.
 #' @return Two opposed horizontal barplots.
 #' @references \url{http://oswaldosantos.github.io/capm}
-#' @seealso \link[plotrix]{pyramid.plot}.
 #' @export
 #' @examples 
 #' ## Load data with information about age, sex and reproductive status of individuals.
@@ -33,7 +33,7 @@
 #' # PlotPopPyramid(survey.data, age.col = 5, sex.col = 4, str.col = 6)
 #' # PlotPopPyramid(survey.data, age.col = 5, sex.col = 4)
 #' 
-PlotPopPyramid <- function(dat = NULL, age.col = NULL, sex.col = NULL, str.col = NULL, x.label = 'Total', stage.label = 'Years', inner.color = 'Gold2', outer.color = 'DarkOliveGreen', label.size = 13) {
+PlotPopPyramid <- function(dat = NULL, age.col = NULL, sex.col = NULL, str.col = NULL, x.label = 'Total', stage.label = 'Years', legend.label = 'Sterilized',  inner.color = 'Gold2', outer.color = 'DarkOliveGreen', label.size = 13) {
   if (!is.numeric(dat[, age.col])) {
     stop('The column containing age information must be numeric.')
   }
@@ -55,7 +55,8 @@ PlotPopPyramid <- function(dat = NULL, age.col = NULL, sex.col = NULL, str.col =
     dat2 <- dat2[ , 1:3]
     names(dat2) <- c('age', 'sex', 'count')
   }
-  ylb <- max(dat2$count)
+  ylb <- max(
+    aggregate(dat2$count, list(dat2[, 'age'], dat2[, 'sex']), sum)$x)
   while (ylb %% 10 != 0) {
     ylb <- ylb + 1
   }
@@ -73,7 +74,8 @@ PlotPopPyramid <- function(dat = NULL, age.col = NULL, sex.col = NULL, str.col =
     plot.f <- ggplot(dat.f, aes(x = age, y = count , fill = ster)) +
       scale_fill_manual(values = c(inner.color, outer.color))
     plot.m <- ggplot(dat.m, aes(x = age, y = count , fill = ster)) +
-      scale_fill_manual(values = c(inner.color, outer.color))
+      scale_fill_manual(name = legend.label,
+                        values = c(inner.color, outer.color))
   } else {
     plot.f <- ggplot(dat.f, aes(x = age, y = count , fill = sex)) +
       scale_fill_manual(values = inner.color)
