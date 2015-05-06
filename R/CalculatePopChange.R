@@ -36,19 +36,33 @@
 #' 
 CalculatePopChange <- function(model.out = NULL, variable = NULL, t1 = NULL, t2 = NULL, ratio = TRUE) {
   if (is.null(t1) & !is.null(t2)) {
-    change <- model.out$results[model.out$results$time == t2, variable]
+    return(model.out$results[model.out$results$time == t2, c('time', variable)])
   }
   if (!is.null(t1) & is.null(t2)) {
-    change <- model.out$results[model.out$results$time == t1, variable]
+    return(model.out$results[model.out$results$time == t1, c('time', variable)])
   }
   if (!is.null(t1) & !is.null(t2)) {
     if (ratio) {
-      change <- model.out$results[model.out$results$time == t2, variable] /
-        model.out$results[model.out$results$time == t1, variable]
+      t.2 <- model.out$results[model.out$results$time == t2, variable]
+      t.1 <- model.out$results[model.out$results$time == t1, variable]
+      if (t.2 / t.1 > 1) {
+        change <- round((t.2 / t.1 * 100), 2)
+        return(noquote(paste0('At t2, ', variable, ' is ', change - 100,
+                              '% higher than ', '(or ', change, '% times) ',
+                              variable, ' at t1.')))
+      } else {
+        change <- round(t.2 / t.1 * 100, 2)
+        return(noquote(paste0('At t2, ', variable, ' is equal to ', change,
+                              '% of ', variable, ' at t1.')))
+      }      
     } else {
-      change <- model.out$results[model.out$results$time == t2, variable] -
-        model.out$results[model.out$results$time == t1, variable]
+      t.2 <- model.out$results[model.out$results$time == t2, variable]
+      t.1 <- model.out$results[model.out$results$time == t1, variable]
+      change <- abs(round(t.2 - t.1, 2))
+      net.change <- 'decreased'
+      if (t.2 - t.1 > 0) {net.change <- 'increased'}
+      return(cat('Compared with t1, in t2', variable, 'is',
+                 net.change, 'by', change))
     }
-  }  
-  return(change)
+  }
 }
