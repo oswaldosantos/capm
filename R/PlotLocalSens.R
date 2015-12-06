@@ -6,6 +6,7 @@
 #' @param y.sens string with the name of y axis for sensitivity functions.
 #' @param y.ind string with the name of y axis for the parameter importance indices.
 #' @param label.size a number to specify the size of axes labels and text.
+#' @param x.axis.angle a number with angle of rotation for x axis text. Passed to \code{angle} argument of \code{\link{element_text}}. 
 #' @details Font size of saved plots is usually different to the font size seen in graphic browsers. Before changing font sizes, see the final result in saved (or preview) plots.
 #' @references Chang W (2012). R Graphics Cookbook. O'Reilly Media, Inc.
 #' 
@@ -47,7 +48,7 @@
 #' # Uncomment the following line:
 #' # PlotLocalSens(local.solve.iasa2)
 #' 
-PlotLocalSens <- function (local.out = NULL, x.sens = "Time", y.sens = "Sensitivity", y.ind = c("L1", "L2", "Mean", "Min", "Max"), label.size = 10, type = 1) {
+PlotLocalSens <- function (local.out = NULL, x.sens = "Time", y.sens = "Sensitivity", y.ind = c("L1", "L2", "Mean", "Min", "Max"), label.size = 10, x.axis.angle = 90, type = 1) {
   if (length(y.ind) != 5) {
     stop("The length of y.ind must be equal to 5.")
   }
@@ -78,7 +79,7 @@ PlotLocalSens <- function (local.out = NULL, x.sens = "Time", y.sens = "Sensitiv
              theme(legend.position = "none", 
                    axis.title.x = element_blank(), 
                    axis.text.x = element_text(size = label.size - 1, 
-                                              angle = 90, vjust = 0.5),
+                                              angle = x.axis.angle, vjust = 0.5),
                    axis.title.y = element_text(size = label.size + 2),
                    axis.text.y = element_text(size = label.size)) + 
              ylab(y.ind[i]) +
