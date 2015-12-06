@@ -4,8 +4,8 @@
 #' @param legend.label string with name for the legend.
 #' @param x.label string with the name of x axis.
 #' @param y.label string with the name of y axis.
-#' @param mm.label string with the name of the "envelope" calculated using the minimum and maximum ranges.
-#' @param sd.label string with the name of the "envelope" calculated using the mean +- standard deviation ranges.
+#' @param mm.label string with the name of the envelope calculated using the minimum and maximum ranges.
+#' @param sd.label string with the name of the envelope calculated using the mean +- standard deviation ranges.
 #' @details Font size of saved plots is usually different to the font size seen in graphic browsers. Before changing font sizes, see the final result in saved (or preview) plots.
 #'  
 #' Other details of the plot can be modifyed using appropriate functions from \code{ggplot2} package.
