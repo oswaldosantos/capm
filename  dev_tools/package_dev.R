@@ -20,4 +20,3 @@ run_examples()
 #   NEWS
 #   CITATION
 #   Home web page
-#   Web documentation in all languages
