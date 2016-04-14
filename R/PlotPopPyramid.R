@@ -37,7 +37,7 @@ PlotPopPyramid <- function(dat = NULL, age.col = NULL, sex.col = NULL, str.col =
   if (!is.numeric(dat[, age.col])) {
     stop('The column containing age information must be numeric.')
   }
-  age <- sex <- ster <- count <- NULL
+  age <- sex <- ster <- count <- unit <- NULL
   if (!is.null(str.col)) {
     if (is.numeric(str.col)) {
       str.col <- names(dat)[str.col]
