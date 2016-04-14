@@ -1,5 +1,15 @@
+capm 0.9.1
+==========
+
+* Selective import of sp package's functions.
+
+* Selective import of maptools package's function.
+
+
 capm 0.9.0
 ==========
+
+* Selective import of rgdal package's functions.
 
 * Selective import of grid package's functions.
 

@@ -7,5 +7,5 @@ citEntry(entry = "Misc",
   title = "capm: Companion Animal Population Management. R package version 0.9.0",
   year = "2015",
   url = "http://oswaldosantos.github.io/capm",
-  textVersion = "Santos Baquero O, Amaku M and Ferreira F (2015). capm: Companion Animal Population Management. R package version 0.9.0. http://oswaldosantos.github.io/capm"
+  textVersion = "Oswaldo Santos Baquero, Marcos Amaku and Fernando Ferreira (2016). capm: Companion Animal Population Management. R package version 0.9.1. http://oswaldosantos.github.io/capm"
 )
