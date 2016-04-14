@@ -128,6 +128,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
   if (class(model.out) != 'capmModels') {
     stop('model.out must be of class "capmModels".')
   }
+  unit <- NULL
   if (model.out$name == 'SolveSI') {
     if (length(intersect(variable, c('n', 'q'))) == 0) {
       stop(paste0('Invalid variable: "', variable,
