@@ -57,19 +57,21 @@ PlotPopPyramid <- function(dat = NULL, age.col = NULL, sex.col = NULL, str.col =
   }
   ylb <- max(
     aggregate(dat2$count, list(dat2[, 'age'], dat2[, 'sex']), sum)$x)
-  while (ylb %% 10 != 0) {
+  while (ylb %% 5 != 0) {
     ylb <- ylb + 1
   }
   dat2[dat2$sex == levels(dat2$sex)[1], 'count'] <-
     dat2[dat2$sex == levels(dat2$sex)[1], 'count'] * (-1)
   dat.f <- dat2[which(dat2[, 2] == levels(dat2$sex)[1]), ]
-  dat.f <- rbind(dat.f, c(max(dat2$age), rep(NA, ncol(dat2) - 1)))
+  if (max(dat.f$age) < max(dat2$age)) {
+    dat.f <- rbind(dat.f, c(max(dat2$age), rep(0, ncol(dat2) - 1)))  
+  }
   dat.f[nrow(dat.f), 'sex'] <- levels(dat2$sex)[1]
-  dat.f$count[is.na(dat.f$count)] <- 0
   dat.m <- dat2[which(dat2[, 2] == levels(dat2$sex)[2]), ]
-  dat.m <- rbind(dat.m, c(max(dat2$age), rep(NA, ncol(dat2) - 1)))
+  if (max(dat.m$age) < max(dat2$age)) {
+    dat.m <- rbind(dat.m, c(max(dat2$age), rep(0, ncol(dat2) - 1)))  
+  }
   dat.m[nrow(dat.m), 'sex'] <- levels(dat2$sex)[2]
-  dat.m$count[is.na(dat.m$count)] <- 0
   if (!is.null(str.col)) {
     plot.f <- ggplot(dat.f, aes(x = age, y = count , fill = ster)) +
       scale_fill_manual(values = c(inner.color, outer.color))
@@ -91,11 +93,12 @@ PlotPopPyramid <- function(dat = NULL, age.col = NULL, sex.col = NULL, str.col =
           axis.title.y = element_blank(),
           axis.text.x = element_text(size = label.size),
           axis.title.x = element_text(size = label.size),
-          plot.title = element_text(size = label.size)) +
+          plot.title = element_text(size = label.size, hjust = .5)) +
     scale_x_continuous(breaks = 0:max(dat2$age),
                        labels = 0:max(dat2$age)) +
-    scale_y_continuous(breaks = seq(0, (ylb * -1), by = ylb / -5),
-                       labels = seq(0, ylb, by = ylb / 5)) +
+    scale_y_continuous(breaks = seq(0, (-ylb), by = ylb / -5),
+                       labels = seq(0, ylb, by = ylb / 5),
+                       limits = c(-ylb, 0)) +
     ggtitle(paste(levels(dat[, sex.col])[1], ' = ',
                   summary(dat[, sex.col])[1])) +
     ylab(x.label)
@@ -111,11 +114,12 @@ PlotPopPyramid <- function(dat = NULL, age.col = NULL, sex.col = NULL, str.col =
           legend.title = element_text(face = 'plain',
                                       size = label.size),
           legend.text = element_text(size = label.size),
-          plot.title = element_text(size = label.size)) +
+          plot.title = element_text(size = label.size, hjust = .5)) +
     scale_x_continuous(breaks = 0:max(dat2$age),
                        labels = 0:max(dat2$age)) +
     scale_y_continuous(breaks = seq(0, ylb, by = ylb / 5),
-                       labels = seq(0, ylb, by = ylb / 5)) +
+                       labels = seq(0, ylb, by = ylb / 5),
+                       limits = c(0, ylb)) +
     ggtitle(paste(levels(dat[, sex.col])[2], ' = ',
                   summary(dat[, sex.col])[2])) +
     labs(fill = str.col) +
@@ -148,7 +152,7 @@ PlotPopPyramid <- function(dat = NULL, age.col = NULL, sex.col = NULL, str.col =
   grid.newpage()
   pushViewport(viewport(layout = grid.layout(1, 200)))
   options(warn = -1) # Expected behvaior
-  print(plot.f, vp = vplayout(1, 1:92))
-  print(plot.m, vp = vplayout(1, 108:200))
-  print(ages, vp = vplayout(1, 93:107))
+  print(plot.f, vp = vplayout(1, 1:93))
+  print(plot.m, vp = vplayout(1, 107:200))
+  print(ages, vp = vplayout(1, 94:106))
 }
