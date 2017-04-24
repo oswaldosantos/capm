@@ -20,11 +20,11 @@ License: GPL (>= 2)
 LazyLoad: yes
 URL: http://oswaldosantos.github.io/capm
 Authors@R: c(person(given='Oswaldo', family='Santos Baquero',
-    email='oswaldosant@gmail.com', role=c("aut", "cre")),
+    email='baquero@usp.br', role=c("aut", "cre")),
     person(given='Marcos', family='Amaku',
     email='amaku@vps.fmvz.usp.br', role="ctb"),
     person(given='Fernando', family='Ferreira',
     email='fernando@vps.fmvz.usp.br', role="ctb"))
-Version: 0.9.1
-Date: 2016-03-06
+Version: 0.10.1
+Date: 2017-04-24
 RoxygenNote: 5.0.1
