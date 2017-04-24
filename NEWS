@@ -1,3 +1,8 @@
+capm 0.10.1
+==========
+
+* DesignSurvey: arguments cal.col and cal.N allow calibration based on a population total.
+
 capm 0.9.1
 ==========
 

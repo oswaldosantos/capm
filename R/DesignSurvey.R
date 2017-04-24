@@ -1,15 +1,17 @@
 #' Survey design
 #' @description A wraper for \code{\link{svydesign}} function from the survey package, to define one of the following survey designs: two-stage cluster, simple (systematic) or stratified. In the first case, weights are calculated considering a probability proportional to size sampling with replacement for the first stage and a simple random sampling for the second stage. Finite population correction is specified as the population size for each level of sampling.
 #' @param sample \code{\link{data.frame}} with sample observations. for two-stage cluster designs, one of the columns must contain unique identifiers for PSU and another column must contain unique identifiers for Secondary Sampling Units (SSU).
-#' @param psu.ssu \code{\link{data.frame}} with all Primary Sampling Units (PSU). First column contains PSU unique identifiers. Second column contains \code{\link{numeric}} PSU sizes. It is only used for two-stage cluster designs.
-#' @param psu.col the column of \code{sample} containing the psu identifiers (for two-stage cluster designs). It is only used for two-stage cluster designs.
-#' @param ssu.col the column of \code{sample} containing the ssu identifiers (for two-stage cluster designs). It is only used for two-stage cluster designs.
+#' @param psu.ssu \code{\link{data.frame}} with all Primary Sampling Units (PSU). First column contains PSU unique identifiers. Second column contains \code{\link{numeric}} PSU sizes. It is used only for two-stage cluster designs.
+#' @param psu.col the column of \code{sample} containing the psu identifiers (for two-stage cluster designs). It is used only for two-stage cluster designs.
+#' @param ssu.col the column of \code{sample} containing the ssu identifiers (for two-stage cluster designs). It is used only for two-stage cluster designs.
+#' @param cal.col the column of \code{sample} with the variable to calibrate estimates. It must be used together with \code{cal.N}.
 #' @param psu.2cd value indicating that the survey is a two-stage cluster design and the number of psu included (for psu included more than once, each must be counted).
 #' @param N for simple designs, a \code{\link{numeric}} value representing the total of sampling units in the population. for a stratified design, it is a column of \code{sample} indicating, for each observation, the total of sampling units in its respective strata. \code{N} is ignored in two-stage cluster designs.
 #' @param strata for stratified designs, a column of \code{sample} indicating the strata memebership of each observation.
+#' @param cal.N population total for the variable to calibrate the estimates. It must be used togheter with \code{cal.col}.
 #' @param ... further arguments passed to \code{\link{svydesign}} function. 
 #' @return An object of class survey.design.
-#' @details For two-stage cluster designs, a PSU appearing in both \code{psu.ssu} and in \code{sample} must have the same identifier. SSU identifiers must be unique but can appear more than once if there is more than one observation per SSU. \code{sample} argument must have just the varibles to be estimated plus the variables required to define the design (two-stage cluster or stratified).
+#' @details For two-stage cluster designs, a PSU appearing in both \code{psu.ssu} and in \code{sample} must have the same identifier. SSU identifiers must be unique but can appear more than once if there is more than one observation per SSU. \code{sample} argument must have just the varibles to be estimated plus the variables required to define the design (two-stage cluster or stratified). \code{cal.col} and \code{cal.N} are needed only if estimates will be calibrated. The calibration is based on a population total.
 #' @references Lumley, T. (2011). Complex surveys: A guide to analysis using R (Vol. 565). Wiley.
 #' 
 #' \url{http://oswaldosantos.github.io/capm}
@@ -37,8 +39,9 @@
 #' strat$strat.size[strat$strat == 'Rural'] <- 600
 #' DesignSurvey(strat, N = 'strat.size', strata = 'strat')
 #' 
-DesignSurvey <- function (sample = NULL, psu.ssu = NULL, psu.col = NULL, ssu.col = NULL, 
-                          psu.2cd = NULL, N = NULL, strata = NULL, ...) 
+DesignSurvey <- function (sample = NULL, psu.ssu = NULL, psu.col = NULL,
+                          ssu.col = NULL, cal.col = NULL, psu.2cd = NULL,
+                          N = NULL, strata = NULL, cal.N = NULL, ...) 
 {
   if (is.numeric(psu.2cd)) {
     if (length(which(!is.na(match(psu.ssu[, 1], sample[, psu.col])))) == 0) {
@@ -60,11 +63,17 @@ DesignSurvey <- function (sample = NULL, psu.ssu = NULL, psu.col = NULL, ssu.col
     for (i in c('psu.id', 'ssu.id', 'pop.size', 'psu.size', 'weights')) {
       dsn$variables <- dsn$variables[-which(names(dsn$variables) == i)]
     }
+    if (!is.null(cal.col) & !is.null(cal.N)) {
+      dsn <- calibrate(dsn, formula = ~ sample[, cal.col]-1, population = cal.N)
+    }
     return(dsn)
   }
   if (!is.null(N) & is.null(strata)) {
     sample$N <- N
     dsn <- svydesign(ids = ~1, fpc = ~N, data = sample)
+    if (!is.null(cal.col) & !is.null(cal.N)) {
+      dsn <- calibrate(dsn, formula = ~ sample[, cal.col]-1, population = cal.N)
+    }
     dsn$variables <- dsn$variables[-which(names(dsn$variables) == 'N')]
     dsn$simple <- 'yes'
     return(dsn)
@@ -72,6 +81,9 @@ DesignSurvey <- function (sample = NULL, psu.ssu = NULL, psu.col = NULL, ssu.col
   if (!is.null(N) & !is.null(strata)) {
     dsn <- svydesign(ids = ~1, fpc = ~sample[, N],
                      strata = ~sample[, strata], data = sample)
+    if (!is.null(cal.col) & !is.null(cal.N)) {
+      dsn <- calibrate(dsn, formula = ~ sample[, cal.col]-1, population = cal.N)
+    }
     if (is.numeric(N)) {
       N <- names(sample)[N]
     }
