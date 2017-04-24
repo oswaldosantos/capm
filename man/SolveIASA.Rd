@@ -22,7 +22,7 @@ SolveIASA(pars = NULL, init = NULL, time = NULL, s.range = NULL,
 
 \item{v.range}{optional \code{\link{vector}} of length 2, with range of values of immigration rates to be assessed. This must be expressed as a percentage of owned animals carrying capacity.}
 
-\item{s.fm}{logical. If \code{TRUE}, s.range is used for females and males and if \code{FALSE}, it is only used for females (for males, the point estimate given in \code{pars} is used.)}
+\item{s.fm}{logical. If \code{TRUE}, s.range is used for females and males and if \code{FALSE}, it is used only for females (for males, the point estimate given in \code{pars} is used.)}
 
 \item{...}{further arguments passed to \link[deSolve]{ode} function.}
 }

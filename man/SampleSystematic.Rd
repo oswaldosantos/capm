@@ -8,7 +8,7 @@ SampleSystematic(psu.ssu = NULL, su = NULL, N = NULL, write = FALSE,
   ...)
 }
 \arguments{
-\item{psu.ssu}{\code{\link{data.frame}} with all PSU. First column contains PSU unique identifiers. Second column contains \code{\link{numeric}} PSU sizes. Only used for the second stage of a two-stage cluster design (see details).}
+\item{psu.ssu}{\code{\link{data.frame}} with all PSU. First column contains PSU unique identifiers. Second column contains \code{\link{numeric}} PSU sizes. It is used only for the second stage of a two-stage cluster design (see details).}
 
 \item{su}{\code{\link{numeric}} indicating the number of sampling units to be selected. If \code{su} has more than one element, stratified sampling is applied and \code{psu.ssu} is ignored (see details).}
 

@@ -1,6 +1,6 @@
 #' Simple and stratified systematic sampling
 #' @description Select sampling units using simple or stratified systematic samplin. In the context of two-stage cluster sampling, select Secondary Sampling Units (SSU) in one or more Primary Sampling Units (PSU), using systematic sampling.
-#' @param psu.ssu \code{\link{data.frame}} with all PSU. First column contains PSU unique identifiers. Second column contains \code{\link{numeric}} PSU sizes. Only used for the second stage of a two-stage cluster design (see details).
+#' @param psu.ssu \code{\link{data.frame}} with all PSU. First column contains PSU unique identifiers. Second column contains \code{\link{numeric}} PSU sizes. It is used only for the second stage of a two-stage cluster design (see details).
 #' @param su \code{\link{numeric}} indicating the number of sampling units to be selected. If \code{su} has more than one element, stratified sampling is applied and \code{psu.ssu} is ignored (see details).
 #' @param N \code{\link{numeric}} indicating the number of sampling units in the population. It is intended for simple or stratified sampling designs and when used, \code{psu.ssu} is ignored (see details).
 #' @param write logical. If \code{TRUE}, a *.csv file containing the PSU and their SSU is writed in the current working directory.
