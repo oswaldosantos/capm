@@ -2,7 +2,7 @@ Package: capm
 Type: Package
 Title: Companion Animal Population Management
 Depends:
-    R (>= 3.2.2)
+    R (>= 3.4.0)
 Imports:
     deSolve,
     FME,
@@ -25,6 +25,6 @@ Authors@R: c(person(given='Oswaldo', family='Santos Baquero',
     email='amaku@vps.fmvz.usp.br', role="ctb"),
     person(given='Fernando', family='Ferreira',
     email='fernando@vps.fmvz.usp.br', role="ctb"))
-Version: 0.10.2
-Date: 2017-04-24
-RoxygenNote: 5.0.1
+Version: 0.10.3
+Date: 2017-05-04
+RoxygenNote: 6.0.1

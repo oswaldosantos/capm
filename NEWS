@@ -1,7 +1,12 @@
+capm 0.10.3
+==========
+
+* PlotPopPyramid: sex.col and str.col are not restricted to be factors.
+
 capm 0.10.2
 ==========
 
-* PlotPopPyramid: centered titles and same limits on x axis for each sex.
+* PlotPopPyramid: centered titles and same limits on x axis for each sex. Fixed bug that introduced NA.
 
 capm 0.10.1
 ==========
