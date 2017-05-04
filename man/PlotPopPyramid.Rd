@@ -12,17 +12,17 @@ PlotPopPyramid(dat = NULL, age.col = NULL, sex.col = NULL,
 \arguments{
 \item{dat}{\code{\link{data.frame}}.}
 
-\item{age.col}{the number or name of \code{dat} column which have a \code{\link{numeric}} \code{\link{vector}} representing ages or stage categories.}
+\item{age.col}{\code{dat} column that has a \code{\link{numeric}} \code{\link{vector}} representing ages or stage categories.}
 
-\item{sex.col}{the number or name of \code{dat} column which have a \code{\link{factor}} with two levels representing the sex of individuals (see Details).}
+\item{sex.col}{\code{dat} column that has two unique values representing the sex of individuals (see Details).}
 
-\item{str.col}{the number of \code{dat} column which have a \code{\link{factor}} representing the reproductive status of individuals (see Details).}
+\item{str.col}{\code{dat} column that has two unique values representing the reproductive status of individuals (see Details).}
 
-\item{x.label}{string to be used as a label for x-axis. If non defined, \code{x.label} is equal to "Total" (see Details).}
+\item{x.label}{string to be used as a label for the x axis. If undefined, \code{x.label} is equal to "Total" (see Details).}
 
-\item{stage.label}{a string to be used as a label for ages or stages categories. If non defined, \code{stage.label} is equal to "Years" (see Details).}
+\item{stage.label}{a string to be used as a label for the ages or stage categories. If undefined, \code{stage.label} is equal to "Years" (see Details).}
 
-\item{legend.label}{a string to be used as a label for the legend. If not defined, \code{legend.label} is equal to "Sterilized".}
+\item{legend.label}{a string to be used as a label for the legend. If undefined, \code{legend.label} is equal to "Sterilized".}
 
 \item{inner.color}{any valid way to specify colors. When \code{str.col} is \code{NULL}, \code{inner.color} is the color of bars. When \code{str.col} is not \code{NULL}, \code{innercolor} is the inner color of bars. If non defined, \code{inner.color} is equal to \code{"Gold2"}.}
 
@@ -34,16 +34,16 @@ PlotPopPyramid(dat = NULL, age.col = NULL, sex.col = NULL,
 Two opposed horizontal barplots.
 }
 \description{
-Display two opposed horizontal barplots (pyramid).
+Displays two opposed horizontal barplots (pyramid).
 }
 \details{
-\code{PlotPopPyramid} is mainly intended for companion animals population pyramids, although it can display other types of opposed bar charts with suitable modification of the arguments.
+\code{PlotPopPyramid} is mainly intended for companion animals population pyramids, although it can display other types of opposed bar charts.
 
-The bars to the left of \code{0} on the x axis correspond to the minimum value of \code{\link{as.numeric}} (\code{dat[, sex.col]}). If \code{str.col} is not \code{NULL}, bars will be stacked, with the minimum value of \code{\link{as.numeric}}(\code{dat[, str.col]}) as their base.
+The bars to the left of the x axis correspond to \code{sort(unique(dat[, sex.col]))[1]}. If \code{str.col} is not \code{NULL}, bars will be stacked, with \code{sort(unique(dat[, str.col]))[1]} as their base.
 
-On the top of the plot, it is displayed the total number of observations of each level of \code{dat[, sex.col]}. The \code{\link{levels}} of \code{sex.col} are used as \code{\link{labels}}.
+On the top of the plot, it is displayed the total number of observations of each \code{dat[, sex.col]} unique value. This unique values are used as \code{\link{labels}}.
 
-The legend \code{\link{labels}} are equal to the \code{\link{levels}} of \code{dat[, str.col]}.
+The legend \code{\link{labels}} are equal to the \code{dat[, str.col]} unique values.
 
 Font size of saved plots is usually different to the font size seen in graphic browsers. Before changing font sizes, see the final result in saved (or preview) plots.
  
@@ -53,14 +53,18 @@ Other details of the plot can be modifyed using appropriate functions from \code
 In companion animals population surveys, some age categories might be empty. One difference between \code{PlotPopPyramid} and \code{pryramid.plot} is that the first does not drop empty age categories.
 }
 \examples{
-## Load data with information about age, sex and reproductive status of individuals.
-data(survey.data)
-# Uncomment the following lines:
-# PlotPopPyramid(survey.data, age.col = 5, sex.col = 4, str.col = 6)
-# PlotPopPyramid(survey.data, age.col = 5, sex.col = 4)
+data(cluster_sample_animals)
+dogs <- cluster_sample_animals[complete.cases(cluster_sample_animals), ]
+dogs <- dogs[dogs$species == "dog", ]
+PlotPopPyramid(dogs,
+               age.col = "age",
+               sex.col = "sex",
+               str.col = "sterilized")
+PlotPopPyramid(dogs,
+               age.col = "age",
+               sex.col = "sex")
 
 }
 \references{
 \url{http://oswaldosantos.github.io/capm}
 }
-
