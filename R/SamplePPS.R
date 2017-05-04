@@ -34,7 +34,7 @@ SamplePPS <- function (psu.ssu = NULL, psu = NULL, write = FALSE, ...) {
   M <- nrow(psu.ssu) 
   cum <- cumsum(psu.ssu[ , 2]) 
   N <- cum[M] 
-  Psu <- data.frame('selected psu' = rep(NA, psu), size = rep(NA, psu)) 
+  Psu <- data.frame('selected_psu' = rep(NA, psu), size = rep(NA, psu)) 
   for (i in 1:psu) { 
     a <- runif(1, 0, N) 
     j <- 1
