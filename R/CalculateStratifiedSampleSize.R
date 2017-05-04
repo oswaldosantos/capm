@@ -1,6 +1,6 @@
 #' Stratified random sample size
-#' @description Calculates sample size for a stratified random sampling design to estimate a total.
-#' @param strata \code{\link{vector}}, \code{\link{matrix}} or \code{\link{data.frame}}. If vector, the length must be equal to the number of sampling units in the population and each element represent the strata memebership of each sampling unit. If matrix or data.frame, first column represent the size of each strata, second column represent the expected mean in each strata and third column represent the expected variance in each strata. Each row is a stra and must be named.
+#' @description Calculates sample size to estimate a total from a stratified random sampling design.
+#' @param strata \code{\link{vector}}, \code{\link{matrix}} or \code{\link{data.frame}}. If vector, the length must be equal to the number of sampling units in the population and each element represent the strata memebership of each sampling unit. If matrix or data.frame, first column represent the size of each strata, second column represent the expected mean in each strata and third column represent the expected variance in each strata. Each row is a strata and must be named.
 #' @param x \code{\link{data.frame}} representing a pilot sample. First column has the variable to be estimated and second column has the strata membership of each observation.
 #' @param conf.level the confidence level required. It must be \code{\link{numeric}} between 0 and 1 inclusive.
 #' @param error the maximum relative difference between the estimate and the unknown population value. It must be \code{\link{numeric}} between 0 and 1 inclusive.
@@ -11,17 +11,18 @@
 #' @export
 #' @examples 
 #' # Using a pilot sample from a population with 10000 sampling units.
-#' strata <- rep(c('Rural', 'Urban'), c(100, 9900))
-#' pilot.sample <- data.frame(c(rpois(5, 1.3), rpois(45, 0.8)),
-#'                            rep(c('Rural', 'Urban'), c(5, 45)))
-#' CalculateStratifiedSampleSize(strata, pilot.sample)                            
+#' strata <- rep(c("rural", "urban"), c(100, 9900))
+#' pilot <- data.frame(c(rpois(5, 1.3), rpois(45, 0.8)),
+#'                            rep(c("rural", "urban"), c(5, 45)))
+#' CalculateStratifiedSampleSize(strata, pilot)
 #'       
 #' # Using expected mean and variance for a population with
 #' # 10000 sampling units.
-#' str.n <- c(Rural = 100, Urban = 9900)
-#' str.mean <- c(Rural = 1.4, Urban = 0.98)
-#' str.var <- c(Rural = 1.48, Urban = 1.02)
-#' CalculateStratifiedSampleSize(cbind(str.n, str.mean, str.var))
+#' str_n <- c(rural = 100, urban = 9900)
+#' str_mean <- c(rural = 1.4, urban = 0.98)
+#' str_var <- c(rural = 1.48, urban = 1.02)
+#' CalculateStratifiedSampleSize(cbind(str_n, str_mean, str_var))
+#' 
 CalculateStratifiedSampleSize <- function(strata = NULL, x = NULL, conf.level = 0.95, error = 0.1) {
   if (conf.level > 1 | conf.level < 0) {
     stop('conf.level must be a number between 0 and 1 inclusive.')

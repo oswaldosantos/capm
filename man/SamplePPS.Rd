@@ -2,7 +2,7 @@
 % Please edit documentation in R/SamplePPS.R
 \name{SamplePPS}
 \alias{SamplePPS}
-\title{Probability proportional to size sampling with replacement}
+\title{Sampling with probability proportional to size and with replacement}
 \usage{
 SamplePPS(psu.ssu = NULL, psu = NULL, write = FALSE, ...)
 }
@@ -16,17 +16,16 @@ SamplePPS(psu.ssu = NULL, psu = NULL, write = FALSE, ...)
 \item{...}{further arguments passed to \code{\link{write.table}} function.}
 }
 \value{
-\code{\link{data.frame}}. First column contains the selected psu identifiers, coerced by \code{\link{as.character}}, to avoid scientific notation in case the identifiers be large numbers of \code{\link{class}} \code{\link{numeric}}. Second column contain PSU sizes, a variable needed for second stage sampling with \code{\link{SampleSystematic}}.
+\code{\link{data.frame}}. First column contains the selected PSU identifiers, coerced by \code{\link{as.character}}, to avoid scientific notation in case the identifiers be large numbers of \code{\link{class}} \code{\link{numeric}}. Second column contain PSU sizes, a variable needed for second stage sampling with \code{\link{SampleSystematic}}.
 }
 \description{
-Select Primary Sampling Units (PSU) with probability proportional to size with replacement.
+Select Primary Sampling Units (PSU) with probability proportional to size and with replacement.
 }
 \examples{
-# Load data with PSU identifiers and sizes.
-data(psu.ssu)
+data(city)
 
-# Take a sample of 10 PSU with probability proportional to size with replacement.
-(selected.psu <- SamplePPS(psu.ssu, 10, write = FALSE))
+# Take a sample of 10 PSU.
+SamplePPS(psu.ssu = city[, c("track_id", "hh")], psu = 10, write = FALSE)
 
 }
 \references{
@@ -37,4 +36,3 @@ Levy P and Lemeshow S (2008). Sampling of populations: methods and applications,
 \seealso{
 \code{\link{SampleSystematic}}.
 }
-

@@ -21,26 +21,26 @@
 #' # Parameters and initial conditions from estimates   
 #' # obtained in examples section from svysumm function but
 #' # estimating a proportion insted of a total for births.
-#' pars.solve.si = c(b = 0.245, d = 0.101, 
+#' pars_solve_si = c(b = 0.245, d = 0.101, 
 #'                  k = 98050, s = 0.048)
-#' init.solve.si = c(n = 89137, q = 0.198)
+#' init_solve_si = c(n = 89137, q = 0.198)
 #' 
 #' # Solve for a specific sterilization rate.
-#' solvesi.pt = SolveSI(pars = pars.solve.si, 
-#'                      init = init.solve.si, 
-#'                      time = 0:15, dd = 'b',
-#'                      im = 100, method = 'rk4')
+#' solve_si_pt = SolveSI(pars = pars_solve_si, 
+#'                      init = init_solve_si, 
+#'                      time = 0:15, dd = "b",
+#'                      im = 100, method = "rk4")
 #' 
 #' # Solve for a range of sterilization rates.
-#' solvesi.rg = SolveSI(pars = pars.solve.si,
-#'                      init = init.solve.si,
-#'                      time = 0:15, dd = 'b', im = 100, 
+#' solve_si_rg = SolveSI(pars = pars_solve_si,
+#'                      init = init_solve_si,
+#'                      time = 0:15, dd = "b", im = 100, 
 #'                      s.range = seq(0, .4, l = 50),
-#'                      method = 'rk4')
+#'                      method = "rk4")
 #' 
 SolveSI <- function(pars = NULL, init = NULL, time = NULL, dd = 'b', im = 0, s.range = NULL, ...) {
   SolveSIfu <- function(pars = NULL, init = NULL, time = NULL) {
-    SolveSI.fu <- function(time, init, pars) {
+    solve_si_fu <- function(time, init, pars) {
       with(as.list(c(init, pars)), {
         if (dd == 'b') {
           nat = b - (b - d) * (n / k)
@@ -56,9 +56,9 @@ SolveSI <- function(pars = NULL, init = NULL, time = NULL, dd = 'b', im = 0, s.r
       })
     }
     init <- c(init['n'], init['q'])
-    SolveSI.out <- ode(times = time, func = SolveSI.fu, 
+    solve_si_out <- ode(times = time, func = solve_si_fu, 
                            y = init, parms = pars, ...)
-    return(as.data.frame(SolveSI.out))
+    return(as.data.frame(solve_si_out))
   }
   
   if (!is.null(s.range)) {

@@ -19,11 +19,10 @@ Graphic interface to use some capm functions
 The graphic interfaces are created with the \code{shiny} package and thus will open in a browser.
 }
 \examples{
-# Uncomment the following line to open the graphic interface in a browser:
-# GraphicInterface(set.func = 'SelectSamplingUnits')
-
+\dontrun{
+GraphicInterface(set.func = 'SelectSamplingUnits')
+}
 }
 \references{
 \url{http://oswaldosantos.github.io/capm}
 }
-

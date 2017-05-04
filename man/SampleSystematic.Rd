@@ -19,32 +19,29 @@ SampleSystematic(psu.ssu = NULL, su = NULL, N = NULL, write = FALSE,
 \item{...}{further arguments passed to \code{\link{write.table}} function.}
 }
 \value{
-A \code{matrix}. For the second stage in a two-stage cluster sampling, the names of columns are the identifiers of selected psu, coerced by \code{\link{as.character}} to avoid scientific notation in case the identifiers be of \code{\link{class}} \code{\link{numeric}}. The rows correspond to the selected SSU within each psu. For simple systematic sampling, the rows correspond to the selected sampling units. For stratified sampling, each column represent an strata and the rows correspond to the selected sampling units in each strata.
+A \code{matrix}. For the second stage in a two-stage cluster sampling, the names of columns are the identifiers of selected psu, coerced by \code{\link{as.character}} to avoid scientific notation in case the identifiers be of \code{\link{class}} \code{\link{numeric}}. The rows correspond to the selected SSU within each PSU. For simple systematic sampling, the rows correspond to the selected sampling units. For stratified sampling, each column represent an strata and the rows correspond to the selected sampling units in each strata.
 }
 \description{
 Select sampling units using simple or stratified systematic samplin. In the context of two-stage cluster sampling, select Secondary Sampling Units (SSU) in one or more Primary Sampling Units (PSU), using systematic sampling.
 }
 \details{
-When \code{N} is defined, \code{psu.ssu} is ignored (not need to be defined). If \code{N} has one element, \code{su} must too and the result is a simple systematic selection.  If \code{N} has more than one element, \code{su} must have the same number of elements and each oredered pair represent an strata. Thus, when N has more than one element, the result is a stratified sampling with systematic selection within each strata (see examples).
+When \code{N} is defined, \code{psu.ssu} is ignored. If \code{N} has one element, \code{su} must too and the result is a simple systematic selection.  If \code{N} has more than one element, \code{su} must have the same number of elements and each oredered pair represent an strata. Thus, when N has more than one element, the result is a stratified sampling with systematic selection within each strata (see examples).
 }
 \examples{
-# Load data with PSU identifiers and sizes.
-data(psu.ssu)
+data(city)
 
-# Take a sample of 10 PSU, with probability 
-# proportional to size and with replacement.
-selected.psu <- SamplePPS(psu.ssu, 10, write = FALSE)
+## Two-stage cluster sampling
+selected_psu <- SamplePPS(psu.ssu = city[, c("track_id", "hh")], psu = 10)
 
-# Take a systematic sampling of 5 SSU within each 
-# PSU of selected.psu.
-SampleSystematic(selected.psu, 5, write = FALSE)
+# Take a systematic sampling of 5 SSU within each selected PSU.
+SampleSystematic(selected_psu, 5, write = FALSE)
 
-# Simple systematic sampling
+## Simple systematic sampling
 SampleSystematic(su = 5, N = 100)
 
-# Stratified systematic sampling
-SampleSystematic(su = c('Urban' = 50, 'Rural' = 10),
-                 N = c('Urban' = 4000, 'Rural' = 150))
+## Stratified systematic sampling
+SampleSystematic(su = c("urban" = 50, "rural" = 10),
+                 N = c("urban" = 4000, "rural" = 150))
 }
 \references{
 Levy P and Lemeshow S (2008). Sampling of populations: methods and applications, Fourth edition. John Wiley and Sons, Inc.
@@ -54,4 +51,3 @@ Levy P and Lemeshow S (2008). Sampling of populations: methods and applications,
 \seealso{
 \code{\link{SamplePPS}}.
 }
-

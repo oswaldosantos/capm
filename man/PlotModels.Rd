@@ -83,13 +83,13 @@ For \code{\link{SolveTC}} function:
 
 \item{col2}{\code{\link{character}} \code{\link{vector}} indicating the color of highest (lowest) population sizes (proportion of sterilized animals), when \code{s.range} is not \code{NULL}.}
 
-\item{x.label}{string with the name of x axis.}
+\item{x.label}{string with the name for x axis.}
 
-\item{y.label}{string with the name of y axis.}
+\item{y.label}{string with the name for y axis.}
 
-\item{scenarios.label}{string with the name of scenarios of \code{\link{SolveIASA}} output, determined by the immigartion rates. Within the string, use the expression __ in the location where you want to appear the value of the immigartion rate. For line breaking, use \code{\\n} (see examples).}
+\item{scenarios.label}{string with the names for the scenarios of \code{\link{SolveIASA}} output, determined by the immigartion rates. Within the string, use the expression __ in the location where you want to appear the value of the immigartion rate. For line breaking, use \code{\\n} (see examples).}
 
-\item{legend.label}{string with the name of legend, for plots of \code{\link{SolveIASA}} output.}
+\item{legend.label}{string with the name of the legend, for plots of \code{\link{SolveIASA}} output.}
 
 \item{pop}{value indicating the output of \code{\link{SolveIASA}} to be ploted. When \code{NULL} (default), plots for owned and stray populations under scenarios created by immigartion rate are created. If \code{1}, the plots of owned population for the minimum immigartion rate are ploted. When \code{2}, the plots of stray population for the minimum immigartion rate are ploted. If \code{3}, the plots of owned population for the maximum immigartion rate are ploted. When \code{4}, the plots of owned population for the maximum immigartion rate are ploted.}
 }
@@ -102,19 +102,17 @@ Font size of saved plots is usually different to the font size seen in graphic b
 Other details of the plot can be modifyed using appropriate functions from \code{ggplot2} package.
 }
 \examples{
-#####################
-## SolveIASA model ##
-#####################
+### IASA model
 
 ## Parameters and intial conditions.
-pars.solve.iasa = c(
+pars_solve_iasa = c(
    b1 = 21871, b2 = 4374,
    df1 = 0.104, dm1 = 0.098, df2 = 0.125, dm2 = 0.118,
    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
    k1 = 98050, k2 = 8055, h1 = 1, h2 = 0.5,
    a = 0.054, alpha = 0.1, v = 0.2, z = 0.1)
    
-init.solve.iasa = c(
+init_solve_iasa = c(
    f1 = 33425, fs1 = 10865,
    m1 = 38039, ms1 = 6808,
    f2 = 3343, fs2 = 109,
@@ -122,13 +120,13 @@ init.solve.iasa = c(
    
 
 # Solve for point estimates.
-solveiasa.pt <- SolveIASA(pars = pars.solve.iasa, 
-                          init = init.solve.iasa, 
+solve_iasa_pt <- SolveIASA(pars = pars_solve_iasa, 
+                          init = init_solve_iasa, 
                           time = 0:10, method = 'rk4')
 
 # Solve for parameter ranges.
-solveiasa.rg <- SolveIASA(pars = pars.solve.iasa, 
-                          init = init.solve.iasa, 
+solve_iasa_rg <- SolveIASA(pars = pars_solve_iasa, 
+                          init = init_solve_iasa, 
                           time = 0:10,
                           s.range = seq(0, .4, l = 15), 
                           a.range = c(0, .2), 
@@ -137,12 +135,13 @@ solveiasa.rg <- SolveIASA(pars = pars.solve.iasa,
                           method = 'rk4')
                 
 ## Plot stray population sizes using point estimates
-# Uncomment the following line:
-# PlotModels(solveiasa.pt, variable = "ns2")
+## Not run
+PlotModels(solve_iasa_pt, variable = "ns2")
 
 ## Plot all scenarios and change the label for the scenarios.
-# Uncomment the following line:
-# PlotModels(solveiasa.rg, variable = 'ns')
+## Not run
+PlotModels(solve_iasa_rg, variable = "ns")
+## End(Not run)
 
 }
 \references{
@@ -153,4 +152,3 @@ Chang W (2012). R Graphics Cookbook. O'Reilly Media, Inc.
 \seealso{
 \link[deSolve]{plot.deSolve}.
 }
-

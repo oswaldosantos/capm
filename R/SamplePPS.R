@@ -1,21 +1,20 @@
-#' Probability proportional to size sampling with replacement
-#' @description Select Primary Sampling Units (PSU) with probability proportional to size with replacement.
+#' Sampling with probability proportional to size and with replacement
+#' @description Select Primary Sampling Units (PSU) with probability proportional to size and with replacement.
 #' @param psu.ssu \code{\link{data.frame}} with all PSU. First column contains PSU unique identifiers. Second column contains \code{\link{numeric}} PSU sizes.
 #' @param psu the number of PSU to be selected.
 #' @param write logical. If \code{TRUE}, a *.csv file containing the PSU and their Secondary Sampling Units (SSU) is writed in the current working directory.
 #' @param ... further arguments passed to \code{\link{write.table}} function.
-#' @return \code{\link{data.frame}}. First column contains the selected psu identifiers, coerced by \code{\link{as.character}}, to avoid scientific notation in case the identifiers be large numbers of \code{\link{class}} \code{\link{numeric}}. Second column contain PSU sizes, a variable needed for second stage sampling with \code{\link{SampleSystematic}}.
+#' @return \code{\link{data.frame}}. First column contains the selected PSU identifiers, coerced by \code{\link{as.character}}, to avoid scientific notation in case the identifiers be large numbers of \code{\link{class}} \code{\link{numeric}}. Second column contain PSU sizes, a variable needed for second stage sampling with \code{\link{SampleSystematic}}.
 #' @references Levy P and Lemeshow S (2008). Sampling of populations: methods and applications, Fourth edition. John Wiley and Sons, Inc.
 #' 
 #' \url{http://oswaldosantos.github.io/capm}
 #' @seealso \code{\link{SampleSystematic}}.
 #' @export
 #' @examples 
-#' # Load data with PSU identifiers and sizes.
-#' data(psu.ssu)
+#' data(city)
 #' 
-#' # Take a sample of 10 PSU with probability proportional to size with replacement.
-#' (selected.psu <- SamplePPS(psu.ssu, 10, write = FALSE))
+#' # Take a sample of 10 PSU.
+#' SamplePPS(psu.ssu = city[, c("track_id", "hh")], psu = 10, write = FALSE)
 #' 
 SamplePPS <- function (psu.ssu = NULL, psu = NULL, write = FALSE, ...) {
   inv <- c(which(!is.finite(psu.ssu[, 2])), which(psu.ssu[, 2] <= 0))

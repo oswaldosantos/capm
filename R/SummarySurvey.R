@@ -11,70 +11,28 @@
 #' \url{http://oswaldosantos.github.io/capm}
 #' @export
 #' @examples
-#' # Load data.
-#' data(psu.ssu)
-#' data(survey.data)
+#' data(city)
+#' data(hh)
+#' ## Two-stage cluster design that included 65 PSU.
+#' data(cluster_sample)
+#' cluster_sample2 <- cluster_sample[complete.cases(cluster_sample), c(1:2, 8:10)]
+#' design <- DesignSurvey(sample = cluster_sample2,
+#'              psu.ssu = city[, c("track_id", "hh")],
+#'              psu.col = "track_id", ssu.col = "hh_id", psu.2cd = 65,
+#'              cal.col = "persons", cal.N = sum(hh$persons))
+#' vars <- rep("total", 3)
+#' cbind(names(design$variables), vars)
+#' SummarySurvey(design = design, variables = vars)
 #' 
-#' ##########################################
-#' ## Example 1 (two-stage cluster design) ##
-#' ## General estimates                    ##
-#' ##########################################
-#' 
-#' # Specify the two-stage cluster design.
-#' design <- DesignSurvey(sample = survey.data, psu.ssu = psu.ssu,
-#'                        psu.col = 2, ssu.col = 1, psu.2cd = 20)
-#' 
-#' # Look at the variables contained in the survey design
-#' names(design$variables)
-#' 
-#' # Specify the type of estimate for each variable
-#' variables <- c("total", "prop", "mean", rep("prop", 2),
-#'                "total", rep("prop", 8))
-#' 
-#' # Make sure you specify the correct type of estimate for each variable
-#' cbind(names(design$variables), variables)
-#' 
-#' # Calculate the summary statistics for the survey.
-#' # Uncomment the following two lines (will take some seconds).
-#' # estimates <- SummarySurvey(design, variables = variables, rnd = 3)
-#' 
-#' ##########################################
-#' ## Example 2 (two-stage cluster design) ##
-#' ## Sex-specific estimates               ##
-#' ##########################################
-#' 
-#' # Make a copy of the dataset and select some 
-#' # variables of interest.
-#' sample1 <- survey.data[, c(1:4, 6:7, 11)]
-#' 
-#' # Transform to numeric the "sterilized" variable in order
-#' # to estimate its total.
-#' sample1[, 5] <- as.character(sample1[, 5])
-#' sample1[which(sample1$sterilized == "yes"), 5] <- 1
-#' sample1[which(sample1[, 5] == "no"), 5] <- 0
-#' sample1[, 5] <- as.numeric(sample1[, 5])
-#' 
-#' # Define a survey design for each sex.
-#' design.sex <- DesignSurvey(sample = sample1, psu.ssu = psu.ssu,
-#'                            psu.col = 2, ssu.col = 1, psu.2cd = 20)
-#' design.f <- subset(design.sex, sex == 'Female')
-#' design.m <- subset(design.sex, sex == 'Male')
-#' 
-#' # Look at the variables contained in the survey design
-#' names(design.sex$variables)
+#' ## Systematic sampling
+#' data(sys_sample)
+#' sys_sample2 <- sys_sample[complete.cases(sys_sample), 7:9]
+#' design <- DesignSurvey(sample = sys_sample2, N = sum(city$hh),
+#'                        cal.col = "persons", cal.N = sum(hh$persons))
+#' vars <- rep("total", 3)
+#' cbind(names(design$variables), vars)
+#' #SummarySurvey(design = design, variables = vars)
 #'
-#' # Specify the type of estimate for each variable
-#' variables.sex <- c("total", "", "total", "prop", "prop")
-#'
-#' # Make sure you specify the correct type of 
-#' # estimate for each variable
-#' cbind(names(design.sex$variables), variables.sex)
-#'
-#' # Calculate the summary statistics for the surveys.
-#' # Uncomment the following two lines (will take some seconds).
-#' # estimates.f <- SummarySurvey(design.f, variables.sex, rnd = 3)
-#' # estimates.m <- SummarySurvey(design.m, variables.sex, rnd = 3)
-#' 
 SummarySurvey <- function(design = NULL, variables = NULL, conf.level = 0.95, rnd = 3) {
   if (length(variables) != length(names(design$variables))) {
     stop('The length of variables argument must be equal to the length of names(design$variables)')

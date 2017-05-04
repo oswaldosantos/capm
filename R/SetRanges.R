@@ -1,5 +1,5 @@
 #' Parameter ranges for global sensitivity analysis
-#' @description Define the minimum and maximum values for parameters whose global sensitivities are to be assesses with \code{\link{CalculateGlobalSens}} or \code{\link{sensRange}} functions.
+#' @description Define the minimum and maximum values for parameters whose global sensitivities are to be assessed with \code{\link{CalculateGlobalSens}} or \code{\link{sensRange}} functions.
 #' @param pars the same \code{pars} vector used in one of the following functions: \code{\link{SolveSI}} or \code{\link{SolveIASA}}.
 #' @param range scale factor to define the minimum and maximum for each parameter. The default is 0.1, which set the minimum and maximum as 10 percent lesser and greater than the \code{pars} values.
 #' @return \code{\link{data.frame}} with the complete set of parameter ranges.
@@ -11,16 +11,10 @@
 #' @seealso \code{\link{sensRange}} and \code{\link{SolveSI}}.
 #' @export
 #' @examples
-#' 
-#' data(psu.ssu)
-#' data(survey.data)
-#' 
-#' #####################
-#' ## SolveIASA model ##
-#' #####################
+#' ## IASA model
 #' 
 #' # Parameters and initial conditions.
-#' pars.solve.iasa = c(
+#' pars_solve_iasa = c(
 #'    b1 = 21871, b2 = 4374,
 #'    df1 = 0.104, dm1 = 0.098, df2 = 0.125, dm2 = 0.118,
 #'    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
@@ -29,7 +23,7 @@
 #'
 #' # Set ranges 10 % greater and lesser than the 
 #' # point estimates.
-#' rg.solve.iasa <- SetRanges(pars.solve.iasa)
+#' rg_solve_iasa <- SetRanges(pars_solve_iasa)
 #' 
 SetRanges <- function(pars = NULL, range = 0.1) {
   par.ranges <- data.frame(min = c(pars) * (1 - range),

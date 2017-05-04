@@ -1,13 +1,13 @@
 #' Two-stage cluster sampling size and composition
-#' @description Calculates sample size and composition for a two-stage cluster sampling design to estimate a total.
+#' @description Calculates sample size and composition to estimate a total from a two-stage cluster sampling design.
 #' @param psu.ssu \code{\link{data.frame}} with all primary sampling units (PSU). First column contains PSU unique identifiers. Second column contains \code{\link{numeric}} PSU sizes.
-#' @param psu.x \code{\link{data.frame}}. Each row corresponds to a secondary sampling unit (SSU) surveyed in a pilot study. First column contains the PSU identifiers to which the ssu belongs to. Second column contains the totals observed in the ssu and must be \code{\link{numeric}}.
+#' @param psu.x \code{\link{data.frame}}. Each row corresponds to a secondary sampling unit (SSU) included in a pilot study. First column contains the PSU identifiers to which the ssu belongs to. Second column contains the totals observed in the ssu and must be \code{\link{numeric}}.
 #' @param conf.level the confidence level required. It must be \code{\link{numeric}} between 0 and 1 inclusive.
 #' @param error the maximum relative difference between the estimate and the unknown population value. It must be \code{\link{numeric}} between 0 and 1 inclusive.
 #' @param cost the ratio of the cost of sampling a PSU to the cost of sampling a SSU.
 #' @param minimum.ssu integer to define the minimum number of SSU to be selected per PSU. If the calculated number of SSU to be selected is lesser than \code{minimum.ssu}, it is redefined as \code{minimum.ssu}. To avoid any lower threshold, define \code{minimum.ssu} as equal to 0.
 #' @return Matrix with the sample size and composition and with variability estimates.
-#' @details It is assumed that psu from the pilot are selected with probability proportional to size (PPS) and with replacement. ssu are assumed to be selected via simple (systematic) random sampling.
+#' @details It is assumed that PSU from the pilot are selected with probability proportional to size (PPS) and with replacement. SSU are assumed to be selected via simple (systematic) random sampling.
 #' 
 #' PSU must have the same identifiers in \code{psu.ssu} and in \code{psu.x}.
 #' @references Levy P and Lemeshow S (2008). Sampling of populations: methods and applications, Fourth edition. John Wiley and Sons, Inc.
@@ -16,13 +16,17 @@
 #' @export
 #' @examples 
 #' # Load data with psu identifiers and sizes.
-#' data(psu.ssu)
-#' 
+#' data(city)
+#' city2 <- city[, c("track_id", "hh")]
 #' # Load data from a pilot sample.
-#' data(pilot)
+#' data(cluster_pilot)
 #' 
 #' # Calculate sample size and composition.
-#' (sample.sc <- Calculate2StageSampleSize(psu.ssu, pilot, conf.level = 0.95, error = 0.1, cost = 4))
+#' Calculate2StageSampleSize(psu.ssu = city2,
+#'                           psu.x = cluster_pilot,
+#'                           conf.level = 0.95,
+#'                           error = 0.1,
+#'                           cost = 4)
 
 Calculate2StageSampleSize <- function(psu.ssu = NULL, psu.x = NULL, conf.level = .95, error = 0.1, cost = 4, minimum.ssu = 15) {
   if (length(intersect(psu.ssu[, 1], psu.x[, 1])) == 0) {

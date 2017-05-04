@@ -3,15 +3,15 @@
 #' \tabular{ll}{
 #' Package: \tab capm\cr
 #' Type: \tab Package\cr
-#' Version: \tab 0.10.2\cr
-#' Date: \tab 2017-04-24\cr
-#' Depends: \tab R (>= 3.3.2)\cr
+#' Version: \tab 0.10.3\cr
+#' Date: \tab 2017-05-04\cr
+#' Depends: \tab R (>= 3.4.0)\cr
 #' Imports: \tab deSolve, FME, survey, reshape2, ggplot2, shiny, grid, rgdal, maptools, sp\cr
 #' License: \tab GPL (>= 2)\cr
 #' LazyLoad: \tab yes\cr
 #' URL: \tab \url{http://oswaldosantos.github.io/capm}\cr
 #' Author: \tab Oswaldo Santos Baquero \email{baquero@@usp.br}\cr
-#' Maintainer: \tab Oswaldo Santos Baquero \email{oswaldosant@@gmail.com}\cr
+#' Maintainer: \tab Oswaldo Santos Baquero \email{baquero@@usp.br}\cr
 #' Contributors: \tab Marcos Amaku \email{amaku@@vps.fmvz.usp.br}, Fernando Ferreira \email{fernando@@vps.fmvz.usp.br}
 #' }
 #'

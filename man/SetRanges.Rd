@@ -15,19 +15,13 @@ SetRanges(pars = NULL, range = 0.1)
 \code{\link{data.frame}} with the complete set of parameter ranges.
 }
 \description{
-Define the minimum and maximum values for parameters whose global sensitivities are to be assesses with \code{\link{CalculateGlobalSens}} or \code{\link{sensRange}} functions.
+Define the minimum and maximum values for parameters whose global sensitivities are to be assessed with \code{\link{CalculateGlobalSens}} or \code{\link{sensRange}} functions.
 }
 \examples{
-
-data(psu.ssu)
-data(survey.data)
-
-#####################
-## SolveIASA model ##
-#####################
+## IASA model
 
 # Parameters and initial conditions.
-pars.solve.iasa = c(
+pars_solve_iasa = c(
    b1 = 21871, b2 = 4374,
    df1 = 0.104, dm1 = 0.098, df2 = 0.125, dm2 = 0.118,
    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
@@ -36,7 +30,7 @@ pars.solve.iasa = c(
 
 # Set ranges 10 \% greater and lesser than the 
 # point estimates.
-rg.solve.iasa <- SetRanges(pars.solve.iasa)
+rg_solve_iasa <- SetRanges(pars_solve_iasa)
 
 }
 \references{
@@ -49,4 +43,3 @@ Reichert P and Kfinsch HR (2001). Practical identifiability analysis of large en
 \seealso{
 \code{\link{sensRange}} and \code{\link{SolveSI}}.
 }
-

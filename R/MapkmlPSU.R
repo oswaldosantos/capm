@@ -12,34 +12,32 @@
 #' @seealso \code{\link{readShapeSpatial}}
 #' @export
 #' @examples
-#' # Load data with the polygon identifiers. 
-#' data(psu.ssu)
+#' data(city)
 #' 
-#' # Take a sample of 10 PSU with probability 
-#' # proportional to size with replacement.
-#' (selected.psu <- SamplePPS(psu.ssu, 10, write = FALSE))
+#' # Take a sample of 10 PSU.
+#' (selected_psu <- SamplePPS(psu.ssu = city[, c("track_id", "hh")], psu = 10))
 #' 
 #' ## Define shape from shapefile.
-#' shp.path <- system.file('extdata', package="capm")
+#' shp_path <- system.file("extdata", package="capm")
 #' # The code above used a shapefile avaliable in the
 #' # capm package.
 #' # You might want to write a code like:
 #' # shp.path  <- 'path_to_the_folder_with_the_shapefile'
 #' 
 #' # Create *kml files of 10 polygons.
-#' # Uncomment the following line to create kml files:
-#' # MapkmlPSU('santos', selected.psu[, 1], 1, shp.path)
+#' \dontrun{
+#' MapkmlPSU(shape = "35SEE250GC_SIR",
+#'           psu = selected_psu[, "selected.psu"],
+#'           id = "CD_GEOCODI", path = shp_path)
 #' 
 #' ## Define the shape argument as an object x of class SpatialPolygonsDataFrame.
-#' # MapkmlPSU(x, selected.psu[, 1], 1)
-#' 
-#' 
+#' MapkmlPSU(shape = x, psu = selected_psu[, "selected.psu"], id = "CD_GEOCODI")
+#' }
 MapkmlPSU <- function(shape = NULL, psu = NULL, id = NULL, path = '.') {
   if (class(shape) == 'SpatialPolygonsDataFrame') {
     tmp <- shape
   } else {
     tmp <- readOGR(path, shape)
-    #proj4string(tmp) <- CRS('+proj=longlat +ellps=WGS84')
   }
   tmp <- spTransform(tmp, CRS('+proj=longlat +ellps=WGS84'))
   tmp2 = NULL

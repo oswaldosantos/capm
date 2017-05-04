@@ -10,7 +10,7 @@ SolveTC(pars = NULL, init = NULL, time = NULL, f.range = NULL,
 \arguments{
 \item{pars}{a named \code{\link{vector}} of length 5. The values are point estimates of the death rate (d), the fertility recovery rate (f), the sterilization rate (s), the proportion of infertile immigrants (z) and the proportion of the death rate compensated by immigration (r). Abreviations in parentheses indicate the names that must be given to the values.}
 
-\item{init}{a named \code{\link{vector}} of length 2, with the total number of fertil (n) and infertil (g) animals.}
+\item{init}{a named \code{\link{vector}} of length 2, with the total number of fertile (n) and infertile (g) animals.}
 
 \item{time}{time sequence for which output is wanted; the first value of times must be the initial time.}
 
@@ -30,30 +30,31 @@ System of ordinary differential equations to simulate the effect of reversible c
 }
 \examples{
 # Parameters and initial conditions.
-pars.solvetc <- c(d = 1 / 6, f = 0.5, s = 0.2, 
+pars_solvetc <- c(d = 1 / 6, f = 0.5, s = 0.2, 
                    z = 0.2, r = 0.8)
 
-init.solvetc <- c(n = 950, g = 50)
+init_solvetc <- c(n = 950, g = 50)
 
 # Solve for point estimates.
-solvetc.pt <- SolveTC(pars = pars.solvetc, 
-                      init = init.solvetc, 
-                      time = 0:10, method = 'rk4')
+solve_tc_pt <- SolveTC(pars = pars_solvetc, 
+                      init = init_solvetc, 
+                      time = 0:10, method = "rk4")
 
 # Solve for parameter ranges.
-solvetc.rg <- SolveTC(pars = pars.solvetc, 
-                      init = init.solvetc, 
+solve_tc_rg <- SolveTC(pars = pars_solvetc, 
+                      init = init_solvetc, 
                       time = 0:15,
                       f.range = seq(0, 1, 0.1), 
                       s.range = c(0.05, 0.4), 
                       z.range = c(0.05, 0.4),
-                      method = 'rk4')
+                      method = "rk4")
 
 }
 \references{
 \url{http://oswaldosantos.github.io/capm}
+
+Baquero, O. S., Brandao, A. P. D., Amaku, M., & Ferreira, F. (2016). Effectiveness of reversible contraception in dog population management. Acta Scientiae Veterinariae, 44, 01-06.
 }
 \seealso{
 \link[deSolve]{ode}.
 }
-

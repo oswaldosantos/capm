@@ -10,7 +10,7 @@ CalculatePopChange(model.out = NULL, variable = NULL, t1 = NULL,
 \arguments{
 \item{model.out}{an output from one of the following functions or a \code{\link{list}} with equivalent structure: \code{\link{SolveIASA}}, \code{\link{SolveSI}} or \code{\link{SolveTC}}.}
 
-\item{variable}{string with the name of the the output variable for which the change needs to be calculated (see the variable argument for \code{\link{PlotModels}}.}
+\item{variable}{string with the name of the the output variable for which the change are to be calculated (see the variable argument for \code{\link{PlotModels}}.}
 
 \item{t1}{value specifying the first time.}
 
@@ -25,33 +25,30 @@ Value representing the ratio (if \code{ratio} is \code{TRUE}) or the difference 
 Calculate the change in population size between two times. When only one time is specified, the population size at that time is returned.
 }
 \examples{
-###################
-## SolveSI model ##
-###################
+## SI model
 
 # Parameters and initial conditions.
-pars.solve.si = c(b = 0.245, d = 0.101, 
+pars_solve_si = c(b = 0.245, d = 0.101, 
                  k = 98050, s = 0.048)
-init.solve.si = c(n = 89137, q = 0.198)
+init_solve_si = c(n = 89137, q = 0.198)
 
 # Solve for a specific sterilization rate.
-solve.si.pt = SolveSI(pars = pars.solve.si, 
-                             init = init.solve.si, 
+solve_si_pt = SolveSI(pars = pars_solve_si, 
+                             init = init_solve_si, 
                              time = 0:15, dd = 'b',
                              im = 100, method = 'rk4')
 
 # Calculate the population change (ratio) between times 0 and 15.
-CalculatePopChange(solve.si.pt, variable = 'n', t2 = 15, t1 = 0)
+CalculatePopChange(solve_si_pt, variable = 'n', t2 = 15, t1 = 0)
 
 # Calculate the population change (difference) between times 0 and 15.
-CalculatePopChange(solve.si.pt, variable = 'n', t2 = 15,
+CalculatePopChange(solve_si_pt, variable = 'n', t2 = 15,
                    t1 = 0, ratio = FALSE)
 
 # Calculate the population zises at time 15.
-CalculatePopChange(solve.si.pt, variable = 'n', t2 = 15)
+CalculatePopChange(solve_si_pt, variable = 'n', t2 = 15)
 
 }
 \references{
 \url{http://oswaldosantos.github.io/capm}
 }
-

@@ -1,7 +1,7 @@
 #' Modelling of reversible contraception for companion animals
 #' @description System of ordinary differential equations to simulate the effect of reversible contraception in a population at equilibrium, where deaths are compensated by births and net immigration.
 #' @param pars a named \code{\link{vector}} of length 5. The values are point estimates of the death rate (d), the fertility recovery rate (f), the sterilization rate (s), the proportion of infertile immigrants (z) and the proportion of the death rate compensated by immigration (r). Abreviations in parentheses indicate the names that must be given to the values.
-#' @param init a named \code{\link{vector}} of length 2, with the total number of fertil (n) and infertil (g) animals.
+#' @param init a named \code{\link{vector}} of length 2, with the total number of fertile (n) and infertile (g) animals.
 #' @param time time sequence for which output is wanted; the first value of times must be the initial time.
 #' @param f.range optional sequence (between 0 and 1) with the fertility recovery rates to be simulated.
 #' @param s.range optional \code{\link{vector}} of length 2, with a range of sterilization rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.
@@ -9,28 +9,30 @@
 #' @param ... further arguments passed to \link[deSolve]{ode} function.
 #' @return \code{\link{list}}. The first element, \code{name}, is a string with the name of the function, the second element, \code{model}, is the model function. The third, fourth and fifth elements are vectors (\code{pars}, \code{init}, \code{time}, respectively) containing the \code{pars}, \code{init} and \code{time} arguments of the function. The sisxthth element \code{results} is a \code{\link{data.frame}} with up to as many rows as elements in time. The first fourth columns contain the time and the variables: \code{n}, \code{g} and \code{u}. When *.range arguments are given, additional columns contain the variables \code{f}, \code{s} and \code{z}.
 #' @references \url{http://oswaldosantos.github.io/capm}
+#' 
+#' Baquero, O. S., Brandao, A. P. D., Amaku, M., & Ferreira, F. (2016). Effectiveness of reversible contraception in dog population management. Acta Scientiae Veterinariae, 44, 01-06.
 #' @seealso \link[deSolve]{ode}.
 #' @export
 #' @examples 
 #' # Parameters and initial conditions.
-#' pars.solvetc <- c(d = 1 / 6, f = 0.5, s = 0.2, 
+#' pars_solvetc <- c(d = 1 / 6, f = 0.5, s = 0.2, 
 #'                    z = 0.2, r = 0.8)
 #'
-#' init.solvetc <- c(n = 950, g = 50)
+#' init_solvetc <- c(n = 950, g = 50)
 #' 
 #' # Solve for point estimates.
-#' solvetc.pt <- SolveTC(pars = pars.solvetc, 
-#'                       init = init.solvetc, 
-#'                       time = 0:10, method = 'rk4')
+#' solve_tc_pt <- SolveTC(pars = pars_solvetc, 
+#'                       init = init_solvetc, 
+#'                       time = 0:10, method = "rk4")
 #' 
 #' # Solve for parameter ranges.
-#' solvetc.rg <- SolveTC(pars = pars.solvetc, 
-#'                       init = init.solvetc, 
+#' solve_tc_rg <- SolveTC(pars = pars_solvetc, 
+#'                       init = init_solvetc, 
 #'                       time = 0:15,
 #'                       f.range = seq(0, 1, 0.1), 
 #'                       s.range = c(0.05, 0.4), 
 #'                       z.range = c(0.05, 0.4),
-#'                       method = 'rk4')
+#'                       method = "rk4")
 #'
 SolveTC <- function(pars = NULL, init = NULL, time = NULL, f.range = NULL, s.range = NULL, z.range = NULL, ...) {
   if(!setequal(names(pars), c('d', 'f', 'r', 's', 'z', 'd'))) {
@@ -41,7 +43,7 @@ SolveTC <- function(pars = NULL, init = NULL, time = NULL, f.range = NULL, s.ran
   }
   SolveTCfu <- function(pars = NULL, init = NULL, time = NULL) {
     init['u'] <- 0
-    SolveTC.fu <- function(time, init, pars) {
+    solve_tc_fu <- function(time, init, pars) {
       with(as.list(c(init, pars)), { 
         dn <- r * d * (n + g) + (1 - r) * d * (1 - z) * (n + g) + f * g -
           (d + s) * n
@@ -52,9 +54,9 @@ SolveTC <- function(pars = NULL, init = NULL, time = NULL, f.range = NULL, s.ran
     }
     init <- c(init['n'], init['g'], init['u'])
     
-    SolveTC.out <- ode(times = time, func = SolveTC.fu, 
+    solve_tc_out <- ode(times = time, func = solve_tc_fu, 
                        y = init, parms = pars, ...)
-    return(as.data.frame(SolveTC.out))
+    return(as.data.frame(solve_tc_out))
   }
   
   if (is.null(f.range) & is.null(s.range) & is.null(z.range)) {
