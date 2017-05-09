@@ -15,7 +15,15 @@ Imports:
     maptools,
     sp
 Description: Quantitative analysis to support companion animal population
-    management.
+    management. Some functions assist survey sampling tasks (calculate sample 
+    size for simple and complex designs, select sampling units and estimate 
+    population parameters) while others assist the modelling of population 
+    dynamics. For sampling methods see: "Levy PS & Lemeshow S"" (2013), 
+    "ISBN-10: 0470040076"; "Lumley" (2010), "ISBN: 978-0-470-28430-8". For 
+    modelling of population dynamics see: "Baquero et al" (2016) 
+    <https://doi.org/10.1016/j.prevetmed.2015.11.009>, "Baquero et al" (2016), 
+    "ISSN 1679-9216", "Amaku et al" (2010) 
+    <http://dx.doi.org/10.1590/S1020-49892009000400003>.
 License: GPL (>= 2)
 LazyLoad: yes
 URL: http://oswaldosantos.github.io/capm
@@ -25,6 +33,6 @@ Authors@R: c(person(given='Oswaldo', family='Santos Baquero',
     email='amaku@vps.fmvz.usp.br', role="ctb"),
     person(given='Fernando', family='Ferreira',
     email='fernando@vps.fmvz.usp.br', role="ctb"))
-Version: 0.10.3
-Date: 2017-05-04
+Version: 0.11.0
+Date: 2017-05-05
 RoxygenNote: 6.0.1
