@@ -115,13 +115,13 @@
 #'                           method = 'rk4')
 #'                 
 #' ## Plot stray population sizes using point estimates
-#' ## Not run
+#' \dontrun{
 #' PlotModels(solve_iasa_pt, variable = "ns2")
 #' 
 #' ## Plot all scenarios and change the label for the scenarios.
 #' ## Not run
 #' PlotModels(solve_iasa_rg, variable = "ns")
-#' ## End(Not run)
+#' }
 #' 
 PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c('cadetblue1', 'yellow', 'red'), col2 = c('blue', 'darkgreen', 'darkred'), x.label = 'Years', y.label = NULL, scenarios.label = 'v = (__ * owned carrying capacity)', legend.label = NULL, pop = NULL) {
   if (class(model.out) != 'capmModels') {

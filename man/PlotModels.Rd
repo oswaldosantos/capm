@@ -135,13 +135,13 @@ solve_iasa_rg <- SolveIASA(pars = pars_solve_iasa,
                           method = 'rk4')
                 
 ## Plot stray population sizes using point estimates
-## Not run
+\dontrun{
 PlotModels(solve_iasa_pt, variable = "ns2")
 
 ## Plot all scenarios and change the label for the scenarios.
 ## Not run
 PlotModels(solve_iasa_rg, variable = "ns")
-## End(Not run)
+}
 
 }
 \references{
