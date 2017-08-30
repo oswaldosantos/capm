@@ -33,7 +33,7 @@ data(cluster_sample)
 cluster_sample2 <- cluster_sample[complete.cases(cluster_sample), c(1:2, 8:10)]
 design <- DesignSurvey(sample = cluster_sample2,
              psu.ssu = city[, c("track_id", "hh")],
-             psu.col = "track_id", ssu.col = "hh_id", psu.2cd = 65,
+             psu.col = "track_id", ssu.col = "hh_id",
              cal.col = "persons", cal.N = sum(hh$persons))
 vars <- rep("total", 3)
 cbind(names(design$variables), vars)

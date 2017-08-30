@@ -5,8 +5,8 @@
 \title{Survey design}
 \usage{
 DesignSurvey(sample = NULL, psu.ssu = NULL, psu.col = NULL,
-  ssu.col = NULL, cal.col = NULL, psu.2cd = NULL, N = NULL,
-  strata = NULL, cal.N = NULL, ...)
+  ssu.col = NULL, cal.col = NULL, N = NULL, strata = NULL,
+  cal.N = NULL, ...)
 }
 \arguments{
 \item{sample}{\code{\link{data.frame}} with sample observations. for two-stage cluster designs, one of the columns must contain unique identifiers for PSU and another column must contain unique identifiers for Secondary Sampling Units (SSU).}
@@ -18,8 +18,6 @@ DesignSurvey(sample = NULL, psu.ssu = NULL, psu.col = NULL,
 \item{ssu.col}{the column of \code{sample} containing the ssu identifiers (for two-stage cluster designs). It is used only for two-stage cluster designs.}
 
 \item{cal.col}{the column of \code{sample} with the variable to calibrate estimates. It must be used together with \code{cal.N}.}
-
-\item{psu.2cd}{for two-stage cluster designs, value indicating the number of psu included (for PSU included more than once, each must be counted).}
 
 \item{N}{for simple designs, a \code{\link{numeric}} value representing the total of sampling units in the population. for a stratified design, it is a column of \code{sample} indicating, for each observation, the total of sampling units in its respective strata. \code{N} is ignored in two-stage cluster designs.}
 
@@ -46,7 +44,7 @@ data(cluster_sample)
 cluster_sample2 <- cluster_sample[complete.cases(cluster_sample), c(1:2, 8:10)]
 DesignSurvey(sample = cluster_sample2,
              psu.ssu = city[, c("track_id", "hh")],
-             psu.col = 1, ssu.col = 2, psu.2cd = 65,
+             psu.col = 1, ssu.col = 2,
              cal.col = 3, cal.N = sum(hh$persons))
 #'
 ## Simple design.

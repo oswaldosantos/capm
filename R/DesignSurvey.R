@@ -5,7 +5,6 @@
 #' @param psu.col the column of \code{sample} containing the psu identifiers (for two-stage cluster designs). It is used only for two-stage cluster designs.
 #' @param ssu.col the column of \code{sample} containing the ssu identifiers (for two-stage cluster designs). It is used only for two-stage cluster designs.
 #' @param cal.col the column of \code{sample} with the variable to calibrate estimates. It must be used together with \code{cal.N}.
-#' @param psu.2cd for two-stage cluster designs, value indicating the number of psu included (for PSU included more than once, each must be counted).
 #' @param N for simple designs, a \code{\link{numeric}} value representing the total of sampling units in the population. for a stratified design, it is a column of \code{sample} indicating, for each observation, the total of sampling units in its respective strata. \code{N} is ignored in two-stage cluster designs.
 #' @param strata for stratified designs, a column of \code{sample} indicating the strata memebership of each observation.
 #' @param cal.N population total for the variable to calibrate the estimates. It must be used togheter with \code{cal.col}.
@@ -24,7 +23,7 @@
 #' cluster_sample2 <- cluster_sample[complete.cases(cluster_sample), c(1:2, 8:10)]
 #' DesignSurvey(sample = cluster_sample2,
 #'              psu.ssu = city[, c("track_id", "hh")],
-#'              psu.col = 1, ssu.col = 2, psu.2cd = 65,
+#'              psu.col = 1, ssu.col = 2,
 #'              cal.col = 3, cal.N = sum(hh$persons))
 #' #'
 #' ## Simple design.
@@ -42,10 +41,14 @@
 #' DesignSurvey(strat, N = "strat_size", strata = "strat")
 #' 
 DesignSurvey <- function (sample = NULL, psu.ssu = NULL, psu.col = NULL,
-                          ssu.col = NULL, cal.col = NULL, psu.2cd = NULL,
-                          N = NULL, strata = NULL, cal.N = NULL, ...) 
+                          ssu.col = NULL, cal.col = NULL, N = NULL,
+                          strata = NULL, cal.N = NULL, ...) 
 {
-  if (is.numeric(psu.2cd)) {
+  if(any(class(sample) == "data.frame")) {
+    sample <- as.data.frame(sample)
+  }
+  if (!is.null(psu.ssu)) {
+    psu.ssu <- as.data.frame(psu.ssu)
     if (length(which(!is.na(match(psu.ssu[, 1], sample[, psu.col])))) == 0) {
       stop("There is no matches between PSU identifiers\nfrom psu.ssu and sample. See details section from the help page.")
     }
@@ -59,14 +62,16 @@ DesignSurvey <- function (sample = NULL, psu.ssu = NULL, psu.col = NULL,
     } else {
       names(sample)[names(sample) == ssu.col] <- "ssu.id"
     }
-    pop.size <- nrow(psu.ssu)
+    pop.size <- nrow(psu.ssu) # PSUs in the population.
     sample <- cbind(sample, pop.size)
     sample <- merge(sample, psu.ssu, by.x = "psu.id", by.y = 1)
-    names(sample)[ncol(sample)] <- "psu.size"
+    names(sample)[ncol(sample)] <- "psu.size" # SSUs per PSU.
     psu.sample.size <- tapply(sample$psu.size, sample$psu.id, length)
-    psu.sample.size <- rep(psu.sample.size, psu.sample.size)
-    f.1 <- psu.2cd * sample$psu.size/sum(psu.ssu[, 2])
-    f.2 <- psu.sample.size/sample$psu.size
+    psu.sample.size <-
+      rep(psu.sample.size, psu.sample.size) # sampled SSUs per PSU
+    f.1 <- sum(tapply(sample$psu.size, sample$psu.id, unique)) /
+      sum(psu.ssu[, 2]) # SSUs in first stage / SSUs in population
+    f.2 <- psu.sample.size/sample$psu.size # sampled SSUs per PSU / SSUs per PSU 
     sample$weights <- 1/(f.1 * f.2)
     dsn <- svydesign(ids = ~psu.id + ssu.id, fpc = ~pop.size + 
                        psu.size, weights = ~weights, data = sample, ...)
