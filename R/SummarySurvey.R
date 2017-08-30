@@ -50,7 +50,7 @@ SummarySurvey <- function(design = NULL, variables = NULL, conf.level = 0.95, rn
       tmp1 <- as.matrix(cbind(tmp, SE(tmp), confint(tmp), 
                               deff(tmp), cv(tmp) * z * 100), nr = 1)
       ci <- attributes(confint(tmp, level = conf.level))$dimnames[[2]]
-      rownames(tmp1) <- paste0('Total.', names(vrs)[i])
+      rownames(tmp1) <- paste0('Total_', names(vrs)[i])
       out <- rbind(out, tmp1)
     }
     if (variables[i] == 'mean') {
@@ -58,7 +58,7 @@ SummarySurvey <- function(design = NULL, variables = NULL, conf.level = 0.95, rn
       tmp1 <- as.matrix(cbind(tmp, SE(tmp), confint(tmp), 
                               deff(tmp), cv(tmp) * z * 100), nr = 1)
       ci <- attributes(confint(tmp, level = conf.level))$dimnames[[2]]
-      rownames(tmp1) <- paste0('Mean.', names(vrs)[i])
+      rownames(tmp1) <- paste0('Mean_', names(vrs)[i])
       out <- rbind(out, tmp1)
     }
     if (variables[i] == 'prop') {
@@ -66,7 +66,7 @@ SummarySurvey <- function(design = NULL, variables = NULL, conf.level = 0.95, rn
       tmp1 <- as.matrix(cbind(tmp, SE(tmp), confint(tmp), 
                               deff(tmp), cv(tmp) * z * 100), nr = 1)
       ci <- attributes(confint(tmp, level = conf.level))$dimnames[[2]]
-      rownames(tmp1) <- paste0('Prop.', rownames(tmp1))
+      rownames(tmp1) <- paste0('Prop_', rownames(tmp1))
       rownames(tmp1) <- gsub('vrs\\[, i\\]', paste0(names(vrs)[i], '.'), rownames(tmp1))
       out <- rbind(out, tmp1)
     }

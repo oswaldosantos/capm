@@ -3,8 +3,8 @@
 #' \tabular{ll}{
 #' Package: \tab capm\cr
 #' Type: \tab Package\cr
-#' Version: \tab 0.11.0\cr
-#' Date: \tab 2017-05-05\cr
+#' Version: \tab 0.11.2\cr
+#' Date: \tab 2017-08-30\cr
 #' Depends: \tab R (>= 3.4.0)\cr
 #' Imports: \tab deSolve, FME, survey, reshape2, ggplot2, shiny, grid, rgdal, maptools, sp\cr
 #' License: \tab GPL (>= 2)\cr
