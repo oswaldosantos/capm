@@ -1,3 +1,8 @@
+capm 0.11.2
+===========
+
+* SummarySurvey: "." replaced by "_" in the prefix of estimated variables.
+
 capm 0.11.1
 ===========
 
