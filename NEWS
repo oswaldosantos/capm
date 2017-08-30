@@ -1,7 +1,12 @@
+capm 0.11.1
+===========
+
+* DesignSurvey: First-stage sampling fraction redefined.
+
 capm 0.11.0
 ===========
 
-* DesignSurvey: allos calibration using a population total.
+* DesignSurvey: allows calibration using a population total.
 
 capm 0.10.3
 ===========
