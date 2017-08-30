@@ -29,6 +29,8 @@
 #'                           cost = 4)
 
 Calculate2StageSampleSize <- function(psu.ssu = NULL, psu.x = NULL, conf.level = .95, error = 0.1, cost = 4, minimum.ssu = 15) {
+  psu.ssu <- as.data.frame(psu.ssu)
+  psu.x <- as.data.frame(psu.x)
   if (length(intersect(psu.ssu[, 1], psu.x[, 1])) == 0) {
     stop('PSU identifiers must be equal in psu.ssu and in psu.x')
   }

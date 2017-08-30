@@ -17,6 +17,7 @@
 #' SamplePPS(psu.ssu = city[, c("track_id", "hh")], psu = 10, write = FALSE)
 #' 
 SamplePPS <- function (psu.ssu = NULL, psu = NULL, write = FALSE, ...) {
+  psu.ssu <- as.data.frame(psu.ssu)
   inv <- c(which(!is.finite(psu.ssu[, 2])), which(psu.ssu[, 2] <= 0))
   if (length(inv) > 0) {
     stop('The size of the following sampling unit(s) is(are) invalid:', '\n', paste('   ', inv))

@@ -28,6 +28,7 @@
 #' SampleSystematic(su = c("urban" = 50, "rural" = 10),
 #'                  N = c("urban" = 4000, "rural" = 150))
 SampleSystematic <- function(psu.ssu = NULL, su = NULL, N = NULL, write = FALSE, ...) {
+  psu.ssu <- as.data.frame(psu.ssu)
   if (!is.null(N)) {
     sus <- matrix(rep(NA, max(su) * length(su)), ncol = length(N))
     for (i in 1:length(N)) {

@@ -39,6 +39,7 @@
 #'                sex.col = "sex")
 #'
 PlotPopPyramid <- function(dat = NULL, age.col = NULL, sex.col = NULL, str.col = NULL, x.label = 'Total', stage.label = 'Years', legend.label = 'Sterilized',  inner.color = 'Gold2', outer.color = 'DarkOliveGreen', label.size = 13) {
+  dat <- as.data.frame(dat)
   if (!is.numeric(dat[, age.col])) {
     stop('The column containing age information must be numeric.')
   }

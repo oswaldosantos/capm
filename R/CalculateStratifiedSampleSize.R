@@ -1,7 +1,7 @@
 #' Stratified random sample size
 #' @description Calculates sample size to estimate a total from a stratified random sampling design.
 #' @param strata \code{\link{vector}}, \code{\link{matrix}} or \code{\link{data.frame}}. If vector, the length must be equal to the number of sampling units in the population and each element represent the strata memebership of each sampling unit. If matrix or data.frame, first column represent the size of each strata, second column represent the expected mean in each strata and third column represent the expected variance in each strata. Each row is a strata and must be named.
-#' @param x \code{\link{data.frame}} representing a pilot sample. First column has the variable to be estimated and second column has the strata membership of each observation.
+#' @param x \code{\link{data.frame}} representing a pilot sample. First column has the variable to be estimated and second column has the strata membership of each observation. Needed when \code{strata} is a vector.
 #' @param conf.level the confidence level required. It must be \code{\link{numeric}} between 0 and 1 inclusive.
 #' @param error the maximum relative difference between the estimate and the unknown population value. It must be \code{\link{numeric}} between 0 and 1 inclusive.
 #' @return numeric sample size rounded up to nearest integer.
@@ -24,6 +24,12 @@
 #' CalculateStratifiedSampleSize(cbind(str_n, str_mean, str_var))
 #' 
 CalculateStratifiedSampleSize <- function(strata = NULL, x = NULL, conf.level = 0.95, error = 0.1) {
+  if(any(class(strata) == "data.frame")) {
+    strata <- as.data.frame(strata)
+  }
+  if(!is.null(x)) {
+    x <- as.data.frame(x) 
+  }
   if (conf.level > 1 | conf.level < 0) {
     stop('conf.level must be a number between 0 and 1 inclusive.')
   }
