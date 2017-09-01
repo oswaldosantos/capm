@@ -6,9 +6,8 @@
 \usage{
 PlotModels(model.out = NULL, variable = NULL, col = "red",
   col1 = c("cadetblue1", "yellow", "red"), col2 = c("blue", "darkgreen",
-  "darkred"), x.label = "Years", y.label = NULL,
-  scenarios.label = "v = (__ * owned carrying capacity)",
-  legend.label = NULL, pop = NULL)
+  "darkred"), x.label = "Years", y.label = NULL, legend.label = NULL,
+  pop = NULL)
 }
 \arguments{
 \item{model.out}{output of one of the function previously mentioned.}
@@ -86,8 +85,6 @@ For \code{\link{SolveTC}} function:
 \item{x.label}{string with the name for x axis.}
 
 \item{y.label}{string with the name for y axis.}
-
-\item{scenarios.label}{string with the names for the scenarios of \code{\link{SolveIASA}} output, determined by the immigartion rates. Within the string, use the expression __ in the location where you want to appear the value of the immigartion rate. For line breaking, use \code{\\n} (see examples).}
 
 \item{legend.label}{string with the name of the legend, for plots of \code{\link{SolveIASA}} output.}
 

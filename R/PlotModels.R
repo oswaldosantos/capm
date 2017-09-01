@@ -71,7 +71,6 @@
 #' @param x.label string with the name for x axis.
 #' @param y.label string with the name for y axis.
 #' @param legend.label string with the name of the legend, for plots of \code{\link{SolveIASA}} output.
-#' @param scenarios.label string with the names for the scenarios of \code{\link{SolveIASA}} output, determined by the immigartion rates. Within the string, use the expression __ in the location where you want to appear the value of the immigartion rate. For line breaking, use \code{\\n} (see examples).
 #' @param pop value indicating the output of \code{\link{SolveIASA}} to be ploted. When \code{NULL} (default), plots for owned and stray populations under scenarios created by immigartion rate are created. If \code{1}, the plots of owned population for the minimum immigartion rate are ploted. When \code{2}, the plots of stray population for the minimum immigartion rate are ploted. If \code{3}, the plots of owned population for the maximum immigartion rate are ploted. When \code{4}, the plots of owned population for the maximum immigartion rate are ploted.
 #' @details Font size of saved plots is usually different to the font size seen in graphic browsers. Before changing font sizes, see the final result in saved (or preview) plots.
 #'  
@@ -123,7 +122,7 @@
 #' PlotModels(solve_iasa_rg, variable = "ns")
 #' }
 #' 
-PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c('cadetblue1', 'yellow', 'red'), col2 = c('blue', 'darkgreen', 'darkred'), x.label = 'Years', y.label = NULL, scenarios.label = 'v = (__ * owned carrying capacity)', legend.label = NULL, pop = NULL) {
+PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c('cadetblue1', 'yellow', 'red'), col2 = c('blue', 'darkgreen', 'darkred'), x.label = 'Years', y.label = NULL, legend.label = NULL, pop = NULL) {
   if (class(model.out) != 'capmModels') {
     stop('model.out must be of class "capmModels".')
   }
@@ -139,8 +138,8 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
         geom_line(colour = col) +
         xlab(x.label)
       if (!is.null(y.label)) {
-        tmp + ylab(y.label) +
-          ylim(0, max(model.out$results[ , variable]))
+        tmp + ylab(y.label) #+
+          #ylim(0, max(model.out$results[ , variable]))
       } else {
         if (variable == 'n') {
           y.label <- 'Population size'
@@ -148,8 +147,8 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
         if (variable == 'q') {
           y.label <- 'Proportion of sterilized animals'
         }
-        tmp + ylab(y.label) +
-          ylim(0, max(model.out$results[ , variable]))
+        tmp + ylab(y.label) #+
+          #ylim(0, max(model.out$results[ , variable]))
       }
     }  else {
       if (is.null(y.label)) {
@@ -218,8 +217,8 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
           geom_line(colour = col) +
           xlab(x.label)
         if (!is.null(y.label)) {
-          tmp + ylab(y.label) +
-            ylim(0, max(model.out$results[ , variable]))
+          tmp + ylab(y.label) #+
+            #ylim(0, max(model.out$results[ , variable]))
         } else {
           if (variable == 'f1') {
             yla <- 'Owned intact females'
@@ -266,8 +265,8 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
           if (variable == 'N') {
             yla <- 'Total pulation size'
           }
-          tmp + ylab(yla) +
-            ylim(0, max(model.out$results[ , variable]))
+          tmp + ylab(yla) #+
+            #ylim(0, max(model.out$results[ , variable]))
         }
       } else {
         if (length(intersect(variable, 
@@ -306,10 +305,10 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
                               'Stray\nanimals')
           }
         }
-        model.out$results[, 'a'] <- 
-          paste('a', '==', round(model.out$results[, 'a'], 2))
-        model.out$results[, 'alpha'] <- 
-          paste('alpha', '==', round(model.out$results[, 'alpha'], 2))
+        model.out$results[, 'a'] <- round(model.out$results[, 'a'], 2)
+          #paste('a', '==', round(model.out$results[, 'a'], 2))
+        model.out$results[, 'alpha'] <- round(model.out$results[, 'alpha'], 2)
+          #paste('alpha', '==', round(model.out$results[, 'alpha'], 2))
         if (is.null(y.label)) {
           y.label <- 'Sterilization rate'
         }
@@ -329,10 +328,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
                                 fill = variable)) +
                      xlab(x.label) + 
                      ylab(y.label) +
-                     ggtitle(
-                       gsub('__', unique(
-                         model.out$results[, 'v'])[i],
-                         scenarios.label)) +
+                     ggtitle(paste('v:', unique(model.out$results[, 'v'])[i])) +
                      geom_raster() + 
                      scale_fill_continuous(
                        name = paste0(legend.label[j], '\n',
@@ -353,10 +349,10 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
                            legend.title = 
                              element_text(size = 10, face = 'plain'),
                            plot.margin = 
-                             unit(c(.5, 0, 0, 0), 'lines'),
+                             unit(c(.2, .2, .5, .2), 'lines'),
                            plot.title = 
-                             element_text(size = 12, hjust = .5)) +
-                     facet_grid(alpha ~ a, labeller = label_parsed)
+                             element_text(size = 10, hjust = .5)) +
+                     facet_grid(alpha ~ a, labeller = label_both)
             )
           }
         }
@@ -400,8 +396,8 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
             geom_line(colour = col) +
             xlab(x.label)
           if (!is.null(y.label)) {
-            tmp + ylab(y.label) +
-              ylim(0, max(model.out$results[ , variable]))
+            tmp + ylab(y.label) #+
+              #ylim(0, max(model.out$results[ , variable]))
           } else {
             if (variable == 'n') {
               y.label <- 'Fertile animals'
@@ -412,8 +408,8 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
             if (variable == 'u') {
               y.label <- 'Sterilized animals (cumulative)'
             }
-            tmp + ylab(y.label) +
-              ylim(0, max(model.out$results[ , variable]))
+            tmp + ylab(y.label) #+
+              #ylim(0, max(model.out$results[ , variable]))
           }
         } else {
           if (is.null(y.label)) {

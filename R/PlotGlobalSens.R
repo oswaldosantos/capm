@@ -75,7 +75,7 @@ PlotGlobalSens <- function(global.out = NULL, x.label = 'Time', y.label = 'Popul
                   alpha = .6) +
       geom_line() +
       xlab(x.label) + ylab(y.label) +
-      ylim(0, max(global.out$Max)) +
+      #ylim(0, max(global.out$Max)) +
       scale_fill_manual(
         name = legend.label,
         values = c('blue', 'red'),
