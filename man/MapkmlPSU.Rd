@@ -4,16 +4,14 @@
 \alias{MapkmlPSU}
 \title{Creates *.kml files of a subset of polygons from a polygon shapefile}
 \usage{
-MapkmlPSU(shape = NULL, psu = NULL, id = NULL, path = ".")
+MapkmlPSU(shape = NULL, psu = NULL, id = NULL)
 }
 \arguments{
-\item{shape}{string with the name of a polygon shapefile or an object of \code{\link{class}} \link[sp]{SpatialPolygonsDataFrame} (see examples).}
+\item{shape}{string with the path of a polygon shapefile or an object of \code{\link{class}} \link[sf]{sf} (see examples).}
 
 \item{psu}{the values to be matched.}
 
 \item{id}{column of the *.dbf file with the values to be matched against.}
-
-\item{path}{string indicating the path to the folder containing the shapfile. If the shapefile is in the working directory or if \code{shape} argument is a shapefile, \code{path} can be ignored.}
 }
 \value{
 *.kml files of the subsetted polygons.
@@ -42,16 +40,13 @@ shp_path <- system.file("extdata", package="capm")
 # Create *kml files of 10 polygons.
 \dontrun{
 MapkmlPSU(shape = "35SEE250GC_SIR",
-          psu = selected_psu[, "selected.psu"],
-          id = "CD_GEOCODI", path = shp_path)
+          psu = selected_psu[, "selected_psu"],
+          id = "CD_GEOCODI")
 
-## Define the shape argument as an object x of class SpatialPolygonsDataFrame.
-MapkmlPSU(shape = x, psu = selected_psu[, "selected.psu"], id = "CD_GEOCODI")
+## Define the shape argument as an object x of class sf.
+MapkmlPSU(shape = x, psu = selected_psu[, "selected_psu"], id = "CD_GEOCODI")
 }
 }
 \references{
 \url{http://oswaldosantos.github.io/capm}
-}
-\seealso{
-\code{\link{readShapeSpatial}}
 }

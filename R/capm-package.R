@@ -20,10 +20,8 @@
 #' @title The capm Package
 #' @keywords package
 #' @import deSolve FME survey reshape2 ggplot2 shiny
-#' @importFrom rgdal readOGR writeOGR
 #' @importFrom grid viewport pushViewport grid.newpage grid.layout
 #' @importFrom stats aggregate confint qnorm runif sd var
 #' @importFrom utils write.table
-#' @importFrom maptools nowrapSpatialLines
-#' @importFrom sp spTransform CRS
+#' @importFrom sf st_read st_write st_transform
 NULL
