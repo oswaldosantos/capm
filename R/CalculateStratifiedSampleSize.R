@@ -1,6 +1,6 @@
 #' Stratified random sample size
 #' @description Calculates sample size to estimate a total from a stratified random sampling design.
-#' @param strata \code{\link{vector}}, \code{\link{matrix}} or \code{\link{data.frame}}. If vector, the length must be equal to the number of sampling units in the population and each element represent the strata memebership of each sampling unit. If matrix or data.frame, first column represent the size of each strata, second column represent the expected mean in each strata and third column represent the expected variance in each strata. Each row is a strata and must be named.
+#' @param strata \code{\link{vector}}, \code{\link{matrix}} or \code{\link{data.frame}}. If vector, named elements represent the size of the strata. If matrix or data.frame, first column represent the size of each strata, second column represent the expected mean in each strata and third column represent the expected variance in each strata. Each row is a strata and must be named.
 #' @param x \code{\link{data.frame}} representing a pilot sample. First column has the variable to be estimated and second column has the strata membership of each observation. Needed when \code{strata} is a vector.
 #' @param conf.level the confidence level required. It must be \code{\link{numeric}} between 0 and 1 inclusive.
 #' @param error the maximum relative difference between the estimate and the unknown population value. It must be \code{\link{numeric}} between 0 and 1 inclusive.
@@ -41,7 +41,7 @@ CalculateStratifiedSampleSize <- function(strata = NULL, x = NULL, conf.level = 
     stop('each strata must have a name.')
   }
   if (is.vector(strata)) {
-    Ni <- table(strata)[unique(x[ , 2])]
+    Ni <- strata
     N <- sum(Ni)
     mean.i <- tapply(x[ , 1], x[ , 2], mean)
     var.i <- tapply(x[ , 1], x[ , 2], var)

@@ -8,7 +8,7 @@ CalculateStratifiedSampleSize(strata = NULL, x = NULL, conf.level = 0.95,
   error = 0.1)
 }
 \arguments{
-\item{strata}{\code{\link{vector}}, \code{\link{matrix}} or \code{\link{data.frame}}. If vector, the length must be equal to the number of sampling units in the population and each element represent the strata memebership of each sampling unit. If matrix or data.frame, first column represent the size of each strata, second column represent the expected mean in each strata and third column represent the expected variance in each strata. Each row is a strata and must be named.}
+\item{strata}{\code{\link{vector}}, \code{\link{matrix}} or \code{\link{data.frame}}. If vector, named elements represent the size of the strata. If matrix or data.frame, first column represent the size of each strata, second column represent the expected mean in each strata and third column represent the expected variance in each strata. Each row is a strata and must be named.}
 
 \item{x}{\code{\link{data.frame}} representing a pilot sample. First column has the variable to be estimated and second column has the strata membership of each observation. Needed when \code{strata} is a vector.}
 
