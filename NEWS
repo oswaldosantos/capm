@@ -1,3 +1,13 @@
+capm 0.12.1
+===========
+
+* SolveIasa: immigration rate defined in terms of N1.
+
+capm 0.12.0
+===========
+
+* MapkmlPSU: now based on sf package.
+
 capm 0.11.2
 ===========
 

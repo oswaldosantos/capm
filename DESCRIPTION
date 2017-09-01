@@ -2,7 +2,7 @@ Package: capm
 Type: Package
 Title: Companion Animal Population Management
 Depends:
-    R (>= 3.4.0)
+    R (>= 3.4.1)
 Imports:
     deSolve,
     FME,
@@ -11,9 +11,7 @@ Imports:
     reshape2,
     shiny,
     grid,
-    rgdal,
-    maptools,
-    sp
+    sf
 Description: Quantitative analysis to support companion animal population
     management. Some functions assist survey sampling tasks (calculate sample 
     size for simple and complex designs, select sampling units and estimate 
@@ -33,6 +31,6 @@ Authors@R: c(person(given='Oswaldo', family='Santos Baquero',
     email='amaku@vps.fmvz.usp.br', role="ctb"),
     person(given='Fernando', family='Ferreira',
     email='fernando@vps.fmvz.usp.br', role="ctb"))
-Version: 0.11.2
-Date: 2017-08-30
+Version: 0.12.1
+Date: 2017-09-01
 RoxygenNote: 6.0.1
