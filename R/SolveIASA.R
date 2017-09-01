@@ -6,8 +6,8 @@
 #' @param s.range optional sequence (between 0 and 1) of the sterilization rates to be simulated.
 #' @param a.range optional \code{\link{vector}} of length 2, with range (ie, confidence interval) of abandonment rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.
 #' @param alpha.range optional \code{\link{vector}} of length 2, with range (ie, confidence interval) of adoption rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.
-#' @param v.range optional \code{\link{vector}} of length 2, with range of values of immigration rates to be assessed. This must be expressed as a percentage of owned animals carrying capacity.
-#' @param s.fm logical. If \code{TRUE}, s.range is used for females and males and if \code{FALSE}, it is used only for females (for males, the point estimate given in \code{pars} is used.)
+#' @param v.range optional \code{\link{vector}} of length 2, with range of values of immigration rates to be assessed.
+#' @param s.fm logical. If \code{TRUE}, s.range is used for females and males and if \code{FALSE}, it is used for only females (for males, the point estimate given in \code{pars} is used.)
 #' @param ... further arguments passed to \link[deSolve]{ode} function.
 #' @details The implemented model is described by Baquero, et. al., 2016 and the function is a wrapper around the defaults of \link[deSolve]{ode} function, whose help page must be consulted for details.
 #' 
@@ -116,8 +116,8 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, s.range = NULL, a.r
         wf1 <- (x1 * m1) / (m1 + f1 * h1 ^ (-1))
         w.f1 <- wf1 - (wf1 - df1) * (omega1 / k1)
         c.f1 <- df1
-        q <- k1 * v * (1 - z) / 2
-        qs <- k1 * v * z / 2
+        q <- N1 * v * (1 - z) / 2
+        qs <- N1 * v * z / 2
         
         d.f1 <- (w.f1 - c.f1 - sf1 - a) * f1 +
           (alpha * f2 + q) * (1 - (omega1 / k1))
