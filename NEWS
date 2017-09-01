@@ -1,3 +1,8 @@
+capm 0.12.2
+===========
+
+* PlotModels and PlotGlobalSens: default ylim.
+
 capm 0.12.1
 ===========
 
