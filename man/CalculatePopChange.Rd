@@ -36,7 +36,8 @@ init_solve_si = c(n = 89137, q = 0.198)
 solve_si_pt = SolveSI(pars = pars_solve_si, 
                              init = init_solve_si, 
                              time = 0:15, dd = 'b',
-                             im = 100, method = 'rk4')
+                             im = 100,
+                             method = 'rk4')
 
 # Calculate the population change (ratio) between times 0 and 15.
 CalculatePopChange(solve_si_pt, variable = 'n', t2 = 15, t1 = 0)

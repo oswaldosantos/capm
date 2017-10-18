@@ -4,8 +4,9 @@
 \alias{SolveIASA}
 \title{Modelling of immigration, abandonment, sterilization and adoption of companion animals}
 \usage{
-SolveIASA(pars = NULL, init = NULL, time = NULL, s.range = NULL,
-  a.range = NULL, alpha.range = NULL, v.range = NULL, s.fm = TRUE, ...)
+SolveIASA(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
+  s.range = NULL, a.range = NULL, alpha.range = NULL, v.range = NULL,
+  s.fm = TRUE, ...)
 }
 \arguments{
 \item{pars}{a named \code{\link{vector}} of length 21, with point estimates of model parameters (see details).}
@@ -13,6 +14,8 @@ SolveIASA(pars = NULL, init = NULL, time = NULL, s.range = NULL,
 \item{init}{a named \code{\link{vector}} of length 8, with point estimates of model parameters (see details).}
 
 \item{time}{time sequence for which output is wanted; the first value of times must be the initial time.}
+
+\item{alpha.owned}{\code{\link{logical}}. If \code{TRUE}, adoption rate is relative to the owned population (proportion of the owned population). If \code{FALSE}, it is relative to the stray population.}
 
 \item{s.range}{optional sequence (between 0 and 1) of the sterilization rates to be simulated.}
 
@@ -86,12 +89,13 @@ init_solve_iasa = c(
 # Solve for point estimates.
 solve_iasa_pt <- SolveIASA(pars = pars_solve_iasa, 
                           init = init_solve_iasa, 
-                          time = 0:8, method = "rk4")
+                          time = 0:8, alpha.owned = TRUE, method = "rk4")
 
 # Solve for parameter ranges.
 solve_iasa_rg <- SolveIASA(pars = pars_solve_iasa, 
                           init = init_solve_iasa, 
                           time = 0:8,
+                          alpha.owned = TRUE,
                           s.range = seq(0, .4, l = 15), 
                           a.range = c(0, .2), 
                           alpha.range = c(0, .2),

@@ -50,7 +50,9 @@ init_solve_iasa = c(
 # Solve for point estimates.
 solve_iasa_pt <- SolveIASA(pars = pars_solve_iasa, 
                           init = init_solve_iasa, 
-                          time = 0:15, method = 'rk4')
+                          time = 0:15,
+                          alpha.owned = TRUE,
+                          method = 'rk4')
 
 ## Calculate local sensitivities to all parameters.
 local_solve_iasa2 <- CalculateLocalSens(model.out = solve_iasa_pt,

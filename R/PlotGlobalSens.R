@@ -33,7 +33,9 @@
 #' # Solve for point estimates.
 #' solve_iasa_pt <- SolveIASA(pars = pars_solve_iasa, 
 #'                           init = init_solve_iasa, 
-#'                           time = 0:15, method = 'rk4')
+#'                           time = 0:15,
+#'                           alpha.owned = TRUE,
+#'                           method = 'rk4')
 #' 
 #' ## Set ranges 10 % greater and lesser than the
 #' ## point estimates.
