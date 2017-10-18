@@ -41,8 +41,8 @@ CalculateStratifiedSampleSize <- function(strata = NULL, x = NULL, conf.level = 
     stop('each strata must have a name.')
   }
   if (is.vector(strata)) {
-    Ni <- strata
-    N <- sum(Ni)
+    Ni <- c(table(strata))
+    N <- length(strata)
     mean.i <- tapply(x[ , 1], x[ , 2], mean)
     var.i <- tapply(x[ , 1], x[ , 2], var)
   } else {
