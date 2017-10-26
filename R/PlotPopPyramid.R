@@ -70,19 +70,27 @@ PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col
     max_age <- max(dat2$age)
     max_age.m <- max(dat.m$age)
     max_age.f <- max(dat.f$age)
+    if (max(dat.f$age) < max(dat2$age)) {
+      dat.f <- rbind(dat.f, c(max(dat2$age), rep(NA, ncol(dat2) - 2), 0))
+    }
+    if (max(dat.m$age) < max(dat2$age)) {
+      dat.m <- rbind(dat.m, c(max(dat2$age), rep(NA, ncol(dat2) - 2), 0))
+    }
   } else {
     age_categories <- factor(levels(dat2$age), levels = levels(dat2$age))
     max_age <- tail(levels(dat2$age), 1)
     max_age.m <- tail(levels(dat.m$age), 1)
     max_age.f <- tail(levels(dat.f$age), 1)
+    all.cats <- cbind.data.frame(age_categories,
+                                 matrix(nrow = length(age_categories),
+                                        ncol = ncol(dat2) - 2),
+                                 rep(0, length(age_categories)))
+    colnames(all.cats) <- names(dat2)
+    for (i in ncol(dat.f)) {
+      dat.f[, i] <- ifelse(is.na(dat.f[, i]), levels(dat.f[, i])[1], dat.f[, i])
+      dat.m[, i] <- ifelse(is.na(dat.m[, i]), levels(dat.m[, i])[1], dat.m[, i])
+    }
   }
-  all.cats <- cbind.data.frame(age_categories,
-                               matrix(nrow = length(age_categories),
-                                      ncol = ncol(dat2) - 2),
-                               rep(0, length(age_categories)))
-  colnames(all.cats) <- names(dat2)
-  dat.f <- rbind(dat.f, all.cats)
-  dat.m <- rbind(dat.m, all.cats)
   dat.m[nrow(dat.m), "sex"] <- sort(unique(dat2$sex))[2]
   if (!is.null(str.col)) {
     plot.f <- ggplot(dat.f, aes(x = age, y = count, fill = ster)) + 
