@@ -5,6 +5,7 @@
 #' @param x.sens string with the name for the x axis.
 #' @param y.sens string with the name for the y axis of the sensitivity functions (when \code{type = 6}).
 #' @param y.ind string with the name for the y axis of the parameter importance indices.
+#' @param bar.colors any valid way to specify colors.
 #' @param label.size a number to specify the size of axes labels and text.
 #' @param x.axis.angle a number with angle of rotation for x axis text. Passed to \code{angle} argument of \code{\link{element_text}}. 
 #' @details Font size of saved plots is usually different to the font size seen in graphic browsers. Before changing font sizes, see the final result in saved (or preview) plots.
@@ -46,7 +47,7 @@
 #' 
 #' ## Plot local sensitivities
 #' PlotLocalSens(local_solve_iasa2)
-PlotLocalSens <- function (local.out = NULL, x.sens = "Time", y.sens = "Sensitivity", y.ind = c("L1", "L2", "Mean", "Min", "Max"), label.size = 10, x.axis.angle = 90, type = 1) {
+PlotLocalSens <- function (local.out = NULL, x.sens = "Time", y.sens = "Sensitivity", y.ind = c("L1", "L2", "Mean", "Min", "Max"), bar.colors = "DarkOliveGreen", label.size = 10, x.axis.angle = 90, type = 1) {
   if (length(y.ind) != 5) {
     stop("The length of y.ind must be equal to 5.")
   }
@@ -62,8 +63,7 @@ PlotLocalSens <- function (local.out = NULL, x.sens = "Time", y.sens = "Sensitiv
   ordered.summary <- summary(local.out)[
     order(summary(local.out)[, "L1"], decreasing = T), ]
   tmp1 <- cbind(w = factor(rownames(ordered.summary),
-                           levels = (rownames(ordered.summary))),
-                ordered.summary)
+                           levels = (rownames(ordered.summary))), ordered.summary)
   coln <- colnames(summary(local.out))[-c(1:2, 8)]
   x.axis.lab <- as.character(tmp1$w)
   x.axis.lab[which(x.axis.lab =='a')] <- 'a'
@@ -71,9 +71,10 @@ PlotLocalSens <- function (local.out = NULL, x.sens = "Time", y.sens = "Sensitiv
   x.axis.lab[which(x.axis.lab =='alpha')] <- expression(alpha)
   for (i in 1:length(coln)) {
     assign(paste0("loc", i),
-           ggplot(tmp1, aes_string(x = "w", y = coln[i],
-                                   fill = "w", colour = "w")) +
-             geom_bar(stat = "identity") + 
+           ggplot(tmp1, aes_string(x = "w", y = coln[i])) +
+             geom_bar(stat = "identity",
+                      fill = bar.colors,
+                      colour = bar.colors) + 
              theme(legend.position = "none", 
                    axis.title.x = element_blank(), 
                    axis.text.x = element_text(size = label.size - 1, 
