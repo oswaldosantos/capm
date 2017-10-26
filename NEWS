@@ -1,7 +1,12 @@
+capm 0.12.5
+===========
+
+* PlotPopPyramid: support for non numeric stages.
+
 capm 0.12.4
 ===========
 
-* SolveIASA: new argument alpha.owned
+* SolveIASA: new argument alpha.owned.
 
 capm 0.12.3
 ===========
