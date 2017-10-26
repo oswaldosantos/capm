@@ -76,12 +76,13 @@ PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col
     max_age.m <- tail(levels(dat.m$age), 1)
     max_age.f <- tail(levels(dat.f$age), 1)
   }
-  if (max_age.f < max_age) {
-    dat.f <- rbind(dat.f, c(max_age, rep(NA, ncol(dat2) - 2), 0))
-  }
-  if (max_age.m < max_age) {
-    dat.m <- rbind(dat.m, c(max_age, rep(NA, ncol(dat2) - 2), 0))
-  }
+  all.cats <- cbind.data.frame(age_categories,
+                               matrix(nrow = length(age_categories),
+                                      ncol = ncol(dat2) - 2),
+                               rep(0, length(age_categories)))
+  colnames(all.cats) <- names(dat2)
+  dat.f <- rbind(dat.f, all.cats)
+  dat.m <- rbind(dat.m, all.cats)
   dat.m[nrow(dat.m), "sex"] <- sort(unique(dat2$sex))[2]
   if (!is.null(str.col)) {
     plot.f <- ggplot(dat.f, aes(x = age, y = count, fill = ster)) + 
