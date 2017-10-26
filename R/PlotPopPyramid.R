@@ -212,7 +212,7 @@ PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col
   }
   grid.newpage()
   pushViewport(viewport(layout = grid.layout(1, 200)))
-  print(plot.f, vp = vplayout(1, 1:93))
-  print(plot.m, vp = vplayout(1, 107:200))
-  print(ages, vp = vplayout(1, 94:106))
+  print(plot.f, vp = vplayout(1, 1:92))
+  print(plot.m, vp = vplayout(1, 108:200))
+  print(ages, vp = vplayout(1, 93:107))
 }
