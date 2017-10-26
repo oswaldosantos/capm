@@ -38,122 +38,175 @@
 #'                age.col = "age",
 #'                sex.col = "sex")
 #'
-PlotPopPyramid <- function(dat = NULL, age.col = NULL, sex.col = NULL, str.col = NULL, x.label = 'Total', stage.label = 'Years', legend.label = 'Sterilized',  inner.color = 'Gold2', outer.color = 'DarkOliveGreen', label.size = 13) {
+PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col = NULL, x.label = "Total", stage.label = "Years", legend.label = "Sterilized", inner.color = "Gold2", outer.color = "DarkOliveGreen", label.size = 13) {
   dat <- as.data.frame(dat)
-  if (!is.numeric(dat[, age.col])) {
-    stop('The column containing age information must be numeric.')
-  }
   age <- sex <- ster <- count <- unit <- NULL
-  #dat[, sex.col] <- factor(dat[, sex.col])
   if (!is.null(str.col)) {
-    #dat[, str.col] <- factor(dat[, str.col])
     if (is.numeric(str.col)) {
       str.col <- names(dat)[str.col]
     }
-    dat2 <- aggregate(dat, list(dat[, age.col],
-                                dat[, sex.col],
-                                dat[, str.col]),
-                      length)
-    dat2 <- dat2[ , 1:4]
-    names(dat2) <- c('age', 'sex', 'ster', 'count')
-  } else {
-    dat2 <- aggregate(dat, list(dat[, age.col],
-                                dat[, sex.col]),
-                      length)
-    dat2 <- dat2[ , 1:3]
-    names(dat2) <- c('age', 'sex', 'count')
+    dat2 <- aggregate(dat, list(dat[, age.col], dat[, sex.col], 
+                                dat[, str.col]), length)
+    dat2 <- dat2[, 1:4]
+    names(dat2) <- c("age", "sex", "ster", "count")
   }
-  ylb <- max(
-    aggregate(dat2$count, list(dat2[, 'age'], dat2[, 'sex']), sum)$x)
-  while (ylb %% 5 != 0) {
+  else {
+    dat2 <- aggregate(dat, list(dat[, age.col], dat[, sex.col]), 
+                      length)
+    dat2 <- dat2[, 1:3]
+    names(dat2) <- c("age", "sex", "count")
+  }
+  ylb <- max(aggregate(dat2$count, list(dat2[, "age"], dat2[, "sex"]), sum)$x)
+  while (ylb%%5 != 0) {
     ylb <- ylb + 1
   }
-  dat2[dat2$sex == sort(unique(dat2$sex))[1], 'count'] <-
-    dat2[dat2$sex == sort(unique(dat2$sex))[1], 'count'] * (-1)
+  dat2[dat2$sex == sort(unique(dat2$sex))[1], "count"] <-
+    dat2[dat2$sex == sort(unique(dat2$sex))[1], "count"] * (-1)
   dat.f <- dat2[which(dat2[, 2] == sort(unique(dat2$sex))[1]), ]
-  if (max(dat.f$age) < max(dat2$age)) {
-    dat.f <- rbind(dat.f, c(max(dat2$age), rep(NA, ncol(dat2) - 2), 0))
-  }
-  dat.f[nrow(dat.f), 'sex'] <- sort(unique(dat2$sex))[1]
+  dat.f[nrow(dat.f), "sex"] <- sort(unique(dat2$sex))[1]
   dat.m <- dat2[which(dat2[, 2] == sort(unique(dat2$sex))[2]), ]
-  if (max(dat.m$age) < max(dat2$age)) {
-    dat.m <- rbind(dat.m, c(max(dat2$age), rep(NA, ncol(dat2) - 2), 0))
-  }
-  dat.m[nrow(dat.m), 'sex'] <- sort(unique(dat2$sex))[2]
-  if (!is.null(str.col)) {
-    plot.f <- ggplot(dat.f, aes(x = age, y = count , fill = ster)) +
-      scale_fill_manual(values = c(inner.color, outer.color))
-    plot.m <- ggplot(dat.m, aes(x = age, y = count , fill = ster)) +
-      scale_fill_manual(name = legend.label,
-                        values = c(inner.color, outer.color))
+  if (is.numeric(dat2$age)) {
+    age_categories <- 0:max(dat2$age)
+    max_age <- max(dat2$age)
+    max_age.m <- max(dat.m$age)
+    max_age.f <- max(dat.f$age)
   } else {
-    plot.f <- ggplot(dat.f, aes(x = age, y = count , fill = sex)) +
+    age_categories <- factor(levels(dat2$age), levels = levels(dat2$age))
+    max_age <- tail(levels(dat2$age), 1)
+    max_age.m <- tail(levels(dat.m$age), 1)
+    max_age.f <- tail(levels(dat.f$age), 1)
+  }
+  if (max_age.f < max_age) {
+    dat.f <- rbind(dat.f, c(max_age, rep(NA, ncol(dat2) - 2), 0))
+  }
+  if (max_age.m < max_age) {
+    dat.m <- rbind(dat.m, c(max_age, rep(NA, ncol(dat2) - 2), 0))
+  }
+  dat.m[nrow(dat.m), "sex"] <- sort(unique(dat2$sex))[2]
+  if (!is.null(str.col)) {
+    plot.f <- ggplot(dat.f, aes(x = age, y = count, fill = ster)) + 
+      scale_fill_manual(values = c(inner.color, outer.color))
+    plot.m <- ggplot(dat.m, aes(x = age, y = count, fill = ster)) + 
+      scale_fill_manual(name = legend.label, values = c(inner.color, 
+                                                        outer.color))
+  }
+  else {
+    plot.f <- ggplot(dat.f, aes(x = age, y = count, fill = sex)) + 
       scale_fill_manual(values = inner.color)
-    plot.m <- ggplot(dat.m, aes(x = age, y = count , fill = sex)) +
+    plot.m <- ggplot(dat.m, aes(x = age, y = count, fill = sex)) + 
       scale_fill_manual(values = inner.color)
   }
-  plot.f <- plot.f +
-    geom_bar(stat = 'identity') + coord_flip() +
-    theme(legend.position = 'none',
-          plot.margin = unit(c(0.5, 0, 0.5, 0.5), "lines"),
-          axis.ticks.length = unit(0, 'lines'),
-          axis.text.y = element_blank(),
-          axis.title.y = element_blank(),
-          axis.text.x = element_text(size = label.size),
-          axis.title.x = element_text(size = label.size),
-          plot.title = element_text(size = label.size, hjust = .5)) +
-    scale_x_continuous(breaks = 0:max(dat2$age),
-                       labels = 0:max(dat2$age)) +
-    scale_y_continuous(breaks = seq(0, (-ylb), by = ylb / -5),
-                       labels = seq(0, ylb, by = ylb / 5),
-                       limits = c(-ylb, 0)) +
-    ggtitle(paste(sort(unique(dat[, sex.col]))[1], ' = ',
-                  table(dat[, sex.col])[1])) +
-    ylab(x.label)
-  plot.m <- plot.m +
-    geom_bar(stat = 'identity') + coord_flip() +
-    theme(legend.position = c(1, 1), legend.justification = c(1, 1),
-          plot.margin = unit(c(0.5, 1, 0.5, 0), "lines"),
-          axis.ticks.length = unit(0, 'lines'),
-          axis.text.y = element_blank(),
-          axis.title.y = element_blank(),
-          axis.text.x = element_text(size = label.size),
-          axis.title.x = element_text(size = label.size),
-          legend.title = element_text(face = 'plain',
-                                      size = label.size),
-          legend.text = element_text(size = label.size),
-          plot.title = element_text(size = label.size, hjust = .5)) +
-    scale_x_continuous(breaks = 0:max(dat2$age),
-                       labels = 0:max(dat2$age)) +
-    scale_y_continuous(breaks = seq(0, ylb, by = ylb / 5),
-                       labels = seq(0, ylb, by = ylb / 5),
-                       limits = c(0, ylb)) +
-    ggtitle(paste(sort(unique(dat[, sex.col]))[2], ' = ',
-                  table(dat[, sex.col])[2])) +
-    labs(fill = str.col) +
-    ylab(x.label)
-  if (is.null(str.col)) {
-    plot.m <- plot.m + theme(legend.position = 'none')
+  if (is.numeric(dat2$age)) {
+    plot.f <- plot.f + geom_bar(stat = "identity") + coord_flip() + 
+      theme(legend.position = "none",
+            plot.margin = unit(c(0.5, 0, 0.5, 0.5), "lines"),
+            axis.ticks.length = unit(0, "lines"),
+            axis.text.y = element_blank(), axis.title.y = element_blank(), 
+            axis.text.x = element_text(size = label.size),
+            axis.title.x = element_text(size = label.size), 
+            plot.title = element_text(size = label.size, hjust = 0.5)) + 
+      scale_x_continuous(breaks = age_categories, labels = age_categories) + 
+      scale_y_continuous(breaks = seq(0, (-ylb), by = ylb/-5), 
+                         labels = seq(0, ylb, by = ylb/5),
+                         limits = c(-ylb, 0)) +
+      ggtitle(paste(sort(unique(dat[, sex.col]))[1], " = ",
+                    table(dat[, sex.col])[1])) +
+      ylab(x.label)
+    plot.m <- plot.m + geom_bar(stat = "identity") + coord_flip() + 
+      theme(legend.position = c(1, 1),
+            legend.justification = c(1, 1),
+            plot.margin = unit(c(0.5, 1, 0.5, 0), "lines"), 
+            axis.ticks.length = unit(0, "lines"),
+            axis.text.y = element_blank(), 
+            axis.title.y = element_blank(),
+            axis.text.x = element_text(size = label.size), 
+            axis.title.x = element_text(size = label.size), 
+            legend.title = element_text(face = "plain", size = label.size), 
+            legend.text = element_text(size = label.size),
+            plot.title = element_text(size = label.size, hjust = 0.5)) +
+      scale_x_continuous(breaks = age_categories, labels = age_categories) +
+      scale_y_continuous(breaks = seq(0, ylb, by = ylb/5),
+                         labels = seq(0, ylb, by = ylb/5), 
+                         limits = c(0, ylb)) +
+      ggtitle(paste(sort(unique(dat[, sex.col]))[2], " = ",
+                    table(dat[, sex.col])[2])) + labs(fill = str.col) + 
+      ylab(x.label)
+    if (is.null(str.col)) {
+      plot.m <- plot.m + theme(legend.position = "none")
+    }
+    ages <- ggplot(data.frame(age = age_categories, count = 0), 
+                   aes(x = age, y = count)) + geom_bar(stat = "identity") + 
+      coord_flip() +
+      theme(legend.position = c(1, 1),
+            legend.justification = c(1, 1),
+            plot.margin = unit(c(0.5, 0, 0.5, 0), "lines"), 
+            axis.ticks.length = unit(0, "lines"),
+            axis.text.y = element_blank(), 
+            axis.title.y = element_blank(),
+            axis.text.x = element_text(size = label.size), 
+            axis.title.x = element_text(size = label.size),
+            plot.title = element_text(size = label.size)) + 
+      scale_y_continuous(breaks = 0, labels = "") +
+      scale_x_continuous(breaks = age_categories, labels = age_categories) +
+      annotate("text", y = 0, x = age_categories,
+               label = age_categories, size = label.size/3) + 
+      ylab("") + ggtitle(stage.label)
+  } else {
+    plot.f <- plot.f + geom_bar(stat = "identity") + coord_flip() + 
+      theme(legend.position = "none",
+            plot.margin = unit(c(0.5, 0, 0.5, 0.5), "lines"),
+            axis.ticks.length = unit(0, "lines"),
+            axis.text.y = element_blank(), axis.title.y = element_blank(), 
+            axis.text.x = element_text(size = label.size),
+            axis.title.x = element_text(size = label.size), 
+            plot.title = element_text(size = label.size, hjust = 0.5)) + 
+      scale_x_discrete(breaks = age_categories, labels = age_categories) + 
+      scale_y_continuous(breaks = seq(0, (-ylb), by = ylb/-5), 
+                         labels = seq(0, ylb, by = ylb/5),
+                         limits = c(-ylb, 0)) +
+      ggtitle(paste(sort(unique(dat[, sex.col]))[1], " = ",
+                    table(dat[, sex.col])[1])) +
+      ylab(x.label)
+    plot.m <- plot.m + geom_bar(stat = "identity") + coord_flip() + 
+      theme(legend.position = c(1, 1),
+            legend.justification = c(1, 1),
+            plot.margin = unit(c(0.5, 1, 0.5, 0), "lines"), 
+            axis.ticks.length = unit(0, "lines"),
+            axis.text.y = element_blank(), 
+            axis.title.y = element_blank(),
+            axis.text.x = element_text(size = label.size), 
+            axis.title.x = element_text(size = label.size), 
+            legend.title = element_text(face = "plain", size = label.size), 
+            legend.text = element_text(size = label.size),
+            plot.title = element_text(size = label.size, hjust = 0.5)) +
+      scale_x_discrete(breaks = age_categories, labels = age_categories) +
+      scale_y_continuous(breaks = seq(0, ylb, by = ylb/5),
+                         labels = seq(0, ylb, by = ylb/5), 
+                         limits = c(0, ylb)) +
+      ggtitle(paste(sort(unique(dat[, sex.col]))[2], " = ",
+                    table(dat[, sex.col])[2])) + labs(fill = str.col) + 
+      ylab(x.label)
+    if (is.null(str.col)) {
+      plot.m <- plot.m + theme(legend.position = "none")
+    }
+    ages <- ggplot(data.frame(age = age_categories, count = 0), 
+                   aes(x = age, y = count)) + geom_bar(stat = "identity") + 
+      coord_flip() +
+      theme(legend.position = c(1, 1),
+            legend.justification = c(1, 1),
+            plot.margin = unit(c(0.5, 0, 0.5, 0), "lines"), 
+            axis.ticks.length = unit(0, "lines"),
+            axis.text.y = element_blank(), 
+            axis.title.y = element_blank(),
+            axis.text.x = element_text(size = label.size), 
+            axis.title.x = element_text(size = label.size),
+            plot.title = element_text(size = label.size)) + 
+      scale_y_continuous(breaks = 0, labels = "") +
+      scale_x_discrete(breaks = age_categories, labels = age_categories) +
+      annotate("text", y = 0, x = age_categories,
+               label = age_categories, size = label.size/3) + 
+      ylab("") + ggtitle(stage.label)
   }
-  ages <- ggplot(data.frame(age = 0:max(dat2$age), count = 0),
-                 aes(x = age, y = count)) +
-    geom_bar(stat = 'identity') + coord_flip() +
-    theme(legend.position = c(1, 1),
-          legend.justification = c(1, 1),
-          plot.margin = unit(c(0.5, 0, 0.5, 0), "lines"),
-          axis.ticks.length = unit(0, 'lines'),
-          axis.text.y = element_blank(),
-          axis.title.y = element_blank(),
-          axis.text.x = element_text(size = label.size),
-          axis.title.x = element_text(size = label.size),
-          plot.title = element_text(size = label.size)) +
-    scale_y_continuous(breaks = 0, labels = '') +
-    scale_x_continuous(breaks = 0:max(dat2$age),
-                       labels = 0:max(dat2$age)) +
-    annotate("text", y = 0, x = 0:max(dat2$age),
-             label = 0:max(dat2$age), size = label.size / 3) +
-    ylab('') +
-    ggtitle(stage.label)
   vplayout <- function(x, y) {
     viewport(layout.pos.row = x, layout.pos.col = y)
   }
