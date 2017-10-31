@@ -1,3 +1,10 @@
+capm 0.12.6
+===========
+
+* Default colors changed. 
+
+* CalculatePopChange: updated to accept outputs from CalculateGlobalSens.
+
 capm 0.12.5
 ===========
 
