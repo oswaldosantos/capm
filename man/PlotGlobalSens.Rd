@@ -7,7 +7,7 @@
 PlotGlobalSens(global.out = NULL, x.label = "Time",
   y.label = "Population", legend.label = "Sensitivity range",
   qt.label = "Qt 0.05 - 0.95", sd.label = "mean +- sd   ",
-  inner.color = "DarkDarkRed", outer.color = "LightLightBlue")
+  inner.color = "DarkRed", outer.color = "LightBlue")
 }
 \arguments{
 \item{global.out}{output from \code{\link{CalculateGlobalSens}} function.}

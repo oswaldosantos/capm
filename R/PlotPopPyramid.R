@@ -7,7 +7,7 @@
 #' @param x.label string to be used as a label for the x axis. If undefined, \code{x.label} is equal to "Total" (see Details).
 #' @param stage.label a string to be used as a label for the ages or stage categories. If undefined, \code{stage.label} is equal to "Years" (see Details).
 #' @param legend.label a string to be used as a label for the legend. If undefined, \code{legend.label} is equal to "Sterilized".
-#' @param inner.color any valid specification of a color. When \code{str.col} is \code{NULL}, \code{inner.color} is the color of bars.
+#' @param inner.color any valid specification of a color. When \code{str.col} is not \code{NULL}, \code{inner.color} is the color of inner bars.
 #' @param outer.color any valid way specification of a color. When \code{str.col} is \code{NULL}, \code{outer.color} is the default color. When \code{str.col} is not \code{NULL}, \code{outer.color} is the outer color of bars.
 #' @param label.size string to define the font size for labels.
 #' @details \code{PlotPopPyramid} is mainly intended for companion animals population pyramids, although it can display other types of opposed bar charts.

@@ -24,9 +24,9 @@ PlotPopPyramid(dat = NULL, age.col = NULL, sex.col = NULL,
 
 \item{legend.label}{a string to be used as a label for the legend. If undefined, \code{legend.label} is equal to "Sterilized".}
 
-\item{inner.color}{any valid specification of a color. When \code{str.col} is \code{NULL}, \code{inner.color} is the color of bars. When \code{str.col} is not \code{NULL}, \code{innercolor} is the inner color of bars.}
+\item{inner.color}{any valid specification of a color. When \code{str.col} is \code{NULL}, \code{inner.color} is the color of bars.}
 
-\item{outer.color}{any valid way specification of a color. When \code{str.col} is \code{NULL}, \code{outer.color} is ignored. When \code{str.col} is not \code{NULL}, \code{outer.color} is the outer color of bars.}
+\item{outer.color}{any valid way specification of a color. When \code{str.col} is \code{NULL}, \code{outer.color} is the default color. When \code{str.col} is not \code{NULL}, \code{outer.color} is the outer color of bars.}
 
 \item{label.size}{string to define the font size for labels.}
 }

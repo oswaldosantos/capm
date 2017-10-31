@@ -54,28 +54,28 @@
 #' ### Plot the sensitivities of combined parameters.
 #' PlotGlobalSens(glob_all_solve_iasa)
 #'
-PlotGlobalSens <- function(global.out = NULL, x.label = 'Time', y.label = 'Population', legend.label = 'Sensitivity range', qt.label = 'Qt 0.05 - 0.95', sd.label = 'mean +- sd   ', inner.color = "DarkDarkRed", outer.color = "LightLightBlue") {
+PlotGlobalSens <- function(global.out = NULL, x.label = 'Time', y.label = 'Population', legend.label = 'Sensitivity range', qt.label = 'Qt 0.05 - 0.95', sd.label = 'mean +- sd   ', inner.color = "DarkRed", outer.color = "LightBlue") {
   x <- Mean <- Min <- Max <- Sd <- NULL
   if (colnames(global.out)[length(global.out)] == 'param') {
     ggplot(global.out, aes(x = x, y = Mean)) +
-      geom_ribbon(aes(ymin = q05, ymax = q95, fill = 'DarkRed')) +
-      geom_ribbon(aes(ymin = Mean - Sd, ymax = Mean + Sd, fill = 'LightBlue')) +
+      geom_ribbon(aes(ymin = q05, ymax = q95, fill = outer.color)) +
+      geom_ribbon(aes(ymin = Mean - Sd, ymax = Mean + Sd, fill = inner.color)) +
       geom_line() + facet_wrap( ~ param) +
       xlab(x.label) + ylab(y.label) +
       scale_fill_manual(
         name = legend.label,
-        values = c('LightBlue', 'DarkRed'),
-        labels = c(sd.label, mm.label)) +
+        values = c(inner.color, outer.color),
+        labels = c(sd.label, qt.label)) +
       theme(legend.position = 'top')
   } else {
     ggplot(global.out, aes(x = x, y = Mean)) +
-      geom_ribbon(aes(ymin = q05, ymax = q95, fill = 'DarkRed')) +
-      geom_ribbon(aes(ymin = Mean - Sd, ymax = Mean + Sd, fill = 'LightBlue')) +
+      geom_ribbon(aes(ymin = q05, ymax = q95, fill = outer.color)) +
+      geom_ribbon(aes(ymin = Mean - Sd, ymax = Mean + Sd, fill = inner.color)) +
       geom_line() +
       xlab(x.label) + ylab(y.label) +
       scale_fill_manual(
         name = legend.label,
-        values = c('LightBlue', 'DarkRed'),
+        values = c(inner.color, outer.color),
         labels = c(sd.label, qt.label)) +
       theme(legend.position = 'top')  
   }
