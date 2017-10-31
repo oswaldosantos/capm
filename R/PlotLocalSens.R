@@ -5,7 +5,7 @@
 #' @param x.sens string with the name for the x axis.
 #' @param y.sens string with the name for the y axis of the sensitivity functions (when \code{type = 6}).
 #' @param y.ind string with the name for the y axis of the parameter importance indices.
-#' @param bar.colors any valid way to specify colors.
+#' @param bar.color any valid specification of a color.
 #' @param label.size a number to specify the size of axes labels and text.
 #' @param x.axis.angle a number with angle of rotation for x axis text. Passed to \code{angle} argument of \code{\link{element_text}}. 
 #' @details Font size of saved plots is usually different to the font size seen in graphic browsers. Before changing font sizes, see the final result in saved (or preview) plots.
@@ -47,7 +47,7 @@
 #' 
 #' ## Plot local sensitivities
 #' PlotLocalSens(local_solve_iasa2)
-PlotLocalSens <- function (local.out = NULL, x.sens = "Time", y.sens = "Sensitivity", y.ind = c("L1", "L2", "Mean", "Min", "Max"), bar.colors = "DarkOliveGreen", label.size = 10, x.axis.angle = 90, type = 1) {
+PlotLocalSens <- function (local.out = NULL, x.sens = "Time", y.sens = "Sensitivity", y.ind = c("L1", "L2", "Mean", "Min", "Max"), bar.colors = "DarkRed", label.size = 10, x.axis.angle = 90, type = 1) {
   if (length(y.ind) != 5) {
     stop("The length of y.ind must be equal to 5.")
   }

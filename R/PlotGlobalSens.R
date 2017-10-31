@@ -4,8 +4,10 @@
 #' @param legend.label string with the name for the legend.
 #' @param x.label string with the name for the x axis.
 #' @param y.label string with the name for the y axis.
-#' @param mm.label string with the name for the envelope calculated using the minimum and maximum ranges.
+#' @param qt.label string with the name for the envelope calculated using the quantiles 0.05 and 0.95.
 #' @param sd.label string with the name for the envelope calculated using the mean +- standard deviation ranges.
+#' @param inner.color any valid specification of a color for the inner envelope.
+#' @param outer.color any valid specification of a color for the outer envelope.
 #' @details Font size of saved plots is usually different to the font size seen in graphic browsers. Before changing font sizes, see the final result in saved (or preview) plots.
 #'  
 #' Other details of the plot can be modifyed using appropriate functions from \code{ggplot2} package.
@@ -52,38 +54,29 @@
 #' ### Plot the sensitivities of combined parameters.
 #' PlotGlobalSens(glob_all_solve_iasa)
 #'
-PlotGlobalSens <- function(global.out = NULL, x.label = 'Time', y.label = 'Population', legend.label = 'Sensitivity range', mm.label = 'min - max', sd.label = 'mean +- sd   ') {
+PlotGlobalSens <- function(global.out = NULL, x.label = 'Time', y.label = 'Population', legend.label = 'Sensitivity range', qt.label = 'Qt 0.05 - 0.95', sd.label = 'mean +- sd   ', inner.color = "DarkDarkRed", outer.color = "LightLightBlue") {
   x <- Mean <- Min <- Max <- Sd <- NULL
   if (colnames(global.out)[length(global.out)] == 'param') {
     ggplot(global.out, aes(x = x, y = Mean)) +
-      geom_ribbon(aes(ymin = Min, ymax = Max, fill = 'red'), 
-                  alpha = .6) +
-      geom_ribbon(aes(ymin = Mean - Sd, ymax = Mean + Sd, fill = 'blue'), 
-                  alpha = .6) +
+      geom_ribbon(aes(ymin = q05, ymax = q95, fill = 'DarkRed')) +
+      geom_ribbon(aes(ymin = Mean - Sd, ymax = Mean + Sd, fill = 'LightBlue')) +
       geom_line() + facet_wrap( ~ param) +
       xlab(x.label) + ylab(y.label) +
       scale_fill_manual(
         name = legend.label,
-        values = c('blue', 'red'),
+        values = c('LightBlue', 'DarkRed'),
         labels = c(sd.label, mm.label)) +
-      theme(legend.position = 'top') +
-      guides(fill = guide_legend(
-        override.aes = list(alpha = 0.5)))
+      theme(legend.position = 'top')
   } else {
     ggplot(global.out, aes(x = x, y = Mean)) +
-      geom_ribbon(aes(ymin = Min, ymax = Max, fill = 'red'), 
-                  alpha = .6) +
-      geom_ribbon(aes(ymin = Mean - Sd, ymax = Mean + Sd, fill = 'blue'), 
-                  alpha = .6) +
+      geom_ribbon(aes(ymin = q05, ymax = q95, fill = 'DarkRed')) +
+      geom_ribbon(aes(ymin = Mean - Sd, ymax = Mean + Sd, fill = 'LightBlue')) +
       geom_line() +
       xlab(x.label) + ylab(y.label) +
-      #ylim(0, max(global.out$Max)) +
       scale_fill_manual(
         name = legend.label,
-        values = c('blue', 'red'),
-        labels = c(sd.label, mm.label)) +
-      theme(legend.position = 'top') +
-      guides(fill = guide_legend(
-        override.aes = list(alpha = 0.4)))    
+        values = c('LightBlue', 'DarkRed'),
+        labels = c(sd.label, qt.label)) +
+      theme(legend.position = 'top')  
   }
 }

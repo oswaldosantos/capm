@@ -5,9 +5,8 @@
 \title{Plot results of CalculateLocalSens function}
 \usage{
 PlotLocalSens(local.out = NULL, x.sens = "Time", y.sens = "Sensitivity",
-  y.ind = c("L1", "L2", "Mean", "Min", "Max"),
-  bar.colors = "DarkOliveGreen", label.size = 10, x.axis.angle = 90,
-  type = 1)
+  y.ind = c("L1", "L2", "Mean", "Min", "Max"), bar.colors = "DarkRed",
+  label.size = 10, x.axis.angle = 90, type = 1)
 }
 \arguments{
 \item{local.out}{output from \code{\link{CalculateLocalSens}} function.}
@@ -18,13 +17,13 @@ PlotLocalSens(local.out = NULL, x.sens = "Time", y.sens = "Sensitivity",
 
 \item{y.ind}{string with the name for the y axis of the parameter importance indices.}
 
-\item{bar.colors}{any valid way to specify colors.}
-
 \item{label.size}{a number to specify the size of axes labels and text.}
 
 \item{x.axis.angle}{a number with angle of rotation for x axis text. Passed to \code{angle} argument of \code{\link{element_text}}.}
 
 \item{type}{a number to define the type of graphical output. \code{1}: importance index L1; \code{2}:  importance index L2; \code{3}: mean of sensitivity functions; \code{5}: minimum of sensitivity functions; and \code{5}: maximum of sensitivity functions; \code{6}: sensitivity functions and all importance indices are ploted.}
+
+\item{bar.color}{any valid specification of a color.}
 }
 \description{
 Plot results of the \code{\link{CalculateLocalSens}} function.

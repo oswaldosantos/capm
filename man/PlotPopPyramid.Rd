@@ -6,8 +6,8 @@
 \usage{
 PlotPopPyramid(dat = NULL, age.col = NULL, sex.col = NULL,
   str.col = NULL, x.label = "Total", stage.label = "Years",
-  legend.label = "Sterilized", inner.color = "Gold2",
-  outer.color = "DarkOliveGreen", label.size = 13)
+  legend.label = "Sterilized", inner.color = "LightBlue",
+  outer.color = "DarkRed", label.size = 13)
 }
 \arguments{
 \item{dat}{\code{\link{data.frame}}.}
@@ -24,9 +24,9 @@ PlotPopPyramid(dat = NULL, age.col = NULL, sex.col = NULL,
 
 \item{legend.label}{a string to be used as a label for the legend. If undefined, \code{legend.label} is equal to "Sterilized".}
 
-\item{inner.color}{any valid way to specify colors. When \code{str.col} is \code{NULL}, \code{inner.color} is the color of bars. When \code{str.col} is not \code{NULL}, \code{innercolor} is the inner color of bars. If non defined, \code{inner.color} is equal to \code{"Gold2"}.}
+\item{inner.color}{any valid specification of a color. When \code{str.col} is \code{NULL}, \code{inner.color} is the color of bars. When \code{str.col} is not \code{NULL}, \code{innercolor} is the inner color of bars.}
 
-\item{outer.color}{any valid way to specify colors. When \code{str.col} is \code{NULL}, \code{outer.color} is ignored. When \code{str.col} is not \code{NULL}, \code{outer.color} is the outer color of bars. If non defined, \code{outercolor} is equal to \code{"DarkOliveGreen"}.}
+\item{outer.color}{any valid way specification of a color. When \code{str.col} is \code{NULL}, \code{outer.color} is ignored. When \code{str.col} is not \code{NULL}, \code{outer.color} is the outer color of bars.}
 
 \item{label.size}{string to define the font size for labels.}
 }

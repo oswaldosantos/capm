@@ -6,7 +6,8 @@
 \usage{
 PlotGlobalSens(global.out = NULL, x.label = "Time",
   y.label = "Population", legend.label = "Sensitivity range",
-  mm.label = "min - max", sd.label = "mean +- sd   ")
+  qt.label = "Qt 0.05 - 0.95", sd.label = "mean +- sd   ",
+  inner.color = "DarkDarkRed", outer.color = "LightLightBlue")
 }
 \arguments{
 \item{global.out}{output from \code{\link{CalculateGlobalSens}} function.}
@@ -17,9 +18,13 @@ PlotGlobalSens(global.out = NULL, x.label = "Time",
 
 \item{legend.label}{string with the name for the legend.}
 
-\item{mm.label}{string with the name for the envelope calculated using the minimum and maximum ranges.}
+\item{qt.label}{string with the name for the envelope calculated using the quantiles 0.05 and 0.95.}
 
 \item{sd.label}{string with the name for the envelope calculated using the mean +- standard deviation ranges.}
+
+\item{inner.color}{any valid specification of a color for the inner envelope.}
+
+\item{outer.color}{any valid specification of a color for the outer envelope.}
 }
 \description{
 Plot results of of \code{\link{CalculateGlobalSens}} function.
