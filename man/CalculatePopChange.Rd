@@ -8,7 +8,7 @@ CalculatePopChange(model.out = NULL, variable = NULL, t1 = NULL,
   t2 = NULL, ratio = TRUE)
 }
 \arguments{
-\item{model.out}{an output from one of the following functions or a \code{\link{list}} with equivalent structure: \code{\link{SolveIASA}}, \code{\link{SolveSI}} or \code{\link{SolveTC}}.}
+\item{model.out}{an output from one of the following functions or a \code{\link{list}} with equivalent structure: \code{\link{SolveIASA}}, \code{\link{SolveSI}},  \code{\link{SolveTC}} or \code{\link{CalculateGlobalSens}}. When the last function is used, its \code{all} argument must be \code{TRUE}.}
 
 \item{variable}{string with the name of the the output variable for which the change are to be calculated (see the variable argument for \code{\link{PlotModels}}.}
 

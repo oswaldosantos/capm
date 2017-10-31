@@ -1,6 +1,6 @@
 #' Population change.
 #' @description Calculate the change in population size between two times. When only one time is specified, the population size at that time is returned.
-#' @param model.out an output from one of the following functions or a \code{\link{list}} with equivalent structure: \code{\link{SolveIASA}}, \code{\link{SolveSI}} or \code{\link{SolveTC}}.
+#' @param model.out an output from one of the following functions or a \code{\link{list}} with equivalent structure: \code{\link{SolveIASA}}, \code{\link{SolveSI}},  \code{\link{SolveTC}} or \code{\link{CalculateGlobalSens}}. When the last function is used, its \code{all} argument must be \code{TRUE}.
 #' @param variable string with the name of the the output variable for which the change are to be calculated (see the variable argument for \code{\link{PlotModels}}.
 #' @param t1 value specifying the first time.
 #' @param t2 value specifying the second time.
@@ -41,27 +41,43 @@ CalculatePopChange <- function(model.out = NULL, variable = NULL, t1 = NULL, t2 
     return(model.out$results[model.out$results$time == t1, c('time', variable)])
   }
   if (!is.null(t1) & !is.null(t2)) {
-    if (ratio) {
-      t.2 <- model.out$results[model.out$results$time == t2, variable]
-      t.1 <- model.out$results[model.out$results$time == t1, variable]
-      if (t.2 / t.1 > 1) {
-        change <- round((t.2 / t.1 * 100), 2)
-        return(noquote(paste0('At t2, ', variable, ' is ', change - 100,
-                              '% higher than ', '(or ', change, '% times) ',
-                              variable, ' at t1.')))
+    
+    if (class(model.out) == "summary.sensRange") {
+      t.2 <- model.out[model.out$x == t2, c("q05", "Mean", "q95")]
+      t.1 <- model.out[model.out$x == t1, "Mean"]
+      if (ratio) {
+        change <- round((t.2 / t.1), 2)
+        return(noquote(paste0('At t2, ', variable, ' will be ', change[2],
+                              " (", change[1], " - ", change[3],
+                              ") times ", variable, ' at t1.')))
       } else {
-        change <- round(t.2 / t.1 * 100, 2)
-        return(noquote(paste0('At t2, ', variable, ' is equal to ', change,
-                              '% of ', variable, ' at t1.')))
-      }      
+        change <- abs(round(t.2 - t.1, 2))
+        net.change <- "decreased"
+        if (t.2 - t.1 > 0) {net.change <- "increased"}
+        return(paste0("A t2, ", variable, " will change by ",
+                      change[2]," (", change[1], " - ", change[3], ")",
+                      ", when compared to t1"))
+      }
     } else {
       t.2 <- model.out$results[model.out$results$time == t2, variable]
       t.1 <- model.out$results[model.out$results$time == t1, variable]
-      change <- abs(round(t.2 - t.1, 2))
-      net.change <- 'decreased'
-      if (t.2 - t.1 > 0) {net.change <- 'increased'}
-      return(cat('Compared with t1, in t2', variable, 'is',
-                 net.change, 'by', change))
+      if (ratio) {
+        change <- round((t.2 / t.1 * 100), 2)
+        if (t.2 / t.1 > 1) {
+          return(noquote(paste0('At t2, ', variable, ' will be ', change - 100,
+                                '% higher than ', '(or ', change, '% times) ',
+                                variable, ' at t1.')))
+        } else {
+          return(noquote(paste0('At t2, ', variable, ' will be equal to ', change,
+                                '% of ', variable, ' at t1.')))
+        }
+      } else {
+        change <- abs(round(t.2 - t.1, 2))
+        net.change <- "decrease"
+        if (t.2 - t.1 > 0) {net.change <- "increase"}
+        return(paste0("A t2, ", variable, " will ", net.change, " by ", change,
+                      ", when compared to t1"))
+      }
     }
   }
 }
