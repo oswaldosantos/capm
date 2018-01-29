@@ -143,19 +143,19 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
           w.f2 <- (m2 * x2) /  (m2 + f2 * h2 ^ (-1))
           c.f2 <- df2 + (w.f2 - df2) * (omega2 / k2)
           
-          d.f2 <- (w.f2 - c.f2 - sf2 - alpha) * f2 +
+          d.f2 <- (w.f2 - c.f2 - sf2) * f2 - alpha * f1 +
             a * f1 * (1 - (omega2 / k2))
           
-          d.fs2 <- - (c.f2 + alpha) * fs2 + sf2 * f2 +
+          d.fs2 <- - c.f2 * fs2 - alpha * fs1 + sf2 * f2 +
             a * fs1 * (1 - (omega2 / k2))
           
           w.m2 <- (f2 * x2) / (m2 + f2 * h2 ^ (-1))
           c.m2 <- dm2 + (w.m2 - dm2) * (omega2 / k2)
           
-          d.m2 <- (w.m2 - c.m2 - sm2 - alpha) * m2 +
+          d.m2 <- (w.m2 - c.m2 - sm2) * m2 - alpha * m1 +
             a * m1 * (1 - (omega2 / k2))
           
-          d.ms2 <- - (c.m2 + alpha) * ms2 + sm2 * m2 +
+          d.ms2 <- - c.m2 * ms2 - alpha * ms1 + sm2 * m2 +
             a * ms1 * (1 - (omega2 / k2))
           
           d.n1 <- d.f1 + d.m1
