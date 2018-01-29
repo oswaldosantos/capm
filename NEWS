@@ -1,3 +1,8 @@
+capm 0.12.7
+===========
+
+* SolveIASA: bug fixed, related to alpha term.
+
 capm 0.12.6
 ===========
 
