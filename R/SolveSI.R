@@ -3,7 +3,7 @@
 #' @param pars \code{\link{vector}} of length 4. The values are point estimates of birth rate, death rate, carrying capacity and sterilization rate. The names of this values must be "b", "d", "k" and "s", respectively.
 #' @param init \code{\link{vector}} of length 2. The values are initial population size and initial proportion of sterilized animals. The names of this values must be "n" and "q", respectively.
 #' @param time time sequence for which output is wanted; the first value of times must be the initial time.
-#' @param dd string equal to \code{b} or \code{d} to define if density-dependece act on birth or death rartes respectively.
+#' @param dd string equal to \code{b}, \code{d} or \code{bd} to define if density-dependece act on birth rate, death rarte or both, respectively.
 #' @param im a number representing the total of immigrants per time unit.
 #' @param s.range optional sequence (between 0 and 1) of the sterilization rates to be simulated.
 #' @param ... further arguments passed to \link[deSolve]{ode} function.
@@ -48,6 +48,10 @@ SolveSI <- function(pars = NULL, init = NULL, time = NULL, dd = 'b', im = 0, s.r
         }
         if (dd == 'd') {
           nat = b
+          mor = d + (b - d) * (n / k)
+        }
+        if (dd == 'bd') {
+          nat = b - (b - d) * (n / k)
           mor = d + (b - d) * (n / k)
         }
         dn = n * (nat * (1 - q) - mor) + im

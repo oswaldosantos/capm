@@ -14,7 +14,7 @@ SolveSI(pars = NULL, init = NULL, time = NULL, dd = "b", im = 0,
 
 \item{time}{time sequence for which output is wanted; the first value of times must be the initial time.}
 
-\item{dd}{string equal to \code{b} or \code{d} to define if density-dependece act on birth or death rartes respectively.}
+\item{dd}{string equal to \code{b}, \code{d} or \code{bd} to define if density-dependece act on birth rate, death rarte or both, respectively.}
 
 \item{im}{a number representing the total of immigrants per time unit.}
 
