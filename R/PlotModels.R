@@ -19,25 +19,25 @@
 #' 
 #' "ms1" (owned sterilized males).
 #'
-#' "f2" (stray intact females).
+#' "f2" (unowned intact females).
 #' 
-#' "fs2" (stray sterilized females).
+#' "fs2" (unowned sterilized females).
 #' 
-#' "m2" (stray intact males).
+#' "m2" (unowned intact males).
 #' 
-#' "ms2" (stray sterilized males). 
+#' "ms2" (unowned sterilized males). 
 #' 
 #' "n1" (owned intact animals).
 #' 
 #' "ns1" (owned sterilized animals).
 #' 
-#' "n2" (stray intact animals).
+#' "n2" (unowned intact animals).
 #' 
-#' "ns2" (stray sterilized animals).
+#' "ns2" (unowned sterilized animals).
 #' 
 #' "N1" (owned animals).
 #' 
-#' "N2" (stray animals).
+#' "N2" (unowned animals).
 #' 
 #' "N" (total population).
 #' 
@@ -71,7 +71,7 @@
 #' @param x.label string with the name for x axis.
 #' @param y.label string with the name for y axis.
 #' @param legend.label string with the name of the legend, for plots of \code{\link{SolveIASA}} output.
-#' @param pop value indicating the output of \code{\link{SolveIASA}} to be ploted. When \code{NULL} (default), plots for owned and stray populations under scenarios created by immigartion rate are created. If \code{1}, the plots of owned population for the minimum immigartion rate are ploted. When \code{2}, the plots of stray population for the minimum immigartion rate are ploted. If \code{3}, the plots of owned population for the maximum immigartion rate are ploted. When \code{4}, the plots of owned population for the maximum immigartion rate are ploted.
+#' @param pop value indicating the output of \code{\link{SolveIASA}} to be ploted. When \code{NULL} (default), plots for owned and unowned populations under scenarios created by immigartion rate are created. If \code{1}, the plots of owned population for the minimum immigartion rate are ploted. When \code{2}, the plots of unowned population for the minimum immigartion rate are ploted. If \code{3}, the plots of owned population for the maximum immigartion rate are ploted. When \code{4}, the plots of owned population for the maximum immigartion rate are ploted.
 #' @details Font size of saved plots is usually different to the font size seen in graphic browsers. Before changing font sizes, see the final result in saved (or preview) plots.
 #'  
 #' Other details of the plot can be modifyed using appropriate functions from \code{ggplot2} package.
@@ -116,7 +116,7 @@
 #'                           v.range = c(0, .1),
 #'                           method = 'rk4')
 #'                 
-#' ## Plot stray population sizes using point estimates
+#' ## Plot unowned population sizes using point estimates
 #' \dontrun{
 #' PlotModels(solve_iasa_pt, variable = "ns2")
 #' 
@@ -236,16 +236,16 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
             yla <- 'Owned sterilized males'
           }
           if (variable == 'f2') {
-            yla <- 'Stray intact females'
+            yla <- 'Unowned intact females'
           }
           if (variable == 'fs2') {
-            yla <- 'Stray sterilized females'
+            yla <- 'Unowned sterilized females'
           }
           if (variable == 'm2') {
-            yla <- 'Stray intact males'
+            yla <- 'Unowned intact males'
           }
           if (variable == 'ms2') {
-            yla <- 'Stray sterilized males'
+            yla <- 'Unowned sterilized males'
           }
           if (variable == 'n1') {
             yla <- 'Owned intact animals'
@@ -254,16 +254,16 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
             yla <- 'Owned sterilized animals'
           }
           if (variable == 'n2') {
-            yla <- 'Stray intact animals'
+            yla <- 'Unowned intact animals'
           }
           if (variable == 'ns2') {
-            yla <- 'Stray sterilized animals'
+            yla <- 'Unowned sterilized animals'
           }
           if (variable == 'N1') {
             yla <- 'Owned animals'
           }
           if (variable == 'N2') {
-            yla <- 'Stray animals'
+            yla <- 'Unowned animals'
           }
           if (variable == 'N') {
             yla <- 'Total pulation size'
@@ -281,31 +281,31 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
         if (is.null(legend.label)) {
           if (variable == 'f') {
             legend.label <- c('Owned\nintact\nfemales', 
-                              'Stray\nintact\nfemales')
+                              'Unowned\nintact\nfemales')
           }
           if (variable == 'fs') {
             legend.label <- c('Owned\nsterilized\nfemales', 
-                              'Stray\nsterilized\nfemales')
+                              'Unowned\nsterilized\nfemales')
           }
           if (variable == 'm') {
             legend.label <- c('Owned\nintact\nmales', 
-                              'Stray\nintact\nmales')
+                              'Unowned\nintact\nmales')
           }
           if (variable == 'ms') {
             legend.label <- c('Owned\nsterilized\nmales', 
-                              'Stray\nsterilized\nmales')
+                              'Unowned\nsterilized\nmales')
           }
           if (variable == 'n') {
             legend.label <- c('Owned\nintact\nanimals', 
-                              'Stray\nintact\nanimals')
+                              'Unowned\nintact\nanimals')
           }
           if (variable == 'ns') {
             legend.label <- c('Owned\nsterilized\nanimals', 
-                              'Stray\nsterilized\nanimals')
+                              'Unowned\nsterilized\nanimals')
           }
           if (variable == 'N') {
             legend.label <- c('Owned\nanimals', 
-                              'Stray\nanimals')
+                              'Unowned\nanimals')
           }
         }
         model.out$results[, 'a'] <- round(model.out$results[, 'a'], 2)

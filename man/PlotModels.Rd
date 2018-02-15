@@ -30,25 +30,25 @@ For \code{\link{SolveIASA}} function using only point estimates:
 
 "ms1" (owned sterilized males).
 
-"f2" (stray intact females).
+"f2" (unowned intact females).
 
-"fs2" (stray sterilized females).
+"fs2" (unowned sterilized females).
 
-"m2" (stray intact males).
+"m2" (unowned intact males).
 
-"ms2" (stray sterilized males). 
+"ms2" (unowned sterilized males). 
 
 "n1" (owned intact animals).
 
 "ns1" (owned sterilized animals).
 
-"n2" (stray intact animals).
+"n2" (unowned intact animals).
 
-"ns2" (stray sterilized animals).
+"ns2" (unowned sterilized animals).
 
 "N1" (owned animals).
 
-"N2" (stray animals).
+"N2" (unowned animals).
 
 "N" (total population).
 
@@ -88,7 +88,7 @@ For \code{\link{SolveTC}} function:
 
 \item{legend.label}{string with the name of the legend, for plots of \code{\link{SolveIASA}} output.}
 
-\item{pop}{value indicating the output of \code{\link{SolveIASA}} to be ploted. When \code{NULL} (default), plots for owned and stray populations under scenarios created by immigartion rate are created. If \code{1}, the plots of owned population for the minimum immigartion rate are ploted. When \code{2}, the plots of stray population for the minimum immigartion rate are ploted. If \code{3}, the plots of owned population for the maximum immigartion rate are ploted. When \code{4}, the plots of owned population for the maximum immigartion rate are ploted.}
+\item{pop}{value indicating the output of \code{\link{SolveIASA}} to be ploted. When \code{NULL} (default), plots for owned and unowned populations under scenarios created by immigartion rate are created. If \code{1}, the plots of owned population for the minimum immigartion rate are ploted. When \code{2}, the plots of unowned population for the minimum immigartion rate are ploted. If \code{3}, the plots of owned population for the maximum immigartion rate are ploted. When \code{4}, the plots of owned population for the maximum immigartion rate are ploted.}
 }
 \description{
 Plot results of one of the following functions: \code{\link{SolveIASA}}, \code{\link{SolveSI}} or \code{\link{SolveTC}}.
@@ -134,7 +134,7 @@ solve_iasa_rg <- SolveIASA(pars = pars_solve_iasa,
                           v.range = c(0, .1),
                           method = 'rk4')
                 
-## Plot stray population sizes using point estimates
+## Plot unowned population sizes using point estimates
 \dontrun{
 PlotModels(solve_iasa_pt, variable = "ns2")
 
