@@ -1,7 +1,12 @@
+capm 0.12.9
+===========
+
+* SolveIASA: New argument dd2.
+
 capm 0.12.8
 ===========
 
-* SolveSI: addition option to specify the argument dd.
+* SolveSI: additional option to specify the argument dd.
 
 capm 0.12.7
 ===========
