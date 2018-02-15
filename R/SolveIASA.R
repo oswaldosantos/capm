@@ -1,9 +1,10 @@
 #' Modelling of immigration, abandonment, sterilization and adoption of companion animals
-#' @description System of ordinary differential equations to simulate the effect of immigration of owned dogs, abandonment, sterilization of owned and stray dogs and adoption, on population dynamics.
+#' @description System of ordinary differential equations to simulate the effect of immigration of owned dogs, abandonment, sterilization of owned and unowned dogs and adoption, on population dynamics.
 #' @param pars a named \code{\link{vector}} of length 21, with point estimates of model parameters (see details).
 #' @param init a named \code{\link{vector}} of length 8, with point estimates of model parameters (see details).
 #' @param time time sequence for which output is wanted; the first value of times must be the initial time.
-#' @param alpha.owned \code{\link{logical}}. If \code{TRUE}, adoption rate is relative to the owned population (proportion of the owned population). If \code{FALSE}, it is relative to the stray population.
+#' @param alpha.owned \code{\link{logical}}. If \code{TRUE}, adoption rate is relative to the owned population (proportion of the owned population). If \code{FALSE}, it is relative to the unowned population.
+#' @param dd2 \code{\link{characetr}} indicating if density dependence in unowned animals act ib mortality ("d") or in natality and mortality ("bd").
 #' @param s.range optional sequence (between 0 and 1) of the sterilization rates to be simulated.
 #' @param a.range optional \code{\link{vector}} of length 2, with range (ie, confidence interval) of abandonment rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.
 #' @param alpha.range optional \code{\link{vector}} of length 2, with range (ie, confidence interval) of adoption rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.
@@ -12,7 +13,7 @@
 #' @param ... further arguments passed to \link[deSolve]{ode} function.
 #' @details The implemented model is described by Baquero, et. al., 2016 and the function is a wrapper around the defaults of \link[deSolve]{ode} function, whose help page must be consulted for details.
 #' 
-#' The \code{pars} argument must contain named values, using the following conventions: \code{1}: owned animals; \code{2}: stray animals; \code{f}: females; \code{m}: males. Then:
+#' The \code{pars} argument must contain named values, using the following conventions: \code{1}: owned animals; \code{2}: unowned animals; \code{f}: females; \code{m}: males. Then:
 #' 
 #'  
 #' \code{b1} and \code{b2}: number of births.
@@ -33,13 +34,13 @@
 #' 
 #' \code{z}: proportion of sterilized immigrants.
 #' 
-#' The \code{init} argument must contain named values for the inital number of animals, using the following conventions: \code{1}: owned animals; \code{2}: stray animals; \code{f}: females; \code{m}: males; and \code{s}: sterilized. Then, the names are:
+#' The \code{init} argument must contain named values for the inital number of animals, using the following conventions: \code{1}: owned animals; \code{2}: unowned animals; \code{f}: females; \code{m}: males; and \code{s}: sterilized. Then, the names are:
 #' 
 #' \code{f1}, \code{fs1}, \code{m1}, \code{ms1}, \code{f2}, \code{fs2}, \code{m2} and \code{ms2}.
 #' 
 #' If any range is specified (e.g \code{s.range}), the remaining ranges must be specified too (\code{a.range}, \code{alpha.range} and \code{v.range}).
 #' The function is a wrapper around the defaults of \link[deSolve]{ode} function, whose help page must be consulted for details. An exception is the method argument, which here has "rk4" as a default.
-#' @return \code{\link{list}}. The first element, \code{name}, is a string with the name of the function, the second element, \code{model}, is the model function. The third, fourth and fifth elements are vectors (\code{pars}, \code{init}, \code{time}, respectively) containing the \code{pars}, \code{init} and \code{time} arguments of the function. The sixth element \code{results} is a \code{\link{data.frame}} with up to as many rows as elements in time. The first column contain the time and subsequent columns contain the size of specific subpopulations, named according to conventions above. The \code{group} column differentiate between owned and strays. When *.range arguments are given, the last fourth columsn specify their instances.
+#' @return \code{\link{list}}. The first element, \code{name}, is a string with the name of the function, the second element, \code{model}, is the model function. The third, fourth and fifth elements are vectors (\code{pars}, \code{init}, \code{time}, respectively) containing the \code{pars}, \code{init} and \code{time} arguments of the function. The sixth element \code{results} is a \code{\link{data.frame}} with up to as many rows as elements in time. The first column contain the time and subsequent columns contain the size of specific subpopulations, named according to conventions above. The \code{group} column differentiate between owned and unowned. When *.range arguments are given, the last fourth columsn specify their instances.
 #' @note Logistic growth models are not intended for scenarios in which
 #' population size is greater than carrying capacity and growth rate is negative.
 #' @references \url{http://oswaldosantos.github.io/capm}
@@ -79,7 +80,7 @@
 #'                           v.range = c(0, .1),
 #'                           method = "rk4")
 #'
-SolveIASA <- function(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL, s.range = NULL, a.range = NULL, alpha.range = NULL, v.range = NULL, s.fm = TRUE, ...) {
+SolveIASA <- function(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL, dd2 = "d", s.range = NULL, a.range = NULL, alpha.range = NULL, v.range = NULL, s.fm = TRUE, ...) {
   if(!setequal(names(pars), c('b1', 'b2', 'df1', 'dm1', 
                               'df2', 'dm2', 'sf1', 'sf2', 
                               'sm1', 'sm2', 'k1', 'k2', 'h1',
@@ -140,7 +141,14 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
             (alpha * ms1 + qs) * (1 - (omega1/k1))
           
           x2 <- (b2 * (h2 * m2 + f2)) / (2 * h2 * f2 * m2)
-          w.f2 <- (m2 * x2) /  (m2 + f2 * h2 ^ (-1))
+          if (dd2 == "d") {
+            w.f2 <- (m2 * x2) /  (m2 + f2 * h2 ^ (-1))  
+          }
+          if (dd2 == "bd") {
+            wf2 <- (x2 * m2) / (m2 + f2 * h2 ^ (-1))
+            w.f2 <- wf2 - (wf2 - df2) * (omega2 / k2)
+          }
+          
           c.f2 <- df2 + (w.f2 - df2) * (omega2 / k2)
           
           d.f2 <- (w.f2 - c.f2 - sf2) * f2 - alpha * f1 +
@@ -149,7 +157,14 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
           d.fs2 <- - c.f2 * fs2 - alpha * fs1 + sf2 * f2 +
             a * fs1 * (1 - (omega2 / k2))
           
-          w.m2 <- (f2 * x2) / (m2 + f2 * h2 ^ (-1))
+          if (dd2 == "d") {
+            w.m2 <- (f2 * x2) / (m2 + f2 * h2 ^ (-1))
+          }
+          if (dd2 == "bd") {
+            wm2 <- (x2 * f2) / (m2 + f2 * h2 ^ (-1))
+            w.m2 <- wm2 - (wm2 - dm2) * (omega2 / k2)
+          }
+          
           c.m2 <- dm2 + (w.m2 - dm2) * (omega2 / k2)
           
           d.m2 <- (w.m2 - c.m2 - sm2) * m2 - alpha * m1 +

@@ -5,8 +5,8 @@
 \title{Modelling of immigration, abandonment, sterilization and adoption of companion animals}
 \usage{
 SolveIASA(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
-  s.range = NULL, a.range = NULL, alpha.range = NULL, v.range = NULL,
-  s.fm = TRUE, ...)
+  dd2 = "d", s.range = NULL, a.range = NULL, alpha.range = NULL,
+  v.range = NULL, s.fm = TRUE, ...)
 }
 \arguments{
 \item{pars}{a named \code{\link{vector}} of length 21, with point estimates of model parameters (see details).}
@@ -15,7 +15,9 @@ SolveIASA(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
 
 \item{time}{time sequence for which output is wanted; the first value of times must be the initial time.}
 
-\item{alpha.owned}{\code{\link{logical}}. If \code{TRUE}, adoption rate is relative to the owned population (proportion of the owned population). If \code{FALSE}, it is relative to the stray population.}
+\item{alpha.owned}{\code{\link{logical}}. If \code{TRUE}, adoption rate is relative to the owned population (proportion of the owned population). If \code{FALSE}, it is relative to the unowned population.}
+
+\item{dd2}{\code{\link{characetr}} indicating if density dependence in unowned animals act ib mortality ("d") or in natality and mortality ("bd").}
 
 \item{s.range}{optional sequence (between 0 and 1) of the sterilization rates to be simulated.}
 
@@ -30,15 +32,15 @@ SolveIASA(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
 \item{...}{further arguments passed to \link[deSolve]{ode} function.}
 }
 \value{
-\code{\link{list}}. The first element, \code{name}, is a string with the name of the function, the second element, \code{model}, is the model function. The third, fourth and fifth elements are vectors (\code{pars}, \code{init}, \code{time}, respectively) containing the \code{pars}, \code{init} and \code{time} arguments of the function. The sixth element \code{results} is a \code{\link{data.frame}} with up to as many rows as elements in time. The first column contain the time and subsequent columns contain the size of specific subpopulations, named according to conventions above. The \code{group} column differentiate between owned and strays. When *.range arguments are given, the last fourth columsn specify their instances.
+\code{\link{list}}. The first element, \code{name}, is a string with the name of the function, the second element, \code{model}, is the model function. The third, fourth and fifth elements are vectors (\code{pars}, \code{init}, \code{time}, respectively) containing the \code{pars}, \code{init} and \code{time} arguments of the function. The sixth element \code{results} is a \code{\link{data.frame}} with up to as many rows as elements in time. The first column contain the time and subsequent columns contain the size of specific subpopulations, named according to conventions above. The \code{group} column differentiate between owned and unowned. When *.range arguments are given, the last fourth columsn specify their instances.
 }
 \description{
-System of ordinary differential equations to simulate the effect of immigration of owned dogs, abandonment, sterilization of owned and stray dogs and adoption, on population dynamics.
+System of ordinary differential equations to simulate the effect of immigration of owned dogs, abandonment, sterilization of owned and unowned dogs and adoption, on population dynamics.
 }
 \details{
 The implemented model is described by Baquero, et. al., 2016 and the function is a wrapper around the defaults of \link[deSolve]{ode} function, whose help page must be consulted for details.
 
-The \code{pars} argument must contain named values, using the following conventions: \code{1}: owned animals; \code{2}: stray animals; \code{f}: females; \code{m}: males. Then:
+The \code{pars} argument must contain named values, using the following conventions: \code{1}: owned animals; \code{2}: unowned animals; \code{f}: females; \code{m}: males. Then:
 
  
 \code{b1} and \code{b2}: number of births.
@@ -59,7 +61,7 @@ The \code{pars} argument must contain named values, using the following conventi
 
 \code{z}: proportion of sterilized immigrants.
 
-The \code{init} argument must contain named values for the inital number of animals, using the following conventions: \code{1}: owned animals; \code{2}: stray animals; \code{f}: females; \code{m}: males; and \code{s}: sterilized. Then, the names are:
+The \code{init} argument must contain named values for the inital number of animals, using the following conventions: \code{1}: owned animals; \code{2}: unowned animals; \code{f}: females; \code{m}: males; and \code{s}: sterilized. Then, the names are:
 
 \code{f1}, \code{fs1}, \code{m1}, \code{ms1}, \code{f2}, \code{fs2}, \code{m2} and \code{ms2}.
 
