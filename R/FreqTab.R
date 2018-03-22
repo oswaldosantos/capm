@@ -4,7 +4,7 @@
 #' @param rnd the number of decimal places (round) or significant digits (signif) to be used.
 #' @param decreasing \code{\link{logical}} (default). If \code{TRUE}, frequencies will be sorted in decreasing order, if \code{FALSE}, they will be sorted in increasing order.
 #' @seealso \link[base]{table} and \link[base]{sort}.
-#' @return \code{\link{data.frame}.
+#' @return \code{\link{data.frame}}.
 #' @export
 #' @examples
 #' data(hh)
