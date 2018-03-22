@@ -1,3 +1,10 @@
+capm 0.12.10
+===========
+
+* New functions: FreqTab and PlotSHHxSpecies.
+
+* theme_minimal to all plot functions.
+
 capm 0.12.9
 ===========
 
