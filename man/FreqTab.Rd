@@ -2,7 +2,7 @@
 % Please edit documentation in R/FreqTab.R
 \name{FreqTab}
 \alias{FreqTab}
-\title{Frequency table of categorical variables.}
+\title{Frequency table of categorical variables}
 \usage{
 FreqTab(variable = NULL, rnd = 3, decreasing = TRUE, ...)
 }
@@ -13,12 +13,16 @@ FreqTab(variable = NULL, rnd = 3, decreasing = TRUE, ...)
 
 \item{decreasing}{\link{\code{logical}} (default). If \code{TRUE}, frequencies will be sorted in decreasing order, if \code{FALSE}, they will be sorted in increasing order.}
 }
+\value{
+\link[base]{data.frame}.
+}
 \description{
 Calculates and sort the count and relative frequency of categories.
 }
 \examples{
 data(hh)
 FreqTab(hh$common_fates)
+
 }
 \seealso{
 \link[base]{table} and \link[base]{sort}.

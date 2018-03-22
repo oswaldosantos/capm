@@ -1,16 +1,17 @@
-#' Distribution of households according to the number of inhabitants one or more species.
+#' Distribution of households according to the number of inhabitants one or more species
 #' @description Dodged bar plot of the distribution of households according to the number of inhabitants of one or more species.
-#' @param dat \link{\code{data.frame}} with households as observation unit and columns with the number of individuals of the species of interest.
+#' @param dat \code{\link{data.frame}} with households as observation unit and columns with the number of individuals of the species of interest.
 #' @param  species names or positions of columns with species data.
-#' @param proportion \link{\code{logical}}. If \code{TRUE} (default), the y axis will represent proportions, if \ocde{FALSE}, it would represent raw counts.
+#' @param proportion \code{\link{logical}}. If \code{TRUE} (default), the y axis will represent proportions, if \code{FALSE}, it would represent raw counts.
 #' @param x.label title for x axis.
 #' @param y.label title for y axis.
-#' @param legend \link{\code{logical}}. If \code{TRUE} (default), the legend will be showed, if \code{FALSE}, it will be removed.
+#' @param legend \code{\link{logical}}. If \code{TRUE} (default), the legend will be showed, if \code{FALSE}, it will be removed.
 #' @seealso \link[ggplot2]{geom_bar}.
 #' @export
 #' @examples
 #' data(hh)
 #' PlotHHxSpecies(hh, c("persons", "dogs", "cats"))
+#' 
 PlotHHxSpecies <- function(dat = NULL, species = NULL, proportion = TRUE, x.label = "Individuals per household", y.label = "Proportion of households", legend = TRUE) {
   freqs <- data.frame(Category = integer(),
                       Count = integer(),
