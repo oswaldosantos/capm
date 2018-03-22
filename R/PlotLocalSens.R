@@ -74,7 +74,8 @@ PlotLocalSens <- function (local.out = NULL, x.sens = "Time", y.sens = "Sensitiv
            ggplot(tmp1, aes_string(x = "w", y = coln[i])) +
              geom_bar(stat = "identity",
                       fill = bar.colors,
-                      colour = bar.colors) + 
+                      colour = bar.colors) +
+             theme_minimal() + 
              theme(legend.position = "none", 
                    axis.title.x = element_blank(), 
                    axis.text.x = element_text(size = label.size - 1, 
@@ -82,8 +83,7 @@ PlotLocalSens <- function (local.out = NULL, x.sens = "Time", y.sens = "Sensitiv
                    axis.title.y = element_text(size = label.size + 2),
                    axis.text.y = element_text(size = label.size)) + 
              ylab(y.ind[i]) +
-             scale_x_discrete(labels = x.axis.lab)) +
-      theme_minimal()
+             scale_x_discrete(labels = x.axis.lab))
   }
   if (type == 6) {
     options(warn = -1)

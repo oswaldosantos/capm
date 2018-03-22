@@ -94,19 +94,24 @@ PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col
   dat.m[nrow(dat.m), "sex"] <- sort(unique(dat2$sex))[2]
   if (!is.null(str.col)) {
     plot.f <- ggplot(dat.f, aes(x = age, y = count, fill = ster)) + 
-      scale_fill_manual(values = c(inner.color, outer.color))
+      scale_fill_manual(values = c(inner.color, outer.color)) +
+      theme_minimal()
     plot.m <- ggplot(dat.m, aes(x = age, y = count, fill = ster)) + 
       scale_fill_manual(name = legend.label, values = c(inner.color, 
-                                                        outer.color))
+                                                        outer.color)) +
+      theme_minimal()
   }
   else {
     plot.f <- ggplot(dat.f, aes(x = age, y = count, fill = sex)) + 
-      scale_fill_manual(values = outer.color)
+      scale_fill_manual(values = outer.color) +
+      theme_minimal()
     plot.m <- ggplot(dat.m, aes(x = age, y = count, fill = sex)) + 
-      scale_fill_manual(values = outer.color)
+      scale_fill_manual(values = outer.color) +
+      theme_minimal()
   }
   if (is.numeric(dat2$age)) {
-    plot.f <- plot.f + geom_bar(stat = "identity") + coord_flip() + 
+    plot.f <- plot.f + geom_bar(stat = "identity") + coord_flip() +
+      theme_minimal() +
       theme(legend.position = "none",
             plot.margin = unit(c(0.5, 0, 0.5, 0.5), "lines"),
             axis.ticks.length = unit(0, "lines"),
@@ -120,9 +125,9 @@ PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col
                          limits = c(-ylb, 0)) +
       ggtitle(paste(sort(unique(dat[, sex.col]))[1], " = ",
                     table(dat[, sex.col])[1])) +
-      ylab(x.label) +
-      theme_minimal()
-    plot.m <- plot.m + geom_bar(stat = "identity") + coord_flip() + 
+      ylab(x.label)
+    plot.m <- plot.m + geom_bar(stat = "identity") + coord_flip() +
+      theme_minimal() +
       theme(legend.position = c(1, 1),
             legend.justification = c(1, 1),
             plot.margin = unit(c(0.5, 1, 0.5, 0), "lines"), 
@@ -140,14 +145,14 @@ PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col
                          limits = c(0, ylb)) +
       ggtitle(paste(sort(unique(dat[, sex.col]))[2], " = ",
                     table(dat[, sex.col])[2])) + labs(fill = str.col) + 
-      ylab(x.label) +
-      theme_minimal()
+      ylab(x.label)
     if (is.null(str.col)) {
       plot.m <- plot.m + theme(legend.position = "none")
     }
     ages <- ggplot(data.frame(age = age_categories, count = 0), 
                    aes(x = age, y = count)) + geom_bar(stat = "identity") + 
       coord_flip() +
+      theme_minimal() +
       theme(legend.position = c(1, 1),
             legend.justification = c(1, 1),
             plot.margin = unit(c(0.5, 0, 0.5, 0), "lines"), 
@@ -161,10 +166,10 @@ PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col
       scale_x_continuous(breaks = age_categories, labels = age_categories) +
       annotate("text", y = 0, x = age_categories,
                label = age_categories, size = label.size/3) + 
-      ylab("") + ggtitle(stage.label) +
-      theme_minimal()
+      ylab("") + ggtitle(stage.label)
   } else {
-    plot.f <- plot.f + geom_bar(stat = "identity") + coord_flip() + 
+    plot.f <- plot.f + geom_bar(stat = "identity") + coord_flip() +
+      theme_minimal() +
       theme(legend.position = "none",
             plot.margin = unit(c(0.5, 0, 0.5, 0.5), "lines"),
             axis.ticks.length = unit(0, "lines"),
@@ -178,9 +183,9 @@ PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col
                          limits = c(-ylb, 0)) +
       ggtitle(paste(sort(unique(dat[, sex.col]))[1], " = ",
                     table(dat[, sex.col])[1])) +
-      ylab(x.label) +
-      theme_minimal()
-    plot.m <- plot.m + geom_bar(stat = "identity") + coord_flip() + 
+      ylab(x.label)
+    plot.m <- plot.m + geom_bar(stat = "identity") + coord_flip() +
+      theme_minimal() +
       theme(legend.position = c(1, 1),
             legend.justification = c(1, 1),
             plot.margin = unit(c(0.5, 1, 0.5, 0), "lines"), 
@@ -204,7 +209,8 @@ PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col
       plot.m <- plot.m + theme(legend.position = "none")
     }
     ages <- ggplot(data.frame(age = age_categories, count = 0), 
-                   aes(x = age, y = count)) + geom_bar(stat = "identity") + 
+                   aes(x = age, y = count)) + geom_bar(stat = "identity") +
+      theme_minimal() +
       coord_flip() +
       theme(legend.position = c(1, 1),
             legend.justification = c(1, 1),
@@ -219,8 +225,7 @@ PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col
       scale_x_discrete(breaks = age_categories, labels = age_categories) +
       annotate("text", y = 0, x = age_categories,
                label = age_categories, size = label.size/3) + 
-      ylab("") + ggtitle(stage.label) +
-      theme_minimal()
+      ylab("") + ggtitle(stage.label)
   }
   vplayout <- function(x, y) {
     viewport(layout.pos.row = x, layout.pos.col = y)

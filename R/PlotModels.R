@@ -89,7 +89,7 @@
 #'    df1 = 0.104, dm1 = 0.098, df2 = 0.125, dm2 = 0.118,
 #'    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
 #'    k1 = 98050, k2 = 8055, h1 = 1, h2 = 0.5,
-#'    a = 0.054, alpha = 0.1, v = 0.2, z = 0.1)
+#'    a = 0.054, alpha = 0.02, v = 0.2, z = 0.1)
 #'    
 #' init_solve_iasa = c(
 #'    f1 = 33425, fs1 = 10865,
@@ -112,7 +112,7 @@
 #'                           alpha.owned = TRUE,
 #'                           s.range = seq(0, .4, l = 15), 
 #'                           a.range = c(0, .2), 
-#'                           alpha.range = c(0, .2),
+#'                           alpha.range = c(0, .05),
 #'                           v.range = c(0, .1),
 #'                           method = 'rk4')
 #'                 
@@ -182,9 +182,9 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
                   length.out = 5) / (10 ^ scl), 1),
             low = col1,
             high = col2) +
+          theme_minimal() +
           theme(legend.position = 'top',
-                legend.title = element_text(size = 12)) +
-          theme_minimal()
+                legend.title = element_text(size = 12))
       } else {
         if (is.null(legend.label)) {
           legend.label == 'Proportion of sterilized animals'
@@ -201,10 +201,10 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
             limits = c(0, 1), breaks = seq(0 , 1, .2),
             low = rev(col2), 
             high = rev(col1)) +
+          theme_minimal() +
           theme(legend.position = 'top', 
                 legend.title = element_text(size = 12),
-                legend.text = element_text(angle = 90)) +
-          theme_minimal()
+                legend.text = element_text(angle = 90))
       }
     }
   } else { 
@@ -352,6 +352,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
                            length.out = 5) / (10 ^ scl), 1),
                        low = col1,
                        high = col2) +
+                     theme_minimal() +
                      theme(legend.position = 'right',
                            legend.title = 
                              element_text(size = 10, face = 'plain'),
@@ -359,8 +360,7 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
                              unit(c(.2, .2, .5, .2), 'lines'),
                            plot.title = 
                              element_text(size = 10, hjust = .5)) +
-                     facet_grid(alpha ~ a, labeller = label_both) +
-                     theme_minimal()
+                     facet_grid(alpha ~ a, labeller = label_both)
             )
           }
         }
@@ -459,12 +459,12 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
                     length.out = 5) / (10 ^ scl), 1),
               low = col1,
               high = col2) +
+            theme_minimal() +
             theme(legend.position = 'top',
                   legend.title = element_text(size = 12),
                   legend.text = element_text(angle = 90),
                   plot.margin = unit(c(.5, 0, 0, 0), 'lines')) +
-            facet_grid(z ~ s) +
-            theme_minimal()
+            facet_grid(z ~ s)
         }
       }
     }

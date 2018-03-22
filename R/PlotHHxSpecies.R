@@ -18,8 +18,11 @@ PlotHHxSpecies <- function(dat = NULL, species = NULL, proportion = TRUE, x.labe
                       Proportion = integer())
   rows <- c()
   dat <- as.data.frame(dat)
+  if (is.numeric(species)) {
+    species <- names(dat[, species])
+  }
   for (i in 1:length(species)) {
-    tmp <- FreqTab(dat[, i])
+    tmp <- FreqTab(dat[, species[i]])
     freqs <- rbind.data.frame(freqs, tmp)
     rows <- c(rows, nrow(tmp))
   }
@@ -31,10 +34,13 @@ PlotHHxSpecies <- function(dat = NULL, species = NULL, proportion = TRUE, x.labe
     freqs <- freqs[, -3]
   }
   names(freqs)[2] <- "y"
+  freqs$Category <- factor(as.character(freqs$Category),
+                           levels = sort(as.integer(levels(freqs$Category))))
   plt <- ggplot(freqs, aes(Category, y, fill = Species)) +
     geom_bar(stat = "identity", position = "dodge") +
     xlab(x.label) +
-    ylab(y.label)
+    ylab(y.label) +
+    theme_minimal()
   if (legend) {
     return(plt)
   } else {

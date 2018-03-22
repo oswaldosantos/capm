@@ -107,7 +107,7 @@ pars_solve_iasa = c(
    df1 = 0.104, dm1 = 0.098, df2 = 0.125, dm2 = 0.118,
    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
    k1 = 98050, k2 = 8055, h1 = 1, h2 = 0.5,
-   a = 0.054, alpha = 0.1, v = 0.2, z = 0.1)
+   a = 0.054, alpha = 0.02, v = 0.2, z = 0.1)
    
 init_solve_iasa = c(
    f1 = 33425, fs1 = 10865,
@@ -130,7 +130,7 @@ solve_iasa_rg <- SolveIASA(pars = pars_solve_iasa,
                           alpha.owned = TRUE,
                           s.range = seq(0, .4, l = 15), 
                           a.range = c(0, .2), 
-                          alpha.range = c(0, .2),
+                          alpha.range = c(0, .05),
                           v.range = c(0, .1),
                           method = 'rk4')
                 
