@@ -9,17 +9,17 @@ PlotHHxSpecies(dat = NULL, species = NULL, proportion = TRUE,
   y.label = "Proportion of households", legend = TRUE)
 }
 \arguments{
-\item{dat}{\link{\code{data.frame}} with households as observation unit and columns with the number of individuals of the species of interest.}
+\item{dat}{\code{\link{data.frame}} with households as observation unit and columns with the number of individuals of the species of interest.}
 
 \item{species}{names or positions of columns with species data.}
 
-\item{proportion}{\link{\code{logical}}. If \code{TRUE} (default), the y axis will represent proportions, if \code{FALSE}, it would represent raw counts.}
+\item{proportion}{\code{\link{logical}}. If \code{TRUE} (default), the y axis will represent proportions, if \code{FALSE}, it would represent raw counts.}
 
 \item{x.label}{title for x axis.}
 
 \item{y.label}{title for y axis.}
 
-\item{legend}{\link{\code{logical}}. If \code{TRUE} (default), the legend will be showed, if \code{FALSE}, it will be removed.}
+\item{legend}{\code{\link{logical}}. If \code{TRUE} (default), the legend will be showed, if \code{FALSE}, it will be removed.}
 }
 \description{
 Dodged bar plot of the distribution of households according to the number of inhabitants of one or more species.

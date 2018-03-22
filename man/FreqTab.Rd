@@ -11,10 +11,10 @@ FreqTab(variable = NULL, rnd = 3, decreasing = TRUE, ...)
 
 \item{rnd}{the number of decimal places (round) or significant digits (signif) to be used.}
 
-\item{decreasing}{\link{\code{logical}} (default). If \code{TRUE}, frequencies will be sorted in decreasing order, if \code{FALSE}, they will be sorted in increasing order.}
+\item{decreasing}{\code{\link{logical}} (default). If \code{TRUE}, frequencies will be sorted in decreasing order, if \code{FALSE}, they will be sorted in increasing order.}
 }
 \value{
-\link[base]{data.frame}.
+\code{\link{data.frame}}.
 }
 \description{
 Calculates and sort the count and relative frequency of categories.
