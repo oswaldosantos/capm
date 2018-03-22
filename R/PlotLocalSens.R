@@ -82,7 +82,8 @@ PlotLocalSens <- function (local.out = NULL, x.sens = "Time", y.sens = "Sensitiv
                    axis.title.y = element_text(size = label.size + 2),
                    axis.text.y = element_text(size = label.size)) + 
              ylab(y.ind[i]) +
-             scale_x_discrete(labels = x.axis.lab)) 
+             scale_x_discrete(labels = x.axis.lab)) +
+      theme_minimal()
   }
   if (type == 6) {
     options(warn = -1)

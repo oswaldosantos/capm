@@ -139,7 +139,8 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
       tmp <- ggplot(model.out$results, 
                     aes_string(x = 'time', y = variable)) + 
         geom_line(colour = col) +
-        xlab(x.label)
+        xlab(x.label) +
+        theme_minimal()
       if (!is.null(y.label)) {
         tmp + ylab(y.label) #+
           #ylim(0, max(model.out$results[ , variable]))
@@ -182,7 +183,8 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
             low = col1,
             high = col2) +
           theme(legend.position = 'top',
-                legend.title = element_text(size = 12))
+                legend.title = element_text(size = 12)) +
+          theme_minimal()
       } else {
         if (is.null(legend.label)) {
           legend.label == 'Proportion of sterilized animals'
@@ -201,7 +203,8 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
             high = rev(col1)) +
           theme(legend.position = 'top', 
                 legend.title = element_text(size = 12),
-                legend.text = element_text(angle = 90))
+                legend.text = element_text(angle = 90)) +
+          theme_minimal()
       }
     }
   } else { 
@@ -218,7 +221,8 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
         tmp <- ggplot(model.out$results, 
                       aes_string(x = 'time', y = variable)) + 
           geom_line(colour = col) +
-          xlab(x.label)
+          xlab(x.label) +
+          theme_minimal()
         if (!is.null(y.label)) {
           tmp + ylab(y.label) #+
             #ylim(0, max(model.out$results[ , variable]))
@@ -355,7 +359,8 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
                              unit(c(.2, .2, .5, .2), 'lines'),
                            plot.title = 
                              element_text(size = 10, hjust = .5)) +
-                     facet_grid(alpha ~ a, labeller = label_both)
+                     facet_grid(alpha ~ a, labeller = label_both) +
+                     theme_minimal()
             )
           }
         }
@@ -397,7 +402,8 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
           tmp <- ggplot(model.out$results, 
                         aes_string(x = 'time', y = variable)) + 
             geom_line(colour = col) +
-            xlab(x.label)
+            xlab(x.label) +
+            theme_minimal()
           if (!is.null(y.label)) {
             tmp + ylab(y.label) #+
               #ylim(0, max(model.out$results[ , variable]))
@@ -457,7 +463,8 @@ PlotModels <- function(model.out = NULL, variable = NULL, col = 'red', col1 = c(
                   legend.title = element_text(size = 12),
                   legend.text = element_text(angle = 90),
                   plot.margin = unit(c(.5, 0, 0, 0), 'lines')) +
-            facet_grid(z ~ s)
+            facet_grid(z ~ s) +
+            theme_minimal()
         }
       }
     }

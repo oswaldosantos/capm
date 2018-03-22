@@ -120,7 +120,8 @@ PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col
                          limits = c(-ylb, 0)) +
       ggtitle(paste(sort(unique(dat[, sex.col]))[1], " = ",
                     table(dat[, sex.col])[1])) +
-      ylab(x.label)
+      ylab(x.label) +
+      theme_minimal()
     plot.m <- plot.m + geom_bar(stat = "identity") + coord_flip() + 
       theme(legend.position = c(1, 1),
             legend.justification = c(1, 1),
@@ -139,7 +140,8 @@ PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col
                          limits = c(0, ylb)) +
       ggtitle(paste(sort(unique(dat[, sex.col]))[2], " = ",
                     table(dat[, sex.col])[2])) + labs(fill = str.col) + 
-      ylab(x.label)
+      ylab(x.label) +
+      theme_minimal()
     if (is.null(str.col)) {
       plot.m <- plot.m + theme(legend.position = "none")
     }
@@ -159,7 +161,8 @@ PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col
       scale_x_continuous(breaks = age_categories, labels = age_categories) +
       annotate("text", y = 0, x = age_categories,
                label = age_categories, size = label.size/3) + 
-      ylab("") + ggtitle(stage.label)
+      ylab("") + ggtitle(stage.label) +
+      theme_minimal()
   } else {
     plot.f <- plot.f + geom_bar(stat = "identity") + coord_flip() + 
       theme(legend.position = "none",
@@ -175,7 +178,8 @@ PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col
                          limits = c(-ylb, 0)) +
       ggtitle(paste(sort(unique(dat[, sex.col]))[1], " = ",
                     table(dat[, sex.col])[1])) +
-      ylab(x.label)
+      ylab(x.label) +
+      theme_minimal()
     plot.m <- plot.m + geom_bar(stat = "identity") + coord_flip() + 
       theme(legend.position = c(1, 1),
             legend.justification = c(1, 1),
@@ -194,7 +198,8 @@ PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col
                          limits = c(0, ylb)) +
       ggtitle(paste(sort(unique(dat[, sex.col]))[2], " = ",
                     table(dat[, sex.col])[2])) + labs(fill = str.col) + 
-      ylab(x.label)
+      ylab(x.label) +
+      theme_minimal()
     if (is.null(str.col)) {
       plot.m <- plot.m + theme(legend.position = "none")
     }
@@ -214,7 +219,8 @@ PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col
       scale_x_discrete(breaks = age_categories, labels = age_categories) +
       annotate("text", y = 0, x = age_categories,
                label = age_categories, size = label.size/3) + 
-      ylab("") + ggtitle(stage.label)
+      ylab("") + ggtitle(stage.label) +
+      theme_minimal()
   }
   vplayout <- function(x, y) {
     viewport(layout.pos.row = x, layout.pos.col = y)

@@ -66,7 +66,8 @@ PlotGlobalSens <- function(global.out = NULL, x.label = 'Time', y.label = 'Popul
         name = legend.label,
         values = c(inner.color, outer.color),
         labels = c(sd.label, qt.label)) +
-      theme(legend.position = 'top')
+      theme(legend.position = 'top') +
+      theme_minimal()
   } else {
     ggplot(global.out, aes(x = x, y = Mean)) +
       geom_ribbon(aes(ymin = q05, ymax = q95, fill = outer.color)) +
@@ -77,6 +78,7 @@ PlotGlobalSens <- function(global.out = NULL, x.label = 'Time', y.label = 'Popul
         name = legend.label,
         values = c(inner.color, outer.color),
         labels = c(sd.label, qt.label)) +
-      theme(legend.position = 'top')  
+      theme(legend.position = 'top') +
+      theme_minimal()
   }
 }
