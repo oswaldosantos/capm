@@ -203,8 +203,7 @@ PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col
                          limits = c(0, ylb)) +
       ggtitle(paste(sort(unique(dat[, sex.col]))[2], " = ",
                     table(dat[, sex.col])[2])) + labs(fill = str.col) + 
-      ylab(x.label) +
-      theme_minimal()
+      ylab(x.label)
     if (is.null(str.col)) {
       plot.m <- plot.m + theme(legend.position = "none")
     }
