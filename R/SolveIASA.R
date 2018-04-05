@@ -80,7 +80,7 @@
 #'                           v.range = c(0, .1),
 #'                           method = "rk4")
 #'
-SolveIASA <- function(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL, dd2 = "d", s.range = NULL, a.range = NULL, alpha.range = NULL, v.range = NULL, s.fm = TRUE, ...) {
+SolveIASA <- function(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL, s.range = NULL, a.range = NULL, alpha.range = NULL, v.range = NULL, s.fm = TRUE, ...) {
   if(!setequal(names(pars), c('b1', 'b2', 'df1', 'dm1', 
                               'df2', 'dm2', 'sf1', 'sf2', 
                               'sm1', 'sm2', 'k1', 'k2', 'h1',
@@ -128,8 +128,11 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
           
           d.f1 <- (w.f1 - c.f1 - sf1 - a) * f1 +
             (alpha * f1 + q) * (1 - (omega1/k1))
+          if (d.f1 < 0) {d.f1 <- 0}
+          
           d.fs1 <- -(c.f1 + a) * fs1 + sf1 * f1 +
             (alpha * fs1 + qs) * (1 - (omega1/k1))
+          if (d.fs1 < 0) {d.fs1 <- 0}
           
           wm1 <- (x1 * f1) / (m1 + f1 * h1 ^ (-1))
           w.m1 <- wm1 - (wm1 - dm1) * (omega1 / k1)
@@ -137,41 +140,34 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
           
           d.m1 <- (w.m1 - c.m1 - sm1 - a) * m1 +
             (alpha * m1 + q) * (1 - (omega1/k1))
+          if (d.m1 < 0) {d.m1 <- 0}
+          
           d.ms1 <- -(c.m1 + a) * ms1 + sm1 * m1 + 
             (alpha * ms1 + qs) * (1 - (omega1/k1))
+          if (d.ms1 < 0) {d.ms1 <- 0}
           
           x2 <- (b2 * (h2 * m2 + f2)) / (2 * h2 * f2 * m2)
-          if (dd2 == "d") {
-            w.f2 <- (m2 * x2) /  (m2 + f2 * h2 ^ (-1))  
-          }
-          if (dd2 == "bd") {
-            wf2 <- (x2 * m2) / (m2 + f2 * h2 ^ (-1))
-            w.f2 <- wf2 - (wf2 - df2) * (omega2 / k2)
-          }
-          
+          w.f2 <- (m2 * x2) /  (m2 + f2 * h2 ^ (-1))
           c.f2 <- df2 + (w.f2 - df2) * (omega2 / k2)
           
-          d.f2 <- (w.f2 - c.f2 - sf2) * f2 - alpha * f1 +
+          d.f2 <- (w.f2 - c.f2 - sf2 - alpha) * f2 +
             a * f1 * (1 - (omega2 / k2))
+          if (d.f2 < 0) {d.f2 <- 0}
           
-          d.fs2 <- - c.f2 * fs2 - alpha * fs1 + sf2 * f2 +
+          d.fs2 <- - (c.f2 + alpha) * fs2 + sf2 * f2 +
             a * fs1 * (1 - (omega2 / k2))
+          if (d.fs2 < 0) {d.fs2 <- 0}
           
-          if (dd2 == "d") {
-            w.m2 <- (f2 * x2) / (m2 + f2 * h2 ^ (-1))
-          }
-          if (dd2 == "bd") {
-            wm2 <- (x2 * f2) / (m2 + f2 * h2 ^ (-1))
-            w.m2 <- wm2 - (wm2 - dm2) * (omega2 / k2)
-          }
-          
+          w.m2 <- (f2 * x2) / (m2 + f2 * h2 ^ (-1))
           c.m2 <- dm2 + (w.m2 - dm2) * (omega2 / k2)
           
-          d.m2 <- (w.m2 - c.m2 - sm2) * m2 - alpha * m1 +
+          d.m2 <- (w.m2 - c.m2 - sm2 - alpha) * m2 +
             a * m1 * (1 - (omega2 / k2))
+          if (d.m2 < 0) {d.m2 <- 0}
           
-          d.ms2 <- - c.m2 * ms2 - alpha * ms1 + sm2 * m2 +
+          d.ms2 <- - (c.m2 + alpha) * ms2 + sm2 * m2 +
             a * ms1 * (1 - (omega2 / k2))
+          if (d.ms2 < 0) {d.ms2 <- 0}
           
           d.n1 <- d.f1 + d.m1
           d.ns1 <- d.fs1 + d.ms1
@@ -229,9 +225,11 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
           
           d.f1 <- (w.f1 - c.f1 - sf1 - a) * f1 +
             (alpha * f2 + q) * (1 - (omega1 / k1))
+          if (d.f1 < 0) {d.f1 <- 0}
           
           d.fs1 <- - (c.f1 + a) * fs1 + sf1 * f1 + 
-            (alpha * fs2 + qs) * (1 - (omega1 / k1))  
+            (alpha * fs2 + qs) * (1 - (omega1 / k1))
+          if (d.fs1 < 0) {d.fs1 <- 0}
           
           wm1 <- (x1 * f1) / (m1 + f1 * h1 ^ (-1))
           w.m1 <- wm1 - (wm1 - dm1) * (omega1 / k1)
@@ -239,9 +237,11 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
           
           d.m1 <- (w.m1 - c.m1 - sm1 - a) * m1 +
             (alpha * m2 + q) * (1 - (omega1 / k1))
+          if (d.m1 < 0) {d.m1 <- 0}
           
           d.ms1 <- - (c.m1 + a) * ms1 + sm1 * m1 + 
-            (alpha * ms2 + qs) * (1 - (omega1 / k1))  
+            (alpha * ms2 + qs) * (1 - (omega1 / k1))
+          if (d.ms1 < 0) {d.ms1 <- 0}
           
           x2 <- (b2 * (h2 * m2 + f2)) / (2 * h2 * f2 * m2)
           w.f2 <- (m2 * x2) /  (m2 + f2 * h2 ^ (-1))
@@ -249,18 +249,22 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
           
           d.f2 <- (w.f2 - c.f2 - sf2 - alpha) * f2 +
             a * f1 * (1 - (omega2 / k2))
+          if (d.f2 < 0) {d.f2 <- 0}
           
           d.fs2 <- - (c.f2 + alpha) * fs2 + sf2 * f2 +
             a * fs1 * (1 - (omega2 / k2))
+          if (d.fs2 < 0) {d.fs2 <- 0}
           
           w.m2 <- (f2 * x2) / (m2 + f2 * h2 ^ (-1))
           c.m2 <- dm2 + (w.m2 - dm2) * (omega2 / k2)
           
           d.m2 <- (w.m2 - c.m2 - sm2 - alpha) * m2 +
             a * m1 * (1 - (omega2 / k2))
+          if (d.m2 < 0) {d.m2 <- 0}
           
           d.ms2 <- - (c.m2 + alpha) * ms2 + sm2 * m2 +
             a * ms1 * (1 - (omega2 / k2))
+          if (d.ms2 < 0) {d.ms2 <- 0}
           
           d.n1 <- d.f1 + d.m1
           d.ns1 <- d.fs1 + d.ms1

@@ -5,8 +5,8 @@
 \title{Modelling of immigration, abandonment, sterilization and adoption of companion animals}
 \usage{
 SolveIASA(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
-  dd2 = "d", s.range = NULL, a.range = NULL, alpha.range = NULL,
-  v.range = NULL, s.fm = TRUE, ...)
+  s.range = NULL, a.range = NULL, alpha.range = NULL, v.range = NULL,
+  s.fm = TRUE, ...)
 }
 \arguments{
 \item{pars}{a named \code{\link{vector}} of length 21, with point estimates of model parameters (see details).}
@@ -16,8 +16,6 @@ SolveIASA(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
 \item{time}{time sequence for which output is wanted; the first value of times must be the initial time.}
 
 \item{alpha.owned}{\code{\link{logical}}. If \code{TRUE}, adoption rate is relative to the owned population (proportion of the owned population). If \code{FALSE}, it is relative to the unowned population.}
-
-\item{dd2}{\code{\link{characetr}} indicating if density dependence in unowned animals act ib mortality ("d") or in natality and mortality ("bd").}
 
 \item{s.range}{optional sequence (between 0 and 1) of the sterilization rates to be simulated.}
 
@@ -30,6 +28,8 @@ SolveIASA(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
 \item{s.fm}{logical. If \code{TRUE}, s.range is used for females and males and if \code{FALSE}, it is used for only females (for males, the point estimate given in \code{pars} is used.)}
 
 \item{...}{further arguments passed to \link[deSolve]{ode} function.}
+
+\item{dd2}{\code{\link{characetr}} indicating if density dependence in unowned animals act ib mortality ("d") or in natality and mortality ("bd").}
 }
 \value{
 \code{\link{list}}. The first element, \code{name}, is a string with the name of the function, the second element, \code{model}, is the model function. The third, fourth and fifth elements are vectors (\code{pars}, \code{init}, \code{time}, respectively) containing the \code{pars}, \code{init} and \code{time} arguments of the function. The sixth element \code{results} is a \code{\link{data.frame}} with up to as many rows as elements in time. The first column contain the time and subsequent columns contain the size of specific subpopulations, named according to conventions above. The \code{group} column differentiate between owned and unowned. When *.range arguments are given, the last fourth columsn specify their instances.
