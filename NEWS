@@ -1,3 +1,8 @@
+capm 0.12.11
+===========
+
+* SolveIASA: truncate non-negative values.
+
 capm 0.12.10
 ===========
 
