@@ -31,6 +31,6 @@ Authors@R: c(person(given='Oswaldo', family='Santos Baquero',
     email='amaku@vps.fmvz.usp.br', role="ctb"),
     person(given='Fernando', family='Ferreira',
     email='fernando@vps.fmvz.usp.br', role="ctb"))
-Version: 0.12.12
+Version: 0.12.13
 Date: 2018-08-30
 RoxygenNote: 6.0.1
