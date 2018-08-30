@@ -56,7 +56,7 @@ PlotLocalSens <- function (local.out = NULL, x.sens = "Time", y.sens = "Sensitiv
   vplayout <- function(x, y) {
     viewport(layout.pos.row = x, layout.pos.col = y)
   }
-  tmp <- melt(local.out[, -2], id.vars = "x")
+  tmp <- gather(local.out[, -2], variable, value, -x)
   loc <- ggplot(tmp, aes(x = x, y = value, colour = variable)) + 
     geom_line(size = 0.5) + theme(legend.position = "none") + 
     xlab(x.sens) + ylab(y.sens)
