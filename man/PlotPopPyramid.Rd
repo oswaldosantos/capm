@@ -5,9 +5,9 @@
 \title{Population PlotPopPyramid}
 \usage{
 PlotPopPyramid(dat = NULL, age.col = NULL, sex.col = NULL,
-  str.col = NULL, x.label = "Total", stage.label = "Years",
-  legend.label = "Sterilized", inner.color = "LightBlue",
-  outer.color = "DarkRed", label.size = 13)
+  str.col = NULL, str.tip = NULL, x.label = "Count",
+  stage.label = "Years", legend.label = "Sterilized",
+  inner.color = "LightBlue", outer.color = "DarkRed", label.size = 13)
 }
 \arguments{
 \item{dat}{\code{\link{data.frame}}.}
@@ -17,6 +17,8 @@ PlotPopPyramid(dat = NULL, age.col = NULL, sex.col = NULL,
 \item{sex.col}{\code{dat} column that has two unique values representing the sex of individuals (see Details).}
 
 \item{str.col}{\code{dat} column that has two unique values representing the reproductive status of individuals (see Details).}
+
+\item{str.tip}{string with the category of \code{str.col} to place at tip of the bars.}
 
 \item{x.label}{string to be used as a label for the x axis. If undefined, \code{x.label} is equal to "Total" (see Details).}
 
