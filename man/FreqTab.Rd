@@ -4,14 +4,16 @@
 \alias{FreqTab}
 \title{Frequency table of categorical variables}
 \usage{
-FreqTab(variable = NULL, rnd = 3, decreasing = TRUE, ...)
+FreqTab(data = NULL, variables = NULL, rnd = 3, decreasing = TRUE, ...)
 }
 \arguments{
-\item{variable}{a categorical variable.}
+\item{variables}{name or position of categorical variables. If more than one variable is provided, contingency frequencies are calculated.}
 
 \item{rnd}{the number of decimal places (round) or significant digits (signif) to be used.}
 
 \item{decreasing}{\code{\link{logical}} (default). If \code{TRUE}, frequencies will be sorted in decreasing order, if \code{FALSE}, they will be sorted in increasing order.}
+
+\item{\code{\link{data.frame}}}{with categorical variables.}
 }
 \value{
 \code{\link{data.frame}}.
@@ -21,7 +23,7 @@ Calculates and sort the count and relative frequency of categories.
 }
 \examples{
 data(hh)
-FreqTab(hh$common_fates)
+FreqTab(hh, c("common_fates", "tolerance"))
 
 }
 \seealso{
