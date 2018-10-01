@@ -1,6 +1,11 @@
 capm 0.13.0
 ============
 
+* Calculate2StageSampleSize: deprecated.
+
+capm 0.13.0
+============
+
 * GraphicInterface: removed.
 
 capm 0.12.15

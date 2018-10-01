@@ -11,10 +11,10 @@ Companion Animal Population Management. Provides functions for quantitative Comp
 \tabular{ll}{
 Package: \tab capm\cr
 Type: \tab Package\cr
-Version: \tab 0.12.14\cr
-Date: \tab 2018-08-30\cr
+Version: \tab 0.13.1\cr
+Date: \tab 2018-01-10\cr
 Depends: \tab R (>= 3.4.1)\cr
-Imports: \tab deSolve, FME, survey, dplyr, tidyr, ggplot2, shiny, grid\cr
+Imports: \tab deSolve, FME, survey, dplyr, tidyr, magrittr, ggplot2, grid, stats, utils, sf\cr
 License: \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
 URL: \tab \url{http://oswaldosantos.github.io/capm}\cr
