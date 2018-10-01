@@ -2,7 +2,7 @@
 % Please edit documentation in R/Calculate2StageSampleSize.R
 \name{Calculate2StageSampleSize}
 \alias{Calculate2StageSampleSize}
-\title{Two-stage cluster sampling size and composition}
+\title{Two-stage cluster sampling size and composition (Deprecated)}
 \usage{
 Calculate2StageSampleSize(psu.ssu = NULL, psu.x = NULL, conf.level = 0.95,
   error = 0.1, cost = 4, minimum.ssu = 15)
@@ -24,29 +24,20 @@ Calculate2StageSampleSize(psu.ssu = NULL, psu.x = NULL, conf.level = 0.95,
 Matrix with the sample size and composition and with variability estimates.
 }
 \description{
-Calculates sample size and composition to estimate a total from a two-stage cluster sampling design.
+Calculates sample size and composition to estimate a total from a two-stage cluster sampling design. This function is deprecated, see details.
 }
 \details{
 It is assumed that PSU from the pilot are selected with probability proportional to size (PPS) and with replacement. SSU are assumed to be selected via simple (systematic) random sampling.
 
 PSU must have the same identifiers in \code{psu.ssu} and in \code{psu.x}.
-}
-\examples{
-# Load data with psu identifiers and sizes.
-data(city)
-city2 <- city[, c("track_id", "hh")]
-# Load data from a pilot sample.
-data(cluster_pilot)
-
-# Calculate sample size and composition.
-Calculate2StageSampleSize(psu.ssu = city2,
-                          psu.x = cluster_pilot,
-                          conf.level = 0.95,
-                          error = 0.1,
-                          cost = 4)
+This function is deprecated because a study (Baquero et. al, 2018a) showed that the calculated sample size are too large for practical purposes. The same study found predefined sample compositions that result in estimates with precision equivalent to that achieved with the algorithm implemented in this function.
+The predefined sample compositions are (PSU * SSU): 65 \* 15, 50 \* 20, and 30 \* 30. If possible, take larger samples.
 }
 \references{
-Levy P and Lemeshow S (2008). Sampling of populations: methods and applications, Fourth edition. John Wiley and Sons, Inc.
+Baquero, O. S., Marconcin, S., Rocha, A., & Garcia, R. D. C. M. (2018). Companion animal demography and population management in Pinhais, Brazil. Preventive Veterinary Medicine.
 
+Baquero, O. S., Marconcin, S., Rocha, A., & Garcia, R. D. C. M. (2018). Companion animal demography and population management in Pinhais, Brazil. Preventive Veterinary Medicine.
+
+Levy P and Lemeshow S (2008). Sampling of populations: methods and applications, Fourth edition. John Wiley and Sons, Inc.
 \url{http://oswaldosantos.github.io/capm}
 }
