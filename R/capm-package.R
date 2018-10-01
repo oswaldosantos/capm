@@ -3,8 +3,8 @@
 #' \tabular{ll}{
 #' Package: \tab capm\cr
 #' Type: \tab Package\cr
-#' Version: \tab 0.12.14\cr
-#' Date: \tab 2018-08-30\cr
+#' Version: \tab 0.12.15\cr
+#' Date: \tab 2018-01-10\cr
 #' Depends: \tab R (>= 3.4.1)\cr
 #' Imports: \tab deSolve, FME, survey, dplyr, tidyr, ggplot2, shiny, grid\cr
 #' License: \tab GPL (>= 2)\cr
@@ -23,10 +23,12 @@
 #' @importFrom survey svydesign calibrate svytotal svymean SE deff cv
 #' @importFrom deSolve ode
 #' @importFrom FME sensFun sensRange
-#' @importFrom dplyr group_by summarise arrange
+#' @importFrom dplyr filter group_by group_by_ summarise arrange ungroup mutate left_join select select_ transmute n desc
 #' @importFrom tidyr gather
+#' @importFrom magrittr "%>%"
 #' @importFrom grid viewport pushViewport grid.newpage grid.layout
-#' @importFrom stats aggregate confint qnorm runif sd var
+#' @importFrom stats aggregate confint qnorm runif sd var na.omit relevel
+#' @importFrom circlize circos.clear circos.par chordDiagram circos.trackPlotRegion get.cell.meta.data get.cell.meta.data circos.text circos.axis
 #' @importFrom utils write.table
 #' @importFrom sf st_read st_write st_transform
 NULL
