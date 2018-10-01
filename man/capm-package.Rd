@@ -11,7 +11,7 @@ Companion Animal Population Management. Provides functions for quantitative Comp
 \tabular{ll}{
 Package: \tab capm\cr
 Type: \tab Package\cr
-Version: \tab 0.13.1\cr
+Version: \tab 0.13.2\cr
 Date: \tab 2018-01-10\cr
 Depends: \tab R (>= 3.4.1)\cr
 Imports: \tab deSolve, FME, survey, dplyr, tidyr, magrittr, ggplot2, grid, stats, utils, sf\cr
