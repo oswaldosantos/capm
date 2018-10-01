@@ -1,10 +1,10 @@
 library(devtools)
 
 # Development workflow
-# use_data(cats, city, cluster_sample, cluster_sample_animals,
-#         cluster_sample_animals_lost, dogs, hh, sys_sample,
-#         sys_sample_animals, sys_sample_animals_lost,
-#         overwrite = T)
+## Datasets
+# Run pinhais_data.R and then the line below.
+# use_data(cluster_sample, psu_ssu, dogs, cats, overwrite = TRUE)
+
 install()
 load_all()
 document()

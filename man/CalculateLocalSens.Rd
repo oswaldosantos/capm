@@ -7,7 +7,7 @@
 CalculateLocalSens(model.out = NULL, sensv = "n")
 }
 \arguments{
-\item{model.out}{an output from one of the previous functions or a \code{\link{list}} with equivalent structure.}
+\item{model.out}{output from one of the previous functions or a \code{\link{list}} with equivalent structure.}
 
 \item{sensv}{string with the name of the output variables for which sensitivity are to be estimated.}
 }
@@ -24,26 +24,17 @@ For further arguments of \code{\link{sensFun}}, defaults are used. See the help 
 ## IASA model
 
 ## Parameters and intial conditions.
-pars_solve_iasa = c(
-   b1 = 21871, b2 = 4374,
-   df1 = 0.104, dm1 = 0.098, df2 = 0.125, dm2 = 0.118,
-   sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
-   k1 = 98050, k2 = 8055, h1 = 1, h2 = 0.5,
-   a = 0.054, alpha = 0.1, v = 0.2, z = 0.1)
-   
-init_solve_iasa = c(
-   f1 = 33425, fs1 = 10865,
-   m1 = 38039, ms1 = 6808,
-   f2 = 3343, fs2 = 109,
-   m2 = 3804, ms2 = 68)
-   
+data(dogs)
+dogs_iasa <- GetDataIASA(dogs,
+                         destination.label = "Pinhais",
+                         total.estimate = 50444)
 
 # Solve for point estimates.
-solve_iasa_pt <- SolveIASA(pars = pars_solve_iasa, 
-                          init = init_solve_iasa, 
+solve_iasa_pt <- SolveIASA(pars = dogs_iasa$pars,
+                          init = dogs_iasa$init,
                           time = 0:15,
                           alpha.owned = TRUE,
-                          method = "rk4")
+                          method = 'rk4')
 
 ## Calculate local sensitivities to all parameters.
 local_solve_iasa2 <- CalculateLocalSens(
@@ -56,6 +47,8 @@ local_solve_iasa1 <- CalculateLocalSens(
 Soetaert K and Petzoldt T (2010). Inverse modelling, sensitivity and monte carlo analysis in R using package FME. Journal of Statistical Software, 33(3), pp. 1-28.
 
 Reichert P and Kfinsch HR (2001). Practical identifiability analysis of large environmental simulation models. Water Resources Research, 37(4), pp.1015-1030.
+
+Baquero, O. S., Marconcin, S., Rocha, A., & Garcia, R. D. C. M. (2018). Companion animal demography and population management in Pinhais, Brazil. Preventive Veterinary Medicine.
 
 \url{http://oswaldosantos.github.io/capm}
 }

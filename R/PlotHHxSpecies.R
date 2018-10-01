@@ -6,13 +6,20 @@
 #' @param x.label title for x axis.
 #' @param y.label title for y axis.
 #' @param legend \code{\link{logical}}. If \code{TRUE} (default), the legend will be showed, if \code{FALSE}, it will be removed.
+#' @references Baquero, O. S., Marconcin, S., Rocha, A., & Garcia, R. D. C. M. (2018). Companion animal demography and population management in Pinhais, Brazil. Preventive Veterinary Medicine.
 #' @seealso \link[ggplot2]{geom_bar}.
 #' @export
 #' @examples
-#' data(hh)
-#' PlotHHxSpecies(hh, c("persons", "dogs", "cats"))
+#' data(cluster_sample)
+#' PlotHHxSpecies(cluster_sample, c("number_of_persons",
+#'                                  "number_of_dogs",
+#'                                  "number_of_cats"))
 #' 
 PlotHHxSpecies <- function(dat = NULL, species = NULL, proportion = TRUE, x.label = "Individuals per household", y.label = "Proportion of households", legend = TRUE) {
+  
+  # Workaround to the "no visible binding for global variable" note.
+  Category <- y <- Species <- NULL
+  
   freqs <- data.frame(Category = integer(),
                       Count = integer(),
                       Proportion = integer())

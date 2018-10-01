@@ -20,23 +20,23 @@ Define the minimum and maximum values for parameters whose global sensitivities 
 \examples{
 ## IASA model
 
-# Parameters and initial conditions.
-pars_solve_iasa = c(
-   b1 = 21871, b2 = 4374,
-   df1 = 0.104, dm1 = 0.098, df2 = 0.125, dm2 = 0.118,
-   sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
-   k1 = 98050, k2 = 8055, h1 = 1, h2 = 0.5,
-   a = 0.054, alpha = 0.1, v = 0.2, z = 0.1)
+## Parameters and intial conditions.
+data(dogs)
+dogs_iasa <- GetDataIASA(dogs,
+                         destination.label = "Pinhais",
+                         total.estimate = 50444)
 
-# Set ranges 10 \% greater and lesser than the 
-# point estimates.
-rg_solve_iasa <- SetRanges(pars_solve_iasa)
+## Set ranges 10 \% greater and lesser than the
+## point estimates.
+rg_solve_iasa <- SetRanges(pars = dogs_iasa$pars)
 
 }
 \references{
 Soetaert K and Petzoldt T (2010). Inverse modelling, sensitivity and monte carlo analysis in R using package FME. Journal of Statistical Software, 33(3), pp. 1-28.
 
 Reichert P and Kfinsch HR (2001). Practical identifiability analysis of large environmental simulation models. Water Resources Research, 37(4), pp. 1015-1030.
+
+Baquero, O. S., Marconcin, S., Rocha, A., & Garcia, R. D. C. M. (2018). Companion animal demography and population management in Pinhais, Brazil. Preventive Veterinary Medicine.
 
 \url{http://oswaldosantos.github.io/capm}
 }

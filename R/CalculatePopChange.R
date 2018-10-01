@@ -1,37 +1,40 @@
 #' Population change.
 #' @description Calculate the change in population size between two times. When only one time is specified, the population size at that time is returned.
-#' @param model.out an output from one of the following functions or a \code{\link{list}} with equivalent structure: \code{\link{SolveIASA}}, \code{\link{SolveSI}},  \code{\link{SolveTC}} or \code{\link{CalculateGlobalSens}}. When the last function is used, its \code{all} argument must be \code{TRUE}.
+#' @param model.out output from one of the following functions or a \code{\link{list}} with equivalent structure: \code{\link{SolveIASA}}, \code{\link{SolveSI}},  \code{\link{SolveTC}} or \code{\link{CalculateGlobalSens}}. When the last function is used, its \code{all} argument must be \code{TRUE}.
 #' @param variable string with the name of the the output variable for which the change are to be calculated (see the variable argument for \code{\link{PlotModels}}.
 #' @param t1 value specifying the first time.
 #' @param t2 value specifying the second time.
 #' @param ratio logical. When \code{TRUE}, the calculated change is based on poulation size at t2 divided by population size at t1. When \code{FALSE}, the calculated change is based on poulation size at t2 minus population size at t1.
 #' @return Value representing the ratio (if \code{ratio} is \code{TRUE}) or the difference (if \code{ratio} is \code{FALSE}) between population size at time t2 and t1. If only one time is specified, the value is the population size at that time.
-#' @references \url{http://oswaldosantos.github.io/capm}
+#' @references Baquero, O. S., Marconcin, S., Rocha, A., & Garcia, R. D. C. M. (2018). Companion animal demography and population management in Pinhais, Brazil. Preventive Veterinary Medicine.
+#' 
+#' \url{http://oswaldosantos.github.io/capm}
 #' @export
 #' @examples
-#' ## SI model
+#' ## IASA model
 #' 
-#' # Parameters and initial conditions.
-#' pars_solve_si = c(b = 0.245, d = 0.101, 
-#'                  k = 98050, s = 0.048)
-#' init_solve_si = c(n = 89137, q = 0.198)
+#' ## Parameters and intial conditions.
+#' data(dogs)
+#' dogs_iasa <- GetDataIASA(dogs,
+#'                          destination.label = "Pinhais",
+#'                          total.estimate = 50444)
 #' 
-#' # Solve for a specific sterilization rate.
-#' solve_si_pt = SolveSI(pars = pars_solve_si, 
-#'                              init = init_solve_si, 
-#'                              time = 0:15, dd = 'b',
-#'                              im = 100,
-#'                              method = 'rk4')
+#' # Solve for point estimates.
+#' solve_iasa_pt <- SolveIASA(pars = dogs_iasa$pars,
+#'                           init = dogs_iasa$init,
+#'                           time = 0:15,
+#'                           alpha.owned = TRUE,
+#'                           method = 'rk4')
 #' 
 #' # Calculate the population change (ratio) between times 0 and 15.
-#' CalculatePopChange(solve_si_pt, variable = 'n', t2 = 15, t1 = 0)
+#' CalculatePopChange(solve_iasa_pt, variable = 'N1', t2 = 15, t1 = 0)
 #' 
 #' # Calculate the population change (difference) between times 0 and 15.
-#' CalculatePopChange(solve_si_pt, variable = 'n', t2 = 15,
+#' CalculatePopChange(solve_iasa_pt, variable = 'N1', t2 = 15,
 #'                    t1 = 0, ratio = FALSE)
 #' 
 #' # Calculate the population zises at time 15.
-#' CalculatePopChange(solve_si_pt, variable = 'n', t2 = 15)
+#' CalculatePopChange(solve_iasa_pt, variable = 'N1', t2 = 15)
 #' 
 CalculatePopChange <- function(model.out = NULL, variable = NULL, t1 = NULL, t2 = NULL, ratio = TRUE) {
   if (is.null(t1) & !is.null(t2)) {

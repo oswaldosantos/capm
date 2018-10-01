@@ -5,7 +5,7 @@
 #' @param x.sens string with the name for the x axis.
 #' @param y.sens string with the name for the y axis of the sensitivity functions (when \code{type = 6}).
 #' @param y.ind string with the name for the y axis of the parameter importance indices.
-#' @param bar.color any valid specification of a color.
+#' @param bar.colors any valid specification of a color.
 #' @param label.size a number to specify the size of axes labels and text.
 #' @param x.axis.angle a number with angle of rotation for x axis text. Passed to \code{angle} argument of \code{\link{element_text}}. 
 #' @details Font size of saved plots is usually different to the font size seen in graphic browsers. Before changing font sizes, see the final result in saved (or preview) plots.
@@ -13,40 +13,34 @@
 #' 
 #' Soetaert K, Cash J and Mazzia F (2012). Solving differential equations in R. Springer.
 #' 
+#' Baquero, O. S., Marconcin, S., Rocha, A., & Garcia, R. D. C. M. (2018). Companion animal demography and population management in Pinhais, Brazil. Preventive Veterinary Medicine.
+#' 
 #' \url{http://oswaldosantos.github.io/capm}
 #' @seealso \link[FME]{plot.sensFun}.
 #' @export
 #' @examples
-#' ## IASA model
-#' 
+#' ## IASA model#' 
+
 #' ## Parameters and intial conditions.
-#' pars_solve_iasa = c(
-#'    b1 = 21871, b2 = 4374,
-#'    df1 = 0.104, dm1 = 0.098, df2 = 0.125, dm2 = 0.118,
-#'    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
-#'    k1 = 98050, k2 = 8055, h1 = 1, h2 = 0.5,
-#'    a = 0.054, alpha = 0.1, v = 0.2, z = 0.1)
-#'    
-#' init_solve_iasa = c(
-#'    f1 = 33425, fs1 = 10865,
-#'    m1 = 38039, ms1 = 6808,
-#'    f2 = 3343, fs2 = 109,
-#'    m2 = 3804, ms2 = 68)
-#'    
-#' 
+#' data(dogs)
+#' dogs_iasa <- GetDataIASA(dogs,
+#'                         destination.label = "Pinhais",
+#'                         total.estimate = 50444)#' 
+
 #' # Solve for point estimates.
-#' solve_iasa_pt <- SolveIASA(pars = pars_solve_iasa, 
-#'                           init = init_solve_iasa, 
-#'                           time = 0:15,
-#'                           alpha.owned = TRUE,
-#'                           method = 'rk4')
-#' 
+#' solve_iasa_pt <- SolveIASA(pars = dogs_iasa$pars,
+#'                          init = dogs_iasa$init,
+#'                          time = 0:15,
+#'                          alpha.owned = TRUE,
+#'                          method = 'rk4')#' 
+
 #' ## Calculate local sensitivities to all parameters.
-#' local_solve_iasa2 <- CalculateLocalSens(model.out = solve_iasa_pt,
-#'                                         sensv = "n2")
-#' 
+#' local_solve_iasa2 <- CalculateLocalSens(
+#'  model.out = solve_iasa_pt, sensv = "n2")#' 
+
 #' ## Plot local sensitivities
-#' PlotLocalSens(local_solve_iasa2)
+#' PlotLocalSens(local_solve_iasa2)#' 
+#' 
 PlotLocalSens <- function (local.out = NULL, x.sens = "Time", y.sens = "Sensitivity", y.ind = c("L1", "L2", "Mean", "Min", "Max"), bar.colors = "DarkRed", label.size = 10, x.axis.angle = 90, type = 1) {
   if (length(y.ind) != 5) {
     stop("The length of y.ind must be equal to 5.")

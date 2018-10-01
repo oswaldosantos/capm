@@ -4,7 +4,6 @@
 #' @param init a named \code{\link{vector}} of length 8, with point estimates of model parameters (see details).
 #' @param time time sequence for which output is wanted; the first value of times must be the initial time.
 #' @param alpha.owned \code{\link{logical}}. If \code{TRUE}, adoption rate is relative to the owned population (proportion of the owned population). If \code{FALSE}, it is relative to the unowned population.
-#' @param dd2 \code{\link{characetr}} indicating if density dependence in unowned animals act ib mortality ("d") or in natality and mortality ("bd").
 #' @param s.range optional sequence (between 0 and 1) of the sterilization rates to be simulated.
 #' @param a.range optional \code{\link{vector}} of length 2, with range (ie, confidence interval) of abandonment rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.
 #' @param alpha.range optional \code{\link{vector}} of length 2, with range (ie, confidence interval) of adoption rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.
@@ -43,42 +42,34 @@
 #' @return \code{\link{list}}. The first element, \code{name}, is a string with the name of the function, the second element, \code{model}, is the model function. The third, fourth and fifth elements are vectors (\code{pars}, \code{init}, \code{time}, respectively) containing the \code{pars}, \code{init} and \code{time} arguments of the function. The sixth element \code{results} is a \code{\link{data.frame}} with up to as many rows as elements in time. The first column contain the time and subsequent columns contain the size of specific subpopulations, named according to conventions above. The \code{group} column differentiate between owned and unowned. When *.range arguments are given, the last fourth columsn specify their instances.
 #' @note Logistic growth models are not intended for scenarios in which
 #' population size is greater than carrying capacity and growth rate is negative.
-#' @references \url{http://oswaldosantos.github.io/capm}
+#' @references Baquero, O. S., Akamine, L. A., Amaku, M., & Ferreira, F. (2016). Defining priorities for dog population management through mathematical modeling. Preventive veterinary medicine, 123, 121-127.
 #' 
-#' Baquero, O. S., Akamine, L. A., Amaku, M., & Ferreira, F. (2016). Defining priorities for dog population management through mathematical modeling. Preventive veterinary medicine, 123, 121-127.
+#' \url{http://oswaldosantos.github.io/capm}
 #' @seealso \link[deSolve]{ode}.
 #' @export
-#' @examples 
-#' # Parameters and initial conditions.
-#' pars_solve_iasa = c(
-#'    b1 = 21871, b2 = 4374,
-#'    df1 = 0.104, dm1 = 0.098, df2 = 0.125, dm2 = 0.118,
-#'    sf1 = 0.069, sf2 = 0.05, sm1 = 0.028, sm2 = 0.05,
-#'    k1 = 98050, k2 = 8055, h1 = 1, h2 = 0.5,
-#'    a = 0.054, alpha = 0.1, v = 0.2, z = 0.1)
-#'    
-#' init_solve_iasa = c(
-#'    f1 = 33425, fs1 = 10865,
-#'    m1 = 38039, ms1 = 6808,
-#'    f2 = 3343, fs2 = 109,
-#'    m2 = 3804, ms2 = 68)
-#'    
+#' @examples
+#' ## Parameters and intial conditions.
+#' data(dogs)
+#' dogs_iasa <- GetDataIASA(dogs,
+#'                          destination.label = "Pinhais",
+#'                          total.estimate = 50444)
 #' 
 #' # Solve for point estimates.
-#' solve_iasa_pt <- SolveIASA(pars = pars_solve_iasa, 
-#'                           init = init_solve_iasa, 
-#'                           time = 0:8, alpha.owned = TRUE, method = "rk4")
-#' 
-#' # Solve for parameter ranges.
-#' solve_iasa_rg <- SolveIASA(pars = pars_solve_iasa, 
-#'                           init = init_solve_iasa, 
-#'                           time = 0:8,
-#'                           alpha.owned = TRUE,
-#'                           s.range = seq(0, .4, l = 15), 
-#'                           a.range = c(0, .2), 
-#'                           alpha.range = c(0, .2),
-#'                           v.range = c(0, .1),
-#'                           method = "rk4")
+#' solve_iasa_pt <- SolveIASA(pars = dogs_iasa$pars,
+#'                            init = dogs_iasa$init,
+#'                            time = 0:15,
+#'                            alpha.owned = TRUE,
+#'                            method = 'rk4')
+# '
+#' solve_iasa_rg <- SolveIASA(pars = dogs_iasa$pars,
+#'                            init = dogs_iasa$init, 
+#'                            time = 0:10,
+#'                            alpha.owned = TRUE,
+#'                            s.range = seq(0, .4, l = 15), 
+#'                            a.range = c(0, .2), 
+#'                            alpha.range = c(0, .05),
+#'                            v.range = c(0, .1),
+#'                            method = 'rk4')
 #'
 SolveIASA <- function(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL, s.range = NULL, a.range = NULL, alpha.range = NULL, v.range = NULL, s.fm = TRUE, ...) {
   if(!setequal(names(pars), c('b1', 'b2', 'df1', 'dm1', 

@@ -1,23 +1,31 @@
-#' Cat population
+#' Cat's sample data from Pinhais, Brazil, 2017
 #'
-#' Hypothetical owned cat population.
+#' Data described and analyzed by Baquero et al., 2018.
 #'
-#' @format A data frame with 44233 observations and 15 variables:
+#' @format Data frame with 195 observations (cats) and 22 variables:
 #' \describe{
-#'   \item{track_id}{Census track ID from Santos, Brazil.}
-#'   \item{hh_id}{Household ID.}
+#'   \item{interview_id}{Interview's ID.}
+#'   \item{census_tract_id}{Census tract's ID.}
 #'   \item{name}{Cat's name.}
+#'   \item{species}{Animal's species}
 #'   \item{sex}{Cat's sex.}
-#'   \item{age}{Cat's age. An age equal to 0 means that the cat has less than 1 year.}
+#'   \item{age}{Cat's age. An age equal to 0 means that the cat had less than 1 year.}
 #'   \item{sterilized}{Cat's reproductive status.}
-#'   \item{sterilized_last_year}{For sterilized cats, indicates if the cat was sterilized in the previous 12 months.}
-#'   \item{free_roaming}{Indicates if the cat has access to the street without supervision.}
-#'   \item{acquisition}{Way of acquisition}
-#'   \item{acquired_last_year}{Indicates if the cat was acquired in the previous 12 months.}
+#'   \item{sterilized_ly}{For sterilized cats, indicates if the cat was sterilized during the last year.}
+#'   \item{go_out_on_the_street_alone}{Indicates if the cat had access to the street without supervision (free-roaming).}
+#'   \item{acquisition}{Acquisition type.}
+#'   \item{acquired_ly}{Indicates if the cat was acquired during the last year.}
 #'   \item{acquired_sterilized}{Indicates if the cat was sterilized when acquired.}
 #'   \item{acquisition_city}{City of acquisition.}
 #'   \item{acquisition_state}{State of acquisition.}
-#'   \item{turnover_last_year}{Indicates if the cat was acquired in the 12 months following the lost of another cat.}
-#'   \item{litter_size_last_year}{Litter size if the queen had the litter in the previous 12 months.}
+#'   \item{lost_animals}{Indicates if the cat was acquired during the year following the lost of another car}
+#'   \item{births_ly}{Litter size if the bitch had the litter during the last year.}
+#'   \item{name3}{Dog's name (cats not present anymore in the household).}
+#'   \item{species3}{Animal's species (animals not present anymore in the household).}
+#'   \item{sex3}{Dog's sex (cats not present anymore in the household).}
+#'   \item{age3}{Dog's age (cats not present anymore in the household). An age equal to 0 means that the dog had less than 1 year.}
+#'   \item{sterilized3}{Dog's reproductive status (cats not present anymore in the household).}
+#'   \item{fate3}{Dog's fate.}
 #' }
+#' @references Baquero, O. S., Marconcin, S., Rocha, A., & Garcia, R. D. C. M. (2018). Companion animal demography and population management in Pinhais, Brazil. Preventive Veterinary Medicine.
 "cats"

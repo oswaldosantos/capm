@@ -18,9 +18,7 @@
 #' @seealso \link[deSolve]{ode}.
 #' @export
 #' @examples 
-#' # Parameters and initial conditions from estimates   
-#' # obtained in examples section from svysumm function but
-#' # estimating a proportion insted of a total for births.
+#' # Parameters and initial conditions.
 #' pars_solve_si = c(b = 0.245, d = 0.101, 
 #'                  k = 98050, s = 0.048)
 #' init_solve_si = c(n = 89137, q = 0.198)

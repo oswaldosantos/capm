@@ -7,14 +7,16 @@
 #' @return \code{\link{data.frame}}. First column contains the selected PSU identifiers, coerced by \code{\link{as.character}}, to avoid scientific notation in case the identifiers be large numbers of \code{\link{class}} \code{\link{numeric}}. Second column contain PSU sizes, a variable needed for second stage sampling with \code{\link{SampleSystematic}}.
 #' @references Levy P and Lemeshow S (2008). Sampling of populations: methods and applications, Fourth edition. John Wiley and Sons, Inc.
 #' 
+#' Baquero, O. S., Marconcin, S., Rocha, A., & Garcia, R. D. C. M. (2018). Companion animal demography and population management in Pinhais, Brazil. Preventive Veterinary Medicine.
+#' 
 #' \url{http://oswaldosantos.github.io/capm}
 #' @seealso \code{\link{SampleSystematic}}.
 #' @export
 #' @examples 
-#' data(city)
+#' data(psu_ssu)
 #' 
 #' # Take a sample of 10 PSU.
-#' SamplePPS(psu.ssu = city[, c("track_id", "hh")], psu = 10, write = FALSE)
+#' SamplePPS(psu.ssu = psu_ssu, psu = 10, write = FALSE)
 #' 
 SamplePPS <- function (psu.ssu = NULL, psu = NULL, write = FALSE, ...) {
   psu.ssu <- as.data.frame(psu.ssu)

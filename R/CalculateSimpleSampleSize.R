@@ -17,8 +17,8 @@
 #' 
 #' # Using expected mean and standard deviation for a population
 #' # with 10000 sampling units.
-#' mean_x <- 0.98
-#' sd_x <- 1.02
+#' mean_x <- mean(pilot)
+#' sd_x <- sd(pilot)
 #' N <- 10000
 #' V <- ((N - 1) / N * sd_x^2) / mean_x^2
 #' CalculateSimpleSampleSize(x = V, N = 10000, conf.level = 0.95, error = 0.1)

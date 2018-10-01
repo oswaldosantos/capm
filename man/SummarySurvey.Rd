@@ -26,31 +26,30 @@ Wraps functions for summary statistics from survey package.
 The length of \code{variables} must be equal to the length of \code{names(design$variables)} (see examples).
 }
 \examples{
-data(city)
-data(hh)
-## Two-stage cluster design that included 65 PSU.
-data(cluster_sample)
-cluster_sample2 <- cluster_sample[complete.cases(cluster_sample), c(1:2, 8:10)]
-design <- DesignSurvey(sample = cluster_sample2,
-             psu.ssu = city[, c("track_id", "hh")],
-             psu.col = "track_id", ssu.col = "hh_id",
-             cal.col = "persons", cal.N = sum(hh$persons))
-vars <- rep("total", 3)
-cbind(names(design$variables), vars)
-SummarySurvey(design = design, variables = vars)
+data("cluster_sample")
+data("psu_ssu")
 
-## Systematic sampling
-data(sys_sample)
-sys_sample2 <- sys_sample[complete.cases(sys_sample), 7:9]
-design <- DesignSurvey(sample = sys_sample2, N = sum(city$hh),
-                       cal.col = "persons", cal.N = sum(hh$persons))
-vars <- rep("total", 3)
-cbind(names(design$variables), vars)
-#SummarySurvey(design = design, variables = vars)
+## Calibrated two-stage cluster design
+cs <- cluster_sample[ , c("interview_id",
+                          "census_tract_id",
+                          "number_of_persons",
+                          "number_of_dogs",
+                          "number_of_cats")]
+
+design <- DesignSurvey(na.omit(cs),
+                       psu.ssu = psu_ssu,
+                       psu.col = "census_tract_id",
+                       ssu.col = "interview_id",
+                       cal.col = "number_of_persons",
+                       cal.N = 129445)
+
+SummarySurvey(design, c("total", "total", "total"))
 
 }
 \references{
 Lumley, T. (2011). Complex surveys: A guide to analysis using R (Vol. 565). Wiley.
+
+Baquero, O. S., Akamine, L. A., Amaku, M., & Ferreira, F. (2016). Defining priorities for dog population management through mathematical modeling. Preventive veterinary medicine, 123, 121-127.
 
 \url{http://oswaldosantos.github.io/capm}
 }

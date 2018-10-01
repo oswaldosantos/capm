@@ -25,9 +25,14 @@ PlotHHxSpecies(dat = NULL, species = NULL, proportion = TRUE,
 Dodged bar plot of the distribution of households according to the number of inhabitants of one or more species.
 }
 \examples{
-data(hh)
-PlotHHxSpecies(hh, c("persons", "dogs", "cats"))
+data(cluster_sample)
+PlotHHxSpecies(cluster_sample, c("number_of_persons",
+                                 "number_of_dogs",
+                                 "number_of_cats"))
 
+}
+\references{
+Baquero, O. S., Marconcin, S., Rocha, A., & Garcia, R. D. C. M. (2018). Companion animal demography and population management in Pinhais, Brazil. Preventive Veterinary Medicine.
 }
 \seealso{
 \link[ggplot2]{geom_bar}.

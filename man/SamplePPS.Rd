@@ -22,14 +22,16 @@ SamplePPS(psu.ssu = NULL, psu = NULL, write = FALSE, ...)
 Select Primary Sampling Units (PSU) with probability proportional to size and with replacement.
 }
 \examples{
-data(city)
+data(psu_ssu)
 
 # Take a sample of 10 PSU.
-SamplePPS(psu.ssu = city[, c("track_id", "hh")], psu = 10, write = FALSE)
+SamplePPS(psu.ssu = psu_ssu, psu = 10, write = FALSE)
 
 }
 \references{
 Levy P and Lemeshow S (2008). Sampling of populations: methods and applications, Fourth edition. John Wiley and Sons, Inc.
+
+Baquero, O. S., Marconcin, S., Rocha, A., & Garcia, R. D. C. M. (2018). Companion animal demography and population management in Pinhais, Brazil. Preventive Veterinary Medicine.
 
 \url{http://oswaldosantos.github.io/capm}
 }
