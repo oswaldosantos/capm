@@ -3,10 +3,10 @@
 #' \tabular{ll}{
 #' Package: \tab capm\cr
 #' Type: \tab Package\cr
-#' Version: \tab 0.12.15\cr
+#' Version: \tab 0.13.0\cr
 #' Date: \tab 2018-01-10\cr
 #' Depends: \tab R (>= 3.4.1)\cr
-#' Imports: \tab deSolve, FME, survey, dplyr, tidyr, ggplot2, shiny, grid\cr
+#' Imports: \tab deSolve, FME, survey, dplyr, tidyr, magrittr, ggplot2, grid, stats, utils, sf\cr
 #' License: \tab GPL (>= 2)\cr
 #' LazyLoad: \tab yes\cr
 #' URL: \tab \url{http://oswaldosantos.github.io/capm}\cr
@@ -19,7 +19,7 @@
 #' @docType package
 #' @title The capm Package
 #' @keywords package
-#' @import ggplot2 shiny
+#' @import ggplot2
 #' @importFrom survey svydesign calibrate svytotal svymean SE deff cv
 #' @importFrom deSolve ode
 #' @importFrom FME sensFun sensRange
