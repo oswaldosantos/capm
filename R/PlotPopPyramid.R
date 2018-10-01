@@ -25,21 +25,47 @@
 #'  
 #' @note In companion animals population surveys, some age categories might be empty. One difference between \code{PlotPopPyramid} and \code{pryramid.plot} is that the first does not drop empty age categories.
 #' @return Two opposed horizontal barplots.
-#' @references \url{http://oswaldosantos.github.io/capm}
+#' @references Baquero, O. S., Marconcin, S., Rocha, A., & Garcia, R. D. C. M. (2018). Companion animal demography and population management in Pinhais, Brazil. Preventive Veterinary Medicine.
+#' 
+#' \url{http://oswaldosantos.github.io/capm}
 #' @export
 #' @examples 
-#' data(cluster_sample_animals)
-#' dogs <- cluster_sample_animals[complete.cases(cluster_sample_animals), ]
-#' dogs <- dogs[dogs$species == "dog", ]
+#' data(dogs)
+#' 
 #' PlotPopPyramid(dogs,
 #'                age.col = "age",
 #'                sex.col = "sex",
 #'                str.col = "sterilized")
+#'
 #' PlotPopPyramid(dogs,
 #'                age.col = "age",
 #'                sex.col = "sex")
-#'
+#' 
+#' ## Merge age categories
+#' pp_age <- cut(c(dogs$age, dogs$age3),
+#'                breaks = c(0, 1, 3, 5, 7, 9, 11, 13, 15,
+#'                           max(c(dogs$age, dogs$age3), na.rm = TRUE)),
+#'                labels = c("<1", "1-3", "3-5", "5-7", "7-9",
+#'                           "9-11", "11-13", "13-15", ">15"),
+#'                include.lowest = TRUE)
+#' pp_sex <- c(dogs$sex, dogs$sex3)
+#' pp_ster <- c(dogs$sterilized, dogs$sterilized3)
+#' pp <- data.frame(age = pp_age, sex = pp_sex, sterilized = pp_ster)
+#' 
+#' PlotPopPyramid(pp,
+#'               age.col = "age",
+#'               sex.col = "sex",
+#'               str.col = "sterilized")
+#' 
+#' PlotPopPyramid(pp,
+#'               age.col = "age",
+#'               sex.col = "sex")
+#' 
 PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col = NULL, str.tip = NULL, x.label = "Count", stage.label = "Years", legend.label = "Sterilized", inner.color = "LightBlue", outer.color = "DarkRed", label.size = 13) {
+  
+  # Workaround to the "no visible binding for global variable" note.
+  sex <- age <- ster <- ..count.. <- NULL
+  
   if (is.character(age.col)) {
     age.col <- which(names(dat) == age.col)
   }
@@ -52,9 +78,12 @@ PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col
     if (!is.null(str.tip)) {
       dat$ster <- relevel(factor(dat$ster), str.tip)
     }
+    dat <- dat[!is.na(dat$ster), ]
   }
   names(dat)[age.col] <- "age"
   names(dat)[sex.col] <- "sex"
+  
+  dat <- dat[!is.na(dat$age) & !is.na(dat$sex), ]
   
   n_sex <- dat %>%
     group_by(sex) %>%
@@ -84,27 +113,53 @@ PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col
       theme_minimal() +
       theme(legend.position = "none")
   }
-  gg_base +
-    geom_bar(data = subset(dat, sex == sort(unique(dat$sex))[1])) +
-    geom_bar(data = subset(dat, sex == sort(unique(dat$sex))[2]),
-             aes(y = ..count.. * (-1))) + 
-    scale_y_continuous(name = x.label,
-                       breaks = count_ticks,
-                       labels = abs(count_ticks),
-                       limits = c(-n_sex_age, n_sex_age)) +
-    scale_x_continuous(name = stage.label,
-                       breaks = unique(dat$age)) +
-    geom_hline(yintercept = 0, color = "gray") +
-    theme(plot.margin = unit(c(0.5, 1, 0.5, 0.5), "lines"), 
-          axis.ticks.length = unit(0, "lines"),
-          axis.text.y = element_text(size = label.size),
-          axis.title.y = element_text(size = label.size),
-          axis.text.x = element_text(size = label.size),
-          axis.title.x = element_text(size = label.size),
-          panel.grid.minor.y = element_blank()) +
-    annotate("text",
-             x = rev(sort(unique(dat$age)))[1],
-             y = count_ticks[c(3, 9)],
-             label = paste(sort(unique(dat$sex)), "(total) =", n_sex$n)) +
-    coord_flip()
+  if(is.numeric(dat$age)) {
+    res <- gg_base +
+      geom_bar(data = subset(dat, sex == sort(unique(dat$sex))[1])) +
+      geom_bar(data = subset(dat, sex == sort(unique(dat$sex))[2]),
+               aes(y = ..count.. * (-1))) + 
+      scale_y_continuous(name = x.label,
+                         breaks = count_ticks,
+                         labels = abs(count_ticks),
+                         limits = c(-n_sex_age, n_sex_age)) +
+      scale_x_continuous(name = stage.label,
+                         breaks = unique(dat$age)) +
+      geom_hline(yintercept = 0, color = "gray") +
+      theme(plot.margin = unit(c(0.5, 1, 0.5, 0.5), "lines"), 
+            axis.ticks.length = unit(0, "lines"),
+            axis.text.y = element_text(size = label.size),
+            axis.title.y = element_text(size = label.size),
+            axis.text.x = element_text(size = label.size),
+            axis.title.x = element_text(size = label.size),
+            panel.grid.minor.y = element_blank()) +
+      annotate("text",
+               x = rev(sort(unique(dat$age)))[1],
+               y = count_ticks[c(3, 9)],
+               label = paste(sort(unique(dat$sex)), "(total) =", n_sex$n)) +
+      coord_flip()
+  } else {
+    res <- gg_base +
+      geom_bar(data = subset(dat, sex == sort(unique(dat$sex))[1])) +
+      geom_bar(data = subset(dat, sex == sort(unique(dat$sex))[2]),
+               aes(y = ..count.. * (-1))) + 
+      scale_y_continuous(name = x.label,
+                         breaks = count_ticks,
+                         labels = abs(count_ticks),
+                         limits = c(-n_sex_age, n_sex_age)) +
+      scale_x_discrete(name = stage.label) +
+      geom_hline(yintercept = 0, color = "gray") +
+      theme(plot.margin = unit(c(0.5, 1, 0.5, 0.5), "lines"), 
+            axis.ticks.length = unit(0, "lines"),
+            axis.text.y = element_text(size = label.size),
+            axis.title.y = element_text(size = label.size),
+            axis.text.x = element_text(size = label.size),
+            axis.title.x = element_text(size = label.size),
+            panel.grid.minor.y = element_blank()) +
+      annotate("text",
+               x = rev(sort(unique(dat$age)))[1],
+               y = count_ticks[c(3, 9)],
+               label = paste(sort(unique(dat$sex)), "(total) =", n_sex$n)) +
+      coord_flip()
+  }
+  return(res)
 }

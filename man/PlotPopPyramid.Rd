@@ -55,18 +55,40 @@ Other details of the plot can be modifyed using appropriate functions from \code
 In companion animals population surveys, some age categories might be empty. One difference between \code{PlotPopPyramid} and \code{pryramid.plot} is that the first does not drop empty age categories.
 }
 \examples{
-data(cluster_sample_animals)
-dogs <- cluster_sample_animals[complete.cases(cluster_sample_animals), ]
-dogs <- dogs[dogs$species == "dog", ]
+data(dogs)
+
 PlotPopPyramid(dogs,
                age.col = "age",
                sex.col = "sex",
                str.col = "sterilized")
+
 PlotPopPyramid(dogs,
                age.col = "age",
                sex.col = "sex")
 
+## Merge age categories
+pp_age <- cut(c(dogs$age, dogs$age3),
+               breaks = c(0, 1, 3, 5, 7, 9, 11, 13, 15,
+                          max(c(dogs$age, dogs$age3), na.rm = TRUE)),
+               labels = c("<1", "1-3", "3-5", "5-7", "7-9",
+                          "9-11", "11-13", "13-15", ">15"),
+               include.lowest = TRUE)
+pp_sex <- c(dogs$sex, dogs$sex3)
+pp_ster <- c(dogs$sterilized, dogs$sterilized3)
+pp <- data.frame(age = pp_age, sex = pp_sex, sterilized = pp_ster)
+
+PlotPopPyramid(pp,
+              age.col = "age",
+              sex.col = "sex",
+              str.col = "sterilized")
+
+PlotPopPyramid(pp,
+              age.col = "age",
+              sex.col = "sex")
+
 }
 \references{
+Baquero, O. S., Marconcin, S., Rocha, A., & Garcia, R. D. C. M. (2018). Companion animal demography and population management in Pinhais, Brazil. Preventive Veterinary Medicine.
+
 \url{http://oswaldosantos.github.io/capm}
 }
