@@ -1,26 +1,31 @@
+capm 0.13.5
+===========
+
+* Remove shiny from imports.
+
 capm 0.13.4
-============
+===========
 
 * Updated examples.
 
 capm 0.13.3
-============
+===========
 
 * PlotPopPyramid: support for ages in a character or factor vector.
 
 
 capm 0.13.2
-============
+===========
 
 * FreqTab: bug fix to deal with NAs.
 
 capm 0.13.1
-============
+===========
 
 * Calculate2StageSampleSize: deprecated.
 
 capm 0.13.0
-============
+===========
 
 * GraphicInterface: removed.
 

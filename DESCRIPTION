@@ -8,14 +8,12 @@ Imports:
     FME,
     survey,
     ggplot2,
-    shiny,
     dplyr,
     tidyr,
     magrittr,
     grid,
     stats,
     circlize,
-    shiny,
     utils,
     sf
 Description: Quantitative analysis to support companion animal population
@@ -37,6 +35,6 @@ Authors@R: c(person(given='Oswaldo', family='Santos Baquero',
     email='amaku@vps.fmvz.usp.br', role="ctb"),
     person(given='Fernando', family='Ferreira',
     email='fernando@vps.fmvz.usp.br', role="ctb"))
-Version: 0.13.4
-Date: 2018-01-10
+Version: 0.13.5
+Date: 2018-10-02
 RoxygenNote: 6.0.1
