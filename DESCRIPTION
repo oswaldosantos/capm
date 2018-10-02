@@ -20,12 +20,15 @@ Description: Quantitative analysis to support companion animal population
     management. Some functions assist survey sampling tasks (calculate sample 
     size for simple and complex designs, select sampling units and estimate 
     population parameters) while others assist the modelling of population 
-    dynamics. For sampling methods see: "Levy PS & Lemeshow S"" (2013), 
-    "ISBN-10: 0470040076"; "Lumley" (2010), "ISBN: 978-0-470-28430-8". For 
-    modelling of population dynamics see: "Baquero et al" (2016) 
-    <https://doi.org/10.1016/j.prevetmed.2015.11.009>, "Baquero et al" (2016), 
-    "ISSN 1679-9216", "Amaku et al" (2010) 
-    <http://dx.doi.org/10.1590/S1020-49892009000400003>.
+    dynamics. For demographic characterizations and population management 
+    evaluations see: Baquero, O. S., Marconcin, S., Rocha, A., & 
+    Garcia, R. D. C. M. (2018). Companion animal demography and population 
+    management in Pinhais, Brazil. Preventive veterinary medicine, 158, 169-177.
+    <https://doi.org/10.1016/j.prevetmed.2018.07.006>. For modelling of 
+    population dynamics see: "Baquero et al" (2016) 
+    <https://doi.org/10.1016/j.prevetmed.2015.11.009>. For sampling methods
+    see: "Levy PS & Lemeshow S"" (2013), "ISBN-10: 0470040076"; 
+    "Lumley" (2010), "ISBN: 978-0-470-28430-8".
 License: GPL (>= 2)
 LazyLoad: yes
 URL: http://oswaldosantos.github.io/capm
