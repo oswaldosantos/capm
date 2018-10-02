@@ -2,7 +2,7 @@ Package: capm
 Type: Package
 Title: Companion Animal Population Management
 Depends:
-    R (>= 3.4.1)
+    R (>= 3.4)
 Imports:
     deSolve,
     FME,
@@ -22,9 +22,9 @@ Description: Quantitative analysis to support companion animal population
     population parameters) while others assist the modelling of population 
     dynamics. For demographic characterizations and population management 
     evaluations see: "Baquero, et al." (2018) ,
-    <https://doi.org/10.1016/j.prevetmed.2018.07.006>. For modelling of 
+    <doi:10.1016/j.prevetmed.2018.07.006>. For modelling of 
     population dynamics see: "Baquero et al." (2016),
-    <https://doi.org/10.1016/j.prevetmed.2015.11.009>. For sampling methods
+    <doi:10.1016/j.prevetmed.2015.11.009>. For sampling methods
     see: "Levy PS & Lemeshow S" (2013), "ISBN-10: 0470040076"; 
     "Lumley" (2010), "ISBN: 978-0-470-28430-8".
 License: GPL (>= 2)
