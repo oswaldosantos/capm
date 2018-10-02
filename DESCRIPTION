@@ -21,13 +21,11 @@ Description: Quantitative analysis to support companion animal population
     size for simple and complex designs, select sampling units and estimate 
     population parameters) while others assist the modelling of population 
     dynamics. For demographic characterizations and population management 
-    evaluations see: Baquero, O. S., Marconcin, S., Rocha, A., & 
-    Garcia, R. D. C. M. (2018). Companion animal demography and population 
-    management in Pinhais, Brazil. Preventive veterinary medicine, 158, 169-177.
+    evaluations see: "Baquero, et al." (2018) ,
     <https://doi.org/10.1016/j.prevetmed.2018.07.006>. For modelling of 
-    population dynamics see: "Baquero et al" (2016) 
+    population dynamics see: "Baquero et al." (2016),
     <https://doi.org/10.1016/j.prevetmed.2015.11.009>. For sampling methods
-    see: "Levy PS & Lemeshow S"" (2013), "ISBN-10: 0470040076"; 
+    see: "Levy PS & Lemeshow S" (2013), "ISBN-10: 0470040076"; 
     "Lumley" (2010), "ISBN: 978-0-470-28430-8".
 License: GPL (>= 2)
 LazyLoad: yes
@@ -35,9 +33,9 @@ URL: http://oswaldosantos.github.io/capm
 Authors@R: c(person(given='Oswaldo', family='Santos Baquero',
     email='baquero@usp.br', role=c("aut", "cre")),
     person(given='Marcos', family='Amaku',
-    email='amaku@vps.fmvz.usp.br', role="ctb"),
+    email='amaku@usp.br', role="ctb"),
     person(given='Fernando', family='Ferreira',
-    email='fernando@vps.fmvz.usp.br', role="ctb"))
+    email='fferreir@usp.br', role="ctb"))
 Version: 0.13.5
 Date: 2018-10-02
 RoxygenNote: 6.0.1
