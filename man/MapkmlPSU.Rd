@@ -9,7 +9,7 @@ MapkmlPSU(shape = NULL, psu = NULL, id = NULL)
 \arguments{
 \item{shape}{string with the path of a polygon shapefile or an object of \code{\link{class}} \link[sf]{sf} (see examples).}
 
-\item{psu}{the values to be matched.}
+\item{psu}{polygons to subset.}
 
 \item{id}{column of the *.dbf file with the values to be matched against.}
 }
@@ -17,7 +17,7 @@ MapkmlPSU(shape = NULL, psu = NULL, id = NULL)
 *.kml files of the subsetted polygons.
 }
 \description{
-Subset polygons acording to the matches between a vector and a specified column from a \link[sp]{SpatialPolygonsDataFrame}.
+Subset the polygons specified in \code{psu} and creates *.kml files of theses polygons.
 }
 \details{
 If there are *.kml files in the working directory, the new created files will overwrite it in case of name matching.

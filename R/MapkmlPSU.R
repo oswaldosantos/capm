@@ -1,7 +1,7 @@
 #' Creates *.kml files of a subset of polygons from a polygon shapefile
-#' @description Subset polygons acording to the matches between a vector and a specified column from a \link[sp]{SpatialPolygonsDataFrame}.
+#' @description Subset the polygons specified in \code{psu} and creates *.kml files of theses polygons.
 #' @param shape string with the path of a polygon shapefile or an object of \code{\link{class}} \link[sf]{sf} (see examples).
-#' @param psu the values to be matched.
+#' @param psu polygons to subset.
 #' @param id column of the *.dbf file with the values to be matched against.
 #' @return *.kml files of the subsetted polygons.
 #' @details If there are *.kml files in the working directory, the new created files will overwrite it in case of name matching.
