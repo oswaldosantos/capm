@@ -3,7 +3,8 @@
 #' @param pars a named \code{\link{vector}} of length 21, with point estimates of model parameters (see details).
 #' @param init a named \code{\link{vector}} of length 8, with point estimates of model parameters (see details).
 #' @param time time sequence for which output is wanted; the first value of times must be the initial time.
-#' @param alpha.owned \code{\link{logical}}. If \code{TRUE}, adoption rate is relative to the owned population (proportion of the owned population). If \code{FALSE}, it is relative to the unowned population.
+#' @param alpha.owned \code{\link{logical}}. If \code{TRUE} (default), adoption rate is relative to the owned population (proportion of the owned population). If \code{FALSE}, it is relative to the unowned population.
+#' @param immigration.reference \code{\link{character}} indicating the value of reference to calculate the immigration rate. If \code{"N1"} (default), the total of immigrants is the product of the owned population size times the immigration rate (N1 \* v). If \code{k1}, it is the product of the owned carrying capacity times the immigration rate (k1 \* v).
 #' @param s.range optional sequence (between 0 and 1) of the sterilization rates to be simulated.
 #' @param a.range optional \code{\link{vector}} of length 2, with range (ie, confidence interval) of abandonment rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.
 #' @param alpha.range optional \code{\link{vector}} of length 2, with range (ie, confidence interval) of adoption rates to be assessed. If given, the rates evaluated are those specified by the argument plus the point estimate given in \code{pars}.
@@ -42,7 +43,9 @@
 #' @return \code{\link{list}}. The first element, \code{name}, is a string with the name of the function, the second element, \code{model}, is the model function. The third, fourth and fifth elements are vectors (\code{pars}, \code{init}, \code{time}, respectively) containing the \code{pars}, \code{init} and \code{time} arguments of the function. The sixth element \code{results} is a \code{\link{data.frame}} with up to as many rows as elements in time. The first column contain the time and subsequent columns contain the size of specific subpopulations, named according to conventions above. The \code{group} column differentiate between owned and unowned. When *.range arguments are given, the last fourth columsn specify their instances.
 #' @note Logistic growth models are not intended for scenarios in which
 #' population size is greater than carrying capacity and growth rate is negative.
-#' @references Baquero, O. S., Akamine, L. A., Amaku, M., & Ferreira, F. (2016). Defining priorities for dog population management through mathematical modeling. Preventive veterinary medicine, 123, 121-127.
+#' @references Baquero, O. S., Marconcin, S., Rocha, A., & Garcia, R. D. C. M. (2018). Companion animal demography and population management in Pinhais, Brazil. Preventive Veterinary Medicine.
+
+#' Baquero, O. S., Akamine, L. A., Amaku, M., & Ferreira, F. (2016). Defining priorities for dog population management through mathematical modeling. Preventive veterinary medicine, 123, 121-127.
 #' 
 #' \url{http://oswaldosantos.github.io/capm}
 #' @seealso \link[deSolve]{ode}.
@@ -71,7 +74,7 @@
 #'                            v.range = c(0, .1),
 #'                            method = 'rk4')
 #'
-SolveIASA <- function(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL, s.range = NULL, a.range = NULL, alpha.range = NULL, v.range = NULL, s.fm = TRUE, ...) {
+SolveIASA <- function(pars = NULL, init = NULL, time = NULL, alpha.owned = TRUE, immigration.reference = "N1", s.range = NULL, a.range = NULL, alpha.range = NULL, v.range = NULL, s.fm = TRUE, ...) {
   if(!setequal(names(pars), c('b1', 'b2', 'df1', 'dm1', 
                               'df2', 'dm2', 'sf1', 'sf2', 
                               'sm1', 'sm2', 'k1', 'k2', 'h1',
@@ -81,9 +84,6 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
   if(!setequal(names(init), c('f1', 'fs1', 'm1', 'ms1',
                               'f2', 'fs2', 'm2', 'ms2'))) {
     stop('Values in init must have the following names:\nf1, fs1, m1, ms1, f2, fs2, m2, ms2')
-  }
-  if (is.null(alpha.owned)) {
-    stop("alpha.owned must be TRUE or FALSE")
   }
   init['n1'] <- sum(init[c('f1', 'm1')])
   init['ns1'] <- sum(init[c('fs1', 'ms1')])
@@ -114,16 +114,22 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
           wf1 <- (x1 * m1) / (m1 + f1 * h1 ^ (-1))
           w.f1 <- wf1 - (wf1 - df1) * (omega1 / k1)
           c.f1 <- df1
-          q <- N1 * v * (1 - z) / 2
-          qs <- N1 * v * z / 2
+          
+          if (immigration.reference == "N1") {
+            q <- N1 * v * (1 - z) / 2
+            qs <- N1 * v * z / 2
+          }
+          if (immigration.reference == "k1") {
+            q <- k1 * v * (1 - z) / 2
+            qs <- k1 * v * z / 2
+          }
+          
           
           d.f1 <- (w.f1 - c.f1 - sf1 - a) * f1 +
             (alpha * f1 + q) * (1 - (omega1/k1))
-          if (d.f1 < 0) {d.f1 <- 0}
           
           d.fs1 <- -(c.f1 + a) * fs1 + sf1 * f1 +
             (alpha * fs1 + qs) * (1 - (omega1/k1))
-          if (d.fs1 < 0) {d.fs1 <- 0}
           
           wm1 <- (x1 * f1) / (m1 + f1 * h1 ^ (-1))
           w.m1 <- wm1 - (wm1 - dm1) * (omega1 / k1)
@@ -131,34 +137,28 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
           
           d.m1 <- (w.m1 - c.m1 - sm1 - a) * m1 +
             (alpha * m1 + q) * (1 - (omega1/k1))
-          if (d.m1 < 0) {d.m1 <- 0}
           
           d.ms1 <- -(c.m1 + a) * ms1 + sm1 * m1 + 
             (alpha * ms1 + qs) * (1 - (omega1/k1))
-          if (d.ms1 < 0) {d.ms1 <- 0}
           
           x2 <- (b2 * (h2 * m2 + f2)) / (2 * h2 * f2 * m2)
           w.f2 <- (m2 * x2) /  (m2 + f2 * h2 ^ (-1))
           c.f2 <- df2 + (w.f2 - df2) * (omega2 / k2)
           
-          d.f2 <- (w.f2 - c.f2 - sf2 - alpha) * f2 +
+          d.f2 <- (w.f2 - c.f2 - sf2) * f2 - alpha * f1 +
             a * f1 * (1 - (omega2 / k2))
-          if (d.f2 < 0) {d.f2 <- 0}
           
-          d.fs2 <- - (c.f2 + alpha) * fs2 + sf2 * f2 +
+          d.fs2 <- - c.f2 * fs2 - alpha * fs1 + sf2 * f2 +
             a * fs1 * (1 - (omega2 / k2))
-          if (d.fs2 < 0) {d.fs2 <- 0}
           
           w.m2 <- (f2 * x2) / (m2 + f2 * h2 ^ (-1))
           c.m2 <- dm2 + (w.m2 - dm2) * (omega2 / k2)
           
-          d.m2 <- (w.m2 - c.m2 - sm2 - alpha) * m2 +
+          d.m2 <- (w.m2 - c.m2 - sm2) * m2 - alpha * m1 +
             a * m1 * (1 - (omega2 / k2))
-          if (d.m2 < 0) {d.m2 <- 0}
           
-          d.ms2 <- - (c.m2 + alpha) * ms2 + sm2 * m2 +
+          d.ms2 <- - c.m2 * ms2 - alpha * ms1 + sm2 * m2 +
             a * ms1 * (1 - (omega2 / k2))
-          if (d.ms2 < 0) {d.ms2 <- 0}
           
           d.n1 <- d.f1 + d.m1
           d.ns1 <- d.fs1 + d.ms1
@@ -211,16 +211,21 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
           wf1 <- (x1 * m1) / (m1 + f1 * h1 ^ (-1))
           w.f1 <- wf1 - (wf1 - df1) * (omega1 / k1)
           c.f1 <- df1
-          q <- N1 * v * (1 - z) / 2
-          qs <- N1 * v * z / 2
+          
+          if (immigration.reference == "N1") {
+            q <- N1 * v * (1 - z) / 2
+            qs <- N1 * v * z / 2
+          }
+          if (immigration.reference == "k1") {
+            q <- k1 * v * (1 - z) / 2
+            qs <- k1 * v * z / 2
+          }
           
           d.f1 <- (w.f1 - c.f1 - sf1 - a) * f1 +
             (alpha * f2 + q) * (1 - (omega1 / k1))
-          if (d.f1 < 0) {d.f1 <- 0}
           
           d.fs1 <- - (c.f1 + a) * fs1 + sf1 * f1 + 
             (alpha * fs2 + qs) * (1 - (omega1 / k1))
-          if (d.fs1 < 0) {d.fs1 <- 0}
           
           wm1 <- (x1 * f1) / (m1 + f1 * h1 ^ (-1))
           w.m1 <- wm1 - (wm1 - dm1) * (omega1 / k1)
@@ -228,11 +233,9 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
           
           d.m1 <- (w.m1 - c.m1 - sm1 - a) * m1 +
             (alpha * m2 + q) * (1 - (omega1 / k1))
-          if (d.m1 < 0) {d.m1 <- 0}
           
           d.ms1 <- - (c.m1 + a) * ms1 + sm1 * m1 + 
             (alpha * ms2 + qs) * (1 - (omega1 / k1))
-          if (d.ms1 < 0) {d.ms1 <- 0}
           
           x2 <- (b2 * (h2 * m2 + f2)) / (2 * h2 * f2 * m2)
           w.f2 <- (m2 * x2) /  (m2 + f2 * h2 ^ (-1))
@@ -240,22 +243,18 @@ SolveIASA <- function(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
           
           d.f2 <- (w.f2 - c.f2 - sf2 - alpha) * f2 +
             a * f1 * (1 - (omega2 / k2))
-          if (d.f2 < 0) {d.f2 <- 0}
           
           d.fs2 <- - (c.f2 + alpha) * fs2 + sf2 * f2 +
             a * fs1 * (1 - (omega2 / k2))
-          if (d.fs2 < 0) {d.fs2 <- 0}
           
           w.m2 <- (f2 * x2) / (m2 + f2 * h2 ^ (-1))
           c.m2 <- dm2 + (w.m2 - dm2) * (omega2 / k2)
           
           d.m2 <- (w.m2 - c.m2 - sm2 - alpha) * m2 +
             a * m1 * (1 - (omega2 / k2))
-          if (d.m2 < 0) {d.m2 <- 0}
           
           d.ms2 <- - (c.m2 + alpha) * ms2 + sm2 * m2 +
             a * ms1 * (1 - (omega2 / k2))
-          if (d.ms2 < 0) {d.ms2 <- 0}
           
           d.n1 <- d.f1 + d.m1
           d.ns1 <- d.fs1 + d.ms1

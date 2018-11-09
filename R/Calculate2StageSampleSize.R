@@ -17,6 +17,7 @@
 #' Baquero, O. S., Marconcin, S., Rocha, A., & Garcia, R. D. C. M. (2018). Companion animal demography and population management in Pinhais, Brazil. Preventive Veterinary Medicine.
 #' 
 #' Levy P and Lemeshow S (2008). Sampling of populations: methods and applications, Fourth edition. John Wiley and Sons, Inc.
+#' 
 #' \url{http://oswaldosantos.github.io/capm}
 #' @export
 Calculate2StageSampleSize <- function(psu.ssu = NULL, psu.x = NULL, conf.level = .95, error = 0.1, cost = 4, minimum.ssu = 15) {

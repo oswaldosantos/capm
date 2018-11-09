@@ -25,21 +25,21 @@
 #' data(dogs)
 #' dogs_iasa <- GetDataIASA(dogs,
 #'                         destination.label = "Pinhais",
-#'                         total.estimate = 50444)#' 
+#'                         total.estimate = 50444)
 
 #' # Solve for point estimates.
 #' solve_iasa_pt <- SolveIASA(pars = dogs_iasa$pars,
 #'                          init = dogs_iasa$init,
 #'                          time = 0:15,
 #'                          alpha.owned = TRUE,
-#'                          method = 'rk4')#' 
+#'                          method = 'rk4')
 
 #' ## Calculate local sensitivities to all parameters.
 #' local_solve_iasa2 <- CalculateLocalSens(
-#'  model.out = solve_iasa_pt, sensv = "n2")#' 
+#'  model.out = solve_iasa_pt, sensv = "n2")
 
 #' ## Plot local sensitivities
-#' PlotLocalSens(local_solve_iasa2)#' 
+#' PlotLocalSens(local_solve_iasa2)
 #' 
 PlotLocalSens <- function (local.out = NULL, x.sens = "Time", y.sens = "Sensitivity", y.ind = c("L1", "L2", "Mean", "Min", "Max"), bar.colors = "DarkRed", label.size = 10, x.axis.angle = 90, type = 1) {
   if (length(y.ind) != 5) {

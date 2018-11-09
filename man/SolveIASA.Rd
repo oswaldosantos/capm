@@ -4,9 +4,9 @@
 \alias{SolveIASA}
 \title{Modelling of immigration, abandonment, sterilization and adoption of companion animals}
 \usage{
-SolveIASA(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
-  s.range = NULL, a.range = NULL, alpha.range = NULL, v.range = NULL,
-  s.fm = TRUE, ...)
+SolveIASA(pars = NULL, init = NULL, time = NULL, alpha.owned = TRUE,
+  immigration.reference = "N1", s.range = NULL, a.range = NULL,
+  alpha.range = NULL, v.range = NULL, s.fm = TRUE, ...)
 }
 \arguments{
 \item{pars}{a named \code{\link{vector}} of length 21, with point estimates of model parameters (see details).}
@@ -15,7 +15,9 @@ SolveIASA(pars = NULL, init = NULL, time = NULL, alpha.owned = NULL,
 
 \item{time}{time sequence for which output is wanted; the first value of times must be the initial time.}
 
-\item{alpha.owned}{\code{\link{logical}}. If \code{TRUE}, adoption rate is relative to the owned population (proportion of the owned population). If \code{FALSE}, it is relative to the unowned population.}
+\item{alpha.owned}{\code{\link{logical}}. If \code{TRUE} (default), adoption rate is relative to the owned population (proportion of the owned population). If \code{FALSE}, it is relative to the unowned population.}
+
+\item{immigration.reference}{\code{\link{character}} indicating the value of reference to calculate the immigration rate. If \code{"N1"} (default), the total of immigrants is the product of the owned population size times the immigration rate (N1 \* v). If \code{k1}, it is the product of the owned carrying capacity times the immigration rate (k1 \* v).}
 
 \item{s.range}{optional sequence (between 0 and 1) of the sterilization rates to be simulated.}
 
@@ -95,6 +97,7 @@ solve_iasa_rg <- SolveIASA(pars = dogs_iasa$pars,
 
 }
 \references{
+Baquero, O. S., Marconcin, S., Rocha, A., & Garcia, R. D. C. M. (2018). Companion animal demography and population management in Pinhais, Brazil. Preventive Veterinary Medicine.
 Baquero, O. S., Akamine, L. A., Amaku, M., & Ferreira, F. (2016). Defining priorities for dog population management through mathematical modeling. Preventive veterinary medicine, 123, 121-127.
 
 \url{http://oswaldosantos.github.io/capm}
