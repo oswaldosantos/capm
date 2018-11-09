@@ -1,3 +1,8 @@
+capm 0.13.6
+===========
+
+# SolveIASA: bug fixed, new argument immigration.reference, and new default for alpha.owned.
+
 capm 0.13.5
 ===========
 
