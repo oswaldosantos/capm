@@ -31,7 +31,7 @@ PlotImmigrationFlow <- function(data = NULL, source = NULL, destination = NULL, 
   
   sources <- FreqTab(data, source)
   names(sources)[which(names(sources) == source)] <- "source"
-  sources[sources$source != destination, 1][-(2:n.sources), 1] <-
+  sources[sources$source != destination, 1][-(1:(n.sources - 1)), 1] <-
     paste0(agg.sources.prefix, nrow(sources) - n.sources, agg.sources.suffix)
   sources <- sources %>%
     group_by(source) %>%
