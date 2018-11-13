@@ -1,3 +1,9 @@
+capm 0.13.7
+===========
+
+# PlotImmigrationFlow: bug fixed to properly select the first sources of immigration.
+
+
 capm 0.13.6
 ===========
 

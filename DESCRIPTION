@@ -36,6 +36,6 @@ Authors@R: c(person(given='Oswaldo', family='Santos Baquero',
     email='amaku@usp.br', role="ctb"),
     person(given='Fernando', family='Ferreira',
     email='fferreir@usp.br', role="ctb"))
-Version: 0.13.6
-Date: 2018-11-09
+Version: 0.13.7
+Date: 2018-11-13
 RoxygenNote: 6.0.1
