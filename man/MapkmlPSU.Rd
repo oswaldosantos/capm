@@ -4,7 +4,7 @@
 \alias{MapkmlPSU}
 \title{Creates *.kml files of a subset of polygons from a polygon shapefile}
 \usage{
-MapkmlPSU(shape = NULL, psu = NULL, id = NULL)
+MapkmlPSU(shape = NULL, psu = NULL, id = NULL, path = "./psu_maps/")
 }
 \arguments{
 \item{shape}{string with the path of a polygon shapefile or an object of \code{\link{class}} \link[sf]{sf} (see examples).}
@@ -12,6 +12,8 @@ MapkmlPSU(shape = NULL, psu = NULL, id = NULL)
 \item{psu}{polygons to subset.}
 
 \item{id}{column of the *.dbf file with the values to be matched against.}
+
+\item{path}{\code{\link{class}} character with the path in which maps will be saved. If the path already exists, it will be overwrited.}
 }
 \value{
 *.kml files of the subsetted polygons.
