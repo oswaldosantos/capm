@@ -1,8 +1,17 @@
+capm 0.13.9
+===========
+
+# MapkmlPSU: bug fixed in the argument "path".
+
+capm 0.13.8
+===========
+
+# MapkmlPSU: new argument "path".
+
 capm 0.13.7
 ===========
 
 # PlotImmigrationFlow: bug fixed to properly select the first sources of immigration.
-
 
 capm 0.13.6
 ===========
