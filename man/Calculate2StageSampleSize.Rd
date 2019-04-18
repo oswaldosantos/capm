@@ -4,8 +4,8 @@
 \alias{Calculate2StageSampleSize}
 \title{Two-stage cluster sampling size and composition (Deprecated)}
 \usage{
-Calculate2StageSampleSize(psu.ssu = NULL, psu.x = NULL, conf.level = 0.95,
-  error = 0.1, cost = 4, minimum.ssu = 15)
+Calculate2StageSampleSize(psu.ssu = NULL, psu.x = NULL,
+  conf.level = 0.95, error = 0.1, cost = 4, minimum.ssu = 15)
 }
 \arguments{
 \item{psu.ssu}{\code{\link{data.frame}} with all primary sampling units (PSU). First column contains PSU unique identifiers. Second column contains \code{\link{numeric}} PSU sizes.}

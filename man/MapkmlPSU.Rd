@@ -4,7 +4,8 @@
 \alias{MapkmlPSU}
 \title{Creates *.kml files of a subset of polygons from a polygon shapefile}
 \usage{
-MapkmlPSU(shape = NULL, psu = NULL, id = NULL, path = "./psu_maps/")
+MapkmlPSU(shape = NULL, psu = NULL, id = NULL,
+  path = "./psu_maps/")
 }
 \arguments{
 \item{shape}{string with the path of a polygon shapefile or an object of \code{\link{class}} \link[sf]{sf} (see examples).}

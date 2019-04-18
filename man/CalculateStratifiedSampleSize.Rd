@@ -4,8 +4,8 @@
 \alias{CalculateStratifiedSampleSize}
 \title{Stratified random sample size}
 \usage{
-CalculateStratifiedSampleSize(strata = NULL, x = NULL, conf.level = 0.95,
-  error = 0.1)
+CalculateStratifiedSampleSize(strata = NULL, x = NULL,
+  conf.level = 0.95, error = 0.1)
 }
 \arguments{
 \item{strata}{\code{\link{vector}}, \code{\link{matrix}} or \code{\link{data.frame}}. If vector, named elements represent the size of the strata. If matrix or data.frame, first column represent the size of each strata, second column represent the expected mean in each strata and third column represent the expected variance in each strata. Each row is a strata and must be named.}

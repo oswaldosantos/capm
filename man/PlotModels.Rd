@@ -5,9 +5,9 @@
 \title{Plot results of capm model functions}
 \usage{
 PlotModels(model.out = NULL, variable = NULL, col = "red",
-  col1 = c("cadetblue1", "yellow", "red"), col2 = c("blue", "darkgreen",
-  "darkred"), x.label = "Years", y.label = NULL, legend.label = NULL,
-  pop = NULL)
+  col1 = c("cadetblue1", "yellow", "red"), col2 = c("blue",
+  "darkgreen", "darkred"), x.label = "Years", y.label = NULL,
+  legend.label = NULL, pop = NULL)
 }
 \arguments{
 \item{model.out}{output of one of the function previously mentioned.}

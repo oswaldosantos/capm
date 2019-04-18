@@ -4,9 +4,10 @@
 \alias{SolveIASA}
 \title{Modelling of immigration, abandonment, sterilization and adoption of companion animals}
 \usage{
-SolveIASA(pars = NULL, init = NULL, time = NULL, alpha.owned = TRUE,
-  immigration.reference = "N1", s.range = NULL, a.range = NULL,
-  alpha.range = NULL, v.range = NULL, s.fm = TRUE, ...)
+SolveIASA(pars = NULL, init = NULL, time = NULL,
+  alpha.owned = TRUE, immigration.reference = "N1", s.range = NULL,
+  a.range = NULL, alpha.range = NULL, v.range = NULL, s.fm = TRUE,
+  ...)
 }
 \arguments{
 \item{pars}{a named \code{\link{vector}} of length 21, with point estimates of model parameters (see details).}

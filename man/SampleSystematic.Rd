@@ -4,8 +4,8 @@
 \alias{SampleSystematic}
 \title{Simple and stratified systematic sampling}
 \usage{
-SampleSystematic(psu.ssu = NULL, su = NULL, N = NULL, write = FALSE,
-  ...)
+SampleSystematic(psu.ssu = NULL, su = NULL, N = NULL,
+  write = FALSE, ...)
 }
 \arguments{
 \item{psu.ssu}{\code{\link{data.frame}} with all PSU. First column contains PSU unique identifiers. Second column contains \code{\link{numeric}} PSU sizes. It is used only for the second stage of a two-stage cluster design (see details).}

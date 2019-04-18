@@ -4,9 +4,10 @@
 \alias{PlotLocalSens}
 \title{Plot results of CalculateLocalSens function}
 \usage{
-PlotLocalSens(local.out = NULL, x.sens = "Time", y.sens = "Sensitivity",
-  y.ind = c("L1", "L2", "Mean", "Min", "Max"), bar.colors = "DarkRed",
-  label.size = 10, x.axis.angle = 90, type = 1)
+PlotLocalSens(local.out = NULL, x.sens = "Time",
+  y.sens = "Sensitivity", y.ind = c("L1", "L2", "Mean", "Min", "Max"),
+  bar.colors = "DarkRed", label.size = 10, x.axis.angle = 90,
+  type = 1)
 }
 \arguments{
 \item{local.out}{output from \code{\link{CalculateLocalSens}} function.}

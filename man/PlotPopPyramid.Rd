@@ -7,7 +7,8 @@
 PlotPopPyramid(dat = NULL, age.col = NULL, sex.col = NULL,
   str.col = NULL, str.tip = NULL, x.label = "Count",
   stage.label = "Years", legend.label = "Sterilized",
-  inner.color = "LightBlue", outer.color = "DarkRed", label.size = 13)
+  inner.color = "LightBlue", outer.color = "DarkRed",
+  label.size = 13)
 }
 \arguments{
 \item{dat}{\code{\link{data.frame}}.}
