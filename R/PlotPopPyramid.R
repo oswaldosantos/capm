@@ -100,9 +100,9 @@ PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col
   if (!is.null(str.col)) {
     gg_base <- ggplot(dat, aes(age, fill = ster)) +
       scale_fill_manual(name = legend.label,
-                        values = c(inner.color, outer.color)) +
+                        values = c(outer.color, inner.color)) +
       theme_minimal() +
-      theme(legend.position = c(1, 1),
+      theme(legend.position = c(1, .9),
             legend.justification = c(1, 1),
             legend.title = element_text(face = "plain", size = label.size),
             legend.text = element_text(size = label.size))
@@ -146,7 +146,7 @@ PlotPopPyramid <-  function (dat = NULL, age.col = NULL, sex.col = NULL, str.col
                          breaks = count_ticks,
                          labels = abs(count_ticks),
                          limits = c(-n_sex_age, n_sex_age)) +
-      scale_x_discrete(name = stage.label) +
+      scale_x_discrete(name = stage.label, limits = levels(factor(dat$age))) +
       geom_hline(yintercept = 0, color = "gray") +
       theme(plot.margin = unit(c(0.5, 1, 0.5, 0.5), "lines"), 
             axis.ticks.length = unit(0, "lines"),
