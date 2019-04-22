@@ -4,7 +4,7 @@
 #' Package: \tab capm\cr
 #' Type: \tab Package\cr
 #' Version: \tab 0.13.10\cr
-#' Date: \tab 2019-18-04\cr
+#' Date: \tab 2019-04-19\cr
 #' Depends: \tab R (>= 3.4)\cr
 #' Imports: \tab deSolve, FME, survey, dplyr, tidyr, magrittr, ggplot2, grid, stats, utils, sf\cr
 #' License: \tab GPL (>= 2)\cr
